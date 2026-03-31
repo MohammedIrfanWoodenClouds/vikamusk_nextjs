@@ -204,25 +204,25 @@ export default function Home() {
               <StaggerItem key={cat.id}>
                 <Link
                   href={`/products?category=${cat.slug}`}
-                  className="group relative flex flex-col md:flex-row bg-white rounded-2xl border border-border/60 overflow-hidden hover-lift"
+                  className="group relative flex flex-col md:flex-row bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-xl hover:border-accent/40 transition-all duration-300 transform hover:-translate-y-1"
                 >
-                  <div className="relative w-full md:w-48 h-48 md:h-auto bg-surface flex-shrink-0">
+                  <div className="relative w-full md:w-48 h-48 md:h-auto bg-gray-50 flex-shrink-0">
                     <Image
                       src={cat.image}
                       alt={cat.name}
                       fill
-                      className="object-contain p-4 group-hover:scale-110 transition-transform duration-500"
+                      className="object-contain p-6 md:p-8 group-hover:scale-110 transition-transform duration-700 ease-out"
                     />
                   </div>
                   <div className="p-6 flex flex-col justify-center">
                     <div className="text-3xl mb-3">{cat.icon}</div>
-                    <h3 className="text-xl font-bold text-primary mb-2 group-hover:text-accent transition-colors">
+                    <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-amber-600 transition-colors">
                       {cat.name}
                     </h3>
-                    <p className="text-sm text-muted leading-relaxed mb-3">
+                    <p className="text-sm text-gray-500 leading-relaxed mb-4">
                       {cat.description}
                     </p>
-                    <span className="text-sm font-semibold text-accent flex items-center gap-1 group-hover:gap-2 transition-all">
+                    <span className="text-sm font-bold text-[#001f3f] flex items-center gap-1 group-hover:gap-2 group-hover:text-accent transition-all">
                       View {cat.productCount} Products <ArrowRight size={14} />
                     </span>
                   </div>

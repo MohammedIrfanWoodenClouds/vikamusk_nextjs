@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
+import SplashScreen from '@/components/SplashScreen'
 import './globals.css'
 
 const inter = Inter({
@@ -83,6 +84,7 @@ export default function RootLayout({
             }),
           }}
         />
+        <SplashScreen />
         <Navbar />
         <main className="min-h-screen">
           {children}
