@@ -12,14 +12,14 @@ const navLinks = [
     name: 'Products',
     href: '/products',
     children: [
-      { name: 'Material Handling', href: '/products?category=material-handling' },
+      { name: 'Forklifts & Reach Trucks', href: '/products?category=forklifts-reach-trucks' },
       { name: 'Aerial Work Platforms', href: '/products?category=aerial-work-platforms' },
-      { name: 'Construction Equipment', href: '/products?category=construction-equipment' },
       { name: 'All Products', href: '/products' },
     ],
   },
+  { name: 'Services', href: '/services' },
   { name: 'About', href: '/about' },
-  { name: 'Careers', href: '/careers' },
+  { name: 'Downloads', href: '/downloads' },
   { name: 'Contact', href: '/contact' },
 ];
 

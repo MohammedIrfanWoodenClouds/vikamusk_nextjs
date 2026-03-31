@@ -25,12 +25,8 @@ export const metadata: Metadata = {
     siteName: 'Vikamusk International',
   },
   icons: {
-    icon: [
-      { url: '/icon-light-32x32.png', media: '(prefers-color-scheme: light)' },
-      { url: '/icon-dark-32x32.png', media: '(prefers-color-scheme: dark)' },
-      { url: '/icon.svg', type: 'image/svg+xml' },
-    ],
-    apple: '/apple-icon.png',
+    icon: '/favicon.png',
+    apple: '/favicon.png',
   },
 }
 
@@ -42,6 +38,51 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.variable}>
       <body className="font-[var(--font-inter)] antialiased">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Organization',
+              name: 'Vikamusk International',
+              alternateName: 'Vikamusk Construction Equipment FZE',
+              url: 'https://vikamusk.com',
+              logo: 'https://vikamusk.com/images/logo.png',
+              description: 'Trusted supplier of advanced construction and material handling solutions across UAE, India & beyond.',
+              foundingDate: '2015',
+              contactPoint: [
+                {
+                  '@type': 'ContactPoint',
+                  email: 'sales@vikamusk.com',
+                  contactType: 'sales',
+                },
+                {
+                  '@type': 'ContactPoint',
+                  email: 'info@vikamusk.com',
+                  contactType: 'customer service',
+                },
+              ],
+              address: [
+                {
+                  '@type': 'PostalAddress',
+                  streetAddress: 'Ajman Free Zone, Sheikh Rashid Bin Saeed Al Maktoum St',
+                  addressLocality: 'Ajman',
+                  addressCountry: 'AE',
+                  postalCode: '932',
+                },
+                {
+                  '@type': 'PostalAddress',
+                  streetAddress: 'Shanmugham Rd, Marine Drive',
+                  addressLocality: 'Kochi',
+                  addressRegion: 'Kerala',
+                  addressCountry: 'IN',
+                  postalCode: '682031',
+                },
+              ],
+              sameAs: [],
+            }),
+          }}
+        />
         <Navbar />
         <main className="min-h-screen">
           {children}
