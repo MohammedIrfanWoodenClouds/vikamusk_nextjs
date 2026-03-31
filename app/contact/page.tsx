@@ -57,7 +57,7 @@ export default function Contact() {
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mt-3 mb-4">
               Contact Us
             </h1>
-            <p className="text-white/60 max-w-xl text-base lg:text-lg leading-relaxed">
+            <p className="text-gray-400 max-w-xl text-base lg:text-lg leading-relaxed">
               Have questions about our equipment? Reach out and our team will get back to you promptly.
             </p>
           </AnimatedSection>
@@ -69,7 +69,7 @@ export default function Contact() {
         <div className="container-custom">
           <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 mb-12 lg:mb-16">
             <StaggerItem>
-              <div className="p-6 lg:p-8 bg-white rounded-2xl border border-border/50 h-full">
+              <div className="p-6 lg:p-8 bg-white rounded-2xl border border-gray-200 h-full">
                 <div className="w-12 h-12 rounded-xl bg-accent/10 text-accent flex items-center justify-center mb-4">
                   <Building2 size={24} />
                 </div>
@@ -89,7 +89,7 @@ export default function Contact() {
             </StaggerItem>
 
             <StaggerItem>
-              <div className="p-6 lg:p-8 bg-white rounded-2xl border border-border/50 h-full">
+              <div className="p-6 lg:p-8 bg-white rounded-2xl border border-gray-200 h-full">
                 <div className="w-12 h-12 rounded-xl bg-accent/10 text-accent flex items-center justify-center mb-4">
                   <Building2 size={24} />
                 </div>
@@ -113,16 +113,16 @@ export default function Contact() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
             {/* Form */}
             <AnimatedSection direction="left">
-              <div className="bg-white rounded-2xl border border-border/50 p-6 lg:p-10">
-                <h2 className="text-2xl font-black text-primary mb-2">Submit Your Enquiry</h2>
-                <p className="text-muted text-sm mb-8">We&apos;d love to hear from you. Fill in the form below.</p>
+              <div className="bg-white rounded-2xl border border-gray-200 p-6 lg:p-10 shadow-sm">
+                <h2 className="text-2xl font-black text-gray-900 mb-2">Submit Your Enquiry</h2>
+                <p className="text-gray-500 text-sm mb-8">We&apos;d love to hear from you. Fill in the form below.</p>
 
                 {status === 'success' ? (
                   <div className="text-center py-12">
                     <div className="w-16 h-16 rounded-full bg-green-100 text-green-600 flex items-center justify-center mx-auto mb-4">
                       <CheckCircle2 size={32} />
                     </div>
-                    <h3 className="text-xl font-bold text-primary mb-2">Thank You!</h3>
+                    <h3 className="text-xl font-bold text-gray-900 mb-2">Thank You!</h3>
                     <p className="text-muted mb-6">Your enquiry has been submitted. We&apos;ll get back to you shortly.</p>
                     <button
                       onClick={() => setStatus('idle')}
@@ -141,7 +141,7 @@ export default function Contact() {
                     )}
 
                     <div>
-                      <label className="block text-sm font-semibold text-primary mb-1.5">
+                      <label className="block text-sm font-semibold text-gray-800 mb-1.5">
                         Full Name <span className="text-red-500">*</span>
                       </label>
                       <input
@@ -149,14 +149,14 @@ export default function Contact() {
                         required
                         value={formData.firstName}
                         onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
-                        className="w-full px-4 py-3 rounded-lg border border-border bg-surface text-primary text-sm focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent transition-all"
+                        className="w-full px-4 py-3 rounded-lg border border-gray-200 bg-white text-gray-900 text-sm focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-300 transition-all"
                         placeholder="Enter your name"
                       />
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                       <div>
-                        <label className="block text-sm font-semibold text-primary mb-1.5">
+                        <label className="block text-sm font-semibold text-gray-800 mb-1.5">
                           Email Address <span className="text-red-500">*</span>
                         </label>
                         <input
@@ -164,12 +164,12 @@ export default function Contact() {
                           required
                           value={formData.email}
                           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                          className="w-full px-4 py-3 rounded-lg border border-border bg-surface text-primary text-sm focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent transition-all"
+                          className="w-full px-4 py-3 rounded-lg border border-gray-200 bg-white text-gray-900 text-sm focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-300 transition-all"
                           placeholder="email@example.com"
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-semibold text-primary mb-1.5">
+                        <label className="block text-sm font-semibold text-gray-800 mb-1.5">
                           Phone Number <span className="text-red-500">*</span>
                         </label>
                         <input
@@ -177,20 +177,20 @@ export default function Contact() {
                           required
                           value={formData.phone}
                           onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                          className="w-full px-4 py-3 rounded-lg border border-border bg-surface text-primary text-sm focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent transition-all"
+                          className="w-full px-4 py-3 rounded-lg border border-gray-200 bg-white text-gray-900 text-sm focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-300 transition-all"
                           placeholder="+971 XXX XXXX"
                         />
                       </div>
                     </div>
 
                     <div>
-                      <label className="block text-sm font-semibold text-primary mb-1.5">
+                      <label className="block text-sm font-semibold text-gray-800 mb-1.5">
                         Interest Area
                       </label>
                       <select
                         value={formData.subject}
                         onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                        className="w-full px-4 py-3 rounded-lg border border-border bg-surface text-primary text-sm focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent transition-all appearance-none"
+                        className="w-full px-4 py-3 rounded-lg border border-gray-200 bg-white text-gray-900 text-sm focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-300 transition-all appearance-none"
                       >
                         <option>Construction Equipment</option>
                         <option>Forklifts & Reach Trucks</option>
@@ -202,14 +202,14 @@ export default function Contact() {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-semibold text-primary mb-1.5">
+                      <label className="block text-sm font-semibold text-gray-800 mb-1.5">
                         Message
                       </label>
                       <textarea
                         value={formData.message}
                         onChange={(e) => setFormData({ ...formData, message: e.target.value.slice(0, 500) })}
                         rows={4}
-                        className="w-full px-4 py-3 rounded-lg border border-border bg-surface text-primary text-sm focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent transition-all resize-none"
+                        className="w-full px-4 py-3 rounded-lg border border-gray-200 bg-white text-gray-900 text-sm focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-300 transition-all resize-none"
                         placeholder="Tell us about your requirements..."
                       />
                       <p className="text-xs text-muted mt-1 text-right">{formData.message.length}/500</p>

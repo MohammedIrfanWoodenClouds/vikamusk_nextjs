@@ -180,20 +180,20 @@ export default function Services() {
       </section>
 
       {/* CTA */}
-      <section className="py-20 gradient-accent">
+      <section className="py-20 bg-[#001f3f]">
         <div className="container-custom text-center">
           <AnimatedSection>
-            <h2 className="text-3xl lg:text-4xl font-black text-primary mb-4">
+            <h2 className="text-3xl lg:text-4xl font-black text-white mb-4">
               Need Equipment Service or Support?
             </h2>
-            <p className="text-primary/70 max-w-lg mx-auto mb-8">
+            <p className="text-gray-400 max-w-lg mx-auto mb-8">
               Our service team is ready to help with maintenance, spare parts, and technical consultation.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
-              <Link href="/contact" className="bg-primary text-white font-bold px-8 py-4 rounded-lg hover:bg-primary-dark transition-colors inline-flex items-center gap-2">
-                Contact Support <Phone size={18} />
+              <Link href="/contact" className="bg-accent hover:bg-amber-600 text-[#001f3f] font-bold px-7 py-3.5 rounded-lg transition-all inline-flex items-center gap-2 text-sm">
+                Contact Support <Phone size={16} />
               </Link>
-              <a href="/vikamusk-company-profile.pdf" target="_blank" rel="noopener noreferrer" className="bg-white text-primary font-bold px-8 py-4 rounded-lg hover:bg-white/90 transition-colors inline-flex items-center gap-2">
+              <a href="/vikamusk-company-profile.pdf" target="_blank" rel="noopener noreferrer" className="bg-white/10 hover:bg-white/20 text-white font-semibold px-7 py-3.5 rounded-lg border border-white/20 hover:border-white/40 transition-all inline-flex items-center gap-2 text-sm">
                 Download Brochure
               </a>
             </div>

@@ -292,16 +292,40 @@ h1, h2, h3, h4, h5, h6 {
 
 /* ==================== FOCUS STYLES ==================== */
 a:focus-visible,
-button:focus-visible,
-input:focus-visible,
-select:focus-visible,
-textarea:focus-visible {
+button:focus-visible {
   outline: 2px solid var(--color-accent);
   outline-offset: 2px;
+}
+
+/* ==================== FORM INPUTS ==================== */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="number"],
+input[type="password"],
+select,
+textarea {
+  font-family: inherit;
+  font-size: 0.875rem;
+  color: var(--color-primary);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: #94a3b8 !important;
+  box-shadow: 0 0 0 3px rgba(148, 163, 184, 0.15);
 }
 
 /* ==================== IMAGE FIX ==================== */
 img {
   max-width: 100%;
   height: auto;
+}
+
+/* ==================== NEXT.JS IMAGE FIX ==================== */
+/* Ensure Next.js Image fill mode works correctly in containers */
+[data-nimg="fill"] {
+  object-fit: contain;
 }

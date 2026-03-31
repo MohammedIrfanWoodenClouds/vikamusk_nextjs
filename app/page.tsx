@@ -366,25 +366,25 @@ export default function Home() {
       </section>
 
       {/* ============= CTA BANNER ============= */}
-      <section className="relative py-24 overflow-hidden">
-        <div className="absolute inset-0 gradient-accent" />
-        <div className="absolute inset-0 opacity-10">
+      <section className="relative py-20 lg:py-24 overflow-hidden bg-[#001f3f]">
+        <div className="absolute inset-0 opacity-15">
           <Image src="/images/hero-bg.png" alt="" fill className="object-cover" />
         </div>
         <div className="container-custom relative z-10 text-center">
           <AnimatedSection>
-            <h2 className="text-3xl lg:text-5xl font-black text-primary mb-6">
-              Build Your Dream With Vikamusk
+            <h2 className="text-3xl lg:text-5xl font-black text-white mb-5">
+              Build Your Dream With{' '}
+              <span className="text-accent">Vikamusk</span>
             </h2>
-            <p className="text-primary/70 max-w-xl mx-auto mb-10 text-lg">
+            <p className="text-gray-400 max-w-xl mx-auto mb-10 text-base lg:text-lg">
               10+ Years of Undefeated Success. Ready to power your next project 
               with world-class equipment?
             </p>
             <div className="flex flex-wrap justify-center gap-4">
-              <Link href="/products" className="bg-primary text-white font-bold px-8 py-4 rounded-lg hover:bg-primary-dark transition-colors inline-flex items-center gap-2">
-                View Products <ArrowRight size={18} />
+              <Link href="/products" className="bg-accent hover:bg-amber-600 text-[#001f3f] font-bold px-7 py-3.5 rounded-lg transition-all inline-flex items-center gap-2 text-sm">
+                View Products <ArrowRight size={16} />
               </Link>
-              <Link href="/contact" className="bg-white text-primary font-bold px-8 py-4 rounded-lg hover:bg-white/90 transition-colors inline-flex items-center gap-2">
+              <Link href="/contact" className="bg-white/10 hover:bg-white/20 text-white font-semibold px-7 py-3.5 rounded-lg border border-white/20 hover:border-white/40 transition-all inline-flex items-center gap-2 text-sm">
                 Contact Us
               </Link>
             </div>

@@ -36,7 +36,6 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close mobile menu on route change
   useEffect(() => {
     setMobileOpen(false);
   }, [pathname]);
@@ -60,21 +59,21 @@ export default function Navbar() {
   return (
     <>
       {/* Top Bar */}
-      <div className="hidden md:block bg-primary text-white/80 text-xs">
+      <div className="hidden md:block bg-primary text-white/70 text-xs">
         <div className="container-custom flex justify-between items-center py-2">
           <div className="flex items-center gap-6">
             <a href="mailto:sales@vikamusk.com" className="flex items-center gap-1.5 hover:text-accent transition-colors">
-              <Mail size={13} />
+              <Mail size={12} />
               sales@vikamusk.com
             </a>
             <a href="mailto:info@vikamusk.com" className="flex items-center gap-1.5 hover:text-accent transition-colors">
-              <Phone size={13} />
+              <Phone size={12} />
               info@vikamusk.com
             </a>
           </div>
-          <div className="flex items-center gap-3 text-white/50">
+          <div className="flex items-center gap-3 text-white/40 text-xs">
             <span>Ajman, UAE</span>
-            <span className="text-white/30">|</span>
+            <span>|</span>
             <span>Kochi, India</span>
           </div>
         </div>
@@ -87,25 +86,25 @@ export default function Navbar() {
         transition={{ duration: 0.5, ease: 'easeOut' }}
         className={`sticky top-0 z-50 transition-all duration-300 ${
           scrolled
-            ? 'bg-white/95 backdrop-blur-lg shadow-lg border-b border-border'
-            : 'bg-white border-b border-border/50'
+            ? 'bg-white/95 backdrop-blur-lg shadow-lg border-b border-gray-200'
+            : 'bg-white border-b border-gray-100'
         }`}
       >
-        <div className="container-custom flex items-center justify-between h-[68px]">
-          {/* Logo */}
-          <Link href="/" className="flex-shrink-0">
+        <div className="container-custom flex items-center justify-between h-16 lg:h-[68px]">
+          {/* Logo — wrapped in constrained container */}
+          <Link href="/" className="flex-shrink-0 relative" style={{ width: '140px', height: '36px' }}>
             <Image
               src="/images/logo.png"
               alt="Vikamusk International"
-              width={160}
-              height={40}
-              className="h-9 w-auto"
+              fill
+              className="object-contain object-left"
               priority
+              sizes="140px"
             />
           </Link>
 
           {/* Desktop Links */}
-          <div className="hidden lg:flex items-center gap-0.5">
+          <div className="hidden lg:flex items-center gap-0">
             {navLinks.map((link) => (
               <div
                 key={link.name}
@@ -115,16 +114,16 @@ export default function Navbar() {
               >
                 <Link
                   href={link.href}
-                  className={`flex items-center gap-1 px-3.5 py-2 text-sm font-semibold rounded-lg transition-colors whitespace-nowrap ${
+                  className={`flex items-center gap-1 px-3 py-2 text-[13px] font-semibold rounded-md transition-colors whitespace-nowrap ${
                     isActive(link.href)
-                      ? 'text-accent bg-accent/5'
-                      : 'text-primary/70 hover:text-accent hover:bg-accent/5'
+                      ? 'text-accent'
+                      : 'text-gray-700 hover:text-accent'
                   }`}
                 >
                   {link.name}
                   {link.children && (
                     <ChevronDown
-                      size={14}
+                      size={13}
                       className={`transition-transform duration-200 ${activeDropdown === link.name ? 'rotate-180' : ''}`}
                     />
                   )}
@@ -138,13 +137,13 @@ export default function Navbar() {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 8 }}
                       transition={{ duration: 0.15 }}
-                      className="absolute top-full left-0 mt-0.5 w-60 bg-white rounded-xl shadow-xl border border-border/50 py-2 z-50"
+                      className="absolute top-full left-0 mt-0.5 w-56 bg-white rounded-lg shadow-xl border border-gray-100 py-1.5 z-50"
                     >
                       {link.children.map((child) => (
                         <Link
                           key={child.name}
                           href={child.href}
-                          className="block px-4 py-2.5 text-sm text-primary/70 hover:text-accent hover:bg-accent/5 transition-colors font-medium"
+                          className="block px-4 py-2.5 text-[13px] text-gray-600 hover:text-accent hover:bg-amber-50 transition-colors font-medium"
                         >
                           {child.name}
                         </Link>
@@ -160,16 +159,16 @@ export default function Navbar() {
           <div className="flex items-center gap-3">
             <Link
               href="/contact"
-              className="hidden md:inline-flex btn-primary btn-sm whitespace-nowrap"
+              className="hidden md:inline-flex items-center justify-center gap-1.5 bg-accent hover:bg-amber-600 text-white font-semibold text-[13px] px-5 py-2 rounded-md transition-all whitespace-nowrap"
             >
               Get a Quote
             </Link>
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="lg:hidden p-2 rounded-lg hover:bg-surface transition-colors text-primary"
+              className="lg:hidden p-2 rounded-md hover:bg-gray-100 transition-colors text-gray-700"
               aria-label="Toggle menu"
             >
-              {mobileOpen ? <X size={24} /> : <Menu size={24} />}
+              {mobileOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
           </div>
         </div>
@@ -191,51 +190,53 @@ export default function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="absolute right-0 top-0 h-full w-[min(320px,85vw)] bg-white shadow-2xl overflow-y-auto"
+              className="absolute right-0 top-0 h-full w-[min(300px,85vw)] bg-white shadow-2xl overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="p-6 pb-8">
+              <div className="p-5 pb-8">
                 {/* Header */}
-                <div className="flex items-center justify-between mb-8">
-                  <Image
-                    src="/images/logo.png"
-                    alt="Vikamusk"
-                    width={120}
-                    height={30}
-                    className="h-7 w-auto"
-                  />
+                <div className="flex items-center justify-between mb-8 pb-4 border-b border-gray-100">
+                  <div className="relative" style={{ width: '110px', height: '28px' }}>
+                    <Image
+                      src="/images/logo.png"
+                      alt="Vikamusk"
+                      fill
+                      className="object-contain object-left"
+                      sizes="110px"
+                    />
+                  </div>
                   <button
                     onClick={closeMobile}
-                    className="p-2 hover:bg-surface rounded-lg transition-colors"
+                    className="p-1.5 hover:bg-gray-100 rounded-md transition-colors"
                     aria-label="Close menu"
                   >
-                    <X size={20} />
+                    <X size={20} className="text-gray-500" />
                   </button>
                 </div>
 
                 {/* Links */}
-                <div className="space-y-1">
+                <div className="space-y-0.5">
                   {navLinks.map((link) => (
                     <div key={link.name}>
                       <Link
                         href={link.href}
                         onClick={closeMobile}
-                        className={`block px-4 py-3 text-base font-semibold rounded-lg transition-colors ${
+                        className={`block px-3 py-2.5 text-[15px] font-semibold rounded-md transition-colors ${
                           isActive(link.href)
-                            ? 'text-accent bg-accent/5'
-                            : 'text-primary/80 hover:text-accent hover:bg-accent/5'
+                            ? 'text-accent bg-amber-50'
+                            : 'text-gray-700 hover:text-accent hover:bg-gray-50'
                         }`}
                       >
                         {link.name}
                       </Link>
                       {link.children && (
-                        <div className="ml-4 space-y-0.5 mb-1">
+                        <div className="ml-3 space-y-0.5 mb-1 border-l-2 border-gray-100 pl-3">
                           {link.children.map((child) => (
                             <Link
                               key={child.name}
                               href={child.href}
                               onClick={closeMobile}
-                              className="block px-4 py-2 text-sm text-muted hover:text-accent transition-colors"
+                              className="block py-2 text-sm text-gray-500 hover:text-accent transition-colors"
                             >
                               {child.name}
                             </Link>
@@ -244,14 +245,14 @@ export default function Navbar() {
                       )}
                     </div>
                   ))}
-                  {/* Downloads in mobile only */}
+                  {/* Downloads */}
                   <Link
                     href="/downloads"
                     onClick={closeMobile}
-                    className={`block px-4 py-3 text-base font-semibold rounded-lg transition-colors ${
+                    className={`block px-3 py-2.5 text-[15px] font-semibold rounded-md transition-colors ${
                       isActive('/downloads')
-                        ? 'text-accent bg-accent/5'
-                        : 'text-primary/80 hover:text-accent hover:bg-accent/5'
+                        ? 'text-accent bg-amber-50'
+                        : 'text-gray-700 hover:text-accent hover:bg-gray-50'
                     }`}
                   >
                     Downloads
@@ -259,18 +260,18 @@ export default function Navbar() {
                 </div>
 
                 {/* Mobile CTA */}
-                <div className="mt-8 pt-6 border-t border-border">
+                <div className="mt-8 pt-5 border-t border-gray-100">
                   <Link
                     href="/contact"
                     onClick={closeMobile}
-                    className="btn-primary w-full text-center block"
+                    className="block w-full text-center bg-accent hover:bg-amber-600 text-white font-semibold py-3 rounded-md transition-colors"
                   >
                     Get a Quote
                   </Link>
                 </div>
 
                 {/* Mobile Contact */}
-                <div className="mt-6 space-y-3 text-sm text-muted">
+                <div className="mt-5 space-y-2.5 text-sm text-gray-500">
                   <a href="mailto:sales@vikamusk.com" className="flex items-center gap-2 hover:text-accent transition-colors">
                     <Mail size={14} /> sales@vikamusk.com
                   </a>

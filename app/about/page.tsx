@@ -193,17 +193,17 @@ export default function About() {
       </section>
 
       {/* CTA */}
-      <section className="py-20 gradient-accent">
+      <section className="py-20 bg-[#001f3f]">
         <div className="container-custom text-center">
           <AnimatedSection>
-            <h2 className="text-3xl lg:text-4xl font-black text-primary mb-6">
+            <h2 className="text-3xl lg:text-4xl font-black text-white mb-5">
               Ready to Work With Us?
             </h2>
-            <p className="text-primary/70 max-w-lg mx-auto mb-8">
+            <p className="text-gray-400 max-w-lg mx-auto mb-8">
               Contact our team to discuss your equipment needs and discover how Vikamusk can help.
             </p>
-            <Link href="/contact" className="bg-primary text-white font-bold px-8 py-4 rounded-lg hover:bg-primary-dark transition-colors inline-flex items-center gap-2">
-              Get in Touch <ArrowRight size={18} />
+            <Link href="/contact" className="bg-accent hover:bg-amber-600 text-[#001f3f] font-bold px-7 py-3.5 rounded-lg transition-all inline-flex items-center gap-2 text-sm">
+              Get in Touch <ArrowRight size={16} />
             </Link>
           </AnimatedSection>
         </div>
