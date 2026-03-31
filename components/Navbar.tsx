@@ -90,16 +90,16 @@ export default function Navbar() {
             : 'bg-white border-b border-gray-100'
         }`}
       >
-        <div className="container-custom flex items-center justify-between h-20 lg:h-[84px]">
-          {/* Logo — wrapped in a more generous container for the new logo */}
-          <Link href="/" className="flex-shrink-0 relative h-10 w-48 lg:h-12 lg:w-56">
+        <div className="container-custom flex items-center justify-between h-[88px] lg:h-[104px]">
+          {/* Logo */}
+          <Link href="/" className="flex-shrink-0 relative h-[50px] w-[220px] lg:h-[64px] lg:w-[280px]">
             <Image
               src="/images/logo.png"
               alt="Vikamusk International"
               fill
-              className="object-contain object-left"
+              className="object-contain object-left scale-[1.15]"
               priority
-              sizes="(max-width: 1024px) 192px, 224px"
+              sizes="(max-width: 1024px) 300px, 350px"
             />
           </Link>
 

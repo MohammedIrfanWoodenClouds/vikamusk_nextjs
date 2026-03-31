@@ -30,14 +30,14 @@ export default function Footer() {
           {/* Brand */}
           <div className="lg:col-span-1">
             <Link href="/" className="inline-block mb-5">
-              <div className="relative" style={{ width: '130px', height: '32px' }}>
+              <div className="relative" style={{ width: '350px', height: '80px' }}>
                 <Image
                   src="/images/logo.png"
                   alt="Vikamusk International"
                   fill
                   className="object-contain object-left invert brightness-0"
                   style={{ filter: 'brightness(0) invert(1)' }}
-                  sizes="130px"
+                  sizes="350px"
                 />
               </div>
             </Link>
