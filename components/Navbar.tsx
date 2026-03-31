@@ -160,7 +160,7 @@ export default function Navbar() {
           <div className="flex items-center gap-3">
             <Link
               href="/contact"
-              className="hidden md:inline-flex btn-primary text-sm !py-2.5 !px-5 whitespace-nowrap"
+              className="hidden md:inline-flex btn-primary btn-sm whitespace-nowrap"
             >
               Get a Quote
             </Link>

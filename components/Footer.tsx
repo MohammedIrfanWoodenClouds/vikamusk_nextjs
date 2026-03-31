@@ -29,15 +29,16 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Brand */}
           <div className="lg:col-span-1">
-            <div className="mb-6">
+            <Link href="/" className="inline-block mb-6">
               <Image
                 src="/images/logo.png"
                 alt="Vikamusk International"
                 width={160}
                 height={40}
-                className="h-9 w-auto brightness-0 invert"
+                className="h-9 w-auto"
+                style={{ filter: 'brightness(0) invert(1)' }}
               />
-            </div>
+            </Link>
             <p className="text-white/60 text-sm leading-relaxed mb-6">
               Founded in 2015. A trusted supplier of advanced construction and material handling solutions across UAE, India, and beyond.
             </p>

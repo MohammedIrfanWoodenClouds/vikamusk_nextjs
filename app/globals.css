@@ -48,7 +48,8 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
   font-weight: 700;
   line-height: 1.2;
-  color: var(--color-primary);
+  /* DO NOT set color here — headings inherit from parent context.
+     This prevents dark-on-dark issues in bg-primary sections. */
 }
 
 /* ==================== SCROLLBAR ==================== */
@@ -129,6 +130,7 @@ h1, h2, h3, h4, h5, h6 {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  color: var(--color-accent); /* fallback for browsers that don't support background-clip: text */
 }
 
 .gradient-primary {
@@ -158,13 +160,13 @@ h1, h2, h3, h4, h5, h6 {
 
 @media (min-width: 768px) {
   .section-padding {
-    padding: 6rem 0;
+    padding: 5.5rem 0;
   }
 }
 
 @media (min-width: 1024px) {
   .section-padding {
-    padding: 7rem 0;
+    padding: 6.5rem 0;
   }
 }
 
@@ -194,6 +196,7 @@ h1, h2, h3, h4, h5, h6 {
 .line-clamp-2 {
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -201,6 +204,7 @@ h1, h2, h3, h4, h5, h6 {
 .line-clamp-3 {
   display: -webkit-box;
   -webkit-line-clamp: 3;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -278,6 +282,12 @@ h1, h2, h3, h4, h5, h6 {
   color: #ffffff;
   border-color: var(--color-primary);
   transform: translateY(-2px);
+}
+
+/* Small variant for buttons in nav */
+.btn-sm {
+  padding: 0.5rem 1.25rem;
+  font-size: 0.8125rem;
 }
 
 /* ==================== FOCUS STYLES ==================== */
