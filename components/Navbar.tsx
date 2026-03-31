@@ -90,21 +90,21 @@ export default function Navbar() {
             : 'bg-white border-b border-gray-100'
         }`}
       >
-        <div className="container-custom flex items-center justify-between h-16 lg:h-[68px]">
-          {/* Logo — wrapped in constrained container */}
-          <Link href="/" className="flex-shrink-0 relative" style={{ width: '140px', height: '36px' }}>
+        <div className="container-custom flex items-center justify-between h-20 lg:h-[84px]">
+          {/* Logo — wrapped in a more generous container for the new logo */}
+          <Link href="/" className="flex-shrink-0 relative h-10 w-48 lg:h-12 lg:w-56">
             <Image
               src="/images/logo.png"
               alt="Vikamusk International"
               fill
               className="object-contain object-left"
               priority
-              sizes="140px"
+              sizes="(max-width: 1024px) 192px, 224px"
             />
           </Link>
 
           {/* Desktop Links */}
-          <div className="hidden lg:flex items-center gap-0">
+          <div className="hidden lg:flex items-center gap-2 xl:gap-6">
             {navLinks.map((link) => (
               <div
                 key={link.name}
@@ -114,17 +114,17 @@ export default function Navbar() {
               >
                 <Link
                   href={link.href}
-                  className={`flex items-center gap-1 px-3 py-2 text-[13px] font-semibold rounded-md transition-colors whitespace-nowrap ${
+                  className={`flex items-center gap-1.5 px-3 py-2.5 text-[15px] font-bold rounded-md transition-all whitespace-nowrap ${
                     isActive(link.href)
                       ? 'text-accent'
-                      : 'text-gray-700 hover:text-accent'
+                      : 'text-gray-700 hover:text-accent hover:bg-gray-50'
                   }`}
                 >
                   {link.name}
                   {link.children && (
                     <ChevronDown
-                      size={13}
-                      className={`transition-transform duration-200 ${activeDropdown === link.name ? 'rotate-180' : ''}`}
+                      size={14}
+                      className={`transition-transform duration-300 ${activeDropdown === link.name ? 'rotate-180 text-accent' : ''}`}
                     />
                   )}
                 </Link>
@@ -133,17 +133,17 @@ export default function Navbar() {
                 <AnimatePresence>
                   {link.children && activeDropdown === link.name && (
                     <motion.div
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 8 }}
-                      transition={{ duration: 0.15 }}
-                      className="absolute top-full left-0 mt-0.5 w-56 bg-white rounded-lg shadow-xl border border-gray-100 py-1.5 z-50"
+                      initial={{ opacity: 0, y: 15, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                      transition={{ duration: 0.2, ease: "easeOut" }}
+                      className="absolute top-full left-0 mt-2 w-64 bg-white rounded-xl shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] border border-gray-100 py-3 z-50 overflow-hidden"
                     >
                       {link.children.map((child) => (
                         <Link
                           key={child.name}
                           href={child.href}
-                          className="block px-4 py-2.5 text-[13px] text-gray-600 hover:text-accent hover:bg-amber-50 transition-colors font-medium"
+                          className="block px-5 py-3 text-sm text-gray-600 hover:text-accent hover:bg-gray-50 transition-colors font-semibold"
                         >
                           {child.name}
                         </Link>
