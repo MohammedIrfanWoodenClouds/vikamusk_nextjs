@@ -131,8 +131,8 @@ export default function Footer() {
             Copyright © {new Date().getFullYear()} | Vikamusk International, All Rights Reserved.
           </p>
           <div className="flex gap-6">
-            <Link href="/about" className="text-white/40 hover:text-white/70 text-sm transition-colors">Privacy Policy</Link>
-            <Link href="/about" className="text-white/40 hover:text-white/70 text-sm transition-colors">Terms of Service</Link>
+            <Link href="/privacy" className="text-white/40 hover:text-white/70 text-sm transition-colors">Privacy Policy</Link>
+            <Link href="/terms" className="text-white/40 hover:text-white/70 text-sm transition-colors">Terms of Service</Link>
           </div>
         </div>
       </div>

@@ -46,7 +46,7 @@ export default function Home() {
   return (
     <>
       {/* ============= HERO SECTION ============= */}
-      <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-primary">
+      <section className="relative min-h-[85vh] lg:min-h-[90vh] flex items-center overflow-hidden bg-primary">
         {/* Background Image */}
         <div className="absolute inset-0">
           <Image
@@ -61,13 +61,13 @@ export default function Home() {
         </div>
 
         {/* Content */}
-        <div className="container-custom relative z-10 py-20">
+        <div className="container-custom relative z-10 py-16 lg:py-20">
           <div className="max-w-3xl">
             <motion.div
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/10 text-white/80 text-sm mb-8"
+              className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/10 text-white/80 text-xs sm:text-sm mb-6 lg:mb-8"
             >
               <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
               Established 2015 • Ajman Free Zone, UAE
@@ -77,7 +77,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="text-4xl sm:text-5xl lg:text-6xl font-black text-white leading-[1.1] mb-6"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white leading-[1.1] mb-4 lg:mb-6"
             >
               A World of{' '}
               <span className="gradient-text">Creativity</span>
@@ -89,7 +89,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.45 }}
-              className="text-lg text-white/70 max-w-xl mb-10 leading-relaxed"
+              className="text-base lg:text-lg text-white/70 max-w-xl mb-8 lg:mb-10 leading-relaxed"
             >
               Trusted supplier of advanced construction and material handling solutions. 
               Specializing in Forklifts and Aerial Work Platforms across UAE, India & beyond.
@@ -99,12 +99,12 @@ export default function Home() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.6 }}
-              className="flex flex-wrap gap-4"
+              className="flex flex-wrap gap-3 sm:gap-4"
             >
-              <Link href="/products" className="btn-primary text-base px-8 py-4">
+              <Link href="/products" className="btn-primary text-sm sm:text-base px-6 py-3 sm:px-8 sm:py-4">
                 Explore Products <ArrowRight size={18} />
               </Link>
-              <Link href="/contact" className="btn-secondary text-base px-8 py-4">
+              <Link href="/contact" className="btn-secondary text-sm sm:text-base px-6 py-3 sm:px-8 sm:py-4">
                 Contact Sales
               </Link>
             </motion.div>
@@ -116,7 +116,7 @@ export default function Home() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.2 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2"
+          className="absolute bottom-6 lg:bottom-8 left-1/2 -translate-x-1/2 hidden sm:block"
         >
           <motion.div
             animate={{ y: [0, 8, 0] }}

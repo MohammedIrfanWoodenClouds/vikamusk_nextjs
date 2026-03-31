@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import { Mail, MapPin, Phone, Send, Building2, Clock } from 'lucide-react';
+import { Mail, MapPin, Send, Building2, Clock, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
 import { AnimatedSection, StaggerContainer, StaggerItem } from '@/components/AnimatedSection';
 
 export default function Contact() {
@@ -13,19 +13,40 @@ export default function Contact() {
     subject: 'Construction Equipment',
     message: '',
   });
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [errorMsg, setErrorMsg] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // In production, this would send to an API
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 5000);
+    setStatus('loading');
+    setErrorMsg('');
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        setStatus('success');
+        setFormData({ firstName: '', email: '', phone: '', subject: 'Construction Equipment', message: '' });
+      } else {
+        setStatus('error');
+        setErrorMsg(data.error || 'Something went wrong.');
+      }
+    } catch {
+      setStatus('error');
+      setErrorMsg('Network error. Please try again or email us directly at sales@vikamusk.com');
+    }
   };
 
   return (
     <>
       {/* Hero */}
-      <section className="relative py-28 bg-primary overflow-hidden">
+      <section className="relative py-24 lg:py-28 bg-primary overflow-hidden">
         <div className="absolute inset-0 opacity-15">
           <Image src="/images/hero-bg.png" alt="" fill className="object-cover" />
         </div>
@@ -33,11 +54,11 @@ export default function Contact() {
         <div className="container-custom relative z-10">
           <AnimatedSection>
             <span className="text-sm font-bold text-accent uppercase tracking-wider">Get In Touch</span>
-            <h1 className="text-4xl lg:text-5xl font-black text-white mt-3 mb-6">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mt-3 mb-4">
               Contact Us
             </h1>
-            <p className="text-white/60 max-w-xl text-lg leading-relaxed">
-              Here&apos;s how you can contact us for any questions or concerns about our equipment.
+            <p className="text-white/60 max-w-xl text-base lg:text-lg leading-relaxed">
+              Have questions about our equipment? Reach out and our team will get back to you promptly.
             </p>
           </AnimatedSection>
         </div>
@@ -46,10 +67,10 @@ export default function Contact() {
       {/* Contact Cards */}
       <section className="section-padding bg-surface">
         <div className="container-custom">
-          <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 mb-16">
+          <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 mb-12 lg:mb-16">
             <StaggerItem>
-              <div className="p-8 bg-white rounded-2xl border border-border/50 h-full">
-                <div className="w-12 h-12 rounded-xl bg-accent/10 text-accent flex items-center justify-center mb-5">
+              <div className="p-6 lg:p-8 bg-white rounded-2xl border border-border/50 h-full">
+                <div className="w-12 h-12 rounded-xl bg-accent/10 text-accent flex items-center justify-center mb-4">
                   <Building2 size={24} />
                 </div>
                 <h3 className="text-lg font-bold text-primary mb-1">Vikamusk Construction Equipment</h3>
@@ -68,8 +89,8 @@ export default function Contact() {
             </StaggerItem>
 
             <StaggerItem>
-              <div className="p-8 bg-white rounded-2xl border border-border/50 h-full">
-                <div className="w-12 h-12 rounded-xl bg-accent/10 text-accent flex items-center justify-center mb-5">
+              <div className="p-6 lg:p-8 bg-white rounded-2xl border border-border/50 h-full">
+                <div className="w-12 h-12 rounded-xl bg-accent/10 text-accent flex items-center justify-center mb-4">
                   <Building2 size={24} />
                 </div>
                 <h3 className="text-lg font-bold text-primary mb-1">Vikamusk International</h3>
@@ -89,23 +110,36 @@ export default function Contact() {
           </StaggerContainer>
 
           {/* Form + Map */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
             {/* Form */}
             <AnimatedSection direction="left">
-              <div className="bg-white rounded-2xl border border-border/50 p-8 lg:p-10">
+              <div className="bg-white rounded-2xl border border-border/50 p-6 lg:p-10">
                 <h2 className="text-2xl font-black text-primary mb-2">Submit Your Enquiry</h2>
-                <p className="text-muted text-sm mb-8">Vikamusk would love to hear your thoughts.</p>
+                <p className="text-muted text-sm mb-8">We&apos;d love to hear from you. Fill in the form below.</p>
 
-                {submitted ? (
+                {status === 'success' ? (
                   <div className="text-center py-12">
                     <div className="w-16 h-16 rounded-full bg-green-100 text-green-600 flex items-center justify-center mx-auto mb-4">
-                      <Send size={28} />
+                      <CheckCircle2 size={32} />
                     </div>
                     <h3 className="text-xl font-bold text-primary mb-2">Thank You!</h3>
-                    <p className="text-muted">Your enquiry has been submitted. We&apos;ll get back to you shortly.</p>
+                    <p className="text-muted mb-6">Your enquiry has been submitted. We&apos;ll get back to you shortly.</p>
+                    <button
+                      onClick={() => setStatus('idle')}
+                      className="btn-outline text-sm"
+                    >
+                      Send Another Enquiry
+                    </button>
                   </div>
                 ) : (
                   <form onSubmit={handleSubmit} className="space-y-5">
+                    {status === 'error' && (
+                      <div className="flex items-start gap-3 p-4 bg-red-50 border border-red-200 rounded-lg text-sm text-red-700">
+                        <AlertCircle size={18} className="flex-shrink-0 mt-0.5" />
+                        <p>{errorMsg}</p>
+                      </div>
+                    )}
+
                     <div>
                       <label className="block text-sm font-semibold text-primary mb-1.5">
                         Full Name <span className="text-red-500">*</span>
@@ -156,12 +190,13 @@ export default function Contact() {
                       <select
                         value={formData.subject}
                         onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                        className="w-full px-4 py-3 rounded-lg border border-border bg-surface text-primary text-sm focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent transition-all"
+                        className="w-full px-4 py-3 rounded-lg border border-border bg-surface text-primary text-sm focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent transition-all appearance-none"
                       >
                         <option>Construction Equipment</option>
                         <option>Forklifts & Reach Trucks</option>
                         <option>Aerial Work Platforms</option>
                         <option>Service & Maintenance</option>
+                        <option>Spare Parts</option>
                         <option>Other</option>
                       </select>
                     </div>
@@ -177,11 +212,23 @@ export default function Contact() {
                         className="w-full px-4 py-3 rounded-lg border border-border bg-surface text-primary text-sm focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent transition-all resize-none"
                         placeholder="Tell us about your requirements..."
                       />
-                      <p className="text-xs text-muted mt-1">{formData.message.length} / 500</p>
+                      <p className="text-xs text-muted mt-1 text-right">{formData.message.length}/500</p>
                     </div>
 
-                    <button type="submit" className="btn-primary w-full py-4">
-                      Submit Enquiry <Send size={16} />
+                    <button
+                      type="submit"
+                      disabled={status === 'loading'}
+                      className="btn-primary w-full py-3.5 disabled:opacity-60 disabled:cursor-not-allowed disabled:transform-none"
+                    >
+                      {status === 'loading' ? (
+                        <>
+                          <Loader2 size={16} className="animate-spin" /> Sending...
+                        </>
+                      ) : (
+                        <>
+                          Submit Enquiry <Send size={16} />
+                        </>
+                      )}
                     </button>
                   </form>
                 )}
@@ -190,7 +237,7 @@ export default function Contact() {
 
             {/* Map + Info */}
             <AnimatedSection direction="right">
-              <div className="rounded-2xl overflow-hidden border border-border/50 h-80 lg:h-96 mb-8">
+              <div className="rounded-2xl overflow-hidden border border-border/50 h-72 lg:h-96 mb-6">
                 <iframe
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3606.1!2d55.4529249!3d25.419355!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f5700095feacd%3A0xd5d4c8ef24f9568e!2sVikamusk%20Construction%20Equipment%20FZE!5e0!3m2!1sen!2sae!4v1"
                   width="100%"
@@ -203,14 +250,14 @@ export default function Contact() {
                 />
               </div>
 
-              <div className="space-y-4">
+              <div className="space-y-3">
                 <div className="flex items-center gap-4 p-4 bg-white rounded-xl border border-border/50">
                   <div className="w-10 h-10 rounded-lg bg-accent/10 text-accent flex items-center justify-center flex-shrink-0">
                     <Mail size={18} />
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <p className="text-xs text-muted uppercase tracking-wider">Sales Email</p>
-                    <a href="mailto:sales@vikamusk.com" className="text-sm font-semibold text-primary hover:text-accent transition-colors">
+                    <a href="mailto:sales@vikamusk.com" className="text-sm font-semibold text-primary hover:text-accent transition-colors truncate block">
                       sales@vikamusk.com
                     </a>
                   </div>
@@ -220,9 +267,9 @@ export default function Contact() {
                   <div className="w-10 h-10 rounded-lg bg-accent/10 text-accent flex items-center justify-center flex-shrink-0">
                     <Clock size={18} />
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <p className="text-xs text-muted uppercase tracking-wider">Business Hours</p>
-                    <p className="text-sm font-semibold text-primary">Sunday – Thursday: 9AM – 6PM</p>
+                    <p className="text-sm font-semibold text-primary">Sun – Thu: 9AM – 6PM (GST)</p>
                   </div>
                 </div>
               </div>
