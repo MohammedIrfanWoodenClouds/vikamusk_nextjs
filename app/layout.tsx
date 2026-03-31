@@ -1,9 +1,6 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
-import { Header } from '@/components/header'
-import { Footer } from '@/components/footer'
-import { ScrollToTop } from '@/components/scroll-to-top'
 import './globals.css'
 
 const geist = Geist({ subsets: ["latin"], variable: '--font-sans' });
@@ -45,12 +42,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geist.variable} ${geistMono.variable}`}>
       <body className="font-sans antialiased">
-        <Header />
         <main className="min-h-screen">
           {children}
         </main>
-        <Footer />
-        <ScrollToTop />
         <Analytics />
       </body>
     </html>

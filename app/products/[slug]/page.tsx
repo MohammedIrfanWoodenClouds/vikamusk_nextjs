@@ -1,65 +1,28 @@
-import { sanityFetch } from '@/lib/sanity'
-import { GET_PRODUCT_BY_SLUG, GET_ALL_PRODUCTS } from '@/lib/queries'
-import { Product } from '@/types'
-import { notFound } from 'next/navigation'
-import { ProductDetailClient } from '@/components/product-detail-client'
-
-interface ProductPageProps {
-  params: Promise<{
-    slug: string
-  }>
-}
-
-export async function generateStaticParams() {
-  try {
-    const products = await sanityFetch<Product[]>({
-      query: GET_ALL_PRODUCTS,
-    })
-
-    return products.map((product) => ({
-      slug: product.slug.current,
-    }))
-  } catch (error) {
-    console.error('Failed to generate static params:', error)
-    return []
-  }
-}
-
-export async function generateMetadata({ params }: ProductPageProps) {
-  const { slug } = await params
-  try {
-    const product = await sanityFetch<Product>({
-      query: GET_PRODUCT_BY_SLUG,
-      params: { slug },
-    })
-
-    if (!product) return {}
-
-    return {
-      title: `${product.title} | Vikamusk`,
-      description: product.description || `Discover ${product.title} construction equipment`,
-    }
-  } catch (error) {
-    return {}
-  }
-}
-
-export default async function ProductPage({ params }: ProductPageProps) {
-  const { slug } = await params
-
-  try {
-    const product = await sanityFetch<Product>({
-      query: GET_PRODUCT_BY_SLUG,
-      params: { slug },
-    })
-
-    if (!product) {
-      notFound()
-    }
-
-    return <ProductDetailClient product={product} />
-  } catch (error) {
-    console.error('Failed to load product:', error)
-    notFound()
-  }
+export default async function ProductDetail() {
+  return (
+    <div className="min-h-screen bg-background py-20">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h1 className="text-4xl font-bold text-primary mb-8">Product Details</h1>
+        <div className="bg-card p-8 rounded-lg border border-border">
+          <p className="text-foreground/70 mb-6">
+            Individual product details coming soon. Each product will feature:
+          </p>
+          <ul className="space-y-2 text-foreground/70 mb-8">
+            <li>• High-quality product images and gallery</li>
+            <li>• Complete technical specifications</li>
+            <li>• Detailed product description</li>
+            <li>• Pricing and availability information</li>
+            <li>• Related products and accessories</li>
+            <li>• Contact form for inquiries</li>
+          </ul>
+          <a
+            href="/products"
+            className="inline-block px-6 py-2 bg-accent text-primary rounded-lg font-semibold hover:bg-opacity-90 transition"
+          >
+            Back to Products
+          </a>
+        </div>
+      </div>
+    </div>
+  )
 }
