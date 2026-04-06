@@ -4,8 +4,10 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import { ArrowRight, ChevronRight, Loader2, Layers } from 'lucide-react';
+import { ArrowRight, ChevronRight, Loader2, Package } from 'lucide-react';
 import { AnimatedSection, StaggerContainer, StaggerItem } from '@/components/AnimatedSection';
+import ProductCard from '@/components/ProductCard';
+import { Suspense } from 'react';
 
 export default function MainCategoryPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -73,59 +75,70 @@ export default function MainCategoryPage() {
         </div>
       </section>
 
-      {/* Sub Categories Grid */}
+      {/* Products Grid */}
       <section className="section-padding bg-surface">
         <div className="container-custom">
           <AnimatedSection className="text-center mb-12">
-            <span className="text-sm font-bold text-accent uppercase tracking-wider">Browse</span>
-            <h2 className="text-3xl lg:text-4xl font-black text-primary mt-3 mb-4">Sub Categories</h2>
-            <p className="text-muted max-w-xl mx-auto">Select a sub-category to view available equipment.</p>
+            <span className="text-sm font-bold text-accent uppercase tracking-wider">Explore</span>
+            <h2 className="text-3xl lg:text-4xl font-black text-primary mt-3 mb-4">Equipment</h2>
+            <p className="text-muted max-w-xl mx-auto">Browse our full range of {category.name} available for your project.</p>
           </AnimatedSection>
-
-          {subCategories.length === 0 ? (
-            <div className="text-center py-16">
-              <Layers size={48} className="mx-auto mb-4 text-gray-300" />
-              <p className="text-muted text-lg">No sub-categories available yet.</p>
-            </div>
-          ) : (
-            <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {subCategories.map((sc: any) => (
-                <StaggerItem key={sc.id}>
-                  <Link
-                    href={`/categories/${slug}/${sc.slug}`}
-                    className="group block bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-xl hover:border-accent/40 transition-all duration-300 transform hover:-translate-y-1"
-                  >
-                    <div className="relative aspect-[16/10] bg-gray-50 overflow-hidden">
-                      {sc.image && (sc.image.startsWith('data:') || sc.image.startsWith('/')) ? (
-                        sc.image.startsWith('data:') ? (
-                          <img src={sc.image} alt={sc.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-                        ) : (
-                          <Image src={sc.image} alt={sc.name} fill className="object-cover group-hover:scale-110 transition-transform duration-700" />
-                        )
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center">
-                          <Layers size={48} className="text-gray-200" />
-                        </div>
-                      )}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                    </div>
-                    <div className="p-6">
-                      <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-amber-600 transition-colors">{sc.name}</h3>
-                      <p className="text-sm text-gray-500 mb-4 line-clamp-2">{sc.description || 'Explore available equipment in this sub-category.'}</p>
-                      <div className="flex items-center justify-between">
-                        <span className="text-xs font-semibold text-muted">{sc.product_count || 0} products</span>
-                        <span className="text-sm font-bold text-primary flex items-center gap-1 group-hover:text-accent group-hover:gap-2 transition-all">
-                          View <ArrowRight size={14} />
-                        </span>
-                      </div>
-                    </div>
-                  </Link>
-                </StaggerItem>
-              ))}
-            </StaggerContainer>
-          )}
+          
+          <Suspense fallback={<div className="flex justify-center py-20"><Loader2 size={32} className="animate-spin text-accent" /></div>}>
+            <CategoryProductsGrid categorySlug={slug} />
+          </Suspense>
         </div>
       </section>
     </>
   );
+}
+
+function CategoryProductsGrid({ categorySlug }: { categorySlug: string }) {
+  const [products, setProducts] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch(`/api/public/products?main_category=${categorySlug}`)
+      .then(r => r.json())
+      .then(data => {
+        setProducts(data.products || []);
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
+  }, [categorySlug]);
+
+  if (loading) return <div className="flex justify-center py-20"><Loader2 size={32} className="animate-spin text-accent" /></div>;
+
+  if (products.length === 0) {
+    return (
+      <div className="text-center py-16">
+        <Package size={48} className="mx-auto mb-4 text-gray-300" />
+        <p className="text-muted text-lg">No products found in this category.</p>
+      </div>
+    );
+  }
+
+  return (
+    <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {products.map((p: any, i: number) => (
+        <StaggerItem key={p.id}>
+          <ProductCard product={normalizeProduct(p)} index={i} />
+        </StaggerItem>
+      ))}
+    </StaggerContainer>
+  );
+}
+
+function normalizeProduct(p: any): any {
+  return {
+    id: String(p.id),
+    name: p.name,
+    slug: p.slug,
+    category: p.main_category_name || '',
+    categorySlug: p.main_category_slug || '',
+    shortDescription: p.short_description || '',
+    image: p.image || '',
+    featured: !!p.featured,
+    specs: typeof p.specs === 'string' ? (() => { try { return JSON.parse(p.specs); } catch { return {}; } })() : (p.specs || {}),
+  };
 }

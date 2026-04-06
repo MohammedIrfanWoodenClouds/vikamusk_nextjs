@@ -34,10 +34,10 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
     >
       <Link
         href={`/products/${product.slug}`}
-        className="group relative flex flex-col bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm hover:shadow-xl hover:shadow-primary/8 hover:border-accent/20 transition-all duration-300 h-full"
+        className="group relative flex flex-col bg-white rounded-3xl border border-gray-200/90 overflow-hidden shadow-[0_1px_0_rgba(0,31,63,0.04)] ring-1 ring-black/[0.03] hover:shadow-xl hover:shadow-primary/[0.08] hover:border-accent/25 hover:-translate-y-0.5 transition-all duration-300 h-full"
       >
         {/* Image */}
-        <div className="relative aspect-[4/3] bg-gradient-to-br from-gray-50 to-slate-100 overflow-hidden">
+        <div className="relative aspect-[4/3] bg-gradient-to-br from-slate-50 via-white to-slate-100 overflow-hidden">
           {product.image ? (
             isBase64 ? (
               <img
@@ -80,7 +80,7 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
         </div>
 
         {/* Content */}
-        <div className="flex flex-col flex-1 p-5">
+        <div className="flex flex-col flex-1 p-5 sm:p-6">
           {/* Category tag */}
           {product.category && (
             <p className="text-[10px] font-bold text-accent/90 uppercase tracking-widest mb-2">{product.category}</p>
@@ -110,15 +110,12 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
             </div>
           )}
 
-          {/* CTA row */}
-          <div className="flex items-center justify-between pt-3 border-t border-gray-50 mt-auto">
+          {/* CTA row — category already shown above; avoid duplicate / overlap */}
+          <div className="flex items-center justify-start pt-3 border-t border-gray-100 mt-auto">
             <span className="flex items-center gap-1.5 text-xs font-bold text-primary group-hover:text-accent transition-colors">
-              View Details
+              View details
               <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform duration-200" />
             </span>
-            {product.category && (
-              <span className="text-[10px] text-gray-300 font-medium truncate max-w-[100px]">{product.category}</span>
-            )}
           </div>
         </div>
       </Link>

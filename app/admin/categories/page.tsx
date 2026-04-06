@@ -10,10 +10,9 @@ interface MainCategory {
   name: string;
   slug: string;
   description: string;
-  icon: string;
   image: string;
   sort_order: number;
-  sub_count?: number;
+  featured?: number;
   product_count?: number;
 }
 
@@ -33,7 +32,7 @@ export default function AdminCategories() {
   const [error, setError] = useState('');
 
   // Form state
-  const [form, setForm] = useState({ name: '', slug: '', description: '', icon: '', image: '', sort_order: 0 });
+  const [form, setForm] = useState({ name: '', slug: '', description: '', image: '', sort_order: 0, featured: 0 });
 
   useEffect(() => {
     const t = localStorage.getItem('admin_token');
@@ -63,14 +62,14 @@ export default function AdminCategories() {
 
   const openCreateForm = () => {
     setEditing(null);
-    setForm({ name: '', slug: '', description: '', icon: '', image: '', sort_order: categories.length });
+    setForm({ name: '', slug: '', description: '', image: '', sort_order: categories.length, featured: 0 });
     setShowForm(true);
     setError('');
   };
 
   const openEditForm = (cat: MainCategory) => {
     setEditing(cat);
-    setForm({ name: cat.name, slug: cat.slug, description: cat.description, icon: cat.icon, image: cat.image, sort_order: cat.sort_order });
+    setForm({ name: cat.name, slug: cat.slug, description: cat.description, image: cat.image, sort_order: cat.sort_order, featured: cat.featured || 0 });
     setShowForm(true);
     setError('');
   };
@@ -142,19 +141,26 @@ export default function AdminCategories() {
             {categories.map((cat) => (
               <div key={cat.id} className="bg-[#0f1d32] border border-white/5 rounded-2xl p-5 flex items-center gap-5 hover:border-white/10 transition-all group">
                 {/* Icon/Image */}
-                <div className="w-16 h-16 rounded-xl bg-white/5 flex items-center justify-center flex-shrink-0 overflow-hidden">
+                <div className="w-16 h-16 rounded-xl bg-white/5 flex items-center justify-center flex-shrink-0 overflow-hidden relative">
                   {cat.image && (cat.image.startsWith('data:') || cat.image.startsWith('/')) ? (
                     <img src={cat.image} alt={cat.name} className="w-full h-full object-cover" />
                   ) : (
-                    <span className="text-2xl">{cat.icon || '📁'}</span>
+                    <div className="w-full h-full flex items-center justify-center bg-white/5">
+                      <ImageIcon size={24} className="text-white/15" />
+                    </div>
+                  )}
+                  {cat.featured === 1 && (
+                    <div className="absolute top-1 right-1 w-3 h-3 bg-amber-500 rounded-full border-2 border-[#0f1d32]" title="Featured Category"></div>
                   )}
                 </div>
                 {/* Info */}
                 <div className="flex-1 min-w-0">
-                  <h3 className="text-white font-bold text-base">{cat.name}</h3>
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-white font-bold text-base">{cat.name}</h3>
+                    {cat.featured === 1 && <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500/10 text-amber-500 border border-amber-500/20 uppercase tracking-wide">Featured</span>}
+                  </div>
                   <p className="text-white/30 text-sm truncate">{cat.description || 'No description'}</p>
                   <div className="flex gap-4 mt-1.5">
-                    <span className="text-xs text-blue-400/70">{cat.sub_count || 0} sub-categories</span>
                     <span className="text-xs text-emerald-400/70">{cat.product_count || 0} products</span>
                     <span className="text-xs text-white/20">slug: {cat.slug}</span>
                   </div>
@@ -200,9 +206,17 @@ export default function AdminCategories() {
                 <textarea value={form.description} onChange={(e) => setForm(prev => ({ ...prev, description: e.target.value }))} rows={3} className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/20 focus:border-amber-500/50 text-sm resize-none" placeholder="Brief description..." />
               </div>
 
-              <div>
-                <label className="block text-xs font-semibold text-white/50 uppercase tracking-wider mb-2">Icon (emoji)</label>
-                <input value={form.icon} onChange={(e) => setForm(prev => ({ ...prev, icon: e.target.value }))} className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/20 focus:border-amber-500/50 text-sm" placeholder="🏗️" />
+              <div className="flex items-center gap-3 p-4 bg-white/5 border border-white/10 rounded-xl">
+                <input
+                  type="checkbox"
+                  id="featured-toggle"
+                  checked={form.featured === 1}
+                  onChange={(e) => setForm(prev => ({ ...prev, featured: e.target.checked ? 1 : 0 }))}
+                  className="w-5 h-5 rounded border-white/20 text-amber-500 focus:ring-amber-500/50 bg-[#0f1d32]"
+                />
+                <label htmlFor="featured-toggle" className="text-sm font-semibold text-white cursor-pointer select-none">
+                  Featured Category <span className="text-white/40 font-normal text-xs ml-1">(Show on home page)</span>
+                </label>
               </div>
 
               <div>

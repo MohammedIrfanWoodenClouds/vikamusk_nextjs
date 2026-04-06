@@ -14,11 +14,12 @@ export function AnimatedSection({ children, className = '', delay = 0, direction
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-50px' });
 
+  /* Avoid filter:blur on animated nodes — it overflows layout and breaks alignment in sections */
   const variants = {
-    up: { hidden: { opacity: 0, y: 50, filter: 'blur(5px)' }, visible: { opacity: 1, y: 0, filter: 'blur(0px)' } },
-    left: { hidden: { opacity: 0, x: -50, filter: 'blur(5px)' }, visible: { opacity: 1, x: 0, filter: 'blur(0px)' } },
-    right: { hidden: { opacity: 0, x: 50, filter: 'blur(5px)' }, visible: { opacity: 1, x: 0, filter: 'blur(0px)' } },
-    scale: { hidden: { opacity: 0, scale: 0.85, filter: 'blur(5px)' }, visible: { opacity: 1, scale: 1, filter: 'blur(0px)' } },
+    up: { hidden: { opacity: 0, y: 28 }, visible: { opacity: 1, y: 0 } },
+    left: { hidden: { opacity: 0, x: -28 }, visible: { opacity: 1, x: 0 } },
+    right: { hidden: { opacity: 0, x: 28 }, visible: { opacity: 1, x: 0 } },
+    scale: { hidden: { opacity: 0, scale: 0.96 }, visible: { opacity: 1, scale: 1 } },
   };
 
   return (
@@ -59,8 +60,8 @@ export function StaggerItem({ children, className = '' }: { children: React.Reac
   return (
     <motion.div
       variants={{
-        hidden: { opacity: 0, y: 40, filter: 'blur(4px)', scale: 0.95 },
-        visible: { opacity: 1, y: 0, filter: 'blur(0px)', scale: 1, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
+        hidden: { opacity: 0, y: 24, scale: 0.98 },
+        visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
       }}
       className={className}
     >

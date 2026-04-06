@@ -16,6 +16,7 @@ const quickLinks = [
   { name: 'Home', href: '/' },
   { name: 'About Us', href: '/about' },
   { name: 'Products', href: '/products' },
+  { name: 'Industries', href: '/industries' },
   { name: 'Services & Support', href: '/services' },
   { name: 'Downloads', href: '/downloads' },
   { name: 'Careers', href: '/careers' },
@@ -55,55 +56,52 @@ export default function Footer() {
   }, []);
 
   return (
-    <footer className="bg-[#05101f] text-white">
-      {/* Top accent line */}
-      <div className="h-px bg-gradient-to-r from-transparent via-accent/50 to-transparent" />
+    <footer className="relative z-20 bg-[#05101f] text-white border-t border-white/[0.06] mt-0">
+      <div className="h-px bg-gradient-to-r from-transparent via-accent/45 to-transparent" />
 
-      {/* Main content */}
-      <div className="container-custom py-16 lg:py-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-14">
+      <div className="container-custom pt-20 pb-12 lg:pt-24 lg:pb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-x-16 lg:gap-y-14">
 
           {/* Brand column */}
           <div className="lg:col-span-1">
-            <Link href="/" className="inline-block mb-6">
+            <Link href="/" className="inline-block mb-8">
               <div className="relative" style={{ width: '160px', height: '42px' }}>
                 <Image
-                  src="/images/logo.png"
+                  src="/images/logo-white.png"
                   alt="Vikamusk International"
                   fill
                   className="object-contain object-left"
-                  style={{ filter: 'brightness(0) invert(1)' }}
                   sizes="160px"
                 />
               </div>
             </Link>
-            <p className="text-white/45 text-sm leading-relaxed mb-6 max-w-xs">
+            <p className="text-white/50 text-sm leading-relaxed mb-8 max-w-sm">
               Founded in 2015. Trusted supplier of advanced construction and material handling solutions across UAE, India, and beyond.
             </p>
-            <div className="flex gap-2">
+            <div className="flex gap-3">
               <a
                 href="mailto:sales@vikamusk.com"
                 title="Email sales"
-                className="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center hover:bg-accent hover:border-accent hover:text-[#05101f] transition-all text-white/40"
+                className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/10 flex items-center justify-center hover:bg-accent hover:border-accent hover:text-[#05101f] transition-all text-white/45"
               >
-                <Mail size={15} />
+                <Mail size={16} />
               </a>
               <a
                 href="https://www.google.com/maps/place/Vikamusk+Construction+Equipment+FZE/"
                 target="_blank"
                 rel="noopener noreferrer"
                 title="Find us on map"
-                className="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center hover:bg-accent hover:border-accent hover:text-[#05101f] transition-all text-white/40"
+                className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/10 flex items-center justify-center hover:bg-accent hover:border-accent hover:text-[#05101f] transition-all text-white/45"
               >
-                <MapPin size={15} />
+                <MapPin size={16} />
               </a>
             </div>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-[10px] font-bold uppercase tracking-widest text-accent mb-5">Quick Links</h4>
-            <ul className="space-y-2.5">
+            <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] text-accent mb-6">Quick Links</h4>
+            <ul className="space-y-3">
               {quickLinks.map((link) => (
                 <FooterLink key={link.name} href={link.href}>{link.name}</FooterLink>
               ))}
@@ -112,8 +110,8 @@ export default function Footer() {
 
           {/* Dynamic Product Categories */}
           <div>
-            <h4 className="text-[10px] font-bold uppercase tracking-widest text-accent mb-5">Product Categories</h4>
-            <ul className="space-y-2.5">
+            <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] text-accent mb-6">Product Categories</h4>
+            <ul className="space-y-3">
               <FooterLink href="/products">All Products</FooterLink>
               {categories.map((cat) => (
                 <li key={cat.id}>
@@ -139,8 +137,8 @@ export default function Footer() {
 
           {/* Contact Info */}
           <div>
-            <h4 className="text-[10px] font-bold uppercase tracking-widest text-accent mb-5">Contact Info</h4>
-            <div className="space-y-4">
+            <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] text-accent mb-6">Contact Info</h4>
+            <div className="space-y-5">
               <div>
                 <p className="text-[9px] font-semibold uppercase tracking-widest text-white/25 mb-1">UAE Office (HQ)</p>
                 <p className="text-white/55 text-sm leading-relaxed">PO Box 932, Ajman Free Zone, Ajman, UAE</p>
@@ -165,24 +163,22 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* CTA strip */}
-        <div className="mt-14 pt-10 border-t border-white/5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div>
-            <p className="text-white font-bold text-base">Ready to power your next project?</p>
-            <p className="text-white/40 text-sm">Get expert guidance from our equipment specialists.</p>
+        <div className="mt-16 lg:mt-20 pt-12 border-t border-white/[0.08] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 sm:gap-8">
+          <div className="space-y-1.5">
+            <p className="text-white font-bold text-lg tracking-tight">Ready to power your next project?</p>
+            <p className="text-white/45 text-sm max-w-md">Get expert guidance from our equipment specialists.</p>
           </div>
           <Link
             href="/contact"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-accent hover:bg-amber-500 text-[#05101f] font-bold text-sm transition-all shadow-lg shadow-amber-500/20 whitespace-nowrap"
+            className="inline-flex items-center gap-2.5 px-8 py-3.5 rounded-xl bg-accent hover:bg-amber-500 text-[#05101f] font-bold text-sm transition-all shadow-lg shadow-amber-500/25 hover:shadow-amber-500/35 whitespace-nowrap"
           >
-            Get a Quote <ArrowRight size={16} />
+            Get a quote <ArrowRight size={17} />
           </Link>
         </div>
       </div>
 
-      {/* Bottom bar */}
-      <div className="border-t border-white/5">
-        <div className="container-custom py-5 flex flex-col sm:flex-row justify-between items-center gap-3">
+      <div className="border-t border-white/[0.06] bg-black/20">
+        <div className="container-custom py-6 lg:py-7 flex flex-col sm:flex-row justify-between items-center gap-4">
           <p className="text-white/25 text-xs">
             © {new Date().getFullYear()} Vikamusk International. All rights reserved.
           </p>

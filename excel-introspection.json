@@ -1,0 +1,303 @@
+{
+  "sheetNames": [
+    "ELECTRIC SCISSOR LIFT",
+    "DIESEL SCISSOR LIFT",
+    "TELESCOPIC FORKLIFT",
+    "TELESCOPIC BOOMLIFT - DIESEL",
+    "TELESCOPIC BOOMLIFT - ELECTRIC",
+    "ARTICULATED BOOMLIFT - DIESEL",
+    "ARTICULATED BOOMLIFT - ELECTRIC",
+    "DIESEL MINI FORKLIFT",
+    "ELECTRIC REACH TRUCKS",
+    "ELECTRIC FORKLIFT",
+    "VNA FORKLIFT",
+    "DIESEL HEAVY FORKLIFT"
+  ],
+  "samples": {
+    "ELECTRIC SCISSOR LIFT": {
+      "rowCount": 28,
+      "firstRows": [
+        {
+          "ELECTRIC SCISSOR LIFT": "1. The pedal extension platform can be quickly rolled out to the operating point, ensuring efficient setup and operation. This feature allows for swift transitions between tasks without the need for manual adjustments.The collapsible fence not only reduces the size of the whole machine but also enhances portability. \r\n2. This design consideration makes transportation and storage much more convenient, fitting easily into tight spaces.\r\n3, The rotary chassis is a smart design choice for easy maintenance. It allows for better access to the machine's components, reducing downtime and ensuring that routine checks and repairs can be carried out with minimal hassle.\r\n4. The machine's compact design makes it easy to work in small spaces, offering flexibility and adaptability in various environments. Whether it's indoors or in confined outdoor areas, this feature ensures that the machine can be operated with ease.\r\n5. With a 25% ability to climb slopes smoothly, the machine demonstrates excellent traction and stability. This capability is crucial for navigating uneven terrains, ensuring that work can continue without interruptions due to difficult slopes.",
+          "__EMPTY": null,
+          "__EMPTY_1": null,
+          "__EMPTY_2": null,
+          "__EMPTY_3": null,
+          "__EMPTY_4": null,
+          "__EMPTY_5": null
+        },
+        {
+          "ELECTRIC SCISSOR LIFT": "Model Number",
+          "__EMPTY": "LTWP0608",
+          "__EMPTY_1": "LTWP0810",
+          "__EMPTY_2": "LTWP1012",
+          "__EMPTY_3": "LTWP1214",
+          "__EMPTY_4": "LTWP1416",
+          "__EMPTY_5": null
+        },
+        {
+          "ELECTRIC SCISSOR LIFT": "Dimensions",
+          "__EMPTY": null,
+          "__EMPTY_1": null,
+          "__EMPTY_2": null,
+          "__EMPTY_3": null,
+          "__EMPTY_4": null,
+          "__EMPTY_5": null
+        },
+        {
+          "ELECTRIC SCISSOR LIFT": "Maximum Working Height (m)",
+          "__EMPTY": 7.8,
+          "__EMPTY_1": 9.8,
+          "__EMPTY_2": 11.8,
+          "__EMPTY_3": 13.8,
+          "__EMPTY_4": 15.8,
+          "__EMPTY_5": null
+        },
+        {
+          "ELECTRIC SCISSOR LIFT": "Maximum Platform Height (m)",
+          "__EMPTY": 5.8,
+          "__EMPTY_1": 7.8,
+          "__EMPTY_2": 9.8,
+          "__EMPTY_3": 11.8,
+          "__EMPTY_4": 13.8,
+          "__EMPTY_5": null
+        },
+        {
+          "ELECTRIC SCISSOR LIFT": "Safe Working Load (kg)",
+          "__EMPTY": 550,
+          "__EMPTY_1": 450,
+          "__EMPTY_2": 320,
+          "__EMPTY_3": 320,
+          "__EMPTY_4": 227,
+          "__EMPTY_5": null
+        },
+        {
+          "ELECTRIC SCISSOR LIFT": "Extension Platform Safe Working Load (kg)",
+          "__EMPTY": 113,
+          "__EMPTY_1": 113,
+          "__EMPTY_2": 113,
+          "__EMPTY_3": 113,
+          "__EMPTY_4": 113,
+          "__EMPTY_5": null
+        },
+        {
+          "ELECTRIC SCISSOR LIFT": "Working Platform Size (L x W x H) (m)",
+          "__EMPTY": "2.26 x 1.13 x 1.1",
+          "__EMPTY_1": "2.26 x 1.13 x 1.1",
+          "__EMPTY_2": "2.29 x 1.13 x 1.1",
+          "__EMPTY_3": "2.29 x 1.13 x 1.1",
+          "__EMPTY_4": "2.64 x 1.13 x 1.1",
+          "__EMPTY_5": null
+        },
+        {
+          "ELECTRIC SCISSOR LIFT": "Overall Dimensions (L x W x H, Guardrail Folded) (mm)",
+          "__EMPTY": "2480 x 1190 x 2190",
+          "__EMPTY_1": "2480 x 1187 x 2220",
+          "__EMPTY_2": "2495 x 1187 x 2450",
+          "__EMPTY_3": "2480 x 1190 x 2585",
+          "__EMPTY_4": "2240 x 1400 x 2595",
+          "__EMPTY_5": null
+        },
+        {
+          "ELECTRIC SCISSOR LIFT": "Platform Extension Size (m)",
+          "__EMPTY": 0.9,
+          "__EMPTY_1": 0.9,
+          "__EMPTY_2": 0.9,
+          "__EMPTY_3": 0.9,
+          "__EMPTY_4": 0.9,
+          "__EMPTY_5": null
+        }
+      ]
+    },
+    "DIESEL SCISSOR LIFT": {
+      "rowCount": 31,
+      "firstRows": [
+        {
+          "DIESEL SCISSOR LIFT": "1. Designed with safety as the top priority, equipped with comprehensive safety features such as overload protection and emergency stop buttons, ensuring the safety of operators when working on rough terrain.\r\n2. The compact structure of the lift ensures excellent maneuverability on challenging terrain, and its durable construction can withstand harsh working conditions, reducing maintenance needs and extending service life.\r\n3. The equipment provides ample vertical clearance and a wide range of horizontal reach, making it versatile. Whether navigating rough landscapes or accessing elevated spaces, the platform ensures the reliability and stability of each ascent.\r\n4. This lift enhances the off-road experience with its flexible, compact, and safe lifting solutions. It is meticulously designed to conquer various environments, improving operational efficiency and safety whether on uneven ground or in tight spaces.",
+          "__EMPTY": null,
+          "__EMPTY_1": null,
+          "__EMPTY_2": null,
+          "__EMPTY_3": null,
+          "__EMPTY_4": null,
+          "__EMPTY_5": null
+        },
+        {
+          "DIESEL SCISSOR LIFT": "Model Number",
+          "__EMPTY": "LTWP1315RT",
+          "__EMPTY_1": "LTWP1618RT",
+          "__EMPTY_2": null,
+          "__EMPTY_3": null,
+          "__EMPTY_4": null,
+          "__EMPTY_5": null
+        },
+        {
+          "DIESEL SCISSOR LIFT": "Dimensions",
+          "__EMPTY": null,
+          "__EMPTY_1": null,
+          "__EMPTY_2": null,
+          "__EMPTY_3": null,
+          "__EMPTY_4": null,
+          "__EMPTY_5": null
+        },
+        {
+          "DIESEL SCISSOR LIFT": "Maximum Working Height (m)",
+          "__EMPTY": 15,
+          "__EMPTY_1": 18,
+          "__EMPTY_2": null,
+          "__EMPTY_3": null,
+          "__EMPTY_4": null,
+          "__EMPTY_5": null
+        },
+        {
+          "DIESEL SCISSOR LIFT": "Maximum Platform Height (m)",
+          "__EMPTY": 13,
+          "__EMPTY_1": 16,
+          "__EMPTY_2": null,
+          "__EMPTY_3": null,
+          "__EMPTY_4": null,
+          "__EMPTY_5": null
+        },
+        {
+          "DIESEL SCISSOR LIFT": "Platform Size (m)",
+          "__EMPTY": "4.24m x 1.83m",
+          "__EMPTY_1": "4.24m x 1.83m",
+          "__EMPTY_2": null,
+          "__EMPTY_3": null,
+          "__EMPTY_4": null,
+          "__EMPTY_5": null
+        },
+        {
+          "DIESEL SCISSOR LIFT": "Platform Extension Size (m)",
+          "__EMPTY": 1.3,
+          "__EMPTY_1": 1.3,
+          "__EMPTY_2": null,
+          "__EMPTY_3": null,
+          "__EMPTY_4": null,
+          "__EMPTY_5": null
+        },
+        {
+          "DIESEL SCISSOR LIFT": "Retracted Length (m)",
+          "__EMPTY": 4.88,
+          "__EMPTY_1": 4.88,
+          "__EMPTY_2": null,
+          "__EMPTY_3": null,
+          "__EMPTY_4": null,
+          "__EMPTY_5": null
+        },
+        {
+          "DIESEL SCISSOR LIFT": "Retracted Width (m)",
+          "__EMPTY": 2.29,
+          "__EMPTY_1": 2.29,
+          "__EMPTY_2": null,
+          "__EMPTY_3": null,
+          "__EMPTY_4": null,
+          "__EMPTY_5": null
+        },
+        {
+          "DIESEL SCISSOR LIFT": "Retracted Height (m)",
+          "__EMPTY": 3,
+          "__EMPTY_1": 3.19,
+          "__EMPTY_2": null,
+          "__EMPTY_3": null,
+          "__EMPTY_4": null,
+          "__EMPTY_5": null
+        }
+      ]
+    },
+    "TELESCOPIC FORKLIFT": {
+      "rowCount": 63,
+      "firstRows": [
+        {
+          "TELESCOPIC FORKLIFT": "1. Strong engine power, energy saving and environmental protection, meeting the requirements of efficient operation.\r\n2. Adopt full hydraulic coaxial flow amplifying steering system, large steering angle, light and flexible steering.\r\n3. The integral frame can provide good rigidity and strength and ensure the high reliability of the chassis.\r\n4. Adopt quick-change racks, which can be replaced quickly.\r\n5. Using pilot valve to control the distribution valve and working device oil circuit, to achieve precise control of the lifting, telescopic and tilting of the working arm, and the operation is light and flexible.\r\n6. The cab has low noise and good sealing, which is convenient for the driver to observe around. It is equipped with front and rear dual cameras and reversing radar, making the operation safer.",
+          "__EMPTY": null,
+          "__EMPTY_1": null,
+          "__EMPTY_2": null,
+          "__EMPTY_3": null,
+          "__EMPTY_4": null,
+          "__EMPTY_5": null
+        },
+        {
+          "TELESCOPIC FORKLIFT": "Model",
+          "__EMPTY": "UNIT",
+          "__EMPTY_1": "FT40",
+          "__EMPTY_2": "FT50",
+          "__EMPTY_3": null,
+          "__EMPTY_4": null,
+          "__EMPTY_5": null
+        },
+        {
+          "TELESCOPIC FORKLIFT": "Rated Load",
+          "__EMPTY": "kg",
+          "__EMPTY_1": 4000,
+          "__EMPTY_2": 5000,
+          "__EMPTY_3": null,
+          "__EMPTY_4": null,
+          "__EMPTY_5": null
+        },
+        {
+          "TELESCOPIC FORKLIFT": "Maximum Lifting Height",
+          "__EMPTY": "m",
+          "__EMPTY_1": "13 & 18",
+          "__EMPTY_2": "13 & 18",
+          "__EMPTY_3": null,
+          "__EMPTY_4": null,
+          "__EMPTY_5": null
+        },
+        {
+          "TELESCOPIC FORKLIFT": "Maximum Front Reach",
+          "__EMPTY": "m",
+          "__EMPTY_1": 3.6,
+          "__EMPTY_2": 4.5,
+          "__EMPTY_3": null,
+          "__EMPTY_4": null,
+          "__EMPTY_5": null
+        },
+        {
+          "TELESCOPIC FORKLIFT": "Overall Length (To Fork Carrier)",
+          "__EMPTY": "m",
+          "__EMPTY_1": 5.4,
+          "__EMPTY_2": 6.4,
+          "__EMPTY_3": null,
+          "__EMPTY_4": null,
+          "__EMPTY_5": null
+        },
+        {
+          "TELESCOPIC FORKLIFT": "Overall Width",
+          "__EMPTY": "m",
+          "__EMPTY_1": 2.26,
+          "__EMPTY_2": 2.4,
+          "__EMPTY_3": null,
+          "__EMPTY_4": null,
+          "__EMPTY_5": null
+        },
+        {
+          "TELESCOPIC FORKLIFT": "Overall Height",
+          "__EMPTY": "m",
+          "__EMPTY_1": 2.58,
+          "__EMPTY_2": 2.55,
+          "__EMPTY_3": null,
+          "__EMPTY_4": null,
+          "__EMPTY_5": null
+        },
+        {
+          "TELESCOPIC FORKLIFT": "Wheelbase",
+          "__EMPTY": "m",
+          "__EMPTY_1": 3.35,
+          "__EMPTY_2": 3.15,
+          "__EMPTY_3": null,
+          "__EMPTY_4": null,
+          "__EMPTY_5": null
+        },
+        {
+          "TELESCOPIC FORKLIFT": "Ground Clearance",
+          "__EMPTY": "m",
+          "__EMPTY_1": 0.36,
+          "__EMPTY_2": 0.38,
+          "__EMPTY_3": null,
+          "__EMPTY_4": null,
+          "__EMPTY_5": null
+        }
+      ]
+    }
+  }
+}

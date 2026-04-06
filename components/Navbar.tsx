@@ -16,22 +16,12 @@ interface NavProduct {
   slug: string;
 }
 
-interface NavSubCategory {
-  id: string;
-  name: string;
-  slug: string;
-  image: string;
-  product_count: number;
-  products: NavProduct[];
-}
-
 interface NavMainCategory {
   id: string;
   name: string;
   slug: string;
-  icon: string;
   image: string;
-  subCategories: NavSubCategory[];
+  products: NavProduct[];
 }
 
 /* ------------------------------------------------------------------ */
@@ -39,6 +29,7 @@ interface NavMainCategory {
 /* ------------------------------------------------------------------ */
 const staticLinks = [
   { name: 'Home', href: '/' },
+  { name: 'Industries', href: '/industries' },
   { name: 'Services', href: '/services' },
   { name: 'About', href: '/about' },
   { name: 'Careers', href: '/careers' },
@@ -183,10 +174,10 @@ export default function Navbar() {
           {/* Logo */}
           <Link href="/" className="flex-shrink-0 relative h-[60px] w-[250px] lg:h-[80px] lg:w-[320px]">
             <Image
-              src="/images/logo.png"
+              src={isTransparent ? "/images/logo-white.png" : "/images/logo-black.png"}
               alt="Vikamusk International"
               fill
-              className={`object-contain object-left scale-[1.2] transition-all duration-300 ${isTransparent ? 'brightness-0 invert' : ''}`}
+              className="object-contain object-left scale-[1.2] transition-all duration-300"
               priority
               sizes="(max-width: 1024px) 300px, 350px"
             />
@@ -288,7 +279,6 @@ export default function Navbar() {
                                 }`}
                               >
                                 <div className="flex items-center gap-2.5 min-w-0">
-                                  <span className="text-lg flex-shrink-0">{mc.icon || '📁'}</span>
                                   <span className="text-sm font-semibold truncate">{mc.name}</span>
                                 </div>
                                 <ChevronRight
@@ -312,7 +302,7 @@ export default function Navbar() {
                           </div>
                         </div>
 
-                        {/* ── Right: Sub Categories Panel ── */}
+                        {/* ── Right: Products Panel ── */}
                         <div className="flex-1 py-3 px-2 min-h-[300px] max-h-[420px] overflow-y-auto">
                           <AnimatePresence mode="wait">
                             {activeCategory ? (
@@ -336,31 +326,25 @@ export default function Navbar() {
                                   </Link>
                                 </div>
 
-                                {/* Sub categories */}
-                                {activeCategory.subCategories.length > 0 ? (
-                                  <div className="grid grid-cols-2 gap-1">
-                                    {activeCategory.subCategories.map((sc) => (
+                                {/* Product items in category */}
+                                {activeCategory.products && activeCategory.products.length > 0 ? (
+                                  <div className="grid grid-cols-2 gap-1 border-gray-100 flex-1">
+                                    {activeCategory.products.map((p) => (
                                       <Link
-                                        key={sc.id}
-                                        href={`/categories/${activeCategory.slug}/${sc.slug}`}
+                                        key={p.id}
+                                        href={`/products/${p.slug}`}
                                         className="group px-4 py-3 rounded-xl hover:bg-gray-50 transition-all duration-200"
                                       >
                                         <div className="flex items-center gap-3">
-                                          {sc.image && (sc.image.startsWith('data:') || sc.image.startsWith('/')) ? (
-                                            <div className="w-10 h-10 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0 ring-1 ring-gray-200/50">
-                                              <img src={sc.image} alt="" className="w-full h-full object-cover" />
-                                            </div>
-                                          ) : (
-                                            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-amber-50 to-amber-100 flex-shrink-0 flex items-center justify-center ring-1 ring-amber-200/50">
-                                              <Package size={16} className="text-amber-500" />
-                                            </div>
-                                          )}
+                                          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-amber-50 to-amber-100 flex-shrink-0 flex items-center justify-center ring-1 ring-amber-200/50">
+                                            <Package size={16} className="text-amber-500" />
+                                          </div>
                                           <div className="min-w-0">
                                             <p className="text-sm font-semibold text-gray-700 group-hover:text-accent transition-colors truncate">
-                                              {sc.name}
+                                              {p.name}
                                             </p>
-                                            <p className="text-[11px] text-gray-400 mt-0.5">
-                                              {sc.product_count} {sc.product_count === 1 ? 'product' : 'products'}
+                                            <p className="text-[10px] text-gray-400 mt-0.5 truncate">
+                                              {activeCategory.name}
                                             </p>
                                           </div>
                                         </div>
@@ -370,36 +354,13 @@ export default function Navbar() {
                                 ) : (
                                   <div className="flex flex-col items-center justify-center py-12 text-gray-300">
                                     <Package size={28} className="mb-2" />
-                                    <p className="text-sm">No sub-categories yet</p>
+                                    <p className="text-sm">No products in this category</p>
                                     <Link
                                       href={`/categories/${activeCategory.slug}`}
-                                      className="mt-2 text-xs font-semibold text-accent hover:text-amber-600 transition-colors"
+                                      className="mt-1.5 text-xs font-semibold text-accent hover:text-amber-600 transition-colors"
                                     >
-                                      Browse {activeCategory.name} →
+                                      Go to category →
                                     </Link>
-                                  </div>
-                                )}
-
-                                {/* Featured products preview (show first 4 products from subcategories) */}
-                                {activeCategory.subCategories.some((sc) => sc.products.length > 0) && (
-                                  <div className="mt-3 pt-3 px-4 border-t border-gray-100">
-                                    <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">
-                                      Popular Products
-                                    </p>
-                                    <div className="flex flex-wrap gap-1.5">
-                                      {activeCategory.subCategories
-                                        .flatMap((sc) => sc.products)
-                                        .slice(0, 4)
-                                        .map((prod) => (
-                                          <Link
-                                            key={prod.id}
-                                            href={`/products/${prod.slug}`}
-                                            className="text-xs px-2.5 py-1.5 rounded-full bg-gray-50 text-gray-600 hover:bg-accent/10 hover:text-accent transition-all font-medium"
-                                          >
-                                            {prod.name}
-                                          </Link>
-                                        ))}
-                                    </div>
                                   </div>
                                 )}
                               </motion.div>
@@ -481,7 +442,7 @@ export default function Navbar() {
                 {/* Header */}
                 <div className="flex items-center justify-between mb-8 pb-4 border-b border-gray-100">
                   <div className="relative" style={{ width: '140px', height: '36px' }}>
-                    <Image src="/images/logo.png" alt="Vikamusk" fill className="object-contain object-left" sizes="140px" />
+                    <Image src="/images/logo-black.png" alt="Vikamusk" fill className="object-contain object-left" sizes="140px" />
                   </div>
                   <button onClick={closeMobile} className="p-1.5 hover:bg-gray-100 rounded-md transition-colors" aria-label="Close menu">
                     <X size={20} className="text-gray-500" />
@@ -555,10 +516,7 @@ export default function Navbar() {
                                     onClick={() => setMobileSubOpen(mobileSubOpen === mc.slug ? null : mc.slug)}
                                     className="w-full flex items-center justify-between py-2 text-sm text-gray-600 hover:text-accent transition-colors"
                                   >
-                                    <span className="flex items-center gap-1.5 min-w-0">
-                                      <span className="flex-shrink-0">{mc.icon || '📁'}</span>
-                                      <span className="truncate">{mc.name}</span>
-                                    </span>
+                                    <span className="truncate">{mc.name}</span>
                                     <ChevronDown
                                       size={12}
                                       className={`flex-shrink-0 ml-1 transition-transform duration-300 ${
@@ -585,21 +543,18 @@ export default function Navbar() {
                                             View All {mc.name}
                                           </Link>
 
-                                          {mc.subCategories.length === 0 && (
-                                            <p className="py-1.5 text-xs text-gray-400 italic">No sub-categories</p>
+                                          {mc.products && mc.products.length === 0 && (
+                                            <p className="py-1.5 text-xs text-gray-400 italic">No products yet</p>
                                           )}
 
-                                          {mc.subCategories.map((sc) => (
+                                          {mc.products && mc.products.map((p) => (
                                             <Link
-                                              key={sc.id}
-                                              href={`/categories/${mc.slug}/${sc.slug}`}
+                                              key={p.id}
+                                              href={`/products/${p.slug}`}
                                               onClick={closeMobile}
                                               className="block py-1.5 text-xs text-gray-500 hover:text-accent transition-colors"
                                             >
-                                              {sc.name}
-                                              {sc.product_count > 0 && (
-                                                <span className="ml-1 text-gray-300">({sc.product_count})</span>
-                                              )}
+                                              {p.name}
                                             </Link>
                                           ))}
                                         </div>

@@ -7,8 +7,8 @@ export async function GET(req: NextRequest) {
   if (!auth.authenticated) return auth.error!;
 
   try {
-    const subCategoryId = req.nextUrl.searchParams.get('sub_category_id');
-    const products = await getAllProducts(subCategoryId || undefined);
+    const mainCategoryId = req.nextUrl.searchParams.get('main_category_id');
+    const products = await getAllProducts(mainCategoryId || undefined);
     return NextResponse.json({ products });
   } catch (e: any) {
     return NextResponse.json({ error: e.message }, { status: 500 });
@@ -21,8 +21,8 @@ export async function POST(req: NextRequest) {
 
   try {
     const data = await req.json();
-    if (!data.name || !data.slug || !data.sub_category_id) {
-      return NextResponse.json({ error: 'Name, slug, and sub_category_id are required' }, { status: 400 });
+    if (!data.name || !data.slug || !data.main_category_id) {
+      return NextResponse.json({ error: 'Name, slug, and main_category_id are required' }, { status: 400 });
     }
     // Ensure features and specs are JSON strings
     if (typeof data.features === 'object') data.features = JSON.stringify(data.features);

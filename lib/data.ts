@@ -1,6 +1,6 @@
 // ============================================
 // Vikamusk - Company Data & Seed Templates
-// All products & categories are managed via Admin → MongoDB
+// All products & categories are managed via Admin → Supabase
 // ============================================
 
 /* ---------- Shared types ---------- */
