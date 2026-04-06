@@ -181,12 +181,12 @@ export default function Navbar() {
 
         <div className="container-custom flex items-center justify-between h-[88px] lg:h-[104px]">
           {/* Logo */}
-          <Link href="/" className="flex-shrink-0 relative h-[50px] w-[220px] lg:h-[64px] lg:w-[280px]">
+          <Link href="/" className="flex-shrink-0 relative h-[60px] w-[250px] lg:h-[80px] lg:w-[320px]">
             <Image
               src="/images/logo.png"
               alt="Vikamusk International"
               fill
-              className={`object-contain object-left scale-[1.15] transition-all duration-300 ${isTransparent ? 'brightness-0 invert' : ''}`}
+              className={`object-contain object-left scale-[1.2] transition-all duration-300 ${isTransparent ? 'brightness-0 invert' : ''}`}
               priority
               sizes="(max-width: 1024px) 300px, 350px"
             />
@@ -442,7 +442,8 @@ export default function Navbar() {
           <div className="flex items-center gap-3">
             <Link
               href="/contact"
-              className="hidden md:inline-flex items-center justify-center gap-2 bg-accent hover:bg-amber-500 text-[#001f3f] font-bold text-sm px-6 py-2.5 rounded-lg transition-all whitespace-nowrap shadow-lg shadow-amber-500/20 hover:shadow-amber-500/35 hover:-translate-y-px"
+              className="hidden md:inline-flex items-center justify-center gap-2 bg-accent hover:bg-amber-500 text-[#001f3f] font-bold text-[15px] rounded-full flex-shrink-0 transition-all whitespace-nowrap shadow-lg shadow-amber-500/20 hover:shadow-amber-500/35 hover:-translate-y-px"
+              style={{ padding: '12px 28px', marginLeft: '16px' }}
             >
               Get a Quote
             </Link>
@@ -479,8 +480,8 @@ export default function Navbar() {
               <div className="p-5 pb-8">
                 {/* Header */}
                 <div className="flex items-center justify-between mb-8 pb-4 border-b border-gray-100">
-                  <div className="relative" style={{ width: '110px', height: '28px' }}>
-                    <Image src="/images/logo.png" alt="Vikamusk" fill className="object-contain object-left" sizes="110px" />
+                  <div className="relative" style={{ width: '140px', height: '36px' }}>
+                    <Image src="/images/logo.png" alt="Vikamusk" fill className="object-contain object-left" sizes="140px" />
                   </div>
                   <button onClick={closeMobile} className="p-1.5 hover:bg-gray-100 rounded-md transition-colors" aria-label="Close menu">
                     <X size={20} className="text-gray-500" />
@@ -647,7 +648,8 @@ export default function Navbar() {
                   <Link
                     href="/contact"
                     onClick={closeMobile}
-                    className="block w-full text-center bg-accent hover:bg-amber-500 text-[#001f3f] font-bold py-3 rounded-lg transition-colors shadow-lg shadow-amber-500/20"
+                    className="block w-full text-center bg-accent hover:bg-amber-500 text-[#001f3f] font-bold text-[15px] rounded-xl transition-colors shadow-lg shadow-amber-500/20"
+                    style={{ padding: '14px 0' }}
                   >
                     Get a Quote
                   </Link>
