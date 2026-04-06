@@ -1,9 +1,11 @@
 import { MongoClient, ObjectId } from 'mongodb';
 import { categories as initialCategories, products as initialProducts, stats } from './data'; // Need mock data for initial seeding
 
-const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017/vikamusk_db';
+if (!process.env.MONGODB_URI) {
+  throw new Error('Please define the MONGODB_URI environment variable inside .env (must be an online cluster for production)');
+}
+const uri = process.env.MONGODB_URI;
 const options = {};
-
 let client: MongoClient;
 let clientPromise: Promise<MongoClient>;
 

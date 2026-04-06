@@ -43,7 +43,13 @@ export default function Footer() {
     fetch('/api/public/categories')
       .then(r => r.json())
       .then(data => {
-        if (data.categories) setCategories(data.categories);
+        if (data.categories) {
+          // Deduplicate by slug in case of DB inconsistency
+          const unique = Array.from(
+            new Map(data.categories.map((c: MainCategory) => [c.slug, c])).values()
+          ) as MainCategory[];
+          setCategories(unique);
+        }
       })
       .catch(() => {});
   }, []);
@@ -78,7 +84,7 @@ export default function Footer() {
               <a
                 href="mailto:sales@vikamusk.com"
                 title="Email sales"
-                className="w-9 h-9 rounded-lg bg-white/5 border border-white/8 flex items-center justify-center hover:bg-accent hover:border-accent hover:text-[#05101f] transition-all text-white/40"
+                className="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center hover:bg-accent hover:border-accent hover:text-[#05101f] transition-all text-white/40"
               >
                 <Mail size={15} />
               </a>
@@ -87,7 +93,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 title="Find us on map"
-                className="w-9 h-9 rounded-lg bg-white/5 border border-white/8 flex items-center justify-center hover:bg-accent hover:border-accent hover:text-[#05101f] transition-all text-white/40"
+                className="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center hover:bg-accent hover:border-accent hover:text-[#05101f] transition-all text-white/40"
               >
                 <MapPin size={15} />
               </a>

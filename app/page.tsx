@@ -114,7 +114,7 @@ export default function Home() {
               initial={{ opacity: 0, y: -16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/8 backdrop-blur-sm border border-white/12 text-white/75 text-xs sm:text-sm mb-8"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/15 text-white/75 text-xs sm:text-sm mb-8"
             >
               <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
               Established 2015 &nbsp;·&nbsp; UAE, India & Global
@@ -185,7 +185,7 @@ export default function Home() {
                   {i > 0 && (
                     <span className="hidden lg:block absolute left-0 top-1/2 -translate-y-1/2 w-px h-10 bg-gray-100" />
                   )}
-                  <div className="w-10 h-10 rounded-xl bg-accent/8 text-accent flex items-center justify-center mb-3 group-hover:bg-accent group-hover:text-primary transition-all duration-300">
+                  <div className="w-10 h-10 rounded-xl bg-accent/10 text-accent flex items-center justify-center mb-3 group-hover:bg-accent group-hover:text-primary transition-all duration-300">
                     <Icon size={18} />
                   </div>
                   <div className="text-3xl lg:text-4xl font-black text-primary tabular-nums">
@@ -204,14 +204,14 @@ export default function Home() {
         <div className="container-custom">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-20 items-center">
             <AnimatedSection direction="left">
-              <div className="relative">
-                <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl shadow-primary/10">
-                  <Image src="/images/company/vikamusk-reception.png" alt="Vikamusk Office" fill className="object-cover" />
-                </div>
-                {/* Floating badge */}
-                <div className="absolute -bottom-5 -right-5 bg-primary text-white px-5 py-3.5 rounded-xl shadow-xl hidden sm:block">
-                  <p className="text-2xl font-black leading-none">10+</p>
-                  <p className="text-[10px] text-white/60 uppercase tracking-wider mt-0.5">Years of Excellence</p>
+              <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl shadow-primary/10 relative">
+                <Image src="/images/company/vikamusk-reception.png" alt="Vikamusk Office" fill className="object-cover" />
+                {/* Gradient overlay for badge legibility */}
+                <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-primary/70 to-transparent" />
+                {/* Badge inside image — no overflow issues */}
+                <div className="absolute bottom-5 right-5 text-right">
+                  <p className="text-3xl font-black text-white leading-none">10+</p>
+                  <p className="text-[10px] text-white/65 uppercase tracking-widest mt-1">Years of Excellence</p>
                 </div>
               </div>
             </AnimatedSection>
@@ -393,7 +393,7 @@ export default function Home() {
           <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
             {whyItems.map((item, i) => (
               <StaggerItem key={i}>
-                <div className="group h-full p-7 rounded-2xl bg-white/4 border border-white/8 hover:bg-white/8 hover:border-accent/20 transition-all duration-300 hover:-translate-y-1">
+                <div className="group h-full p-7 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-accent/20 transition-all duration-300 hover:-translate-y-1">
                   {/* Accent top line */}
                   <div className="w-8 h-0.5 bg-accent/40 group-hover:bg-accent group-hover:w-12 transition-all duration-300 mb-5 rounded-full" />
                   <div className="w-11 h-11 rounded-xl bg-accent/10 text-accent flex items-center justify-center mb-4 group-hover:bg-accent group-hover:text-primary transition-all duration-300">
@@ -487,7 +487,7 @@ export default function Home() {
               </Link>
               <Link
                 href="/contact"
-                className="inline-flex items-center justify-center gap-2 bg-white/8 hover:bg-white/14 text-white font-semibold px-8 py-4 rounded-xl border border-white/15 hover:border-white/30 transition-all backdrop-blur-sm"
+                className="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white font-semibold px-8 py-4 rounded-xl border border-white/15 hover:border-white/30 transition-all backdrop-blur-sm"
               >
                 Contact Us <ArrowRight size={17} />
               </Link>
