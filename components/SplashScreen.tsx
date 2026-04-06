@@ -8,52 +8,60 @@ export default function SplashScreen() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Check if the user has already seen the splash screen in this session
-    const hasSeenSplash = sessionStorage.getItem('hasSeenSplash');
-    
+    // Basic session check with try-catch
+    let hasSeenSplash = false;
+    try {
+      hasSeenSplash = sessionStorage.getItem('hasSeenSplash') === 'true';
+    } catch (e) {
+      console.warn('sessionStorage not available', e);
+    }
+
     if (hasSeenSplash) {
       setIsLoading(false);
     } else {
       const timer = setTimeout(() => {
         setIsLoading(false);
-        sessionStorage.setItem('hasSeenSplash', 'true');
-      }, 2500); // Show splash for 2.5 seconds
-      
+        try {
+          sessionStorage.setItem('hasSeenSplash', 'true');
+        } catch (e) {}
+      }, 2000); // reduced to 2s
       return () => clearTimeout(timer);
     }
   }, []);
 
   return (
-    <AnimatePresence>
+    <AnimatePresence mode="wait">
       {isLoading && (
         <motion.div
+          key="splash-screen"
           initial={{ opacity: 1 }}
-          exit={{ opacity: 0, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } }}
-          className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#001f3f]"
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.6 }}
+          className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#001f3f]"
         >
           {/* Logo Animation */}
           <motion.div
-            initial={{ scale: 0.8, opacity: 0, y: 20 }}
-            animate={{ scale: 1, opacity: 1, y: 0 }}
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="relative w-80 h-32 xl:w-96 xl:h-40 mb-10 bg-white rounded-3xl shadow-2xl flex items-center justify-center p-6 lg:p-10"
+            className="relative w-72 h-72 md:w-[450px] md:h-[450px] mb-12 flex items-center justify-center"
           >
             <div className="relative w-full h-full">
               <Image
-                src="/images/logo.png"
+                src="/images/logo-custom.png"
                 alt="Vikamusk"
                 fill
                 className="object-contain"
                 priority
-                sizes="(max-width: 768px) 320px, 384px"
+                sizes="(max-width: 768px) 300px, 450px"
               />
             </div>
           </motion.div>
           
           {/* Enhanced Minimalist Loader */}
           <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.5 }}
             className="w-48 xl:w-64 h-1 bg-white/10 rounded-full overflow-hidden relative"
           >

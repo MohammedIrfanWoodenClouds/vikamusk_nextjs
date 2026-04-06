@@ -4,9 +4,25 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
-import type { Product } from '@/lib/data';
 
-export default function ProductCard({ product, index = 0 }: { product: Product; index?: number }) {
+interface ProductCardProps {
+  product: {
+    id: string;
+    name: string;
+    slug: string;
+    category: string;
+    categorySlug: string;
+    shortDescription: string;
+    specs: Record<string, string>;
+    image: string;
+    featured: boolean;
+  };
+  index?: number;
+}
+
+export default function ProductCard({ product, index = 0 }: ProductCardProps) {
+  const isBase64 = product.image?.startsWith('data:');
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 40, filter: 'blur(5px)', scale: 0.95 }}
@@ -20,13 +36,25 @@ export default function ProductCard({ product, index = 0 }: { product: Product; 
       >
         {/* Image */}
         <div className="relative aspect-[4/3] bg-gray-50 overflow-hidden">
-          <Image
-            src={product.image}
-            alt={product.name}
-            fill
-            className="object-contain p-6 md:p-8 group-hover:scale-110 transition-transform duration-700 ease-out"
-            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          />
+          {product.image ? (
+            isBase64 ? (
+              <img
+                src={product.image}
+                alt={product.name}
+                className="w-full h-full object-contain p-6 md:p-8 group-hover:scale-110 transition-transform duration-700 ease-out"
+              />
+            ) : (
+              <Image
+                src={product.image}
+                alt={product.name}
+                fill
+                className="object-contain p-6 md:p-8 group-hover:scale-110 transition-transform duration-700 ease-out"
+                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              />
+            )
+          ) : (
+            <div className="w-full h-full flex items-center justify-center text-gray-300 text-lg">No Image</div>
+          )}
           {product.featured && (
             <div className="absolute top-4 left-4 px-3 py-1.5 bg-accent text-[#001f3f] text-[10px] md:text-xs font-bold rounded-full uppercase tracking-wider shadow-md">
               Featured
@@ -37,19 +65,13 @@ export default function ProductCard({ product, index = 0 }: { product: Product; 
 
         {/* Content */}
         <div className="p-6">
-          <p className="text-[11px] font-bold text-accent uppercase tracking-wider mb-2">
-            {product.category}
-          </p>
-          <h3 className="text-lg font-black text-gray-900 mb-2 group-hover:text-amber-600 transition-colors">
-            {product.name}
-          </h3>
-          <p className="text-sm text-gray-500 leading-relaxed mb-5 line-clamp-2">
-            {product.shortDescription}
-          </p>
+          <p className="text-[11px] font-bold text-accent uppercase tracking-wider mb-2">{product.category}</p>
+          <h3 className="text-lg font-black text-gray-900 mb-2 group-hover:text-amber-600 transition-colors">{product.name}</h3>
+          <p className="text-sm text-gray-500 leading-relaxed mb-5 line-clamp-2">{product.shortDescription}</p>
 
           {/* Quick Specs */}
           <div className="flex flex-wrap gap-2 mb-6">
-            {Object.entries(product.specs).slice(0, 2).map(([key, value]) => (
+            {Object.entries(product.specs || {}).slice(0, 2).map(([key, value]) => (
               <span key={key} className="text-[11px] px-2.5 py-1 bg-gray-100 border border-gray-200 rounded-full text-gray-600 font-semibold truncate max-w-full">
                 {key}: {value}
               </span>
@@ -59,11 +81,7 @@ export default function ProductCard({ product, index = 0 }: { product: Product; 
           {/* CTA */}
           <div className="flex items-center text-sm font-bold text-[#001f3f] group-hover:text-accent transition-colors">
             View Details
-            <motion.span
-              className="ml-2 inline-block"
-              initial={{ x: 0 }}
-              whileHover={{ x: 5 }}
-            >
+            <motion.span className="ml-2 inline-block" initial={{ x: 0 }} whileHover={{ x: 5 }}>
               <ArrowRight size={16} />
             </motion.span>
           </div>
