@@ -123,9 +123,10 @@ export default function Home() {
               initial={{ opacity: 0, y: -16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/15 text-white/75 text-xs sm:text-sm mb-8"
+              className="inline-flex items-center justify-center gap-3.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-white/90 text-base sm:text-lg font-medium tracking-wide mb-14"
+              style={{ padding: '0.875rem 2.5rem', margin: '0.5rem' }}
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
+              <span className="w-2.5 h-2.5 rounded-full bg-accent animate-pulse flex-shrink-0" />
               Established 2015 &nbsp;·&nbsp; UAE, India & Global
             </motion.div>
 
@@ -134,7 +135,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 32 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.65, delay: 0.3 }}
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-[68px] font-black text-white leading-[1.05] tracking-tight mb-6"
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-[68px] font-black text-white leading-[1.05] tracking-tight"
             >
               A World of{' '}
               <span className="gradient-text">Creativity</span>
@@ -147,7 +148,8 @@ export default function Home() {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.65, delay: 0.45 }}
-              className="text-base lg:text-lg text-white/60 max-w-xl mb-10 leading-relaxed"
+              className="text-base lg:text-lg text-white/60 max-w-xl leading-relaxed"
+              style={{ marginTop: '3.5rem' }}
             >
               Trusted supplier of advanced construction and material handling solutions. Specialising in Forklifts and Aerial Work Platforms across UAE, India & beyond.
             </motion.p>
@@ -158,6 +160,7 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.65, delay: 0.6 }}
               className="flex flex-wrap gap-3 sm:gap-4"
+              style={{ marginTop: '3.5rem' }}
             >
               <Link href="/products" className="btn-primary text-sm sm:text-base px-7 py-3.5 sm:px-8 sm:py-4">
                 Explore Products <ArrowRight size={17} />
@@ -183,23 +186,23 @@ export default function Home() {
       </section>
 
       {/* ===== STATS BAR ===== */}
-      <section className="bg-white border-b border-gray-100/80">
-        <div className="container-custom py-16 lg:py-20">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-y-12 gap-x-6 lg:gap-x-4 lg:gap-y-0">
+      <section className="bg-white border-b border-gray-100/80 my-6">
+        <div className="container-custom py-28 md:py-32 lg:py-36">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-y-16 gap-x-6 lg:gap-x-4 lg:gap-y-0">
             {stats.map((stat, i) => {
               const Icon = statIcons[i] || Award;
               return (
-                <div key={i} className="flex flex-col items-center justify-center text-center relative group min-h-[120px] lg:min-h-0">
+                <div key={i} className="flex flex-col items-center justify-center text-center relative group min-h-[160px] lg:min-h-[150px]">
                   {i > 0 && (
-                    <span className="hidden lg:block absolute left-0 top-1/2 -translate-y-1/2 w-px h-12 bg-gradient-to-b from-transparent via-gray-200 to-transparent" />
+                    <span className="hidden lg:block absolute left-0 top-1/2 -translate-y-1/2 w-px h-14 bg-gradient-to-b from-transparent via-gray-200 to-transparent" />
                   )}
-                  <div className="w-11 h-11 rounded-2xl bg-accent/[0.08] text-accent flex items-center justify-center mb-3.5 ring-1 ring-accent/10 group-hover:bg-accent group-hover:text-primary group-hover:ring-accent/30 transition-all duration-300">
-                    <Icon size={19} />
+                  <div className="w-12 h-12 rounded-2xl bg-accent/[0.08] text-accent flex items-center justify-center mb-4 ring-1 ring-accent/10 group-hover:bg-accent group-hover:text-primary group-hover:ring-accent/30 transition-all duration-300">
+                    <Icon size={20} />
                   </div>
-                  <div className="text-3xl lg:text-[2.15rem] font-black text-primary tabular-nums leading-none tracking-tight">
+                  <div className="text-3xl lg:text-[2.25rem] font-black text-primary tabular-nums leading-none tracking-tight">
                     <AnimatedCounter target={stat.value} suffix={stat.suffix} />
                   </div>
-                  <p className="text-[10px] lg:text-[11px] text-gray-500 font-bold uppercase tracking-[0.14em] mt-2.5 max-w-[9rem] mx-auto leading-snug">{stat.label}</p>
+                  <p className="text-[10px] lg:text-[11px] text-gray-500 font-bold uppercase tracking-[0.14em] mt-3 max-w-[9rem] mx-auto leading-snug">{stat.label}</p>
                 </div>
               );
             })}
@@ -208,46 +211,108 @@ export default function Home() {
       </section>
 
       {/* ===== ABOUT PREVIEW ===== */}
-      <section className="section-padding bg-white">
-        <div className="container-custom">
+      <section className="section-padding bg-white relative overflow-hidden">
+        {/* Subtle background accent */}
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-accent/[0.03] rounded-full blur-[120px] pointer-events-none -translate-y-1/2 translate-x-1/4" />
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-primary/[0.02] rounded-full blur-[100px] pointer-events-none translate-y-1/3 -translate-x-1/4" />
+
+        <div className="container-custom relative">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-20 items-center">
             <AnimatedSection direction="left">
-              <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl shadow-primary/10 relative">
-                <Image src="/images/company/vikamusk-reception.png" alt="Vikamusk Office" fill className="object-cover" />
-                {/* Gradient overlay for badge legibility */}
-                <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-primary/70 to-transparent" />
-                {/* Badge inside image — no overflow issues */}
-                <div className="absolute bottom-5 right-5 text-right">
-                  <p className="text-3xl font-black text-white leading-none">10+</p>
-                  <p className="text-[10px] text-white/65 uppercase tracking-widest mt-1">Years of Excellence</p>
+              <div className="relative">
+                {/* Main image container */}
+                <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl shadow-primary/10 relative group">
+                  <Image src="/images/company/vikamusk-reception.png" alt="Vikamusk Office" fill className="object-cover group-hover:scale-[1.03] transition-transform duration-700 ease-out" />
+                  {/* Gradient overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-primary/60 via-primary/10 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-primary/30" />
                 </div>
+
+                {/* Floating "10+ Years" badge - positioned outside the overflow-hidden container */}
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                  whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 0.3, type: 'spring', stiffness: 120 }}
+                  className="absolute -bottom-7 -right-4 lg:-right-7 z-10"
+                >
+                  <div className="relative group/badge">
+                    {/* Animated glow ring */}
+                    <div className="absolute -inset-2 rounded-2xl bg-gradient-to-br from-accent/30 via-accent/10 to-accent/25 blur-md animate-[pulse-glow_3s_ease-in-out_infinite] opacity-60" />
+
+                    {/* Badge card */}
+                    <div className="relative flex flex-col items-center justify-center w-[120px] h-[120px] sm:w-[140px] sm:h-[140px] rounded-2xl bg-white border border-gray-100/80 shadow-[0_20px_60px_-15px_rgba(0,31,63,0.18)] backdrop-blur-sm overflow-hidden">
+                      {/* Internal accent gradient */}
+                      <div className="absolute inset-0 bg-gradient-to-br from-accent/[0.06] via-transparent to-primary/[0.04]" />
+
+                      {/* Top accent bar */}
+                      <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-accent via-accent-light to-accent" />
+
+                      {/* Content */}
+                      <div className="relative text-center">
+                        <p className="text-4xl sm:text-5xl font-black leading-none bg-gradient-to-br from-primary via-primary to-primary-light bg-clip-text text-transparent">
+                          10<span className="text-accent">+</span>
+                        </p>
+                        <div className="w-8 h-px bg-gradient-to-r from-transparent via-accent to-transparent mx-auto mt-2 mb-1.5" />
+                        <p className="text-[8px] sm:text-[9px] text-muted font-bold uppercase tracking-[0.18em] leading-tight">
+                          Years of<br />Excellence
+                        </p>
+                      </div>
+
+                      {/* Corner accent */}
+                      <div className="absolute bottom-0 right-0 w-8 h-8 bg-accent/[0.06] rounded-tl-2xl" />
+                    </div>
+                  </div>
+                </motion.div>
+
+                {/* Decorative accent corner frame */}
+                <div className="absolute -top-3 -left-3 w-16 h-16 border-t-2 border-l-2 border-accent/30 rounded-tl-2xl pointer-events-none" />
+                <div className="absolute -bottom-3 -left-3 w-10 h-10 border-b-2 border-l-2 border-primary/10 rounded-bl-xl pointer-events-none" />
               </div>
             </AnimatedSection>
 
             <AnimatedSection direction="right">
-              <span className="text-xs font-bold text-accent uppercase tracking-widest">Discover Our Story</span>
-              <h2 className="text-3xl lg:text-4xl font-black text-primary mt-3 mb-5 leading-tight">
+              <span className="inline-flex items-center gap-2 text-xs font-bold text-accent uppercase tracking-[0.2em]">
+                <span className="h-px w-6 bg-accent/40" />
+                Discover Our Story
+              </span>
+              <h2 className="text-3xl lg:text-4xl font-black text-primary mt-4 mb-2 leading-tight">
                 About Vikamusk International
               </h2>
+              {/* Decorative underline */}
+              <div className="flex items-center gap-2 mb-6">
+                <div className="h-1 w-12 rounded-full bg-accent" />
+                <div className="h-1 w-4 rounded-full bg-accent/30" />
+                <div className="h-1 w-2 rounded-full bg-accent/15" />
+              </div>
+
               <p className="text-muted leading-relaxed mb-4">
                 Founded in 2015 in India and proudly established in the Ajman Free Zone of UAE, Vikamusk Construction Equipment is a trusted supplier of advanced construction and material handling solutions.
               </p>
               <p className="text-muted leading-relaxed mb-8">
                 Serving clients across China, UAE, Saudi Arabia, Oman and India. Collaborating with 10+ industrial manufacturers worldwide for reliable, high-performance equipment.
               </p>
-              <ul className="space-y-2.5 mb-8">
+
+              {/* USP pills */}
+              <div className="space-y-3 mb-8">
                 {[
                   'ISO-compliant equipment from verified global manufacturers',
                   'Dedicated after-sales and technical support teams',
                   'Custom equipment solutions for unique project needs',
                 ].map((point, i) => (
-                  <li key={i} className="flex items-start gap-2.5 text-sm text-muted">
-                    <CheckCircle2 size={16} className="text-accent mt-0.5 flex-shrink-0" />
-                    {point}
-                  </li>
+                  <div key={i} className="flex items-start gap-3 group/item">
+                    <span className="flex-shrink-0 w-6 h-6 rounded-lg bg-accent/10 flex items-center justify-center mt-0.5 group-hover/item:bg-accent/20 transition-colors">
+                      <CheckCircle2 size={14} className="text-accent" />
+                    </span>
+                    <span className="text-sm text-muted leading-relaxed">{point}</span>
+                  </div>
                 ))}
-              </ul>
-              <Link href="/about" className="btn-outline">Learn More <ArrowRight size={15} /></Link>
+              </div>
+
+              <Link href="/about" className="btn-outline group">
+                Learn More
+                <ArrowRight size={15} className="group-hover:translate-x-0.5 transition-transform" />
+              </Link>
             </AnimatedSection>
           </div>
         </div>
