@@ -32,6 +32,7 @@ function normalizeProduct(p: any): any {
     specs: typeof p.specs === 'string' ? (() => { try { return JSON.parse(p.specs); } catch { return {}; } })() : (p.specs || {}),
     image: p.image || '',
     featured: !!p.featured,
+    model_names: Array.isArray(p.model_names) ? p.model_names : [],
   };
 }
 
@@ -112,13 +113,27 @@ function ProductListCard({ product, index }: { product: any; index: number }) {
           {product.category && (
             <p className="text-[11px] font-black text-accent uppercase tracking-[0.2em] mb-2">{product.category}</p>
           )}
-          <h3 className="text-xl sm:text-2xl font-black text-primary group-hover:text-accent transition-colors leading-tight mb-3">
+          <h3 className="text-xl sm:text-2xl font-black text-primary group-hover:text-accent transition-colors leading-tight mb-2">
             {product.name}
           </h3>
+          {(product.model_names || []).length > 0 && (
+            <div className="flex flex-wrap gap-1.5 mb-3">
+              {(product.model_names as string[]).slice(0, 5).map((name: string) => (
+                <span key={name} className="text-[10px] px-2.5 py-0.5 rounded-full font-bold border border-border/60 text-muted bg-surface uppercase tracking-wide">
+                  {name}
+                </span>
+              ))}
+              {(product.model_names as string[]).length > 5 && (
+                <span className="text-[10px] px-2.5 py-0.5 rounded-full font-bold border border-border/60 text-muted/60 bg-surface">
+                  +{(product.model_names as string[]).length - 5} more
+                </span>
+              )}
+            </div>
+          )}
           {product.shortDescription && (
             <p className="text-sm sm:text-base text-muted/80 leading-relaxed line-clamp-3 mb-6 font-medium">{product.shortDescription}</p>
           )}
-          
+
           <div className="mt-auto flex flex-wrap items-center justify-between gap-4">
             {specEntries.length > 0 && (
               <div className="flex flex-wrap gap-2">

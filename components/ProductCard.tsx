@@ -16,6 +16,7 @@ interface ProductCardProps {
     specs: Record<string, string>;
     image: string;
     featured: boolean;
+    model_names?: string[];
   };
   index?: number;
 }
@@ -23,6 +24,7 @@ interface ProductCardProps {
 export default function ProductCard({ product, index = 0 }: ProductCardProps) {
   const isBase64 = product.image?.startsWith('data:');
   const specEntries = Object.entries(product.specs || {}).slice(0, 2);
+  const modelNames = product.model_names || [];
 
   return (
     <motion.div
@@ -79,8 +81,22 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
             <h3 className="text-[22px] sm:text-[26px] font-black text-black leading-tight line-clamp-2 px-4 uppercase">
               {product.name}
             </h3>
+            {modelNames.length > 0 && (
+              <div className="flex flex-wrap justify-center gap-1.5 mt-3 px-4">
+                {modelNames.slice(0, 4).map((name) => (
+                  <span key={name} className="text-[10px] px-2.5 py-1 rounded-full font-bold border border-black/10 text-black/50 bg-gray-50 uppercase tracking-wide">
+                    {name}
+                  </span>
+                ))}
+                {modelNames.length > 4 && (
+                  <span className="text-[10px] px-2.5 py-1 rounded-full font-bold border border-black/10 text-black/40 bg-gray-50">
+                    +{modelNames.length - 4} more
+                  </span>
+                )}
+              </div>
+            )}
           </div>
-          
+
           {/* Button Container */}
           <div className="w-full flex justify-center items-center">
             <span className="flex items-center justify-center w-[92%] py-3.5 bg-accent text-white border-2 border-black rounded-xl text-sm sm:text-[15px] font-black uppercase tracking-wider shadow-[0_4px_0_#000] hover:translate-y-0.5 hover:shadow-[0_2px_0_#000] transition-all duration-200">

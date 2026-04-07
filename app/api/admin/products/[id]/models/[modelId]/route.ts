@@ -12,11 +12,13 @@ export async function PUT(
   const { modelId } = await params;
   try {
     const data = await req.json();
-    await updateProductModel(modelId, {
-      model_name: data.model_name,
+    const updateData: Record<string, any> = {
       specs: Array.isArray(data.specs) ? data.specs : [],
-      sort_order: data.sort_order ?? 0,
-    });
+      images: Array.isArray(data.images) ? data.images : [],
+    };
+    if (data.model_name !== undefined) updateData.model_name = data.model_name;
+    if (data.sort_order !== undefined) updateData.sort_order = data.sort_order;
+    await updateProductModel(modelId, updateData);
     return NextResponse.json({ success: true });
   } catch (e: any) {
     return NextResponse.json({ error: e.message }, { status: 500 });

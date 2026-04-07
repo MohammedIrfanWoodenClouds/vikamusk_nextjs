@@ -29,6 +29,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
       product_id: id,
       model_name: data.model_name,
       specs: Array.isArray(data.specs) ? data.specs : [],
+      images: Array.isArray(data.images) ? data.images : [],
       sort_order: data.sort_order ?? 0,
     });
     return NextResponse.json({ model }, { status: 201 });

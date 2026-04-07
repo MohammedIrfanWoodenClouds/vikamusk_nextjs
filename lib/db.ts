@@ -170,6 +170,18 @@ export async function getAllProducts(mainCategoryId?: string) {
   const { data: prods, error } = await query;
   if (error) throw error;
 
+  // Batch-load all model names in a single query
+  const { data: allModels } = await supabase
+    .from('product_models')
+    .select('product_id, model_name, sort_order')
+    .order('sort_order', { ascending: true });
+
+  const modelsByProduct: Record<string, string[]> = {};
+  (allModels || []).forEach((m) => {
+    if (!modelsByProduct[m.product_id]) modelsByProduct[m.product_id] = [];
+    modelsByProduct[m.product_id].push(m.model_name);
+  });
+
   return await Promise.all((prods || []).map(async (p) => {
     const { data: mainCat } = await supabase
       .from('main_categories')
@@ -181,6 +193,7 @@ export async function getAllProducts(mainCategoryId?: string) {
       ...p,
       main_category_name: mainCat?.name,
       main_category_slug: mainCat?.slug,
+      model_names: modelsByProduct[p.id] || [],
     };
   }));
 }
@@ -202,10 +215,26 @@ export async function getProductsByMainCategory(mainCategorySlug: string) {
 
   if (error) throw error;
 
+  const prodIds = (prods || []).map(p => p.id);
+  const { data: allModels } = prodIds.length > 0
+    ? await supabase
+        .from('product_models')
+        .select('product_id, model_name, sort_order')
+        .in('product_id', prodIds)
+        .order('sort_order', { ascending: true })
+    : { data: [] };
+
+  const modelsByProduct: Record<string, string[]> = {};
+  (allModels || []).forEach((m) => {
+    if (!modelsByProduct[m.product_id]) modelsByProduct[m.product_id] = [];
+    modelsByProduct[m.product_id].push(m.model_name);
+  });
+
   return (prods || []).map(p => ({
     ...p,
     main_category_name: mainCat.name,
     main_category_slug: mainCat.slug,
+    model_names: modelsByProduct[p.id] || [],
   }));
 }
 
@@ -218,6 +247,21 @@ export async function getFeaturedProducts() {
 
   if (error) throw error;
 
+  const prodIds = (prods || []).map(p => p.id);
+  const { data: allModels } = prodIds.length > 0
+    ? await supabase
+        .from('product_models')
+        .select('product_id, model_name, sort_order')
+        .in('product_id', prodIds)
+        .order('sort_order', { ascending: true })
+    : { data: [] };
+
+  const modelsByProduct: Record<string, string[]> = {};
+  (allModels || []).forEach((m) => {
+    if (!modelsByProduct[m.product_id]) modelsByProduct[m.product_id] = [];
+    modelsByProduct[m.product_id].push(m.model_name);
+  });
+
   return await Promise.all((prods || []).map(async (p) => {
     const { data: mainCat } = await supabase
       .from('main_categories')
@@ -229,6 +273,7 @@ export async function getFeaturedProducts() {
       ...p,
       main_category_name: mainCat?.name,
       main_category_slug: mainCat?.slug,
+      model_names: modelsByProduct[p.id] || [],
     };
   }));
 }
@@ -314,10 +359,69 @@ export async function getModelsByProduct(productId: string) {
   return data || [];
 }
 
-export async function createProductModel(data: { product_id: string; model_name: string; specs: any[]; sort_order: number }) {
+export async function getAllModels() {
+  const { data: models, error } = await supabase
+    .from('product_models')
+    .select('*')
+    .order('sort_order', { ascending: true });
+
+  if (error) throw error;
+
+  // Enrich with product name and category name
+  return await Promise.all((models || []).map(async (m) => {
+    const { data: product } = await supabase
+      .from('products')
+      .select('id, name, slug, main_category_id')
+      .eq('id', m.product_id)
+      .single();
+
+    let categoryName = '';
+    if (product?.main_category_id) {
+      const { data: cat } = await supabase
+        .from('main_categories')
+        .select('name')
+        .eq('id', product.main_category_id)
+        .single();
+      categoryName = cat?.name || '';
+    }
+
+    return {
+      ...m,
+      product_name: product?.name || '',
+      product_slug: product?.slug || '',
+      category_name: categoryName,
+    };
+  }));
+}
+
+export async function getModelById(modelId: string) {
+  const { data, error } = await supabase
+    .from('product_models')
+    .select('*')
+    .eq('id', modelId)
+    .single();
+
+  if (error && error.code !== 'PGRST116') throw error;
+  return data;
+}
+
+export async function createProductModel(data: {
+  product_id: string;
+  model_name: string;
+  specs: any[];
+  images?: any[];
+  short_description?: string;
+  features?: string;
+  sort_order: number;
+}) {
   const { data: model, error } = await supabase
     .from('product_models')
-    .insert(data)
+    .insert({
+      ...data,
+      images: data.images ?? [],
+      short_description: data.short_description ?? '',
+      features: data.features ?? '[]',
+    })
     .select()
     .single();
 

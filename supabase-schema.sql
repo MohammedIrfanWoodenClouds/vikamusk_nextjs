@@ -59,6 +59,7 @@ CREATE TABLE IF NOT EXISTS product_models (
   product_id UUID REFERENCES products(id) ON DELETE CASCADE,
   model_name TEXT NOT NULL,
   specs JSONB DEFAULT '[]',
+  images JSONB DEFAULT '[]',
   sort_order INTEGER DEFAULT 0,
   created_at TIMESTAMPTZ DEFAULT NOW()
 );

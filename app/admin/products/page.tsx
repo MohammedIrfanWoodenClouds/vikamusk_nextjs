@@ -13,6 +13,7 @@ interface ProductModel {
   product_id: string;
   model_name: string;
   specs: { label: string; value: string }[];
+  images: string[];
   sort_order: number;
 }
 
@@ -43,7 +44,8 @@ function slugify(text: string) {
 function ModelsEditor({ productId, token }: { productId: string; token: string }) {
   const [models, setModels] = useState<ProductModel[]>([]);
   const [loading, setLoading] = useState(true);
-  const [saving, setSaving] = useState(false);
+  const [saving, setSaving] = useState<string | null>(null); // modelId being saved
+  const [adding, setAdding] = useState(false);
   const [newModelName, setNewModelName] = useState('');
   const [expandedModel, setExpandedModel] = useState<string | null>(null);
 
@@ -54,7 +56,7 @@ function ModelsEditor({ productId, token }: { productId: string; token: string }
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
-      setModels(data.models || []);
+      setModels((data.models || []).map((m: any) => ({ ...m, images: m.images || [] })));
     } finally { setLoading(false); }
   }, [productId, token]);
 
@@ -62,16 +64,16 @@ function ModelsEditor({ productId, token }: { productId: string; token: string }
 
   const addModel = async () => {
     if (!newModelName.trim()) return;
-    setSaving(true);
+    setAdding(true);
     try {
       await fetch(`/api/admin/products/${productId}/models`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-        body: JSON.stringify({ model_name: newModelName.trim(), specs: [], sort_order: models.length }),
+        body: JSON.stringify({ model_name: newModelName.trim(), specs: [], images: [], sort_order: models.length }),
       });
       setNewModelName('');
-      fetchModels();
-    } finally { setSaving(false); }
+      await fetchModels();
+    } finally { setAdding(false); }
   };
 
   const deleteModel = async (modelId: string) => {
@@ -92,45 +94,67 @@ function ModelsEditor({ productId, token }: { productId: string; token: string }
     setModels(prev => prev.map(m => m.id === model.id ? { ...m, specs } : m));
   };
 
-  const removeSpec = async (model: ProductModel, idx: number) => {
+  const removeSpec = (model: ProductModel, idx: number) => {
     const specs = (model.specs || []).filter((_, i) => i !== idx);
     setModels(prev => prev.map(m => m.id === model.id ? { ...m, specs } : m));
-    await fetch(`/api/admin/products/${productId}/models/${model.id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-      body: JSON.stringify({ specs }),
-    });
   };
 
-  const saveSpecs = async (model: ProductModel) => {
-    setSaving(true);
+  const handleModelImages = (model: ProductModel, e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
+    if (!files.length) return;
+    const current = [...(model.images || [])];
+    let loaded = 0;
+    files.forEach(file => {
+      if (file.size > 5 * 1024 * 1024) return;
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        current.push(reader.result as string);
+        loaded++;
+        if (loaded === files.length) {
+          setModels(prev => prev.map(m => m.id === model.id ? { ...m, images: [...current] } : m));
+        }
+      };
+      reader.readAsDataURL(file);
+    });
+    // Reset input so the same file can be re-selected
+    e.target.value = '';
+  };
+
+  const removeModelImage = (model: ProductModel, idx: number) => {
+    const images = (model.images || []).filter((_, i) => i !== idx);
+    setModels(prev => prev.map(m => m.id === model.id ? { ...m, images } : m));
+  };
+
+  const saveModel = async (model: ProductModel) => {
+    setSaving(model.id);
     try {
       await fetch(`/api/admin/products/${productId}/models/${model.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-        body: JSON.stringify({ specs: model.specs || [] }),
+        body: JSON.stringify({ specs: model.specs || [], images: model.images || [] }),
       });
-    } finally { setSaving(false); }
+    } finally { setSaving(null); }
   };
 
   if (loading) return <div className="py-4 flex justify-center"><Loader2 size={18} className="animate-spin text-amber-500" /></div>;
 
   return (
     <div className="space-y-3">
+      {/* Add model input */}
       <div className="flex gap-2">
         <input
           value={newModelName}
           onChange={e => setNewModelName(e.target.value)}
           onKeyDown={e => e.key === 'Enter' && addModel()}
-          placeholder="Model name (e.g. VM-1500, Model A, 3T Diesel)"
+          placeholder="Model name (e.g. VM-1500, 3T Diesel)"
           className="flex-1 px-3 py-2 rounded-xl text-white placeholder-white/20 text-sm focus:outline-none"
           style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)' }}
         />
-        <button onClick={addModel} disabled={saving || !newModelName.trim()}
+        <button onClick={addModel} disabled={adding || !newModelName.trim()}
           className="px-4 py-2 rounded-xl font-bold text-sm disabled:opacity-50 flex items-center gap-1.5 transition-all"
           style={{ background: '#f59e0b', color: '#001f3f' }}
         >
-          {saving ? <Loader2 size={14} className="animate-spin" /> : <Plus size={14} />} Add
+          {adding ? <Loader2 size={14} className="animate-spin" /> : <Plus size={14} />} Add
         </button>
       </div>
 
@@ -138,6 +162,7 @@ function ModelsEditor({ productId, token }: { productId: string; token: string }
         ? <p className="text-xs italic py-2" style={{ color: 'rgba(255,255,255,0.3)' }}>No models yet. Add one above.</p>
         : models.map(model => (
           <div key={model.id} className="rounded-xl overflow-hidden" style={{ border: '1px solid rgba(255,255,255,0.08)' }}>
+            {/* Model header */}
             <div
               className="flex items-center justify-between px-4 py-3 cursor-pointer"
               style={{ background: 'rgba(255,255,255,0.04)' }}
@@ -146,44 +171,79 @@ function ModelsEditor({ productId, token }: { productId: string; token: string }
               <div className="flex items-center gap-2">
                 <LayoutGrid size={14} style={{ color: '#f59e0b' }} />
                 <span className="text-white font-bold text-sm">{model.model_name}</span>
-                <span className="text-xs" style={{ color: 'rgba(255,255,255,0.3)' }}>({(model.specs || []).length} specs)</span>
+                <span className="text-xs" style={{ color: 'rgba(255,255,255,0.3)' }}>
+                  {(model.specs || []).length} specs · {(model.images || []).length} images
+                </span>
               </div>
               <div className="flex items-center gap-2">
                 <button onClick={e => { e.stopPropagation(); deleteModel(model.id); }}
                   className="p-1.5 rounded-lg transition-all" style={{ color: 'rgba(255,255,255,0.3)' }}
                 ><Trash2 size={13} /></button>
-                {expandedModel === model.id ? <ChevronUp size={14} style={{ color: 'rgba(255,255,255,0.4)' }} /> : <ChevronDown size={14} style={{ color: 'rgba(255,255,255,0.4)' }} />}
+                {expandedModel === model.id
+                  ? <ChevronUp size={14} style={{ color: 'rgba(255,255,255,0.4)' }} />
+                  : <ChevronDown size={14} style={{ color: 'rgba(255,255,255,0.4)' }} />}
               </div>
             </div>
 
             {expandedModel === model.id && (
-              <div className="p-4 space-y-2.5" style={{ background: 'rgba(255,255,255,0.02)' }}>
-                <p className="text-[10px] uppercase tracking-wider font-semibold mb-3" style={{ color: 'rgba(255,255,255,0.4)' }}>Spec Rows</p>
-                {(model.specs || []).map((spec, idx) => (
-                  <div key={idx} className="flex gap-2 items-center">
-                    <input value={spec.label} onChange={e => updateSpec(model, idx, 'label', e.target.value)}
-                      placeholder="Label (e.g. Capacity)" className="flex-1 px-3 py-2 rounded-lg text-white placeholder-white/20 text-xs focus:outline-none"
-                      style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)' }}
-                    />
-                    <input value={spec.value} onChange={e => updateSpec(model, idx, 'value', e.target.value)}
-                      placeholder="Value (e.g. 1,500 kg)" className="flex-1 px-3 py-2 rounded-lg text-white placeholder-white/20 text-xs focus:outline-none"
-                      style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)' }}
-                    />
-                    <button onClick={() => removeSpec(model, idx)} className="p-1.5 rounded-lg flex-shrink-0" style={{ color: 'rgba(255,255,255,0.3)' }}>
-                      <X size={13} />
-                    </button>
+              <div className="p-4 space-y-4" style={{ background: 'rgba(255,255,255,0.02)' }}>
+
+                {/* Images section */}
+                <div>
+                  <p className="text-[10px] uppercase tracking-wider font-semibold mb-2" style={{ color: 'rgba(255,255,255,0.4)' }}>Model Images</p>
+                  <div className="flex flex-wrap gap-2 mb-2">
+                    {(model.images || []).map((img, idx) => (
+                      <div key={idx} className="relative w-20 h-20 rounded-lg overflow-hidden group flex-shrink-0" style={{ background: 'rgba(255,255,255,0.05)' }}>
+                        <img src={img} alt="" className="w-full h-full object-contain p-1" />
+                        <button
+                          type="button"
+                          onClick={() => removeModelImage(model, idx)}
+                          className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all"
+                          style={{ background: 'rgba(239,68,68,0.7)' }}
+                        ><X size={14} className="text-white" /></button>
+                      </div>
+                    ))}
+                    <label
+                      className="w-20 h-20 rounded-lg flex flex-col items-center justify-center gap-1 cursor-pointer transition-all flex-shrink-0"
+                      style={{ border: '2px dashed rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.3)' }}
+                    >
+                      <Upload size={16} />
+                      <span className="text-[9px]">Add images</span>
+                      <input type="file" accept="image/*" multiple className="hidden" onChange={e => handleModelImages(model, e)} />
+                    </label>
                   </div>
-                ))}
-                <div className="flex gap-2 pt-1">
-                  <button onClick={() => addSpec(model)}
-                    className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs transition-all"
-                    style={{ border: '1px dashed rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.4)' }}
-                  ><Plus size={12} /> Add Row</button>
-                  <button onClick={() => saveSpecs(model)} disabled={saving}
-                    className="flex items-center gap-1.5 px-4 py-2 rounded-lg font-bold text-xs transition-all disabled:opacity-50"
-                    style={{ background: 'rgba(245,158,11,0.1)', color: '#f59e0b' }}
-                  >{saving ? <Loader2 size={12} className="animate-spin" /> : <Save size={12} />} Save Specs</button>
                 </div>
+
+                {/* Specs section */}
+                <div>
+                  <p className="text-[10px] uppercase tracking-wider font-semibold mb-2" style={{ color: 'rgba(255,255,255,0.4)' }}>Spec Rows</p>
+                  {(model.specs || []).map((spec, idx) => (
+                    <div key={idx} className="flex gap-2 items-center mb-2">
+                      <input value={spec.label} onChange={e => updateSpec(model, idx, 'label', e.target.value)}
+                        placeholder="Label (e.g. Capacity)" className="flex-1 px-3 py-2 rounded-lg text-white placeholder-white/20 text-xs focus:outline-none"
+                        style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)' }}
+                      />
+                      <input value={spec.value} onChange={e => updateSpec(model, idx, 'value', e.target.value)}
+                        placeholder="Value (e.g. 1,500 kg)" className="flex-1 px-3 py-2 rounded-lg text-white placeholder-white/20 text-xs focus:outline-none"
+                        style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)' }}
+                      />
+                      <button onClick={() => removeSpec(model, idx)} className="p-1.5 rounded-lg flex-shrink-0" style={{ color: 'rgba(255,255,255,0.3)' }}>
+                        <X size={13} />
+                      </button>
+                    </div>
+                  ))}
+                  <div className="flex gap-2 pt-1">
+                    <button onClick={() => addSpec(model)}
+                      className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs transition-all"
+                      style={{ border: '1px dashed rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.4)' }}
+                    ><Plus size={12} /> Add Row</button>
+                    <button onClick={() => saveModel(model)} disabled={saving === model.id}
+                      className="flex items-center gap-1.5 px-4 py-2 rounded-lg font-bold text-xs transition-all disabled:opacity-50"
+                      style={{ background: 'rgba(245,158,11,0.1)', color: '#f59e0b' }}
+                    >{saving === model.id ? <Loader2 size={12} className="animate-spin" /> : <Save size={12} />} Save</button>
+                  </div>
+                </div>
+
               </div>
             )}
           </div>
@@ -392,42 +452,53 @@ export default function AdminProducts() {
               : <div className="grid gap-3">
                   {filtered.map(prod => (
                     <div key={prod.id}>
-                      <div className="rounded-2xl p-5 flex items-center gap-5 transition-all group" style={{ background: '#001f3f', border: '1px solid rgba(255,255,255,0.05)' }}>
-                        <div className="w-16 h-16 rounded-xl flex items-center justify-center flex-shrink-0 overflow-hidden" style={{ background: 'rgba(255,255,255,0.05)' }}>
-                          {prod.image ? <img src={prod.image} alt={prod.name} className="w-full h-full object-contain p-1" /> : <Package size={22} style={{ color: 'rgba(16,185,129,0.5)' }} />}
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-2 flex-wrap">
-                            <h3 className="text-white font-bold text-base">{prod.name}</h3>
-                            {prod.featured === 1 && <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase" style={{ background: 'rgba(245,158,11,0.1)', color: '#f59e0b' }}>Featured</span>}
+                      <div className="rounded-2xl overflow-hidden transition-all" style={{ background: '#001f3f', border: '1px solid rgba(255,255,255,0.05)' }}>
+                        {/* Product info row */}
+                        <div className="p-5 flex items-center gap-5">
+                          <div className="w-16 h-16 rounded-xl flex items-center justify-center flex-shrink-0 overflow-hidden" style={{ background: 'rgba(255,255,255,0.05)' }}>
+                            {prod.image ? <img src={prod.image} alt={prod.name} className="w-full h-full object-contain p-1" /> : <Package size={22} style={{ color: 'rgba(16,185,129,0.5)' }} />}
                           </div>
-                          <p className="text-sm truncate mt-0.5" style={{ color: 'rgba(255,255,255,0.3)' }}>{prod.short_description || 'No description'}</p>
-                          <p className="text-xs mt-1" style={{ color: 'rgba(96,165,250,0.7)' }}>{prod.main_category_name || 'No category'}</p>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2 flex-wrap">
+                              <h3 className="text-white font-bold text-base">{prod.name}</h3>
+                              {prod.featured === 1 && <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase" style={{ background: 'rgba(245,158,11,0.1)', color: '#f59e0b' }}>Featured</span>}
+                            </div>
+                            <p className="text-sm truncate mt-0.5" style={{ color: 'rgba(255,255,255,0.3)' }}>{prod.short_description || 'No description'}</p>
+                            <p className="text-xs mt-1" style={{ color: 'rgba(96,165,250,0.7)' }}>{prod.main_category_name || 'No category'}</p>
+                          </div>
+                          {/* Icon actions (edit / featured / delete) */}
+                          <div className="flex items-center gap-1.5 flex-shrink-0">
+                            <button onClick={() => toggleFeatured(prod)} className="p-2.5 rounded-lg transition-all"
+                              style={{ background: 'rgba(255,255,255,0.05)', color: prod.featured ? '#f59e0b' : 'rgba(255,255,255,0.3)' }}
+                              title={prod.featured ? 'Unfeature' : 'Feature'}
+                            >{prod.featured ? <Star size={16} /> : <StarOff size={16} />}</button>
+                            <button onClick={() => openEdit(prod)} className="p-2.5 rounded-lg transition-all" style={{ background: 'rgba(255,255,255,0.05)', color: 'rgba(255,255,255,0.4)' }} title="Edit"><Pencil size={16} /></button>
+                            <button onClick={() => handleDelete(prod.id)} disabled={deleting === prod.id} className="p-2.5 rounded-lg transition-all disabled:opacity-50" style={{ background: 'rgba(255,255,255,0.05)', color: 'rgba(255,255,255,0.4)' }} title="Delete">
+                              {deleting === prod.id ? <Loader2 size={16} className="animate-spin" /> : <Trash2 size={16} />}
+                            </button>
+                          </div>
                         </div>
-                        <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                          <button onClick={() => setShowModels(showModels === prod.id ? null : prod.id)}
-                            className="p-2.5 rounded-lg transition-all"
-                            style={{ background: showModels === prod.id ? 'rgba(96,165,250,0.15)' : 'rgba(255,255,255,0.05)', color: showModels === prod.id ? '#60a5fa' : 'rgba(255,255,255,0.4)' }}
-                            title="Manage Models"
-                          ><LayoutGrid size={16} /></button>
-                          <button onClick={() => toggleFeatured(prod)} className="p-2.5 rounded-lg transition-all"
-                            style={{ background: 'rgba(255,255,255,0.05)', color: prod.featured ? '#f59e0b' : 'rgba(255,255,255,0.4)' }}
-                          >{prod.featured ? <Star size={16} /> : <StarOff size={16} />}</button>
-                          <button onClick={() => openEdit(prod)} className="p-2.5 rounded-lg transition-all" style={{ background: 'rgba(255,255,255,0.05)', color: 'rgba(255,255,255,0.4)' }}><Pencil size={16} /></button>
-                          <button onClick={() => handleDelete(prod.id)} disabled={deleting === prod.id} className="p-2.5 rounded-lg transition-all disabled:opacity-50" style={{ background: 'rgba(255,255,255,0.05)', color: 'rgba(255,255,255,0.4)' }}>
-                            {deleting === prod.id ? <Loader2 size={16} className="animate-spin" /> : <Trash2 size={16} />}
+
+                        {/* Always-visible Models button bar */}
+                        <div style={{ borderTop: '1px solid rgba(255,255,255,0.05)', background: 'rgba(0,0,0,0.15)' }}>
+                          <button
+                            onClick={() => setShowModels(showModels === prod.id ? null : prod.id)}
+                            className="w-full flex items-center justify-between px-5 py-3 transition-all"
+                            style={{ color: showModels === prod.id ? '#60a5fa' : 'rgba(255,255,255,0.35)' }}
+                          >
+                            <div className="flex items-center gap-2">
+                              <LayoutGrid size={14} />
+                              <span className="text-xs font-bold uppercase tracking-wider">Manage Models</span>
+                              <span className="text-[10px]" style={{ color: 'rgba(255,255,255,0.2)' }}>— add variants with images & specs</span>
+                            </div>
+                            <ChevronDown size={14} className={`transition-transform duration-200 ${showModels === prod.id ? 'rotate-180' : ''}`} />
                           </button>
                         </div>
                       </div>
 
                       {/* Models panel */}
                       {showModels === prod.id && token && (
-                        <div className="mt-1.5 rounded-2xl p-5" style={{ background: 'rgba(0,31,63,0.6)', border: '1px solid rgba(255,255,255,0.04)' }}>
-                          <div className="flex items-center gap-2 mb-4">
-                            <LayoutGrid size={15} style={{ color: '#60a5fa' }} />
-                            <h4 className="text-white font-bold text-sm">Product Models & Spec Table</h4>
-                            <span className="text-xs ml-1" style={{ color: 'rgba(255,255,255,0.25)' }}>— Adds variants to the comparison table on the product page</span>
-                          </div>
+                        <div className="mt-1 rounded-2xl p-5" style={{ background: 'rgba(0,31,63,0.6)', border: '1px solid rgba(255,255,255,0.04)' }}>
                           <ModelsEditor productId={prod.id} token={token} />
                         </div>
                       )}

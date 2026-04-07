@@ -17,6 +17,7 @@ interface ProductModel {
   product_id: string;
   model_name: string;
   specs: { label: string; value: string }[];
+  images: string[];
   sort_order: number;
 }
 
@@ -37,10 +38,59 @@ function normalizeProduct(p: any): any {
     featured: !!p.featured,
     main_category_slug: p.main_category_slug || p.category_slug,
     main_category_name: p.main_category_name || p.category_name,
+    model_names: Array.isArray(p.model_names) ? p.model_names : [],
   };
 }
 
 type Tab = 'overview' | 'specs' | 'models' | 'features';
+
+/* ── Single Model Card ── */
+function ModelCard({ model, isActive, onClick }: { model: ProductModel; isActive: boolean; onClick: () => void }) {
+  const images = model.images || [];
+  const [imgIdx, setImgIdx] = useState(0);
+  const displayImg = images[imgIdx] || '';
+
+  return (
+    <button
+      onClick={onClick}
+      className="text-left w-full rounded-2xl overflow-hidden border-2 transition-all"
+      style={{ borderColor: isActive ? '#f59e0b' : 'rgba(0,31,63,0.1)', background: isActive ? 'rgba(245,158,11,0.04)' : '#fff' }}
+    >
+      {/* Model image */}
+      <div className="relative h-40 bg-gradient-to-br from-gray-50 to-slate-100 overflow-hidden">
+        {displayImg ? (
+          displayImg.startsWith('data:') ? (
+            <img src={displayImg} alt={model.model_name} className="w-full h-full object-contain p-4" />
+          ) : (
+            <Image src={displayImg} alt={model.model_name} fill className="object-contain p-4" sizes="200px" />
+          )
+        ) : (
+          <div className="w-full h-full flex items-center justify-center text-gray-200">
+            <Package size={36} className="opacity-30" />
+          </div>
+        )}
+        {images.length > 1 && (
+          <div className="absolute bottom-2 left-0 right-0 flex justify-center gap-1">
+            {images.map((_, i) => (
+              <button
+                key={i}
+                onClick={e => { e.stopPropagation(); setImgIdx(i); }}
+                className="w-1.5 h-1.5 rounded-full transition-all"
+                style={{ background: i === imgIdx ? '#f59e0b' : 'rgba(0,0,0,0.2)' }}
+              />
+            ))}
+          </div>
+        )}
+      </div>
+      <div className="px-4 py-3">
+        <p className="font-black text-primary text-sm">{model.model_name}</p>
+        {model.specs?.length > 0 && (
+          <p className="text-[11px] text-muted mt-0.5">{model.specs.length} specifications</p>
+        )}
+      </div>
+    </button>
+  );
+}
 
 /* ── Model Spec Comparison Table ── */
 function SpecTable({ models }: { models: ProductModel[] }) {
@@ -103,6 +153,7 @@ export default function ProductDetail() {
   const [activeImage, setActiveImage] = useState(0);
   const [imageZoomed, setImageZoomed] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [activeModelId, setActiveModelId] = useState<string | null>(null);
 
   useEffect(() => {
     fetch(`/api/public/products?slug=${slug}`)
@@ -321,8 +372,45 @@ export default function ProductDetail() {
 
                   {activeTab === 'models' && (
                     <motion.div key="models" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.2 }} className="min-h-[160px]">
-                      <p className="text-xs text-muted mb-3 font-medium">Compare all available models side-by-side</p>
-                      <SpecTable models={models} />
+                      {/* Model cards grid */}
+                      <div className="grid grid-cols-2 gap-3 mb-5">
+                        {models.map(m => (
+                          <ModelCard
+                            key={m.id}
+                            model={m}
+                            isActive={activeModelId === m.id}
+                            onClick={() => setActiveModelId(activeModelId === m.id ? null : m.id)}
+                          />
+                        ))}
+                      </div>
+
+                      {/* Selected model spec detail */}
+                      {activeModelId && (() => {
+                        const sel = models.find(m => m.id === activeModelId);
+                        if (!sel || !sel.specs?.length) return null;
+                        return (
+                          <div className="mb-5 rounded-xl border border-accent/30 overflow-hidden">
+                            <div className="px-4 py-2.5 flex items-center gap-2" style={{ background: 'rgba(245,158,11,0.08)' }}>
+                              <LayoutGrid size={13} className="text-accent" />
+                              <span className="text-xs font-black text-primary uppercase tracking-wider">{sel.model_name} — Specifications</span>
+                            </div>
+                            {sel.specs.map((s, i, arr) => (
+                              <div key={i} className={`flex justify-between items-center px-4 py-2.5 ${i % 2 === 0 ? 'bg-surface/60' : 'bg-white'} ${i < arr.length - 1 ? 'border-b border-border/40' : ''}`}>
+                                <span className="text-xs font-semibold text-muted">{s.label}</span>
+                                <span className="text-xs font-bold text-primary ml-4 text-right">{s.value}</span>
+                              </div>
+                            ))}
+                          </div>
+                        );
+                      })()}
+
+                      {/* Comparison table */}
+                      {models.some(m => m.specs?.length > 0) && (
+                        <>
+                          <p className="text-xs text-muted mb-2 font-medium">Side-by-side comparison</p>
+                          <SpecTable models={models} />
+                        </>
+                      )}
                     </motion.div>
                   )}
 

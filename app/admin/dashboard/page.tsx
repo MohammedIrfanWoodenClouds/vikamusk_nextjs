@@ -3,11 +3,12 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { FolderTree, Package, Briefcase, LogOut, Layers, ChevronRight, Loader2, Shield, Mail } from 'lucide-react';
+import { FolderTree, Package, Briefcase, LogOut, Layers, ChevronRight, Loader2, Shield, Mail, LayoutGrid } from 'lucide-react';
 
 interface Stats {
   categories: number;
   products: number;
+  models: number;
   careers: number;
   enquiries: number;
 }
@@ -35,7 +36,7 @@ function useAdminAuth() {
 
 export default function AdminDashboard() {
   const { token, loading: authLoading, logout } = useAdminAuth();
-  const [stats, setStats] = useState<Stats>({ categories: 0, products: 0, careers: 0, enquiries: 0 });
+  const [stats, setStats] = useState<Stats>({ categories: 0, products: 0, models: 0, careers: 0, enquiries: 0 });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -45,12 +46,14 @@ export default function AdminDashboard() {
     Promise.all([
       fetch('/api/admin/categories', { headers }).then(r => r.json()),
       fetch('/api/admin/products', { headers }).then(r => r.json()),
+      fetch('/api/admin/models', { headers }).then(r => r.json()),
       fetch('/api/admin/careers', { headers }).then(r => r.json()),
       fetch('/api/admin/enquiries', { headers }).then(r => r.json()).catch(() => ({ enquiries: [] })),
-    ]).then(([cats, prods, careers, enqs]) => {
+    ]).then(([cats, prods, mods, careers, enqs]) => {
       setStats({
         categories: cats.categories?.length || 0,
         products: prods.products?.length || 0,
+        models: mods.models?.length || 0,
         careers: careers.careers?.length || 0,
         enquiries: enqs.enquiries?.length || 0,
       });
@@ -68,7 +71,8 @@ export default function AdminDashboard() {
 
   const cards = [
     { title: 'Categories', count: stats.categories, icon: <FolderTree size={24} />, href: '/admin/categories', color: 'from-blue-500 to-blue-600', desc: 'Top-level product categories' },
-    { title: 'Products', count: stats.products, icon: <Package size={24} />, href: '/admin/products', color: 'from-emerald-500 to-emerald-600', desc: 'Equipment listings & models' },
+    { title: 'Products', count: stats.products, icon: <Package size={24} />, href: '/admin/products', color: 'from-emerald-500 to-emerald-600', desc: 'Equipment listings' },
+    { title: 'Models', count: stats.models, icon: <LayoutGrid size={24} />, href: '/admin/models', color: 'from-violet-500 to-violet-600', desc: 'Product variants & specs' },
     { title: 'Career Postings', count: stats.careers, icon: <Briefcase size={24} />, href: '/admin/careers', color: 'from-amber-500 to-amber-600', desc: 'Job openings and postings' },
     { title: 'Enquiries', count: stats.enquiries, icon: <Mail size={24} />, href: '/admin/enquiries', color: 'from-rose-500 to-rose-600', desc: 'Product & contact submissions' },
   ];
@@ -139,6 +143,7 @@ export default function AdminDashboard() {
             {[
               { label: 'Add Category', href: '/admin/categories', icon: <FolderTree size={18} /> },
               { label: 'Add Product', href: '/admin/products', icon: <Package size={18} /> },
+              { label: 'Add Model', href: '/admin/models', icon: <LayoutGrid size={18} /> },
               { label: 'Add Job Posting', href: '/admin/careers', icon: <Briefcase size={18} /> },
               { label: 'View Enquiries', href: '/admin/enquiries', icon: <Mail size={18} /> },
             ].map((action) => (
