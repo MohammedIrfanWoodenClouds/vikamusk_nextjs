@@ -3,7 +3,7 @@ import Link from 'next/link';
 export default function TermsOfService() {
   return (
     <>
-      <section className="py-24 lg:py-28 bg-primary">
+      <section className="relative pt-44 lg:pt-52 pb-16 bg-primary">
         <div className="container-custom">
           <h1 className="text-3xl lg:text-4xl font-black text-white mb-4">Terms of Service</h1>
           <p className="text-white/60">Last updated: April 2026</p>

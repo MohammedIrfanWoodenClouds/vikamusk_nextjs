@@ -186,7 +186,7 @@ export default function ProductDetail() {
   return (
     <>
       {/* Breadcrumb */}
-      <div className="bg-white border-b border-border/60 py-3 sticky top-0 z-30 backdrop-blur-sm bg-white/95">
+      <div className="bg-white border-b border-border/60 py-3 sticky top-[64px] lg:top-[72px] xl:top-[104px] z-30 backdrop-blur-sm bg-white/95 mt-[88px] lg:mt-[104px]">
         <div className="container-custom">
           <nav className="flex items-center gap-1.5 text-xs text-muted overflow-x-auto whitespace-nowrap">
             <Link href="/" className="hover:text-primary transition-colors font-medium">Home</Link>
@@ -205,7 +205,7 @@ export default function ProductDetail() {
       </div>
 
       {/* Product Hero */}
-      <section className="bg-white section-padding">
+      <section className="bg-white pt-10 pb-20 lg:pt-16 lg:pb-28">
         <div className="container-custom">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 xl:gap-20 items-start">
 

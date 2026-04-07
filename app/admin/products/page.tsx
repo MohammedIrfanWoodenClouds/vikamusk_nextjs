@@ -402,7 +402,7 @@ export default function AdminProducts() {
                             {prod.featured === 1 && <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase" style={{ background: 'rgba(245,158,11,0.1)', color: '#f59e0b' }}>Featured</span>}
                           </div>
                           <p className="text-sm truncate mt-0.5" style={{ color: 'rgba(255,255,255,0.3)' }}>{prod.short_description || 'No description'}</p>
-                          <p className="text-xs mt-1" style={{ color: 'rgba(96,165,250,0.7)' }}>{prod.sub_category_name || prod.main_category_name || 'No category'}</p>
+                          <p className="text-xs mt-1" style={{ color: 'rgba(96,165,250,0.7)' }}>{prod.main_category_name || 'No category'}</p>
                         </div>
                         <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                           <button onClick={() => setShowModels(showModels === prod.id ? null : prod.id)}

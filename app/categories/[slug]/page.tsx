@@ -45,7 +45,7 @@ export default function MainCategoryPage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative py-28 bg-primary overflow-hidden">
+      <section className="relative pt-44 lg:pt-52 pb-28 bg-primary overflow-hidden">
         {category.image && (
           <div className="absolute inset-0 opacity-15">
             {category.image.startsWith('data:') ? (

@@ -9,7 +9,7 @@ export default function Services() {
   return (
     <>
       {/* Hero */}
-      <section className="relative py-28 bg-primary overflow-hidden">
+      <section className="relative pb-28 bg-primary overflow-hidden" style={{ paddingTop: '200px' }}>
         <div className="absolute inset-0 opacity-15">
           <Image src="/images/hero-bg.png" alt="" fill className="object-cover" />
         </div>
