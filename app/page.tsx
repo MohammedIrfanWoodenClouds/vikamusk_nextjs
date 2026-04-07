@@ -149,7 +149,7 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.65, delay: 0.45 }}
               className="text-base lg:text-lg text-white/60 max-w-xl leading-relaxed"
-              style={{ marginTop: '3.5rem' }}
+              style={{ marginTop: '1.5rem' }}
             >
               Trusted supplier of advanced construction and material handling solutions. Specialising in Forklifts and Aerial Work Platforms across UAE, India & beyond.
             </motion.p>
@@ -160,7 +160,7 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.65, delay: 0.6 }}
               className="flex flex-wrap gap-3 sm:gap-4"
-              style={{ marginTop: '3.5rem' }}
+              style={{ marginTop: '1.5rem' }}
             >
               <Link href="/products" className="btn-primary text-sm sm:text-base px-7 py-3.5 sm:px-8 sm:py-4">
                 Explore Products <ArrowRight size={17} />
@@ -241,7 +241,7 @@ export default function Home() {
                     <div className="absolute -inset-2 rounded-2xl bg-gradient-to-br from-accent/30 via-accent/10 to-accent/25 blur-md animate-[pulse-glow_3s_ease-in-out_infinite] opacity-60" />
 
                     {/* Badge card */}
-                    <div className="relative flex flex-col items-center justify-center w-[120px] h-[120px] sm:w-[140px] sm:h-[140px] rounded-2xl bg-white border border-gray-100/80 shadow-[0_20px_60px_-15px_rgba(0,31,63,0.18)] backdrop-blur-sm overflow-hidden">
+                    <div className="relative flex flex-col items-center justify-center w-[100px] h-[100px] sm:w-[120px] sm:h-[120px] rounded-2xl bg-white border border-gray-100/80 shadow-[0_20px_60px_-15px_rgba(0,31,63,0.18)] backdrop-blur-sm overflow-hidden">
                       {/* Internal accent gradient */}
                       <div className="absolute inset-0 bg-gradient-to-br from-accent/[0.06] via-transparent to-primary/[0.04]" />
 
@@ -250,17 +250,17 @@ export default function Home() {
 
                       {/* Content */}
                       <div className="relative text-center">
-                        <p className="text-4xl sm:text-5xl font-black leading-none bg-gradient-to-br from-primary via-primary to-primary-light bg-clip-text text-transparent">
+                        <p className="text-3xl sm:text-4xl font-black leading-none bg-gradient-to-br from-primary via-primary to-primary-light bg-clip-text text-transparent">
                           10<span className="text-accent">+</span>
                         </p>
-                        <div className="w-8 h-px bg-gradient-to-r from-transparent via-accent to-transparent mx-auto mt-2 mb-1.5" />
-                        <p className="text-[8px] sm:text-[9px] text-muted font-bold uppercase tracking-[0.18em] leading-tight">
+                        <div className="w-6 sm:w-8 h-px bg-gradient-to-r from-transparent via-accent to-transparent mx-auto mt-2 mb-1.5" />
+                        <p className="text-[7px] sm:text-[8px] text-muted font-bold uppercase tracking-[0.18em] leading-tight">
                           Years of<br />Excellence
                         </p>
                       </div>
 
                       {/* Corner accent */}
-                      <div className="absolute bottom-0 right-0 w-8 h-8 bg-accent/[0.06] rounded-tl-2xl" />
+                      <div className="absolute bottom-0 right-0 w-6 h-6 sm:w-8 sm:h-8 bg-accent/[0.06] rounded-tl-2xl" />
                     </div>
                   </div>
                 </motion.div>
@@ -280,21 +280,23 @@ export default function Home() {
                 About Vikamusk International
               </h2>
               {/* Decorative underline */}
-              <div className="flex items-center gap-2 mb-6">
+              <div className="flex items-center gap-2">
                 <div className="h-1 w-12 rounded-full bg-accent" />
                 <div className="h-1 w-4 rounded-full bg-accent/30" />
                 <div className="h-1 w-2 rounded-full bg-accent/15" />
               </div>
 
-              <p className="text-muted leading-relaxed mb-4">
-                Founded in 2015 in India and proudly established in the Ajman Free Zone of UAE, Vikamusk Construction Equipment is a trusted supplier of advanced construction and material handling solutions.
-              </p>
-              <p className="text-muted leading-relaxed mb-8">
-                Serving clients across China, UAE, Saudi Arabia, Oman and India. Collaborating with 10+ industrial manufacturers worldwide for reliable, high-performance equipment.
-              </p>
+              <div style={{ marginTop: '1rem' }}>
+                <p className="text-muted leading-relaxed mb-4">
+                  Founded in 2015 in India and proudly established in the Ajman Free Zone of UAE, Vikamusk Construction Equipment is a trusted supplier of advanced construction and material handling solutions.
+                </p>
+                <p className="text-muted leading-relaxed">
+                  Serving clients across China, UAE, Saudi Arabia, Oman and India. Collaborating with 10+ industrial manufacturers worldwide for reliable, high-performance equipment.
+                </p>
+              </div>
 
               {/* USP pills */}
-              <div className="space-y-3 mb-8">
+              <div className="space-y-3" style={{ marginTop: '1rem' }}>
                 {[
                   'ISO-compliant equipment from verified global manufacturers',
                   'Dedicated after-sales and technical support teams',
@@ -309,10 +311,12 @@ export default function Home() {
                 ))}
               </div>
 
-              <Link href="/about" className="btn-outline group">
-                Learn More
-                <ArrowRight size={15} className="group-hover:translate-x-0.5 transition-transform" />
-              </Link>
+              <div style={{ marginTop: '1rem' }}>
+                <Link href="/about" className="btn-outline group inline-flex">
+                  Learn More
+                  <ArrowRight size={15} className="group-hover:translate-x-0.5 transition-transform" />
+                </Link>
+              </div>
             </AnimatedSection>
           </div>
         </div>
@@ -324,17 +328,21 @@ export default function Home() {
           backgroundImage: 'radial-gradient(ellipse 80% 50% at 50% -20%, rgba(0, 31, 63, 0.06), transparent)',
         }} />
         <div className="container-custom relative">
-          <AnimatedSection className="text-center mb-12 lg:mb-16 max-w-2xl mx-auto">
-            <span className="inline-flex items-center gap-2 text-xs font-bold text-accent uppercase tracking-[0.2em]">
-              <span className="h-px w-6 bg-accent/40" />
-              What We Offer
-              <span className="h-px w-6 bg-accent/40" />
-            </span>
-            <h2 className="text-3xl lg:text-[2.35rem] font-black text-primary mt-4 mb-4 tracking-tight">Our Product Categories</h2>
-            <p className="text-muted text-sm lg:text-base leading-relaxed">
-              Explore our comprehensive range of construction and material handling equipment designed for performance, reliability, and safety.
-            </p>
-          </AnimatedSection>
+          <div className="w-full flex flex-col items-center justify-center text-center px-4" style={{ marginBottom: '2rem' }}>
+            <AnimatedSection direction="up" className="flex flex-col items-center justify-center w-full max-w-3xl mx-auto">
+              <div className="flex w-full items-center justify-center gap-3 mb-4">
+                <span className="h-[2px] w-8 bg-accent/50" />
+                <span className="text-xs font-black text-accent uppercase tracking-[0.25em]">What We Offer</span>
+                <span className="h-[2px] w-8 bg-accent/50" />
+              </div>
+              <h2 className="text-3xl lg:text-5xl font-black text-primary tracking-tight mb-5 w-full text-center">
+                Our Product Categories
+              </h2>
+              <p className="text-muted text-base lg:text-lg leading-relaxed text-center w-full">
+                Explore our comprehensive range of construction and material handling equipment designed for performance, reliability, and safety.
+              </p>
+            </AnimatedSection>
+          </div>
 
           {loadingData ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
@@ -362,53 +370,52 @@ export default function Home() {
                 <StaggerItem key={cat.id}>
                   <Link
                     href={`/categories/${cat.slug}`}
-                    className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-gray-200/80 bg-white shadow-[0_1px_0_rgba(0,31,63,0.04)] ring-1 ring-black/[0.03] transition-all duration-300 hover:-translate-y-1 hover:border-accent/30 hover:shadow-xl hover:shadow-primary/[0.07]"
+                    className="group flex flex-col h-full bg-white rounded-[2rem] border border-gray-200/80 shadow-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:border-accent/40 overflow-hidden"
                   >
-                    <div className="relative aspect-[5/4] overflow-hidden bg-gradient-to-br from-slate-50 via-white to-slate-100 rounded-t-3xl">
-                      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-[linear-gradient(135deg,rgba(245,158,11,0.06)_0%,transparent_45%)] pointer-events-none" />
+                    <div className="relative h-[450px] sm:h-[500px] w-full bg-gradient-to-br from-slate-50 via-white to-slate-100 flex items-center justify-center overflow-hidden shrink-0">
+                      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-[linear-gradient(135deg,rgba(245,158,11,0.06)_0%,transparent_50%)] pointer-events-none" />
                       {cat.image && (cat.image.startsWith('data:') || cat.image.startsWith('/')) ? (
                         cat.image.startsWith('data:') ? (
                           <img
                             src={cat.image}
                             alt={cat.name}
-                            className="w-full h-full object-contain p-7 sm:p-8 group-hover:scale-[1.04] transition-transform duration-700 ease-out"
+                            className="w-full h-full object-contain p-8 group-hover:scale-[1.05] transition-transform duration-700 ease-out"
                           />
                         ) : (
                           <Image
                             src={cat.image}
                             alt={cat.name}
                             fill
-                            className="object-contain p-7 sm:p-8 group-hover:scale-[1.04] transition-transform duration-700 ease-out"
+                            className="object-contain p-8 group-hover:scale-[1.05] transition-transform duration-700 ease-out"
                             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                           />
                         )
                       ) : (
-                        <div className="w-full h-full flex items-center justify-center">
-                          <Package size={52} className="text-gray-200" />
-                        </div>
+                        <Package size={52} className="text-gray-200" />
                       )}
-                      <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-primary/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-                      <div className="absolute top-3 right-3 z-20 rounded-xl bg-white/95 backdrop-blur-md px-3 py-2 shadow-md ring-1 ring-primary/10">
-                        <span className="block text-lg font-black text-primary tabular-nums leading-none">{cat.product_count || 0}</span>
-                        <span className="text-[9px] font-bold text-gray-500 uppercase tracking-wider">Products</span>
+                      
+                      {/* Badge */}
+                      <div className="absolute z-20 flex items-center justify-center gap-1.5 rounded-full bg-accent text-white border border-black shadow-md shadow-accent/20 group-hover:bg-primary group-hover:border-primary transition-colors duration-500" style={{ top: 0, left: 0, margin: '1rem', padding: '0.4rem 1rem' }}>
+                        <span className="text-sm font-black tabular-nums tracking-tight">{cat.product_count || 0}</span>
+                        <span className="text-[9px] font-bold uppercase tracking-widest mt-0.5">Products</span>
                       </div>
                     </div>
 
-                    <div className="flex flex-1 flex-col p-5 sm:p-6 pt-5">
-                      <h3 className="text-lg font-black text-primary group-hover:text-accent transition-colors line-clamp-2 leading-snug mb-2">
-                        {cat.name}
-                      </h3>
-                      {categoryBlurb ? (
-                        <p className="text-xs sm:text-sm text-gray-500 line-clamp-2 leading-relaxed flex-1 mb-5">{categoryBlurb}</p>
-                      ) : (
-                        <div className="flex-1 min-h-[2.5rem]" aria-hidden />
-                      )}
-                      <span className="inline-flex items-center gap-2 text-xs font-bold text-primary group-hover:text-accent transition-colors mt-auto">
-                        Browse category
-                        <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-surface group-hover:bg-accent/15 transition-colors">
-                          <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
+                    <div className="w-full bg-white z-10 relative pt-2 px-6" style={{ paddingBottom: '2rem' }}>
+                      
+                      {/* Name Container */}
+                      <div className="w-full text-center" style={{ marginBottom: '1rem' }}>
+                        <h3 className="text-xl sm:text-2xl font-black text-black leading-tight">
+                          {cat.name}
+                        </h3>
+                      </div>
+                      
+                      {/* Button Container */}
+                      <div className="w-full flex justify-center items-center">
+                        <span className="flex items-center justify-center w-[85%] py-3.5 bg-[#f59e0b] text-white border border-black rounded-full text-sm sm:text-base font-black uppercase tracking-wider shadow-[0_3px_0_rgba(0,0,0,1)] hover:bg-[#d97706] hover:translate-y-1 hover:shadow-none transition-all duration-300">
+                          Browse category
                         </span>
-                      </span>
+                      </div>
                     </div>
                   </Link>
                 </StaggerItem>
@@ -418,7 +425,7 @@ export default function Home() {
           )}
 
           {categories.length > 0 && (
-            <div className="text-center mt-12 lg:mt-14">
+            <div className="text-center" style={{ marginTop: '1rem' }}>
               <Link href="/products" className="btn-outline text-sm px-8 py-3.5 rounded-xl">
                 View all products <ArrowRight size={15} />
               </Link>
@@ -431,21 +438,21 @@ export default function Home() {
       <section className="section-padding bg-white relative">
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" aria-hidden />
         <div className="container-custom">
-          <AnimatedSection className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-12 lg:mb-14 text-center lg:text-left">
-            <div className="max-w-xl mx-auto lg:mx-0">
-              <span className="inline-flex items-center gap-2 text-xs font-bold text-accent uppercase tracking-[0.2em] justify-center lg:justify-start">
-                <span className="h-px w-6 bg-accent/40 hidden sm:block" />
-                Highlighted Equipment
-              </span>
-              <h2 className="text-3xl lg:text-[2.35rem] font-black text-primary mt-3 tracking-tight">Featured Products</h2>
-              <p className="text-muted text-sm lg:text-base mt-3 leading-relaxed hidden sm:block">
+          <div className="w-full flex flex-col items-center justify-center text-center px-4" style={{ marginBottom: '2rem' }}>
+            <AnimatedSection className="flex flex-col items-center justify-center w-full max-w-6xl mx-auto">
+              <div className="flex w-full items-center justify-center gap-3 mb-4">
+                <span className="h-[2px] w-8 bg-accent/50 hidden sm:block" />
+                <span className="text-xs font-black text-accent uppercase tracking-[0.25em]">Highlighted Equipment</span>
+                <span className="h-[2px] w-8 bg-accent/50 hidden sm:block" />
+              </div>
+              <h2 className="text-3xl lg:text-[2.35rem] font-black text-primary tracking-tight mb-4 w-full text-center">
+                Featured Products
+              </h2>
+              <p className="text-muted text-base lg:text-lg leading-relaxed text-center w-full max-w-full lg:whitespace-nowrap">
                 Hand-picked equipment from our catalog — engineered for reliability on demanding sites.
               </p>
-            </div>
-            <Link href="/products" className="btn-outline text-sm py-3 px-7 rounded-xl whitespace-nowrap self-center lg:self-auto shrink-0">
-              View all <ArrowRight size={15} />
-            </Link>
-          </AnimatedSection>
+            </AnimatedSection>
+          </div>
 
           {loadingData ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
@@ -476,6 +483,15 @@ export default function Home() {
               ))}
             </div>
           )}
+
+          {/* View All Button */}
+          {featuredProducts.length > 0 && (
+            <div className="text-center w-full flex justify-center" style={{ marginTop: '1rem' }}>
+              <Link href="/products" className="btn-outline text-sm px-8 py-3.5 rounded-xl flex items-center justify-center gap-2">
+                View all products <ArrowRight size={15} />
+              </Link>
+            </div>
+          )}
         </div>
       </section>
 
@@ -499,7 +515,7 @@ export default function Home() {
         <div className="absolute bottom-0 -right-24 w-[480px] h-[480px] bg-primary-light/[0.15] rounded-full blur-[100px] pointer-events-none" />
 
         <div className="container-custom relative z-10 w-full py-4 flex flex-col items-center">
-          <AnimatedSection className="mb-14 lg:mb-20 w-full max-w-3xl mx-auto px-4 text-center">
+          <AnimatedSection className="w-full max-w-3xl mx-auto px-4 text-center mb-8">
             <div className="flex w-full justify-center mb-5">
               <motion.span
                 initial={{ opacity: 0, scale: 0.96 }}
@@ -526,26 +542,31 @@ export default function Home() {
               <StaggerItem key={i}>
                 <motion.div
                   whileHover={{ y: -6 }}
-                  className="group relative h-full flex flex-col p-7 sm:p-8 rounded-[1.35rem] bg-white/[0.04] border border-white/[0.09] backdrop-blur-sm overflow-hidden transition-all duration-300 hover:bg-white/[0.07] hover:border-accent/25 hover:shadow-[0_24px_48px_-12px_rgba(0,0,0,0.35)]"
+                  className="group relative h-full flex flex-col items-center text-center p-8 sm:p-10 rounded-[1.35rem] bg-white/[0.04] border border-white/[0.09] backdrop-blur-sm overflow-hidden transition-all duration-300 hover:bg-white/[0.07] hover:border-accent/25 hover:shadow-[0_24px_48px_-12px_rgba(0,0,0,0.35)]"
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-accent/[0.07] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                   <div className="absolute top-0 right-0 w-28 h-28 bg-accent/[0.07] blur-[48px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                  <div className="w-11 h-1 bg-accent/35 group-hover:bg-accent group-hover:w-14 transition-all duration-500 mb-7 rounded-full" />
+                  {/* Centered Decorative Bar */}
+                  <div className="w-11 h-1 bg-accent/35 group-hover:bg-accent group-hover:w-14 transition-all duration-500 mb-8 rounded-full" />
 
-                  <div className="w-14 h-14 rounded-2xl bg-accent/12 text-accent flex items-center justify-center mb-5 ring-1 ring-white/10 group-hover:bg-accent group-hover:text-primary group-hover:ring-accent/40 transition-all duration-300 shadow-lg shadow-black/20">
+                  {/* Centered Icon Container */}
+                  <div className="w-16 h-16 rounded-2xl bg-accent/12 text-accent flex items-center justify-center mb-8 ring-1 ring-white/10 group-hover:bg-accent group-hover:text-primary group-hover:ring-accent/40 transition-all duration-300 shadow-lg shadow-black/20">
                     {item.icon}
                   </div>
 
-                  <h3 className="text-lg sm:text-xl font-black text-white mb-2.5 group-hover:text-accent transition-colors duration-300">
-                    {item.title}
-                  </h3>
+                  {/* Card Content with Padding/Spacing */}
+                  <div className="flex flex-col flex-1 px-2 my-8">
+                    <h3 className="text-xl sm:text-2xl font-black text-white mb-4 group-hover:text-accent transition-colors duration-300">
+                      {item.title}
+                    </h3>
 
-                  <p className="text-white/48 text-sm sm:text-[0.9375rem] leading-relaxed flex-1 group-hover:text-white/65 transition-colors duration-300 pb-1">
-                    {item.desc}
-                  </p>
+                    <p className="text-white/48 text-sm sm:text-base leading-relaxed group-hover:text-white/65 transition-colors duration-300">
+                      {item.desc}
+                    </p>
+                  </div>
 
-                  <div className="mt-5 h-px w-full bg-gradient-to-r from-accent/25 via-white/10 to-transparent opacity-60 group-hover:opacity-100 transition-opacity" />
+                  <div className="mt-8 h-px w-full bg-gradient-to-r from-accent/25 via-white/10 to-transparent opacity-60 group-hover:opacity-100 transition-opacity" />
                 </motion.div>
               </StaggerItem>
             ))}
@@ -558,18 +579,24 @@ export default function Home() {
         <div className="container-custom">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-20 items-center">
             <AnimatedSection direction="left">
-              <span className="text-xs font-bold text-accent uppercase tracking-widest">Our Reach</span>
-              <h2 className="text-3xl lg:text-4xl font-black text-primary mt-3 mb-5 leading-tight">Global Presence</h2>
-              <p className="text-muted leading-relaxed mb-8 text-sm lg:text-base">
-                Vikamusk continues to build lasting partnerships and set new standards in equipment reliability. Our market networks and service systems span the globe, delivering to 20+ countries.
-              </p>
-              <div className="space-y-3">
+              <div style={{ marginBottom: '1rem' }}>
+                <span className="text-xs font-bold text-accent uppercase tracking-widest">Our Reach</span>
+              </div>
+              <div style={{ marginBottom: '1rem' }}>
+                <h2 className="text-3xl lg:text-4xl font-black text-primary leading-tight">Global Presence</h2>
+              </div>
+              <div style={{ marginBottom: '1rem' }}>
+                <p className="text-muted leading-relaxed text-sm lg:text-base">
+                  Vikamusk continues to build lasting partnerships and set new standards in equipment reliability. Our market networks and service systems span the globe, delivering to 20+ countries.
+                </p>
+              </div>
+              <div className="flex flex-col">
                 {[
                   { flag: '🇦🇪', country: 'UAE (Headquarters)', city: 'Ajman Free Zone', detail: 'Head Office & Warehouse' },
                   { flag: '🇮🇳', country: 'India', city: 'Kochi, Kerala', detail: 'Regional Operations Office' },
                   { flag: '🇨🇳', country: 'China', city: 'Qingdao', detail: 'Manufacturing Partnership' },
                 ].map((loc, i) => (
-                  <div key={i} className="flex items-center gap-4 p-4 rounded-xl bg-surface border border-border/40 hover:border-accent/20 hover:shadow-sm transition-all">
+                  <div key={i} className="flex items-center gap-4 p-4 rounded-xl bg-surface border border-border/40 hover:border-accent/20 hover:shadow-sm transition-all" style={{ marginBottom: '1rem' }}>
                     <span className="text-2xl">{loc.flag}</span>
                     <div>
                       <h4 className="font-bold text-primary text-sm">{loc.country}</h4>
@@ -612,38 +639,40 @@ export default function Home() {
 
         <div className="container-custom relative z-10 w-full py-4 flex flex-col items-center">
           <AnimatedSection className="w-full max-w-5xl mx-auto flex flex-col items-center px-4 text-center">
-            <div className="flex w-full justify-center mb-10">
+            <div className="flex w-full justify-center mb-4">
               <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-accent/10 border border-accent/25 text-accent text-xs font-bold uppercase tracking-[0.22em]">
                 <Star size={14} className="shrink-0 animate-pulse" />
                 Partner with excellence
               </div>
             </div>
-            <h2 className="w-full text-4xl md:text-5xl lg:text-[3.5rem] font-black text-white mb-10 leading-[1.08] tracking-tight text-center text-balance px-2">
+            <h2 className="w-full text-4xl md:text-5xl lg:text-[3.5rem] font-black text-white mb-4 leading-[1.08] tracking-tight text-center text-balance px-2">
               Build your dream with{' '}
               <span className="gradient-text">Vikamusk</span>
             </h2>
-            <p className="text-white/52 w-full max-w-[42rem] mx-auto mb-12 lg:mb-14 text-base sm:text-lg lg:text-xl leading-relaxed text-center text-balance">
-              10+ years of undefeated success. Ready to power your next project with world-class equipment and dedicated engineering support?
-            </p>
+            <div className="text-center w-full" style={{ marginBottom: '3rem' }}>
+              <p className="text-white/52 w-full max-w-[42rem] mx-auto text-base sm:text-lg lg:text-xl leading-relaxed text-center text-balance">
+                10+ years of undefeated success. Ready to power your next project with world-class equipment and dedicated engineering support?
+              </p>
+            </div>
 
-            <div className="flex flex-col sm:flex-row justify-center items-stretch sm:items-center gap-5 sm:gap-6 w-full max-w-3xl mx-auto sm:justify-center">
+            <div className="flex flex-col sm:flex-row justify-center items-center gap-4 w-full max-w-lg mx-auto">
               <Link
                 href="/products"
-                className="group w-full sm:flex-1 sm:max-w-none inline-flex items-center justify-center gap-3 min-h-[3.75rem] sm:min-h-[4.25rem] px-10 sm:px-12 py-5 sm:py-6 rounded-2xl bg-accent hover:bg-amber-500 text-[#001229] font-black text-lg sm:text-xl transition-all shadow-[0_12px_40px_-8px_rgba(245,158,11,0.45)] hover:shadow-[0_16px_48px_-6px_rgba(245,158,11,0.55)] hover:-translate-y-0.5 active:scale-[0.98] ring-1 ring-white/10"
+                className="group w-full sm:flex-1 inline-flex items-center justify-center gap-2.5 min-h-[3.25rem] px-8 py-4 rounded-xl bg-accent hover:bg-amber-500 text-[#001229] font-black text-base sm:text-lg transition-all shadow-[0_12px_40px_-8px_rgba(245,158,11,0.45)] hover:shadow-[0_16px_48px_-6px_rgba(245,158,11,0.55)] hover:-translate-y-0.5 active:scale-[0.98] ring-1 ring-white/10"
               >
                 View products
-                <ArrowRight size={22} className="group-hover:translate-x-0.5 transition-transform" />
+                <ArrowRight size={20} className="group-hover:translate-x-0.5 transition-transform" />
               </Link>
               <Link
                 href="/contact"
-                className="group w-full sm:flex-1 sm:max-w-none inline-flex items-center justify-center gap-3 min-h-[3.75rem] sm:min-h-[4.25rem] px-10 sm:px-12 py-5 sm:py-6 rounded-2xl bg-white/[0.06] hover:bg-white/[0.1] text-white font-bold text-lg sm:text-xl border border-white/15 hover:border-white/25 transition-all backdrop-blur-md active:scale-[0.98] shadow-lg shadow-black/20"
+                className="group w-full sm:flex-1 inline-flex items-center justify-center gap-2.5 min-h-[3.25rem] px-8 py-4 rounded-xl bg-white/[0.06] hover:bg-white/[0.1] text-white font-bold text-base sm:text-lg border border-white/15 hover:border-white/25 transition-all backdrop-blur-md active:scale-[0.98] shadow-lg shadow-black/20"
               >
                 Contact us
-                <ArrowRight size={22} className="opacity-90 group-hover:translate-x-0.5 transition-transform" />
+                <ArrowRight size={20} className="opacity-90 group-hover:translate-x-0.5 transition-transform" />
               </Link>
             </div>
 
-            <div className="mt-16 lg:mt-24 w-full max-w-4xl mx-auto px-2 pt-4">
+            <div className="w-full max-w-4xl mx-auto px-2 pt-4" style={{ marginTop: '3rem' }}>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-6 lg:gap-8">
                 {[
                   { value: '10+', label: 'Global Manufacturers', icon: Globe },

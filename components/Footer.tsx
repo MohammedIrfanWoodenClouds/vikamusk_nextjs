@@ -149,13 +149,13 @@ export default function Footer() {
               </div>
               <div>
                 <p className="text-[9px] font-semibold uppercase tracking-widest text-white/25 mb-1">Sales Enquiries</p>
-                <a href="mailto:sales@vikamusk.com" className="text-accent hover:text-amber-300 text-sm transition-colors">
+                <a href="mailto:sales@vikamusk.com" className="text-accent hover:text-white text-sm transition-colors">
                   sales@vikamusk.com
                 </a>
               </div>
               <div>
                 <p className="text-[9px] font-semibold uppercase tracking-widest text-white/25 mb-1">General</p>
-                <a href="mailto:info@vikamusk.com" className="text-accent hover:text-amber-300 text-sm transition-colors">
+                <a href="mailto:info@vikamusk.com" className="text-accent hover:text-white text-sm transition-colors">
                   info@vikamusk.com
                 </a>
               </div>
@@ -170,7 +170,8 @@ export default function Footer() {
           </div>
           <Link
             href="/contact"
-            className="inline-flex items-center gap-2.5 px-8 py-3.5 rounded-xl bg-accent hover:bg-amber-500 text-[#05101f] font-bold text-sm transition-all shadow-lg shadow-amber-500/25 hover:shadow-amber-500/35 whitespace-nowrap"
+            className="inline-flex items-center justify-center gap-2 bg-accent hover:bg-amber-500 text-[#001f3f] font-bold text-[15px] rounded-full flex-shrink-0 transition-all whitespace-nowrap shadow-lg shadow-amber-500/20 hover:shadow-amber-500/35 hover:-translate-y-px"
+            style={{ padding: '12px 28px' }}
           >
             Get a quote <ArrowRight size={17} />
           </Link>

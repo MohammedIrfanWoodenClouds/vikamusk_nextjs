@@ -206,7 +206,10 @@ function ProductsContent() {
   return (
     <>
       {/* ─── Hero ─── */}
-      <section className="relative py-24 lg:py-32 bg-primary overflow-hidden">
+      <section 
+        className="relative pb-24 lg:pb-32 bg-primary overflow-hidden"
+        style={{ paddingTop: '180px' }}
+      >
         <div className="absolute inset-0">
           <Image src="/images/hero-bg.png" alt="" fill className="object-cover opacity-20" priority />
           <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/97 to-primary/75" />
@@ -216,33 +219,37 @@ function ProductsContent() {
             style={{ backgroundImage: `radial-gradient(circle, rgba(245,158,11,0.9) 1px, transparent 1px)`, backgroundSize: '36px 36px' }} />
         </div>
 
-        <div className="container-custom relative z-10">
-          <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+        <div className="container-custom relative z-10 flex flex-col items-center text-center">
+          <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="w-full flex flex-col items-center">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/15 text-white/65 text-xs font-semibold mb-6 backdrop-blur-sm">
               <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
               Construction & Material Handling Equipment
             </div>
-            <h1 className="text-4xl lg:text-[56px] font-black text-white leading-[1.05] tracking-tight mb-5">
+            <h1 className="text-4xl lg:text-[56px] font-black text-white leading-[1.05] tracking-tight mb-5 w-full">
               Products &{' '}
               <span className="gradient-text">Services</span>
             </h1>
-            <p className="text-white/55 max-w-lg text-base lg:text-lg leading-relaxed mb-10">
-              Explore our complete range of forklifts, aerial work platforms, and material handling solutions — engineered for performance and reliability.
+            <p className="text-white/55 max-w-5xl mx-auto text-base lg:text-lg leading-relaxed mb-4 w-full">
+              Explore our complete range of forklifts, aerial work platforms, and material handling solutions<br className="hidden md:block" />
+              — engineered for performance and reliability.
             </p>
 
             {/* Hero search */}
-            <div className="relative max-w-xl">
-              <Search size={17} className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 pointer-events-none" />
+            <div 
+              className="relative w-full max-w-4xl mx-auto"
+              style={{ marginTop: '1rem', marginBottom: '2rem' }}
+            >
+              <Search size={36} className="absolute left-10 top-1/2 -translate-y-1/2 text-white/40 pointer-events-none" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
                 placeholder="Search products..."
-                className="w-full pl-11 pr-12 py-3.5 bg-white/10 border border-white/15 rounded-xl text-white placeholder-white/35 text-sm backdrop-blur-sm focus:outline-none focus:border-accent/50 focus:bg-white/15 transition-all"
+                className="w-full h-18 pl-20 pr-20 bg-white/10 border-4 border-white/20 rounded-[3rem] text-white placeholder-white/35 text-2xl sm:text-3xl backdrop-blur-2xl focus:outline-none focus:border-accent/50 focus:bg-white/15 transition-all text-center font-black shadow-2xl shadow-black/50"
               />
               {searchQuery && (
-                <button onClick={() => setSearchQuery('')} className="absolute right-4 top-1/2 -translate-y-1/2 text-white/40 hover:text-white transition-colors">
-                  <X size={15} />
+                <button onClick={() => setSearchQuery('')} className="absolute right-10 top-1/2 -translate-y-1/2 text-white/40 hover:text-white transition-colors">
+                  <X size={32} />
                 </button>
               )}
             </div>
@@ -255,66 +262,74 @@ function ProductsContent() {
         <div className="container-custom py-10 lg:py-14">
 
           {/* Toolbar */}
-          <div className="flex flex-wrap items-center gap-3 mb-8">
-            {/* Mobile filter toggle */}
-            <button
-              onClick={() => setShowMobileFilters(v => !v)}
-              className="lg:hidden inline-flex items-center gap-2 px-4 py-2.5 bg-white border border-border rounded-xl text-sm font-semibold text-primary hover:border-primary/30 transition-colors"
-            >
-              <SlidersHorizontal size={15} />
-              Filters
-              {activeCategory !== 'all' && (
-                <span className="w-1.5 h-1.5 rounded-full bg-accent" />
-              )}
-            </button>
+          <div className="flex flex-wrap items-center gap-5 mb-12">
+            {/* Category Dropdown (Desktop & Mobile) */}
+            <div className="relative z-30">
+              <button
+                onClick={() => setShowMobileFilters(v => !v)}
+                className="inline-flex items-center gap-4 px-10 py-6 bg-white border-2 border-border/60 rounded-2xl text-[13px] sm:text-base font-black text-primary hover:border-primary/40 hover:shadow-lg transition-all shadow-md group"
+              >
+                <SlidersHorizontal size={20} className="text-accent group-hover:scale-110 transition-transform" />
+                <span className="text-muted/60 font-bold uppercase tracking-widest text-[10px] mr-1">Category</span>
+                {activeCategory === 'all' ? 'All Products' : categories.find(c => c.slug === activeCategory)?.name}
+                <ChevronDown size={22} className={`text-muted transition-transform duration-300 ${showMobileFilters ? 'rotate-180' : ''}`} />
+              </button>
 
-            {/* Category chips – desktop */}
-            <div className="hidden lg:flex flex-wrap gap-2 flex-1">
-              {[{ id: 0, name: `All Products`, slug: 'all', product_count: products.length }, ...categories].map((cat) => (
-                <button
-                  key={cat.slug}
-                  onClick={() => handleCategoryChange(cat.slug)}
-                  className={`relative px-4 py-2 rounded-xl text-xs font-bold transition-all duration-200 ${
-                    activeCategory === cat.slug
-                      ? 'bg-primary text-white shadow-md shadow-primary/20'
-                      : 'bg-white text-muted border border-border hover:border-primary/25 hover:text-primary'
-                  }`}
-                >
-                  {cat.name}
-                  <span className={`ml-1.5 text-[10px] ${activeCategory === cat.slug ? 'text-white/70' : 'text-gray-400'}`}>
-                    ({cat.id === 0 ? products.length : (cat.product_count || 0)})
-                  </span>
-                </button>
-              ))}
+              <AnimatePresence>
+                {showMobileFilters && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10, scale: 0.96 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 6, scale: 0.96 }}
+                    transition={{ duration: 0.2 }}
+                    className="absolute left-0 top-full mt-3 w-80 max-h-[460px] overflow-y-auto bg-white border border-border rounded-2xl shadow-2xl z-50 py-3 scrollbar-thin scrollbar-thumb-gray-200"
+                  >
+                    {[{ id: 0, name: `All Products`, slug: 'all', product_count: products.length }, ...categories].map((cat) => (
+                      <button
+                        key={cat.slug}
+                        onClick={() => handleCategoryChange(cat.slug)}
+                        className={`w-full px-6 py-4.5 text-left text-base font-black transition-colors flex items-center justify-between border-b border-gray-50 last:border-0 ${
+                          activeCategory === cat.slug ? 'bg-primary/5 text-primary' : 'text-muted hover:bg-gray-50 hover:text-primary'
+                        }`}
+                      >
+                        {cat.name}
+                        <span className={`text-[12px] font-bold ${activeCategory === cat.slug ? 'text-accent' : 'text-gray-300'}`}>
+                          {cat.id === 0 ? products.length : (cat.product_count || 0)}
+                        </span>
+                      </button>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
 
             {/* Right controls */}
-            <div className="flex items-center gap-2 ml-auto">
+            <div className="flex items-center gap-3.5 ml-auto">
               {/* Sort dropdown */}
-              <div className="relative">
+              <div className="relative z-30">
                 <button
                   onClick={() => setSortOpen(v => !v)}
-                  className="inline-flex items-center gap-2 px-4 py-2.5 bg-white border border-border rounded-xl text-xs font-semibold text-primary hover:border-primary/30 transition-colors"
+                  className="inline-flex items-center gap-4 px-10 py-6 bg-white border-2 border-border/60 rounded-2xl text-[13px] sm:text-base font-black text-primary hover:border-primary/40 hover:shadow-lg transition-all shadow-md group"
                 >
-                  <ArrowUpDown size={13} />
-                  <span className="hidden sm:inline">{sortLabels[sortBy]}</span>
+                  <ArrowUpDown size={20} className="text-accent/60 group-hover:scale-110 transition-transform" />
+                  <span className="hidden sm:inline font-black">{sortLabels[sortBy]}</span>
                   <span className="sm:hidden">Sort</span>
-                  <ChevronDown size={12} className={`transition-transform ${sortOpen ? 'rotate-180' : ''}`} />
+                  <ChevronDown size={18} className={`text-muted transition-transform duration-300 ${sortOpen ? 'rotate-180' : ''}`} />
                 </button>
                 <AnimatePresence>
                   {sortOpen && (
                     <motion.div
-                      initial={{ opacity: 0, y: 6, scale: 0.97 }}
+                      initial={{ opacity: 0, y: 10, scale: 0.97 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: 4, scale: 0.97 }}
+                      exit={{ opacity: 0, y: 6, scale: 0.97 }}
                       transition={{ duration: 0.15 }}
-                      className="absolute right-0 top-full mt-2 w-44 bg-white border border-border rounded-xl shadow-lg shadow-black/5 z-20 overflow-hidden"
+                      className="absolute right-0 top-full mt-3 w-64 bg-white border border-border rounded-2xl shadow-2xl z-50 overflow-hidden py-3"
                     >
                       {(Object.entries(sortLabels) as [SortOption, string][]).map(([key, label]) => (
                         <button
                           key={key}
                           onClick={() => { setSortBy(key); setSortOpen(false); }}
-                          className={`w-full px-4 py-2.5 text-left text-xs font-semibold transition-colors ${
+                          className={`w-full px-6 py-4.5 text-left text-base font-black transition-colors border-b border-gray-50 last:border-0 ${
                             sortBy === key ? 'bg-primary/5 text-primary' : 'text-muted hover:bg-gray-50 hover:text-primary'
                           }`}
                         >
@@ -327,56 +342,26 @@ function ProductsContent() {
                 </AnimatePresence>
               </div>
 
-              {/* View toggle */}
-              <div className="flex bg-white border border-border rounded-xl overflow-hidden">
+              <div className="flex items-center bg-white p-2.5 rounded-2xl border-2 border-border/60 shadow-md">
                 <button
                   onClick={() => setViewMode('grid')}
-                  className={`p-2.5 transition-colors ${viewMode === 'grid' ? 'bg-primary text-white' : 'text-muted hover:text-primary'}`}
+                  className={`p-4 rounded-xl transition-all ${viewMode === 'grid' ? 'bg-primary text-white shadow-lg shadow-primary/20' : 'text-muted hover:bg-gray-50 font-bold'}`}
                   title="Grid view"
                 >
-                  <Grid3X3 size={15} />
+                  <Grid3X3 size={22} />
                 </button>
                 <button
                   onClick={() => setViewMode('list')}
-                  className={`p-2.5 transition-colors ${viewMode === 'list' ? 'bg-primary text-white' : 'text-muted hover:text-primary'}`}
+                  className={`p-4 rounded-xl transition-all ${viewMode === 'list' ? 'bg-primary text-white shadow-lg shadow-primary/20 border-l-2 border-white/20' : 'text-muted hover:bg-gray-50 font-bold border-l-2 border-border/40'}`}
                   title="List view"
                 >
-                  <List size={15} />
+                  <List size={22} />
                 </button>
               </div>
             </div>
           </div>
 
-          {/* Mobile filter panel */}
-          <AnimatePresence>
-            {showMobileFilters && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                exit={{ opacity: 0, height: 0 }}
-                className="lg:hidden overflow-hidden mb-6"
-              >
-                <div className="bg-white border border-border rounded-2xl p-4">
-                  <p className="text-xs font-bold text-muted uppercase tracking-widest mb-3">Categories</p>
-                  <div className="flex flex-wrap gap-2">
-                    {[{ id: 0, name: `All Products`, slug: 'all', product_count: products.length }, ...categories].map((cat) => (
-                      <button
-                        key={cat.slug}
-                        onClick={() => handleCategoryChange(cat.slug)}
-                        className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
-                          activeCategory === cat.slug
-                            ? 'bg-primary text-white'
-                            : 'bg-surface text-muted border border-border hover:border-primary/25'
-                        }`}
-                      >
-                        {cat.name} ({cat.id === 0 ? products.length : (cat.product_count || 0)})
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+
 
           {/* Results info + search pill */}
           <div className="flex flex-wrap items-center gap-3 mb-6">

@@ -170,14 +170,25 @@ export default function Navbar() {
           style={{ width: scrolled ? '100%' : '0%', opacity: scrolled ? 1 : 0 }}
         />
 
-        <div className="container-custom flex items-center justify-between h-[88px] lg:h-[104px]">
+        <div className={`container-custom flex items-center justify-between transition-all duration-500 ${
+          scrolled ? 'h-[64px] lg:h-[72px]' : 'h-[88px] lg:h-[104px]'
+        }`}>
           {/* Logo */}
-          <Link href="/" className="flex-shrink-0 relative h-[60px] w-[250px] lg:h-[80px] lg:w-[320px]">
+          <Link 
+            href="/" 
+            className={`flex-shrink-0 relative transition-all duration-500 ${
+              scrolled 
+                ? 'h-[45px] w-[180px] lg:h-[50px] lg:w-[220px]' 
+                : 'h-[60px] w-[250px] lg:h-[80px] lg:w-[320px]'
+            }`}
+          >
             <Image
               src={isTransparent ? "/images/logo-white.png" : "/images/logo-black.png"}
               alt="Vikamusk International"
               fill
-              className="object-contain object-left scale-[1.2] transition-all duration-300"
+              className={`object-contain object-left transition-all duration-500 ${
+                scrolled ? 'scale-[1.05]' : 'scale-[1.2]'
+              }`}
               priority
               sizes="(max-width: 1024px) 300px, 350px"
             />
@@ -404,7 +415,10 @@ export default function Navbar() {
             <Link
               href="/contact"
               className="hidden md:inline-flex items-center justify-center gap-2 bg-accent hover:bg-amber-500 text-[#001f3f] font-bold text-[15px] rounded-full flex-shrink-0 transition-all whitespace-nowrap shadow-lg shadow-amber-500/20 hover:shadow-amber-500/35 hover:-translate-y-px"
-              style={{ padding: '12px 28px', marginLeft: '16px' }}
+              style={{
+                padding: scrolled ? '10px 24px' : '12px 28px',
+                marginLeft: '16px',
+              }}
             >
               Get a Quote
             </Link>
