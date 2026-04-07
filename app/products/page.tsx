@@ -79,54 +79,59 @@ function ProductListCard({ product, index }: { product: any; index: number }) {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, delay: index * 0.05 }}
+      initial={{ opacity: 0, x: -20 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.5, delay: index * 0.05, ease: [0.22, 1, 0.36, 1] }}
     >
       <Link
         href={`/products/${product.slug}`}
-        className="group flex gap-5 bg-white rounded-2xl border border-gray-100 p-4 hover:shadow-lg hover:border-accent/25 transition-all duration-300"
+        className="group flex flex-col sm:flex-row gap-8 bg-white rounded-[2rem] border-2 border-gray-100 p-6 hover:shadow-2xl hover:border-accent/40 transition-all duration-400"
       >
         {/* Image */}
-        <div className="relative w-32 h-32 sm:w-40 sm:h-40 rounded-xl bg-gradient-to-br from-gray-50 to-gray-100 flex-shrink-0 overflow-hidden">
+        <div className="relative w-full sm:w-56 sm:h-56 h-64 rounded-2xl bg-gradient-to-br from-gray-50 to-gray-100 flex-shrink-0 overflow-hidden">
           {product.image ? (
             isBase64 ? (
-              <img src={product.image} alt={product.name} className="w-full h-full object-contain p-3 group-hover:scale-105 transition-transform duration-500" />
+              <img src={product.image} alt={product.name} className="w-full h-full object-contain p-6 group-hover:scale-105 transition-transform duration-500" />
             ) : (
-              <Image src={product.image} alt={product.name} fill className="object-contain p-3 group-hover:scale-105 transition-transform duration-500" sizes="160px" />
+              <Image src={product.image} alt={product.name} fill className="object-contain p-6 group-hover:scale-105 transition-transform duration-500" sizes="224px" />
             )
           ) : (
-            <div className="w-full h-full flex items-center justify-center text-gray-200 text-xs">No Image</div>
+            <div className="w-full h-full flex items-center justify-center text-gray-200">
+              <Package size={48} className="opacity-20" />
+            </div>
           )}
           {product.featured && (
-            <div className="absolute top-2 left-2 flex items-center gap-1 px-2 py-0.5 bg-accent text-[#001f3f] text-[9px] font-black rounded-full uppercase tracking-wider">
-              <Star size={8} fill="currentColor" /> Featured
+            <div className="absolute top-4 left-4 flex items-center gap-1.5 px-3 py-1 bg-accent text-[#001f3f] text-[10px] font-black rounded-full uppercase tracking-widest shadow-lg">
+              <Star size={10} fill="currentColor" /> Featured
             </div>
           )}
         </div>
 
         {/* Content */}
-        <div className="flex flex-col flex-1 min-w-0">
+        <div className="flex flex-col flex-1 py-1">
           {product.category && (
-            <p className="text-[10px] font-bold text-accent/80 uppercase tracking-widest mb-1">{product.category}</p>
+            <p className="text-[11px] font-black text-accent uppercase tracking-[0.2em] mb-2">{product.category}</p>
           )}
-          <h3 className="text-base font-black text-gray-900 group-hover:text-accent transition-colors leading-snug line-clamp-1 mb-1.5">
+          <h3 className="text-xl sm:text-2xl font-black text-primary group-hover:text-accent transition-colors leading-tight mb-3">
             {product.name}
           </h3>
           {product.shortDescription && (
-            <p className="text-xs text-gray-500 leading-relaxed line-clamp-2 mb-3">{product.shortDescription}</p>
+            <p className="text-sm sm:text-base text-muted/80 leading-relaxed line-clamp-3 mb-6 font-medium">{product.shortDescription}</p>
           )}
-          {specEntries.length > 0 && (
-            <div className="flex flex-wrap gap-1.5">
-              {specEntries.map(([key, value]) => (
-                <span key={key} className="text-[10px] px-2 py-0.5 bg-gray-50 border border-gray-100 rounded-full text-gray-500 font-semibold truncate max-w-[140px]">
-                  {key}: {String(value)}
-                </span>
-              ))}
+          
+          <div className="mt-auto flex flex-wrap items-center justify-between gap-4">
+            {specEntries.length > 0 && (
+              <div className="flex flex-wrap gap-2">
+                {specEntries.map(([key, value]) => (
+                  <span key={key} className="text-[11px] px-3 py-1 bg-gray-50 border border-gray-100 rounded-full text-muted font-bold tracking-tight">
+                    <span className="text-primary/40 font-black">{key}:</span> {String(value)}
+                  </span>
+                ))}
+              </div>
+            )}
+            <div className="flex items-center gap-2 text-[13px] font-black text-primary group-hover:text-accent transition-colors whitespace-nowrap uppercase tracking-widest bg-gray-50 group-hover:bg-accent/10 px-5 py-2.5 rounded-full">
+              View Product <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform duration-300" />
             </div>
-          )}
-          <div className="flex items-center gap-1.5 text-xs font-bold text-primary group-hover:text-accent transition-colors mt-auto pt-2">
-            View Details <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform duration-200" />
           </div>
         </div>
       </Link>
@@ -236,20 +241,20 @@ function ProductsContent() {
 
             {/* Hero search */}
             <div 
-              className="relative w-full max-w-4xl mx-auto"
+              className="relative w-full max-w-2xl mx-auto"
               style={{ marginTop: '1rem', marginBottom: '2rem' }}
             >
-              <Search size={36} className="absolute left-10 top-1/2 -translate-y-1/2 text-white/40 pointer-events-none" />
+              <Search size={22} className="absolute left-7 top-1/2 -translate-y-1/2 text-white/40 pointer-events-none" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
                 placeholder="Search products..."
-                className="w-full h-18 pl-20 pr-20 bg-white/10 border-4 border-white/20 rounded-[3rem] text-white placeholder-white/35 text-2xl sm:text-3xl backdrop-blur-2xl focus:outline-none focus:border-accent/50 focus:bg-white/15 transition-all text-center font-black shadow-2xl shadow-black/50"
+                className="w-full h-16 pl-16 pr-16 bg-white/10 border-2 border-white/20 rounded-[2rem] text-white placeholder-white/35 text-lg sm:text-xl backdrop-blur-3xl focus:outline-none focus:border-accent/50 focus:bg-white/15 transition-all text-center font-black shadow-2xl shadow-black/50"
               />
               {searchQuery && (
-                <button onClick={() => setSearchQuery('')} className="absolute right-10 top-1/2 -translate-y-1/2 text-white/40 hover:text-white transition-colors">
-                  <X size={32} />
+                <button onClick={() => setSearchQuery('')} className="absolute right-7 top-1/2 -translate-y-1/2 text-white/40 hover:text-white transition-colors">
+                  <X size={20} />
                 </button>
               )}
             </div>
@@ -258,78 +263,81 @@ function ProductsContent() {
       </section>
 
       {/* ─── Main Content ─── */}
-      <section className="bg-surface min-h-screen">
+      <section className="bg-surface min-h-screen" style={{ paddingBottom: '3rem' }}>
         <div className="container-custom py-10 lg:py-14">
 
           {/* Toolbar */}
-          <div className="flex flex-wrap items-center gap-5 mb-12">
+          <div className="flex flex-wrap items-center gap-4 mb-8">
             {/* Category Dropdown (Desktop & Mobile) */}
-            <div className="relative z-30">
+            <div className="relative z-30" style={{ margin: '0.75rem' }}>
               <button
                 onClick={() => setShowMobileFilters(v => !v)}
-                className="inline-flex items-center gap-4 px-10 py-6 bg-white border-2 border-border/60 rounded-2xl text-[13px] sm:text-base font-black text-primary hover:border-primary/40 hover:shadow-lg transition-all shadow-md group"
+                className="inline-flex items-center gap-3.5 px-12 h-11 bg-white border-2 border-border/60 rounded-xl text-[13px] sm:text-[14px] font-black text-primary hover:border-primary/40 hover:shadow-lg transition-all shadow-sm group"
               >
-                <SlidersHorizontal size={20} className="text-accent group-hover:scale-110 transition-transform" />
-                <span className="text-muted/60 font-bold uppercase tracking-widest text-[10px] mr-1">Category</span>
+                <SlidersHorizontal size={16} className="text-accent group-hover:scale-110 transition-transform" />
+                <span className="text-muted/60 font-bold uppercase tracking-widest text-[9px] mr-1">Category</span>
                 {activeCategory === 'all' ? 'All Products' : categories.find(c => c.slug === activeCategory)?.name}
-                <ChevronDown size={22} className={`text-muted transition-transform duration-300 ${showMobileFilters ? 'rotate-180' : ''}`} />
+                <ChevronDown size={16} className={`text-muted transition-transform duration-300 ${showMobileFilters ? 'rotate-180' : ''}`} />
               </button>
 
               <AnimatePresence>
                 {showMobileFilters && (
                   <motion.div
-                    initial={{ opacity: 0, y: 10, scale: 0.96 }}
+                    initial={{ opacity: 0, y: 8, scale: 0.96 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: 6, scale: 0.96 }}
+                    exit={{ opacity: 0, y: 4, scale: 0.96 }}
                     transition={{ duration: 0.2 }}
-                    className="absolute left-0 top-full mt-3 w-80 max-h-[460px] overflow-y-auto bg-white border border-border rounded-2xl shadow-2xl z-50 py-3 scrollbar-thin scrollbar-thumb-gray-200"
+                    className="absolute left-0 top-full mt-4 w-[420px] max-h-[520px] overflow-y-auto bg-white border-2 border-border rounded-2xl shadow-[0_30px_90px_rgba(0,0,0,0.15)] z-50 p-8 scrollbar-thin scrollbar-thumb-gray-200"
+                    style={{ marginLeft: '1rem', marginRight: '1rem' }}
                   >
-                    {[{ id: 0, name: `All Products`, slug: 'all', product_count: products.length }, ...categories].map((cat) => (
-                      <button
-                        key={cat.slug}
-                        onClick={() => handleCategoryChange(cat.slug)}
-                        className={`w-full px-6 py-4.5 text-left text-base font-black transition-colors flex items-center justify-between border-b border-gray-50 last:border-0 ${
-                          activeCategory === cat.slug ? 'bg-primary/5 text-primary' : 'text-muted hover:bg-gray-50 hover:text-primary'
-                        }`}
-                      >
-                        {cat.name}
-                        <span className={`text-[12px] font-bold ${activeCategory === cat.slug ? 'text-accent' : 'text-gray-300'}`}>
-                          {cat.id === 0 ? products.length : (cat.product_count || 0)}
-                        </span>
-                      </button>
-                    ))}
+                    <div className="flex flex-col gap-2.5">
+                      {[{ id: 0, name: `All Products`, slug: 'all', product_count: products.length }, ...categories].map((cat) => (
+                        <button
+                          key={cat.slug}
+                          onClick={() => handleCategoryChange(cat.slug)}
+                          className={`w-full px-24 py-6 text-left text-[16px] font-black transition-colors flex items-center justify-between border-b border-gray-50 last:border-0 ${
+                            activeCategory === cat.slug ? 'bg-primary/5 text-primary' : 'text-muted hover:bg-gray-50 hover:text-primary'
+                          }`}
+                        >
+                          <span className="uppercase tracking-widest">{cat.name}</span>
+                          <span className={`text-[12px] font-black px-4 py-1.5 rounded-full ${activeCategory === cat.slug ? 'bg-accent text-white shadow-lg shadow-accent/20' : 'bg-gray-100 text-muted'}`}>
+                            {cat.id === 0 ? products.length : (cat.product_count || 0)}
+                          </span>
+                        </button>
+                      ))}
+                    </div>
                   </motion.div>
                 )}
               </AnimatePresence>
             </div>
 
             {/* Right controls */}
-            <div className="flex items-center gap-3.5 ml-auto">
+            <div className="flex items-center gap-4 ml-auto">
               {/* Sort dropdown */}
               <div className="relative z-30">
                 <button
                   onClick={() => setSortOpen(v => !v)}
-                  className="inline-flex items-center gap-4 px-10 py-6 bg-white border-2 border-border/60 rounded-2xl text-[13px] sm:text-base font-black text-primary hover:border-primary/40 hover:shadow-lg transition-all shadow-md group"
+                  className="inline-flex items-center gap-3.5 px-12 h-11 bg-white border-2 border-border/60 rounded-xl text-[13px] sm:text-[14px] font-black text-primary hover:border-primary/40 hover:shadow-lg transition-all shadow-sm group"
                 >
-                  <ArrowUpDown size={20} className="text-accent/60 group-hover:scale-110 transition-transform" />
+                  <ArrowUpDown size={16} className="text-accent/60 group-hover:scale-110 transition-transform" />
                   <span className="hidden sm:inline font-black">{sortLabels[sortBy]}</span>
                   <span className="sm:hidden">Sort</span>
-                  <ChevronDown size={18} className={`text-muted transition-transform duration-300 ${sortOpen ? 'rotate-180' : ''}`} />
+                  <ChevronDown size={14} className={`text-muted transition-transform duration-300 ${sortOpen ? 'rotate-180' : ''}`} />
                 </button>
                 <AnimatePresence>
                   {sortOpen && (
                     <motion.div
-                      initial={{ opacity: 0, y: 10, scale: 0.97 }}
+                      initial={{ opacity: 0, y: 8, scale: 0.97 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: 6, scale: 0.97 }}
+                      exit={{ opacity: 0, y: 4, scale: 0.97 }}
                       transition={{ duration: 0.15 }}
-                      className="absolute right-0 top-full mt-3 w-64 bg-white border border-border rounded-2xl shadow-2xl z-50 overflow-hidden py-3"
+                      className="absolute right-0 top-full mt-2 w-60 bg-white border border-border rounded-xl shadow-2xl z-50 overflow-hidden py-2"
                     >
                       {(Object.entries(sortLabels) as [SortOption, string][]).map(([key, label]) => (
                         <button
                           key={key}
                           onClick={() => { setSortBy(key); setSortOpen(false); }}
-                          className={`w-full px-6 py-4.5 text-left text-base font-black transition-colors border-b border-gray-50 last:border-0 ${
+                          className={`w-full px-6 py-4 text-left text-[14px] font-black transition-colors border-b border-gray-50 last:border-0 ${
                             sortBy === key ? 'bg-primary/5 text-primary' : 'text-muted hover:bg-gray-50 hover:text-primary'
                           }`}
                         >
@@ -342,20 +350,21 @@ function ProductsContent() {
                 </AnimatePresence>
               </div>
 
-              <div className="flex items-center bg-white p-2.5 rounded-2xl border-2 border-border/60 shadow-md">
+              <div className="flex items-center h-11 bg-white px-3.5 rounded-xl border-2 border-border/60 shadow-sm">
                 <button
                   onClick={() => setViewMode('grid')}
-                  className={`p-4 rounded-xl transition-all ${viewMode === 'grid' ? 'bg-primary text-white shadow-lg shadow-primary/20' : 'text-muted hover:bg-gray-50 font-bold'}`}
+                  className={`w-8.5 h-8.5 flex items-center justify-center rounded-lg transition-all ${viewMode === 'grid' ? 'bg-primary text-white shadow-lg shadow-primary/20' : 'text-muted hover:bg-gray-50 font-bold'}`}
                   title="Grid view"
                 >
-                  <Grid3X3 size={22} />
+                  <Grid3X3 size={16} />
                 </button>
+                <div className="w-px h-5 bg-border/60 mx-1.5" />
                 <button
                   onClick={() => setViewMode('list')}
-                  className={`p-4 rounded-xl transition-all ${viewMode === 'list' ? 'bg-primary text-white shadow-lg shadow-primary/20 border-l-2 border-white/20' : 'text-muted hover:bg-gray-50 font-bold border-l-2 border-border/40'}`}
+                  className={`w-8.5 h-8.5 flex items-center justify-center rounded-lg transition-all ${viewMode === 'list' ? 'bg-primary text-white shadow-lg shadow-primary/20' : 'text-muted hover:bg-gray-50 font-bold'}`}
                   title="List view"
                 >
-                  <List size={22} />
+                  <List size={16} />
                 </button>
               </div>
             </div>
@@ -364,30 +373,34 @@ function ProductsContent() {
 
 
           {/* Results info + search pill */}
-          <div className="flex flex-wrap items-center gap-3 mb-6">
+          <div 
+            className="flex flex-wrap items-center gap-3"
+            style={{ marginTop: '2rem', marginBottom: '2rem' }}
+          >
             <p className="text-sm text-muted">
               {loading ? (
                 <span className="inline-flex items-center gap-2"><Loader2 size={14} className="animate-spin" /> Loading...</span>
               ) : (
                 <>
-                  <span className="font-bold text-primary">{filteredAndSorted.length}</span>
-                  {' '}product{filteredAndSorted.length !== 1 ? 's' : ''} found
+                  <span className="font-black text-primary">{filteredAndSorted.length}</span>
+                  <span className="font-medium">{' '}product{filteredAndSorted.length !== 1 ? 's' : ''} found</span>
                 </>
               )}
             </p>
             {searchQuery && !loading && (
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-accent/10 border border-accent/20 rounded-full text-xs font-semibold text-primary">
-                <Search size={11} /> "{searchQuery}"
-                <button onClick={() => setSearchQuery('')} className="ml-0.5 text-muted hover:text-primary transition-colors">
-                  <X size={11} />
+              <span className="inline-flex items-center gap-2 px-5 py-2.5 bg-accent/10 border-2 border-accent/20 rounded-full text-[13px] font-black text-primary shadow-sm">
+                <Search size={14} className="text-accent" /> "{searchQuery}"
+                <button onClick={() => setSearchQuery('')} className="ml-1 text-muted/60 hover:text-accent transition-colors">
+                  <X size={14} />
                 </button>
               </span>
             )}
             {activeCategory !== 'all' && !loading && (
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-primary/5 border border-primary/10 rounded-full text-xs font-semibold text-primary">
+              <span className="inline-flex items-center gap-2 px-5 py-2.5 bg-primary/5 border-2 border-primary/10 rounded-full text-[13px] font-black text-primary shadow-sm">
+                <Package size={14} className="text-primary/40" />
                 {categories.find(c => c.slug === activeCategory)?.name}
-                <button onClick={() => handleCategoryChange('all')} className="ml-0.5 text-muted hover:text-primary transition-colors">
-                  <X size={11} />
+                <button onClick={() => handleCategoryChange('all')} className="ml-1 text-muted/60 hover:text-accent transition-colors">
+                  <X size={14} />
                 </button>
               </span>
             )}
@@ -447,24 +460,64 @@ function ProductsContent() {
 
       {/* ─── Bottom CTA ─── */}
       {!loading && filteredAndSorted.length > 0 && (
-        <section className="bg-white border-t border-border py-16 lg:py-20">
-          <div className="container-custom text-center">
+        <section className="bg-[#001e3f] min-h-screen flex items-center justify-center py-24 px-4 overflow-hidden relative">
+          {/* Subtle Background Pattern */}
+          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+          
+          {/* Section Indicator Badge - Pinned to top */}
+          <div 
+            className="absolute left-1/2 -translate-x-1/2 z-20"
+            style={{ top: '6rem' }}
+          >
+            <div 
+              className="inline-flex items-center gap-4 border-2 border-accent/40 rounded-full font-black text-accent uppercase shadow-2xl"
+              style={{ 
+                padding: '1.25rem 3.5rem', 
+                backgroundColor: 'rgba(245, 158, 11, 0.25)',
+                letterSpacing: '0.5em',
+                fontSize: '15px'
+              }}
+            >
+              <SlidersHorizontal size={18} /> Need Help Choosing?
+            </div>
+          </div>
+          
+          <div className="container-custom text-center relative z-10">
             <AnimatedSection>
-              <span className="text-xs font-bold text-accent uppercase tracking-widest">Need Help Choosing?</span>
-              <h2 className="text-2xl lg:text-3xl font-black text-primary mt-3 mb-4">Can't Find What You're Looking For?</h2>
-              <p className="text-muted max-w-md mx-auto text-sm mb-8 leading-relaxed">
-                Our equipment specialists are ready to help you find the perfect solution for your project requirements.
-              </p>
-              <div className="flex flex-wrap justify-center gap-3">
-                <Link href="/contact" className="btn-primary">
-                  Contact Sales <ArrowRight size={15} />
+              <h2 className="text-[32px] sm:text-[48px] lg:text-[64px] font-black text-white mt-10 mb-6 leading-[1.1] text-center whitespace-nowrap">
+                Can't Find What You're <span className="text-accent underline underline-offset-[16px] decoration-[6px]">Looking For?</span>
+              </h2>
+              
+              <div className="flex flex-col items-center w-full" style={{ marginTop: '2rem', marginBottom: '3rem' }}>
+                <p 
+                  className="text-white/70 max-w-4xl text-lg sm:text-xl leading-relaxed font-medium text-center"
+                >
+                  Our equipment specialists are ready to help you find the perfect solution<br className="hidden sm:block" /> for your project requirements. Connect with us for a custom consultation.
+                </p>
+              </div>
+              
+              <div className="flex flex-wrap justify-center items-center gap-2 mb-8">
+                <Link 
+                  href="/contact" 
+                  className="bg-accent text-[#001f3f] rounded-[2rem] font-black uppercase tracking-[0.2em] hover:bg-white hover:scale-105 transition-all mb-8 flex items-center justify-center gap-4 shadow-[0_25px_60px_rgba(245,158,11,0.4)] group"
+                  style={{ padding: '1.25rem 4rem', margin: '1rem', fontSize: '16px' }}
+                >
+                  Contact Sales <ArrowRight size={22} className="group-hover:translate-x-2 transition-transform" />
                 </Link>
-                <a href="/vikamusk-company-profile.pdf" target="_blank" rel="noopener noreferrer" className="btn-outline">
+                <a 
+                  href="/vikamusk-company-profile.pdf" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="bg-white/5 border-2 border-white/20 text-white rounded-[2rem] font-black uppercase tracking-[0.2em] hover:bg-white hover:text-primary hover:scale-105 transition-all mb-8 flex items-center justify-center shadow-xl"
+                  style={{ padding: '1.25rem 4rem', margin: '1rem', fontSize: '16px' }}
+                >
                   Download Catalogue
                 </a>
               </div>
             </AnimatedSection>
           </div>
+          
+          <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
         </section>
       )}
     </>
