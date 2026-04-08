@@ -592,7 +592,7 @@ export default function Home() {
         <div className="absolute bottom-0 -right-24 w-[480px] h-[480px] bg-primary-light/[0.15] rounded-full blur-[100px] pointer-events-none" />
 
         <div className="container-custom relative z-10 w-full py-4 flex flex-col items-center">
-          <AnimatedSection className="w-full max-w-3xl mx-auto px-4 text-center mb-8">
+          <AnimatedSection className="w-full max-w-3xl mx-auto px-4 text-center mb-16">
             <div className="flex w-full justify-center mb-5">
               <motion.span
                 initial={{ opacity: 0, scale: 0.96 }}
@@ -609,7 +609,7 @@ export default function Home() {
               A partner dedicated to{' '}
               <span className="gradient-text">your success</span>
             </h2>
-            <p className="text-white/55 text-base lg:text-lg leading-relaxed text-center text-balance max-w-2xl mx-auto mb-12">
+            <p className="text-white/55 text-base lg:text-lg leading-relaxed text-center text-balance max-w-2xl mx-auto">
               We don&apos;t just supply equipment; we deliver engineering excellence and strategic support that helps you build a legacy of creativity and performance.
             </p>
           </AnimatedSection>
