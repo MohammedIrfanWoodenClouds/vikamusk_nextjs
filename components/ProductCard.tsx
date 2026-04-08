@@ -42,11 +42,11 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
       viewport={{ once: true, margin: '-40px' }}
       transition={{ duration: 0.55, delay: index * 0.07, ease: [0.22, 1, 0.36, 1] }}
-      className="h-full"
+      className="h-full flex-1 flex flex-col"
     >
       <Link
         href={`/products/${product.slug}`}
-        className="group flex flex-col h-full bg-white rounded-[2rem] border-2 border-black shadow-[0_5px_0_#000] hover:shadow-[0_2px_0_#000] hover:translate-y-0.5 transition-all duration-300 overflow-hidden"
+        className="group flex-1 flex flex-col h-full bg-white rounded-[2rem] border-2 border-black shadow-[0_5px_0_#000] hover:shadow-[0_2px_0_#000] hover:translate-y-0.5 transition-all duration-300 overflow-hidden"
       >
         {/* Image Box */}
         <div className="relative h-[320px] sm:h-[380px] w-full bg-gradient-to-br from-slate-50 via-white to-slate-100 flex items-center justify-center overflow-hidden shrink-0">
@@ -76,7 +76,7 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
         </div>
 
         {/* Content */}
-        <div className="w-full bg-white z-10 relative pt-4 px-8" style={{ paddingBottom: '2.5rem' }}>
+        <div className="w-full bg-white z-10 relative pt-4 px-8 flex-1 flex flex-col" style={{ paddingBottom: '2.5rem' }}>
           
           {/* Name Container */}
           <div className="w-full text-center flex flex-col items-center" style={{ marginBottom: '1.25rem', marginTop: '1.25rem' }}>
@@ -103,7 +103,7 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
           </div>
 
           {/* Button Container */}
-          <div className="w-full flex justify-center items-center">
+          <div className="w-full flex justify-center items-center mt-auto">
             <span className="flex items-center justify-center w-[92%] py-3.5 bg-accent text-white border-2 border-black rounded-xl text-sm sm:text-[15px] font-black uppercase tracking-wider shadow-[0_4px_0_#000] hover:translate-y-0.5 hover:shadow-[0_2px_0_#000] transition-all duration-200">
               Explore Equipment <ArrowRight size={18} className="ml-2" />
             </span>

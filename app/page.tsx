@@ -134,7 +134,7 @@ export default function Home() {
         elem.removeEventListener('mouseleave', handleMouseLeave);
       }
     };
-  }, [featuredProducts, isCarousel]);
+  }, [featuredProducts]);
 
   useEffect(() => {
     Promise.all([
@@ -536,7 +536,7 @@ export default function Home() {
           ) : !isCarousel ? (
             <div className="flex flex-wrap justify-center gap-6 lg:gap-8">
               {featuredProducts.map((product, i) => (
-                <div key={product.id} className="w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]">
+                <div key={product.id} className="w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] flex flex-col">
                   <ProductCard product={product} index={i} />
                 </div>
               ))}
@@ -551,7 +551,7 @@ export default function Home() {
                 {[...featuredProducts, ...featuredProducts, ...featuredProducts].map((product, i) => (
                   <div 
                     key={`${product.id}-${i}`} 
-                    className="w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] flex-none shrink-0 snap-start"
+                    className="w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] flex-none shrink-0 snap-start flex flex-col"
                   >
                     <ProductCard product={product} index={i} />
                   </div>
