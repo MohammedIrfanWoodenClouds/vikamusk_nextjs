@@ -545,7 +545,7 @@ export default function Home() {
             <div className="relative -mx-4 px-4 sm:mx-0 sm:px-0">
               <div 
                 ref={featuredScrollRef} 
-                className="flex gap-6 overflow-x-auto snap-x snap-mandatory hide-scrollbar pb-8 pt-4"
+                className="flex gap-6 overflow-x-auto snap-x snap-mandatory hide-scrollbar pb-8 pt-5"
                 style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
               >
                 {[...featuredProducts, ...featuredProducts, ...featuredProducts].map((product, i) => (
