@@ -9,9 +9,9 @@ export default function About() {
   return (
     <>
       {/* Hero */}
-      <section className="relative pt-32 lg:pt-40 pb-28 bg-primary overflow-hidden">
+      <section className="relative pb-28 bg-primary overflow-hidden" style={{ paddingTop: '200px' }}>
         <div className="absolute inset-0 opacity-20">
-          <Image src="/images/company/vikamusk-company-china-.png" alt="" fill className="object-cover" />
+          <Image src="/images/company/vikamusk-company-china-.png" alt="" fill className="object-cover" priority />
         </div>
         <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/95 to-primary/80" />
         <div className="container-custom relative z-10">
@@ -66,6 +66,7 @@ export default function About() {
                   alt="Vikamusk Reception"
                   fill
                   className="object-cover"
+                  priority
                 />
               </div>
             </AnimatedSection>

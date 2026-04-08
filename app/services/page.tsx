@@ -12,7 +12,7 @@ export default function Services() {
       {/* Hero */}
       <section className="relative pb-28 bg-primary overflow-hidden" style={{ paddingTop: '200px' }}>
         <div className="absolute inset-0 opacity-15">
-          <Image src="/images/hero-bg.png" alt="" fill className="object-cover" />
+          <Image src="/images/hero-bg.png" alt="" fill className="object-cover" priority />
         </div>
         <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/95 to-primary/80" />
         <div className="container-custom relative z-10">
@@ -71,6 +71,7 @@ export default function Services() {
                   alt="Vikamusk Equipment Supply"
                   fill
                   className="object-cover"
+                  priority
                 />
               </div>
             </AnimatedSection>
