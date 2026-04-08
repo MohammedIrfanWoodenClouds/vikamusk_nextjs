@@ -609,7 +609,7 @@ export default function Home() {
               A partner dedicated to{' '}
               <span className="gradient-text">your success</span>
             </h2>
-            <p className="text-white/55 text-base lg:text-lg leading-relaxed text-center text-balance max-w-2xl mx-auto">
+            <p className="text-white/55 text-base lg:text-lg leading-relaxed text-center text-balance max-w-2xl mx-auto mb-12">
               We don&apos;t just supply equipment; we deliver engineering excellence and strategic support that helps you build a legacy of creativity and performance.
             </p>
           </AnimatedSection>

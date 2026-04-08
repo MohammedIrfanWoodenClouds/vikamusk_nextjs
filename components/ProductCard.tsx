@@ -83,7 +83,7 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
             {product.category && (
                <p className="text-[11px] font-black text-accent uppercase tracking-[0.2em] mb-2">{product.category}</p>
             )}
-            <h3 className="text-[22px] sm:text-[26px] font-black text-black leading-tight line-clamp-2 px-4 uppercase">
+            <h3 className="text-[22px] sm:text-[26px] font-black text-black leading-tight line-clamp-2 px-4 uppercase min-h-[56px] sm:min-h-[66px] flex items-center justify-center">
               {product.name}
             </h3>
             {modelNames.length > 0 && (
