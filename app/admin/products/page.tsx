@@ -40,219 +40,6 @@ function slugify(text: string) {
   return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 }
 
-/* ── Models Panel ── */
-function ModelsEditor({ productId, token }: { productId: string; token: string }) {
-  const [models, setModels] = useState<ProductModel[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [saving, setSaving] = useState<string | null>(null); // modelId being saved
-  const [adding, setAdding] = useState(false);
-  const [newModelName, setNewModelName] = useState('');
-  const [expandedModel, setExpandedModel] = useState<string | null>(null);
-
-  const fetchModels = useCallback(async () => {
-    setLoading(true);
-    try {
-      const res = await fetch(`/api/admin/products/${productId}/models`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      const data = await res.json();
-      setModels((data.models || []).map((m: any) => ({ ...m, images: m.images || [] })));
-    } finally { setLoading(false); }
-  }, [productId, token]);
-
-  useEffect(() => { fetchModels(); }, [fetchModels]);
-
-  const addModel = async () => {
-    if (!newModelName.trim()) return;
-    setAdding(true);
-    try {
-      await fetch(`/api/admin/products/${productId}/models`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-        body: JSON.stringify({ model_name: newModelName.trim(), specs: [], images: [], sort_order: models.length }),
-      });
-      setNewModelName('');
-      await fetchModels();
-    } finally { setAdding(false); }
-  };
-
-  const deleteModel = async (modelId: string) => {
-    if (!confirm('Delete this model?')) return;
-    await fetch(`/api/admin/products/${productId}/models/${modelId}`, {
-      method: 'DELETE', headers: { Authorization: `Bearer ${token}` },
-    });
-    fetchModels();
-  };
-
-  const updateSpec = (model: ProductModel, idx: number, field: 'label' | 'value', val: string) => {
-    const specs = (model.specs || []).map((s, i) => i === idx ? { ...s, [field]: val } : s);
-    setModels(prev => prev.map(m => m.id === model.id ? { ...m, specs } : m));
-  };
-
-  const addSpec = (model: ProductModel) => {
-    const specs = [...(model.specs || []), { label: '', value: '' }];
-    setModels(prev => prev.map(m => m.id === model.id ? { ...m, specs } : m));
-  };
-
-  const removeSpec = (model: ProductModel, idx: number) => {
-    const specs = (model.specs || []).filter((_, i) => i !== idx);
-    setModels(prev => prev.map(m => m.id === model.id ? { ...m, specs } : m));
-  };
-
-  const handleModelImages = (model: ProductModel, e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(e.target.files || []);
-    if (!files.length) return;
-    const current = [...(model.images || [])];
-    let loaded = 0;
-    files.forEach(file => {
-      if (file.size > 5 * 1024 * 1024) return;
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        current.push(reader.result as string);
-        loaded++;
-        if (loaded === files.length) {
-          setModels(prev => prev.map(m => m.id === model.id ? { ...m, images: [...current] } : m));
-        }
-      };
-      reader.readAsDataURL(file);
-    });
-    // Reset input so the same file can be re-selected
-    e.target.value = '';
-  };
-
-  const removeModelImage = (model: ProductModel, idx: number) => {
-    const images = (model.images || []).filter((_, i) => i !== idx);
-    setModels(prev => prev.map(m => m.id === model.id ? { ...m, images } : m));
-  };
-
-  const saveModel = async (model: ProductModel) => {
-    setSaving(model.id);
-    try {
-      await fetch(`/api/admin/products/${productId}/models/${model.id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-        body: JSON.stringify({ specs: model.specs || [], images: model.images || [] }),
-      });
-    } finally { setSaving(null); }
-  };
-
-  if (loading) return <div className="py-4 flex justify-center"><Loader2 size={18} className="animate-spin text-amber-500" /></div>;
-
-  return (
-    <div className="space-y-3">
-      {/* Add model input */}
-      <div className="flex gap-2">
-        <input
-          value={newModelName}
-          onChange={e => setNewModelName(e.target.value)}
-          onKeyDown={e => e.key === 'Enter' && addModel()}
-          placeholder="Model name (e.g. VM-1500, 3T Diesel)"
-          className="flex-1 px-3 py-2 rounded-xl text-white placeholder-white/20 text-sm focus:outline-none"
-          style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)' }}
-        />
-        <button onClick={addModel} disabled={adding || !newModelName.trim()}
-          className="px-4 py-2 rounded-xl font-bold text-sm disabled:opacity-50 flex items-center gap-1.5 transition-all"
-          style={{ background: '#f59e0b', color: '#001f3f' }}
-        >
-          {adding ? <Loader2 size={14} className="animate-spin" /> : <Plus size={14} />} Add
-        </button>
-      </div>
-
-      {models.length === 0
-        ? <p className="text-xs italic py-2" style={{ color: 'rgba(255,255,255,0.3)' }}>No models yet. Add one above.</p>
-        : models.map(model => (
-          <div key={model.id} className="rounded-xl overflow-hidden" style={{ border: '1px solid rgba(255,255,255,0.08)' }}>
-            {/* Model header */}
-            <div
-              className="flex items-center justify-between px-4 py-3 cursor-pointer"
-              style={{ background: 'rgba(255,255,255,0.04)' }}
-              onClick={() => setExpandedModel(expandedModel === model.id ? null : model.id)}
-            >
-              <div className="flex items-center gap-2">
-                <LayoutGrid size={14} style={{ color: '#f59e0b' }} />
-                <span className="text-white font-bold text-sm">{model.model_name}</span>
-                <span className="text-xs" style={{ color: 'rgba(255,255,255,0.3)' }}>
-                  {(model.specs || []).length} specs · {(model.images || []).length} images
-                </span>
-              </div>
-              <div className="flex items-center gap-2">
-                <button onClick={e => { e.stopPropagation(); deleteModel(model.id); }}
-                  className="p-1.5 rounded-lg transition-all" style={{ color: 'rgba(255,255,255,0.3)' }}
-                ><Trash2 size={13} /></button>
-                {expandedModel === model.id
-                  ? <ChevronUp size={14} style={{ color: 'rgba(255,255,255,0.4)' }} />
-                  : <ChevronDown size={14} style={{ color: 'rgba(255,255,255,0.4)' }} />}
-              </div>
-            </div>
-
-            {expandedModel === model.id && (
-              <div className="p-4 space-y-4" style={{ background: 'rgba(255,255,255,0.02)' }}>
-
-                {/* Images section */}
-                <div>
-                  <p className="text-[10px] uppercase tracking-wider font-semibold mb-2" style={{ color: 'rgba(255,255,255,0.4)' }}>Model Images</p>
-                  <div className="flex flex-wrap gap-2 mb-2">
-                    {(model.images || []).map((img, idx) => (
-                      <div key={idx} className="relative w-20 h-20 rounded-lg overflow-hidden group flex-shrink-0" style={{ background: 'rgba(255,255,255,0.05)' }}>
-                        <img src={img} alt="" className="w-full h-full object-contain p-1" />
-                        <button
-                          type="button"
-                          onClick={() => removeModelImage(model, idx)}
-                          className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all"
-                          style={{ background: 'rgba(239,68,68,0.7)' }}
-                        ><X size={14} className="text-white" /></button>
-                      </div>
-                    ))}
-                    <label
-                      className="w-20 h-20 rounded-lg flex flex-col items-center justify-center gap-1 cursor-pointer transition-all flex-shrink-0"
-                      style={{ border: '2px dashed rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.3)' }}
-                    >
-                      <Upload size={16} />
-                      <span className="text-[9px]">Add images</span>
-                      <input type="file" accept="image/*" multiple className="hidden" onChange={e => handleModelImages(model, e)} />
-                    </label>
-                  </div>
-                </div>
-
-                {/* Specs section */}
-                <div>
-                  <p className="text-[10px] uppercase tracking-wider font-semibold mb-2" style={{ color: 'rgba(255,255,255,0.4)' }}>Spec Rows</p>
-                  {(model.specs || []).map((spec, idx) => (
-                    <div key={idx} className="flex gap-2 items-center mb-2">
-                      <input value={spec.label} onChange={e => updateSpec(model, idx, 'label', e.target.value)}
-                        placeholder="Label (e.g. Capacity)" className="flex-1 px-3 py-2 rounded-lg text-white placeholder-white/20 text-xs focus:outline-none"
-                        style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)' }}
-                      />
-                      <input value={spec.value} onChange={e => updateSpec(model, idx, 'value', e.target.value)}
-                        placeholder="Value (e.g. 1,500 kg)" className="flex-1 px-3 py-2 rounded-lg text-white placeholder-white/20 text-xs focus:outline-none"
-                        style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)' }}
-                      />
-                      <button onClick={() => removeSpec(model, idx)} className="p-1.5 rounded-lg flex-shrink-0" style={{ color: 'rgba(255,255,255,0.3)' }}>
-                        <X size={13} />
-                      </button>
-                    </div>
-                  ))}
-                  <div className="flex gap-2 pt-1">
-                    <button onClick={() => addSpec(model)}
-                      className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs transition-all"
-                      style={{ border: '1px dashed rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.4)' }}
-                    ><Plus size={12} /> Add Row</button>
-                    <button onClick={() => saveModel(model)} disabled={saving === model.id}
-                      className="flex items-center gap-1.5 px-4 py-2 rounded-lg font-bold text-xs transition-all disabled:opacity-50"
-                      style={{ background: 'rgba(245,158,11,0.1)', color: '#f59e0b' }}
-                    >{saving === model.id ? <Loader2 size={12} className="animate-spin" /> : <Save size={12} />} Save</button>
-                  </div>
-                </div>
-
-              </div>
-            )}
-          </div>
-        ))
-      }
-    </div>
-  );
-}
-
 /* ── Main Page ── */
 export default function AdminProducts() {
   const router = useRouter();
@@ -261,7 +48,6 @@ export default function AdminProducts() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
-  const [showModels, setShowModels] = useState<string | null>(null);
   const [editing, setEditing] = useState<Product | null>(null);
   const [saving, setSaving] = useState(false);
   const [deleting, setDeleting] = useState<string | null>(null);
@@ -479,29 +265,7 @@ export default function AdminProducts() {
                           </div>
                         </div>
 
-                        {/* Always-visible Models button bar */}
-                        <div style={{ borderTop: '1px solid rgba(255,255,255,0.05)', background: 'rgba(0,0,0,0.15)' }}>
-                          <button
-                            onClick={() => setShowModels(showModels === prod.id ? null : prod.id)}
-                            className="w-full flex items-center justify-between px-5 py-3 transition-all"
-                            style={{ color: showModels === prod.id ? '#60a5fa' : 'rgba(255,255,255,0.35)' }}
-                          >
-                            <div className="flex items-center gap-2">
-                              <LayoutGrid size={14} />
-                              <span className="text-xs font-bold uppercase tracking-wider">Manage Models</span>
-                              <span className="text-[10px]" style={{ color: 'rgba(255,255,255,0.2)' }}>— add variants with images & specs</span>
-                            </div>
-                            <ChevronDown size={14} className={`transition-transform duration-200 ${showModels === prod.id ? 'rotate-180' : ''}`} />
-                          </button>
-                        </div>
                       </div>
-
-                      {/* Models panel */}
-                      {showModels === prod.id && token && (
-                        <div className="mt-1 rounded-2xl p-5" style={{ background: 'rgba(0,31,63,0.6)', border: '1px solid rgba(255,255,255,0.04)' }}>
-                          <ModelsEditor productId={prod.id} token={token} />
-                        </div>
-                      )}
                     </div>
                   ))}
                 </div>
@@ -546,25 +310,6 @@ export default function AdminProducts() {
                 <input value={form.short_description} onChange={e => setForm(p => ({ ...p, short_description: e.target.value }))} className={inputCls} style={inputStyle} placeholder="Brief one-liner" />
               </div>
 
-              <div>
-                <label className={labelCls} style={labelStyle}>Full Description</label>
-                <textarea value={form.full_description} onChange={e => setForm(p => ({ ...p, full_description: e.target.value }))} rows={4}
-                  className={`${inputCls} resize-none`} style={inputStyle} placeholder="Detailed product description..." />
-              </div>
-
-              <div>
-                <label className={labelCls} style={labelStyle}>Features (one per line)</label>
-                <textarea value={form.features} onChange={e => setForm(p => ({ ...p, features: e.target.value }))} rows={4}
-                  className={`${inputCls} resize-none font-mono`} style={inputStyle} placeholder={"Heavy duty lift system\nFull hydraulic control\nSafety certified"} />
-              </div>
-
-              <div>
-                <label className={labelCls} style={labelStyle}>General Specs (Key: Value, one per line)</label>
-                <textarea value={form.specs} onChange={e => setForm(p => ({ ...p, specs: e.target.value }))} rows={4}
-                  className={`${inputCls} resize-none font-mono`} style={inputStyle} placeholder={"Capacity: 3,000 kg\nEngine: Diesel\nMax Height: 6m"} />
-                <p className="text-[10px] mt-1" style={{ color: 'rgba(255,255,255,0.2)' }}>For multi-model comparison tables, use the Models panel after saving.</p>
-              </div>
-
               {/* Main image */}
               <div>
                 <label className={labelCls} style={labelStyle}>Main Image</label>
@@ -578,34 +323,7 @@ export default function AdminProducts() {
                 {form.image && <button type="button" onClick={() => setForm(p => ({ ...p, image: '' }))} className="text-xs mt-2" style={{ color: 'rgba(239,68,68,0.6)' }}>Remove image</button>}
               </div>
 
-              {/* Additional images */}
-              <div>
-                <label className={labelCls} style={labelStyle}>Gallery Images (additional)</label>
-                {additionalImages.length > 0 && (
-                  <div className="flex gap-2 flex-wrap mb-3">
-                    {additionalImages.map((img, idx) => (
-                      <div key={idx} className="relative w-16 h-16 rounded-lg overflow-hidden group" style={{ background: 'rgba(255,255,255,0.05)' }}>
-                        <img src={img} alt="" className="w-full h-full object-contain p-1" />
-                        <button type="button" onClick={() => removeAdditionalImage(idx)}
-                          className="absolute inset-0 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-all"
-                          style={{ background: 'rgba(239,68,68,0.6)' }}
-                        ><X size={14} /></button>
-                      </div>
-                    ))}
-                  </div>
-                )}
-                <label className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl cursor-pointer transition-all" style={{ border: '2px dashed rgba(255,255,255,0.08)' }}>
-                  <Upload size={16} style={{ color: 'rgba(255,255,255,0.3)' }} /><span className="text-sm" style={{ color: 'rgba(255,255,255,0.4)' }}>Add gallery images (multi-select)</span>
-                  <input type="file" accept="image/*" multiple onChange={handleAdditionalImages} className="hidden" />
-                </label>
-              </div>
 
-              {/* Brochure URL */}
-              <div>
-                <label className={labelCls} style={labelStyle}>Brochure / Download URL (optional)</label>
-                <input value={form.brochure_url} onChange={e => setForm(p => ({ ...p, brochure_url: e.target.value }))}
-                  className={inputCls} style={inputStyle} placeholder="https://... or /files/product-brochure.pdf" />
-              </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div>

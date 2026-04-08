@@ -201,11 +201,6 @@ export default function AdminCategories() {
                 <input value={form.slug} onChange={(e) => setForm(prev => ({ ...prev, slug: e.target.value }))} className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/20 focus:border-amber-500/50 text-sm" placeholder="forklifts-reach-trucks" required />
               </div>
 
-              <div>
-                <label className="block text-xs font-semibold text-white/50 uppercase tracking-wider mb-2">Description</label>
-                <textarea value={form.description} onChange={(e) => setForm(prev => ({ ...prev, description: e.target.value }))} rows={3} className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/20 focus:border-amber-500/50 text-sm resize-none" placeholder="Brief description..." />
-              </div>
-
               <div className="flex items-center gap-3 p-4 bg-white/5 border border-white/10 rounded-xl">
                 <input
                   type="checkbox"

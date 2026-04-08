@@ -123,10 +123,10 @@ export default function Home() {
               initial={{ opacity: 0, y: -16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="inline-flex items-center justify-center gap-3.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-white/90 text-base sm:text-lg font-medium tracking-wide mb-14"
-              style={{ padding: '0.875rem 2.5rem', margin: '0.5rem' }}
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-white/90 text-xs sm:text-sm font-medium tracking-wide mb-8"
+              style={{ padding: '0.45rem 1.25rem', margin: '0.5rem' }}
             >
-              <span className="w-2.5 h-2.5 rounded-full bg-accent animate-pulse flex-shrink-0" />
+              <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse flex-shrink-0" />
               Established 2015 &nbsp;·&nbsp; UAE, India & Global
             </motion.div>
 
@@ -658,14 +658,14 @@ export default function Home() {
             <div className="flex flex-col sm:flex-row justify-center items-center gap-4 w-full max-w-lg mx-auto">
               <Link
                 href="/products"
-                className="group w-full sm:flex-1 inline-flex items-center justify-center gap-2.5 min-h-[3.25rem] px-8 py-4 rounded-xl bg-accent hover:bg-amber-500 text-[#001229] font-black text-base sm:text-lg transition-all shadow-[0_12px_40px_-8px_rgba(245,158,11,0.45)] hover:shadow-[0_16px_48px_-6px_rgba(245,158,11,0.55)] hover:-translate-y-0.5 active:scale-[0.98] ring-1 ring-white/10"
+                className="group w-full sm:flex-1 inline-flex items-center justify-center gap-2.5 min-h-[3.25rem] px-8 py-4 rounded-xl bg-accent hover:bg-white text-[#001229] hover:text-[#001f3f] font-black text-base sm:text-lg transition-all duration-300 shadow-[0_12px_40px_-8px_rgba(245,158,11,0.45)] hover:shadow-[0_12px_30px_-8px_rgba(255,255,255,0.2)] hover:-translate-y-0.5 active:scale-[0.98] ring-1 ring-white/10"
               >
                 View products
                 <ArrowRight size={20} className="group-hover:translate-x-0.5 transition-transform" />
               </Link>
               <Link
                 href="/contact"
-                className="group w-full sm:flex-1 inline-flex items-center justify-center gap-2.5 min-h-[3.25rem] px-8 py-4 rounded-xl bg-white/[0.06] hover:bg-white/[0.1] text-white font-bold text-base sm:text-lg border border-white/15 hover:border-white/25 transition-all backdrop-blur-md active:scale-[0.98] shadow-lg shadow-black/20"
+                className="group w-full sm:flex-1 inline-flex items-center justify-center gap-2.5 min-h-[3.25rem] px-8 py-4 rounded-xl bg-white/[0.06] hover:bg-white text-white hover:text-[#001f3f] font-bold text-base sm:text-lg border border-white/15 hover:border-white transition-all duration-300 backdrop-blur-md active:scale-[0.98] shadow-lg shadow-black/20 hover:-translate-y-0.5"
               >
                 Contact us
                 <ArrowRight size={20} className="opacity-90 group-hover:translate-x-0.5 transition-transform" />

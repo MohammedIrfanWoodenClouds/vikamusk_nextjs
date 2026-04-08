@@ -170,7 +170,7 @@ export default function Footer() {
           </div>
           <Link
             href="/contact"
-            className="inline-flex items-center justify-center gap-2 bg-accent hover:bg-amber-500 text-[#001f3f] font-bold text-[15px] rounded-full flex-shrink-0 transition-all whitespace-nowrap shadow-lg shadow-amber-500/20 hover:shadow-amber-500/35 hover:-translate-y-px"
+            className="inline-flex items-center justify-center gap-2 bg-accent hover:bg-white text-[#001f3f] hover:text-[#001f3f] font-bold text-[15px] rounded-full flex-shrink-0 transition-all duration-300 whitespace-nowrap shadow-lg shadow-amber-500/20 hover:shadow-white/20 hover:-translate-y-px"
             style={{ padding: '12px 28px' }}
           >
             Get a quote <ArrowRight size={17} />

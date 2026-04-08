@@ -410,17 +410,15 @@ export async function createProductModel(data: {
   model_name: string;
   specs: any[];
   images?: any[];
-  short_description?: string;
-  features?: string;
   sort_order: number;
 }) {
   const { data: model, error } = await supabase
     .from('product_models')
     .insert({
-      ...data,
-      images: data.images ?? [],
-      short_description: data.short_description ?? '',
-      features: data.features ?? '[]',
+      product_id: data.product_id,
+      model_name: data.model_name,
+      sort_order: data.sort_order,
+      specs: data.specs,
     })
     .select()
     .single();

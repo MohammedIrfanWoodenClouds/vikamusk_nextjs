@@ -30,8 +30,6 @@ export async function POST(req: NextRequest) {
     const model = await createProductModel({
       product_id: data.product_id,
       model_name: data.model_name,
-      short_description: data.short_description || '',
-      features,
       specs,
       images: Array.isArray(data.images) ? data.images : [],
       sort_order: data.sort_order ?? 0,

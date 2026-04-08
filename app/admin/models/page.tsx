@@ -32,7 +32,7 @@ const EMPTY_FORM = {
   model_name: '',
   short_description: '',
   features: '',
-  specs: '',
+  specsList: [] as { label: string; value: string }[],
   mainImage: '',
   galleryImages: '[]',
   sort_order: 0,
@@ -80,16 +80,53 @@ export default function AdminModels() {
     catch { return str.split('\n').map(s => s.trim()).filter(Boolean); }
   };
 
-  const parseSpecs = (str: string): { label: string; value: string }[] => {
-    return str
-      .split('\n')
-      .filter(l => l.includes(':'))
-      .map(l => { const i = l.indexOf(':'); return { label: l.slice(0, i).trim(), value: l.slice(i + 1).trim() }; })
-      .filter(s => s.label);
+  const handleSpecChange = (idx: number, field: 'label' | 'value', val: string) => {
+    const list = [...form.specsList];
+    list[idx] = { ...list[idx], [field]: val };
+    setForm({ ...form, specsList: list });
   };
 
-  const specsToText = (specs: { label: string; value: string }[]) =>
-    (specs || []).map(s => `${s.label}: ${s.value}`).join('\n');
+  const addSpecRow = () => setForm({ ...form, specsList: [...form.specsList, { label: '', value: '' }] });
+  
+  const removeSpecRow = (idx: number) => {
+    const list = [...form.specsList];
+    list.splice(idx, 1);
+    setForm({ ...form, specsList: list });
+  };
+
+  const loadTemplate = () => {
+    setForm(p => ({
+      ...p,
+      specsList: [
+        { label: '--- DIMENSIONS ---', value: '' },
+        { label: 'Maximum Working Height (m)', value: '' },
+        { label: 'Maximum Platform Height (m)', value: '' },
+        { label: 'Safe Working Load (kg)', value: '' },
+        { label: 'Extension Platform Safe Working Load (kg)', value: '' },
+        { label: 'Working Platform Size (L x W x H) (m)', value: '' },
+        { label: 'Overall Dimensions (L x W x H, Guardrail Folded) (m)', value: '' },
+        { label: 'Platform Extension Size (m)', value: '' },
+        { label: 'Minimum Ground Clearance (m)', value: '' },
+        { label: '--- PERFORMANCE ---', value: '' },
+        { label: 'Wheelbase (m)', value: '' },
+        { label: 'Turning Radius (Inner / Outer) (m)', value: '' },
+        { label: 'Lifting / Lowering Motor', value: '' },
+        { label: 'Motor Power (24V)', value: '' },
+        { label: 'Lifting / Lowering Speed (m/min)', value: '' },
+        { label: 'Machine Driving Speed (Travel State) (km/h)', value: '' },
+        { label: 'Machine Driving Speed (Lifting State) (km/h)', value: '' },
+        { label: '--- BATTERY ---', value: '' },
+        { label: 'Type', value: '' },
+        { label: 'Battery Spec', value: '' },
+        { label: 'Charger', value: '' },
+        { label: 'Maximum Gradeability (%)', value: '' },
+        { label: 'Maximum Allowable Angle of Work (°)', value: '' },
+        { label: 'Tire Size', value: '' },
+        { label: 'Controller Brand', value: '' },
+        { label: 'Self-weight (kg)', value: '' },
+      ]
+    }));
+  };
 
   /* ── Image helpers ── */
   const handleMainImage = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -144,7 +181,7 @@ export default function AdminModels() {
       model_name: model.model_name,
       short_description: model.short_description || '',
       features: featuresStr,
-      specs: specsToText(model.specs),
+      specsList: Array.isArray(model.specs) ? model.specs : [],
       mainImage: mainImage || '',
       galleryImages: JSON.stringify(rest),
       sort_order: model.sort_order,
@@ -167,7 +204,7 @@ export default function AdminModels() {
       model_name: form.model_name,
       short_description: form.short_description,
       features: JSON.stringify(parseFeatures(form.features)),
-      specs: parseSpecs(form.specs),
+      specs: form.specsList,
       images: allImages,
       sort_order: form.sort_order,
     };
@@ -391,16 +428,38 @@ export default function AdminModels() {
                 />
               </div>
 
-              {/* Specs */}
-              <div>
-                <label className={labelCls} style={labelStyle}>Specifications (Key: Value, one per line)</label>
-                <textarea
-                  value={form.specs}
-                  onChange={e => setForm(p => ({ ...p, specs: e.target.value }))}
-                  rows={5}
-                  className={`${inputCls} resize-none font-mono`} style={inputStyle}
-                  placeholder={'Capacity: 3,000 kg\nMax Lift Height: 6 m\nEngine: Diesel\nOverall Width: 1,220 mm'}
-                />
+              {/* Specs Table */}
+              <div className="pt-2">
+                <div className="flex items-center justify-between mb-3">
+                  <label className={labelCls} style={{ ...labelStyle, marginBottom: 0 }}>Specifications Table</label>
+                  <button type="button" onClick={loadTemplate}
+                    className="text-[10px] px-2.5 py-1.5 rounded-lg bg-amber-500/10 text-amber-500 font-bold hover:bg-amber-500/20 transition-all border border-amber-500/20">
+                    Load Scissor Lift Template
+                  </button>
+                </div>
+                <div className="space-y-2 mb-3">
+                  <div className="flex gap-2">
+                     <div className="flex-1 text-[10px] uppercase font-bold text-white/30">Label / Spec Name</div>
+                     <div className="flex-1 text-[10px] uppercase font-bold text-white/30">Value</div>
+                     <div className="w-[38px]"></div>
+                  </div>
+                  {form.specsList.map((row, idx) => (
+                    <div key={idx} className="flex items-center gap-2">
+                       <input value={row.label} onChange={e => handleSpecChange(idx, 'label', e.target.value)}
+                         className={inputCls} style={{...inputStyle, padding: '8px 12px', fontSize: '12px'}} placeholder="e.g. Dimensions" />
+                       <input value={row.value} onChange={e => handleSpecChange(idx, 'value', e.target.value)}
+                         className={inputCls} style={{...inputStyle, padding: '8px 12px', fontSize: '12px'}} placeholder="Value (leave blank for group headers)" />
+                       <button type="button" onClick={() => removeSpecRow(idx)} className="p-2 text-red-400 hover:bg-red-400/10 rounded-lg transition-colors flex-shrink-0">
+                         <X size={14} />
+                       </button>
+                    </div>
+                  ))}
+                </div>
+                <button type="button" onClick={addSpecRow}
+                  className="text-xs flex items-center gap-1.5 px-3 py-2 rounded-lg transition-all"
+                  style={{ border: '1px dashed rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.4)' }}>
+                  <Plus size={12} /> Add Row
+                </button>
               </div>
 
               {/* Main image */}
