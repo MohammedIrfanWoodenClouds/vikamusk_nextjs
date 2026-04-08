@@ -82,6 +82,60 @@ export default function Home() {
   const [categories, setCategories] = useState<any[]>([]);
   const [loadingData, setLoadingData] = useState(true);
 
+  const featuredScrollRef = useRef<HTMLDivElement>(null);
+
+  const isCarousel = featuredProducts.length > 3;
+
+  useEffect(() => {
+    if (!isCarousel) return;
+    let isHovered = false;
+    
+    const handleMouseEnter = () => isHovered = true;
+    const handleMouseLeave = () => isHovered = false;
+    
+    const elem = featuredScrollRef.current;
+    if (elem) {
+      elem.addEventListener('mouseenter', handleMouseEnter);
+      elem.addEventListener('mouseleave', handleMouseLeave);
+      
+      // Initialize to the middle block of duplicates to allow smooth swiping left & right
+      setTimeout(() => {
+        if (!featuredScrollRef.current) return;
+        const first = featuredScrollRef.current.children[0] as HTMLElement;
+        if (first) {
+           featuredScrollRef.current.scrollLeft = featuredProducts.length * (first.offsetWidth + 24);
+        }
+      }, 100);
+    }
+
+    const interval = setInterval(() => {
+      if (!featuredScrollRef.current || isHovered) return;
+      const el = featuredScrollRef.current;
+      const firstChild = el.children[0] as HTMLElement;
+      if (!firstChild) return;
+      
+      const step = firstChild.offsetWidth + 24;
+      el.scrollBy({ left: step, behavior: 'smooth' });
+
+      // Teleport instantly back after smooth scroll completes to create infinite loop feeling
+      setTimeout(() => {
+        if (!featuredScrollRef.current) return;
+        const singleBlockWidth = featuredProducts.length * step;
+        if (featuredScrollRef.current.scrollLeft >= singleBlockWidth * 2 - 10) {
+          featuredScrollRef.current.scrollBy({ left: -singleBlockWidth, behavior: 'auto' });
+        }
+      }, 600);
+    }, 3000);
+
+    return () => {
+      clearInterval(interval);
+      if (elem) {
+        elem.removeEventListener('mouseenter', handleMouseEnter);
+        elem.removeEventListener('mouseleave', handleMouseLeave);
+      }
+    };
+  }, [featuredProducts, isCarousel]);
+
   useEffect(() => {
     Promise.all([
       fetch('/api/public/products?featured=true').then(r => r.json()),
@@ -323,6 +377,8 @@ export default function Home() {
       </section>
 
       {/* ===== PRODUCT CATEGORIES ===== */}
+      {/* HIDDEN FOR NOW: if needed add later */}
+      {false && (
       <section className="section-padding bg-surface relative overflow-hidden">
         <div className="pointer-events-none absolute inset-0 opacity-[0.4]" aria-hidden style={{
           backgroundImage: 'radial-gradient(ellipse 80% 50% at 50% -20%, rgba(0, 31, 63, 0.06), transparent)',
@@ -433,6 +489,7 @@ export default function Home() {
           )}
         </div>
       </section>
+      )}
 
       {/* ===== FEATURED PRODUCTS ===== */}
       <section className="section-padding bg-white relative">
@@ -476,11 +533,31 @@ export default function Home() {
                 Browse all products <ArrowRight size={15} />
               </Link>
             </div>
-          ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-              {featuredProducts.slice(0, 6).map((product, i) => (
-                <ProductCard key={product.id} product={product} index={i} />
+          ) : !isCarousel ? (
+            <div className="flex flex-wrap justify-center gap-6 lg:gap-8">
+              {featuredProducts.map((product, i) => (
+                <div key={product.id} className="w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]">
+                  <ProductCard product={product} index={i} />
+                </div>
               ))}
+            </div>
+          ) : (
+            <div className="relative -mx-4 px-4 sm:mx-0 sm:px-0">
+              <div 
+                ref={featuredScrollRef} 
+                className="flex gap-6 overflow-x-auto snap-x snap-mandatory hide-scrollbar pb-8 pt-4"
+                style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+              >
+                {[...featuredProducts, ...featuredProducts, ...featuredProducts].map((product, i) => (
+                  <div 
+                    key={`${product.id}-${i}`} 
+                    className="w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] flex-none shrink-0 snap-start"
+                  >
+                    <ProductCard product={product} index={i} />
+                  </div>
+                ))}
+              </div>
+              <style dangerouslySetInnerHTML={{__html: `\n.hide-scrollbar::-webkit-scrollbar { display: none; }\n`}} />
             </div>
           )}
 

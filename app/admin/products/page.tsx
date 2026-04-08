@@ -146,7 +146,24 @@ export default function AdminProducts() {
       const obj = JSON.parse(prod.specs);
       specsStr = Object.entries(obj).map(([k, v]) => `${k}: ${v}`).join('\n');
     } catch { specsStr = prod.specs || ''; }
-    setForm({ main_category_id: prod.main_category_id, name: prod.name, slug: prod.slug, short_description: prod.short_description || '', full_description: prod.full_description || '', features: featuresStr, specs: specsStr, image: prod.image || '', images: prod.images || '[]', brochure_url: prod.brochure_url || '', featured: prod.featured, sort_order: prod.sort_order });
+    
+    let mainImg = '';
+    let extraImgs = '[]';
+    if (prod.image && prod.image.startsWith('[')) {
+      try {
+        const arr = JSON.parse(prod.image);
+        if (arr.length > 0) {
+          mainImg = arr[0];
+          extraImgs = JSON.stringify(arr.slice(1));
+        }
+      } catch {
+        mainImg = prod.image;
+      }
+    } else {
+      mainImg = prod.image || '';
+    }
+
+    setForm({ main_category_id: prod.main_category_id, name: prod.name, slug: prod.slug, short_description: prod.short_description || '', full_description: prod.full_description || '', features: featuresStr, specs: specsStr, image: mainImg, images: extraImgs, brochure_url: prod.brochure_url || '', featured: prod.featured, sort_order: prod.sort_order });
     setShowForm(true); setError('');
   };
 
@@ -154,7 +171,16 @@ export default function AdminProducts() {
     e.preventDefault();
     if (!token) return;
     setSaving(true); setError('');
-    const payload = { ...form, features: JSON.stringify(parseFeatures(form.features)), specs: JSON.stringify(parseSpecs(form.specs)) };
+    
+    let extraImgs: string[] = [];
+    try { extraImgs = JSON.parse(form.images); } catch {}
+    const allImages = form.image ? [form.image, ...extraImgs] : extraImgs;
+    const finalImageToken = allImages.length === 0 ? '' : allImages.length === 1 ? allImages[0] : JSON.stringify(allImages);
+
+    const payload = { ...form, image: finalImageToken, features: JSON.stringify(parseFeatures(form.features)), specs: JSON.stringify(parseSpecs(form.specs)) };
+    // @ts-ignore
+    delete payload.images; // not in db schema
+
     try {
       const url = editing ? `/api/admin/products/${editing.id}` : '/api/admin/products';
       const res = await fetch(url, { method: editing ? 'PUT' : 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` }, body: JSON.stringify(payload) });
@@ -242,7 +268,13 @@ export default function AdminProducts() {
                         {/* Product info row */}
                         <div className="p-5 flex items-center gap-5">
                           <div className="w-16 h-16 rounded-xl flex items-center justify-center flex-shrink-0 overflow-hidden" style={{ background: 'rgba(255,255,255,0.05)' }}>
-                            {prod.image ? <img src={prod.image} alt={prod.name} className="w-full h-full object-contain p-1" /> : <Package size={22} style={{ color: 'rgba(16,185,129,0.5)' }} />}
+                            {(() => {
+                              let dispImg = prod.image;
+                              if (dispImg && dispImg.startsWith('[')) {
+                                try { const arr = JSON.parse(dispImg); dispImg = arr[0] || ''; } catch {}
+                              }
+                              return dispImg ? <img src={dispImg} alt={prod.name} className="w-full h-full object-contain p-1" /> : <Package size={22} style={{ color: 'rgba(16,185,129,0.5)' }} />;
+                            })()}
                           </div>
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2 flex-wrap">
@@ -321,6 +353,27 @@ export default function AdminProducts() {
                   </label>
                 </div>
                 {form.image && <button type="button" onClick={() => setForm(p => ({ ...p, image: '' }))} className="text-xs mt-2" style={{ color: 'rgba(239,68,68,0.6)' }}>Remove image</button>}
+              </div>
+
+              {/* Multiple Images */}
+              <div>
+                <label className={labelCls} style={labelStyle}>Gallery Images (Optional)</label>
+                <label className="flex items-center justify-center gap-2 w-full px-4 py-3 rounded-xl cursor-pointer transition-all mb-3" style={{ border: '2px dashed rgba(255,255,255,0.1)' }}>
+                  <Upload size={18} style={{ color: 'rgba(255,255,255,0.3)' }} /><span className="text-sm" style={{ color: 'rgba(255,255,255,0.4)' }}>Upload additional images</span>
+                  <input type="file" accept="image/*" onChange={handleAdditionalImages} className="hidden" multiple />
+                </label>
+                {additionalImages.length > 0 && (
+                  <div className="grid grid-cols-4 sm:grid-cols-5 gap-3 mt-4">
+                    {additionalImages.map((img, idx) => (
+                      <div key={idx} className="relative group aspect-square rounded-xl overflow-hidden bg-white/5 border border-white/10">
+                        <img src={img} alt={`Gallery ${idx}`} className="w-full h-full object-cover" />
+                        <button type="button" onClick={() => removeAdditionalImage(idx)} className="absolute top-1 right-1 p-1 bg-red-500/80 hover:bg-red-500 text-white rounded-lg opacity-0 group-hover:opacity-100 transition-opacity">
+                          <X size={14} />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
 
 

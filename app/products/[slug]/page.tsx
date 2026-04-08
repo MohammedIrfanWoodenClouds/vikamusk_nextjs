@@ -22,6 +22,19 @@ interface ProductModel {
 }
 
 function normalizeProduct(p: any): any {
+  let mainImg = p.image || '';
+  let imgList: string[] = [];
+  if (mainImg && mainImg.startsWith('[')) {
+    try {
+      imgList = JSON.parse(mainImg);
+      mainImg = imgList[0] || '';
+    } catch {
+      imgList = [mainImg];
+    }
+  } else if (mainImg) {
+    imgList = [mainImg];
+  }
+
   return {
     id: String(p.id),
     name: p.name,
@@ -32,8 +45,8 @@ function normalizeProduct(p: any): any {
     fullDescription: p.full_description || '',
     features: typeof p.features === 'string' ? (() => { try { return JSON.parse(p.features); } catch { return []; } })() : (p.features || []),
     specs: typeof p.specs === 'string' ? (() => { try { return JSON.parse(p.specs); } catch { return {}; } })() : (p.specs || {}),
-    images: typeof p.images === 'string' ? (() => { try { return JSON.parse(p.images); } catch { return []; } })() : (p.images || []),
-    image: p.image || '',
+    images: imgList,
+    image: mainImg,
     brochure_url: p.brochure_url || '',
     featured: !!p.featured,
     main_category_slug: p.main_category_slug || p.category_slug,
