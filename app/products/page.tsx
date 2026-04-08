@@ -228,7 +228,7 @@ function ProductsContent() {
       {/* ─── Hero ─── */}
       <section 
         className="relative pb-24 lg:pb-32 bg-primary overflow-hidden"
-        style={{ paddingTop: '200px' }}
+        style={{ paddingTop: '160px' }}
       >
         <div className="absolute inset-0">
           <Image src="/images/hero-bg.png" alt="" fill className="object-cover opacity-20" priority />

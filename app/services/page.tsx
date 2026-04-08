@@ -10,7 +10,7 @@ export default function Services() {
   return (
     <>
       {/* Hero */}
-      <section className="relative pb-28 bg-primary overflow-hidden" style={{ paddingTop: '200px' }}>
+      <section className="relative pb-28 bg-primary overflow-hidden" style={{ paddingTop: '160px' }}>
         <div className="absolute inset-0 opacity-15">
           <Image src="/images/hero-bg.png" alt="" fill className="object-cover" priority />
         </div>
@@ -191,7 +191,7 @@ export default function Services() {
               >
                 <Link
                   href="/contact"
-                  className="bg-accent hover:bg-amber-600 text-[#001f3f] font-bold rounded-xl transition-all inline-flex items-center gap-2.5 hover:scale-105"
+                  className="bg-accent hover:bg-white text-[#001f3f] hover:text-[#001f3f] font-bold rounded-xl transition-all inline-flex items-center gap-2.5 hover:scale-105 hover:shadow-[0_0_25px_rgba(255,255,255,0.4)]"
                   style={{
                     padding: '1rem 2.25rem',
                     fontSize: '0.95rem',
@@ -204,7 +204,7 @@ export default function Services() {
                   href="/vikamusk-company-profile.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-white/10 hover:bg-white/20 text-white font-semibold rounded-xl border border-white/20 hover:border-white/40 transition-all inline-flex items-center justify-center gap-2.5 hover:scale-105"
+                  className="bg-white/10 hover:bg-white text-white hover:text-[#001f3f] font-semibold rounded-xl border border-white/20 hover:border-white transition-all inline-flex items-center justify-center gap-2.5 hover:scale-105 hover:shadow-[0_0_25px_rgba(255,255,255,0.4)]"
                   style={{
                     padding: '1rem 2.25rem',
                     fontSize: '0.95rem',

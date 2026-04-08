@@ -46,18 +46,18 @@ export default function Contact() {
   return (
     <>
       {/* Hero */}
-      <section className="relative pb-28 bg-primary overflow-hidden" style={{ paddingTop: '200px' }}>
+      <section className="relative pb-28 bg-primary overflow-hidden" style={{ paddingTop: '160px' }}>
         <div className="absolute inset-0 opacity-15">
           <Image src="/images/hero-bg.png" alt="" fill className="object-cover" />
         </div>
         <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/95 to-primary/80" />
         <div className="container-custom relative z-10">
-          <AnimatedSection>
-            <span className="text-sm font-bold text-accent uppercase tracking-wider">Get In Touch</span>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mt-3 mb-4">
+          <AnimatedSection className="flex flex-col items-center text-center">
+            <span className="text-sm font-bold text-accent uppercase tracking-wider block mb-4">Get In Touch</span>
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-6">
               Contact Us
             </h1>
-            <p className="text-gray-400 max-w-xl text-base lg:text-lg leading-relaxed">
+            <p className="text-gray-400 text-base lg:text-lg leading-relaxed max-w-2xl" style={{ marginBottom: '3rem' }}>
               Have questions about our equipment? Reach out and our team will get back to you promptly.
             </p>
           </AnimatedSection>

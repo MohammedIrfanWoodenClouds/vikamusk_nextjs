@@ -40,16 +40,16 @@ export default function Careers() {
   return (
     <>
       {/* Hero */}
-      <section className="relative pb-28 bg-primary overflow-hidden" style={{ paddingTop: '200px' }}>
+      <section className="relative pb-28 bg-primary overflow-hidden" style={{ paddingTop: '160px' }}>
         <div className="absolute inset-0 opacity-15">
           <Image src="/images/company/vikamusk-reception.png" alt="" fill className="object-cover" priority />
         </div>
         <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/95 to-primary/80" />
         <div className="container-custom relative z-10">
-          <AnimatedSection>
-            <span className="text-sm font-bold text-accent uppercase tracking-wider">Join Our Team</span>
-            <h1 className="text-4xl lg:text-5xl font-black text-white mt-3 mb-6">Careers at Vikamusk</h1>
-            <p className="text-white/60 max-w-xl text-lg leading-relaxed">
+          <AnimatedSection className="flex flex-col items-center text-center">
+            <span className="text-sm font-bold text-accent uppercase tracking-wider block mb-4">Join Our Team</span>
+            <h1 className="text-4xl lg:text-5xl font-black text-white mb-6">Careers at Vikamusk</h1>
+            <p className="text-white/60 text-lg leading-relaxed max-w-2xl" style={{ marginBottom: '3rem' }}>
               Be part of a team that&apos;s shaping the future of construction equipment and material handling solutions across the globe.
             </p>
           </AnimatedSection>

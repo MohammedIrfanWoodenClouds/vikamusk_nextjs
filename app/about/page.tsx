@@ -9,18 +9,18 @@ export default function About() {
   return (
     <>
       {/* Hero */}
-      <section className="relative pb-28 bg-primary overflow-hidden" style={{ paddingTop: '200px' }}>
+      <section className="relative pb-28 bg-primary overflow-hidden" style={{ paddingTop: '160px' }}>
         <div className="absolute inset-0 opacity-20">
           <Image src="/images/company/vikamusk-company-china-.png" alt="" fill className="object-cover" priority />
         </div>
         <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/95 to-primary/80" />
         <div className="container-custom relative z-10">
-          <AnimatedSection>
-            <span className="text-sm font-bold text-accent uppercase tracking-wider">Who We Are</span>
-            <h1 className="text-4xl lg:text-5xl font-black text-white mt-3 mb-6 max-w-2xl">
+          <AnimatedSection className="flex flex-col items-center text-center">
+            <span className="text-sm font-bold text-accent uppercase tracking-wider block mb-4">Who We Are</span>
+            <h1 className="text-4xl lg:text-5xl font-black text-white leading-tight mb-6">
               About Vikamusk International
             </h1>
-            <p className="text-white/60 max-w-xl text-lg leading-relaxed">
+            <p className="text-white/60 text-lg leading-relaxed max-w-4xl" style={{ marginBottom: '3rem' }}>
               A trusted name in construction equipment and material handling solutions since 2015.
             </p>
           </AnimatedSection>
@@ -203,7 +203,7 @@ export default function About() {
             <p className="text-gray-400 max-w-lg mx-auto mb-8">
               Contact our team to discuss your equipment needs and discover how Vikamusk can help.
             </p>
-            <Link href="/contact" className="bg-accent hover:bg-amber-600 text-[#001f3f] font-bold px-7 py-3.5 rounded-lg transition-all inline-flex items-center gap-2 text-sm">
+            <Link href="/contact" className="bg-accent hover:bg-white text-[#001f3f] hover:text-[#001f3f] font-bold px-7 py-3.5 rounded-xl transition-all inline-flex items-center gap-2 text-sm hover:scale-105 hover:shadow-[0_0_25px_rgba(255,255,255,0.4)] border-2 border-transparent hover:border-black">
               Get in Touch <ArrowRight size={16} />
             </Link>
           </AnimatedSection>
