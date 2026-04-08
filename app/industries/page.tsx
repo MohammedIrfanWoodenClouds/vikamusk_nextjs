@@ -61,7 +61,7 @@ export default function Industries() {
   return (
     <>
       {/* Hero */}
-      <section className="relative pb-28 bg-primary overflow-hidden" style={{ paddingTop: '160px' }}>
+      <section className="relative pb-28 bg-primary overflow-hidden" style={{ paddingTop: '200px' }}>
         <div className="absolute inset-0 opacity-15">
           <Image src="/images/hero-bg.png" alt="" fill className="object-cover" priority />
         </div>

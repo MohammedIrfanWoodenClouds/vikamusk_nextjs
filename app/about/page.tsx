@@ -10,7 +10,7 @@ export default function About() {
   return (
     <>
       {/* Hero */}
-      <section className="relative pb-28 bg-primary overflow-hidden" style={{ paddingTop: '160px' }}>
+      <section className="relative pb-28 bg-primary overflow-hidden" style={{ paddingTop: '200px' }}>
         <div className="absolute inset-0 opacity-20">
           <Image src="/images/company/vikamusk-company-china-.png" alt="" fill className="object-cover" priority />
         </div>

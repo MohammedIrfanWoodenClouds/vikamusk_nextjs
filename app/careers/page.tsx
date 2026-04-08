@@ -42,7 +42,7 @@ export default function Careers() {
   return (
     <>
       {/* Hero */}
-      <section className="relative pb-28 bg-primary overflow-hidden" style={{ paddingTop: '160px' }}>
+      <section className="relative pb-28 bg-primary overflow-hidden" style={{ paddingTop: '200px' }}>
         <div className="absolute inset-0 opacity-15">
           <Image src="/images/company/vikamusk-reception.png" alt="" fill className="object-cover" priority />
         </div>
@@ -109,7 +109,7 @@ export default function Careers() {
             </div>
           ) : careers.length === 0 ? (
             <AnimatedSection>
-              <div className="bg-white rounded-[32px] p-12 lg:p-20 text-center border border-border/50 shadow-sm max-w-4xl mx-auto">
+              <div className="bg-white rounded-2xl p-12 lg:p-20 text-center border border-border/50 shadow-sm max-w-4xl mx-auto">
                 <div className="w-20 h-20 bg-surface rounded-2xl flex items-center justify-center mx-auto mb-8">
                   <Briefcase size={40} className="text-gray-300" />
                 </div>
