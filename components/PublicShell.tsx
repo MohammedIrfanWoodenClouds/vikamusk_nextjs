@@ -18,7 +18,7 @@ export default function PublicShell({ children }: { children: React.ReactNode })
       <SplashScreen />
       <Navbar />
 
-      <main className="min-h-screen overflow-x-hidden">{children}</main>
+      <main className="min-h-screen overflow-x-hidden pt-[88px] lg:pt-[104px]">{children}</main>
       <Footer />
     </>
   );

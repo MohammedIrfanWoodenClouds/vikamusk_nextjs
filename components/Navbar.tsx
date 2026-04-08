@@ -412,7 +412,7 @@ export default function Navbar() {
           <div className="flex items-center gap-3">
             <Link
               href="/contact"
-              className="hidden md:inline-flex items-center justify-center gap-2 bg-accent hover:bg-white text-[#001f3f] hover:text-[#001f3f] font-bold text-[15px] rounded-full flex-shrink-0 transition-all duration-300 whitespace-nowrap shadow-lg shadow-amber-500/20 hover:shadow-white/20 hover:-translate-y-px"
+              className="hidden md:inline-flex items-center justify-center gap-2 bg-accent hover:bg-white text-[#001f3f] hover:text-[#001f3f] font-bold text-[15px] rounded-full flex-shrink-0 transition-all duration-300 whitespace-nowrap shadow-lg shadow-amber-500/20 hover:shadow-white/20 hover:-translate-y-px border-2 border-transparent hover:border-black active:scale-[0.98]"
               style={{
                 padding: scrolled ? '10px 24px' : '12px 28px',
                 marginLeft: '16px',

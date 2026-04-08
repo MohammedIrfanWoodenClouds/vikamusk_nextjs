@@ -61,17 +61,14 @@ export default function Industries() {
   return (
     <>
       {/* Hero */}
-      <section 
-        className="relative pb-28 bg-primary overflow-hidden"
-        style={{ paddingTop: '200px' }}
-      >
+      <section className="relative pt-32 lg:pt-40 pb-28 bg-primary overflow-hidden">
         <div className="absolute inset-0 opacity-15">
           <Image src="/images/hero-bg.png" alt="" fill className="object-cover" />
         </div>
         <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/95 to-primary/80" />
         <div className="container-custom relative z-10">
           <AnimatedSection className="flex flex-col items-center text-center gap-y-10">
-            <span className="text-sm font-bold text-accent uppercase tracking-[0.2em] mt-12 block">Who We Serve</span>
+            <span className="text-sm font-bold text-accent uppercase tracking-[0.2em] block">Who We Serve</span>
             <h1 className="text-4xl lg:text-[72px] font-black text-white leading-[1.05] tracking-tight">
               Industries We Serve
             </h1>
@@ -104,7 +101,10 @@ export default function Industries() {
                 application, backed by full after-sales support, genuine spare parts, and expert
                 technical consultation.
               </p>
-              <Link href="/products" className="btn-primary">
+              <Link 
+                href="/products" 
+                className="btn-primary hover:!bg-white hover:!text-[#001f3f] border-2 border-transparent hover:!border-black transition-all duration-300"
+              >
                 Browse Equipment <ArrowRight size={16} />
               </Link>
             </AnimatedSection>
@@ -205,18 +205,17 @@ export default function Industries() {
               >
                 <Link
                   href="/contact"
-                  className="bg-accent hover:bg-amber-600 text-[#001f3f] font-bold rounded-xl transition-all inline-flex items-center gap-2.5 hover:scale-105"
+                  className="btn-primary hover:!bg-white hover:!text-[#001f3f] hover:!border-black font-bold rounded-xl transition-all duration-300 inline-flex items-center gap-2.5 hover:scale-105 shadow-lg shadow-amber-500/20 hover:shadow-none"
                   style={{
                     padding: '1rem 2.25rem',
                     fontSize: '0.95rem',
-                    boxShadow: '0 4px 20px rgba(245, 158, 11, 0.3)',
                   }}
                 >
                   Get in Touch <Phone size={18} />
                 </Link>
                 <Link
                   href="/products"
-                  className="bg-white/10 hover:bg-white/20 text-white font-semibold rounded-xl border border-white/20 hover:border-white/40 transition-all inline-flex items-center gap-2.5 hover:scale-105"
+                  className="bg-white/10 hover:!bg-white text-white hover:!text-[#001f3f] font-semibold rounded-xl border-2 border-white/20 hover:!border-black transition-all duration-300 inline-flex items-center gap-2.5 hover:scale-105"
                   style={{
                     padding: '1rem 2.25rem',
                     fontSize: '0.95rem',
