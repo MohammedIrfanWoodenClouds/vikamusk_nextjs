@@ -216,10 +216,10 @@ export default function Home() {
               className="flex flex-wrap gap-3 sm:gap-4"
               style={{ marginTop: '1.5rem' }}
             >
-              <Link href="/products" className="btn-primary text-sm sm:text-base px-7 py-3.5 sm:px-8 sm:py-4">
+              <Link href="/products" className="btn-primary text-sm sm:text-base px-7 py-3.5 sm:px-8 sm:py-4 hover:!bg-white hover:!text-[#001f3f] hover:!border-white hover:!shadow-[0_0_25px_rgba(255,255,255,0.4)]">
                 Explore Products <ArrowRight size={17} />
               </Link>
-              <Link href="/contact" className="btn-secondary text-sm sm:text-base px-7 py-3.5 sm:px-8 sm:py-4">
+              <Link href="/contact" className="btn-secondary text-sm sm:text-base px-7 py-3.5 sm:px-8 sm:py-4 hover:!bg-white hover:!text-[#001f3f] hover:!border-white hover:!shadow-[0_0_25px_rgba(255,255,255,0.4)]">
                 Contact Sales
               </Link>
             </motion.div>
