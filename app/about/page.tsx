@@ -2,8 +2,9 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight, Target, Eye, Briefcase, Users, Lightbulb, Globe } from 'lucide-react';
+import { ArrowRight, Target, Eye, Briefcase, Users, Lightbulb, Globe, Phone } from 'lucide-react';
 import { AnimatedSection, StaggerContainer, StaggerItem } from '@/components/AnimatedSection';
+import ServiceCard from '@/components/ServiceCard';
 
 export default function About() {
   return (
@@ -75,74 +76,97 @@ export default function About() {
       </section>
 
       {/* Mission & Vision */}
-      <section className="section-padding bg-surface">
+      <section className="section-padding bg-primary text-white">
         <div className="container-custom">
-          <AnimatedSection className="text-center mb-16">
+          <AnimatedSection className="flex flex-col items-center text-center mb-16">
             <span className="text-sm font-bold text-accent uppercase tracking-wider">Our Purpose</span>
-            <h2 className="text-3xl lg:text-4xl font-black text-primary mt-3">
+            <h2 className="text-3xl lg:text-4xl font-black text-white mt-3 mb-4">
               Mission & Vision
             </h2>
+            <p className="text-white/60 max-w-2xl mx-auto text-center">
+              Our core values guide every decision we make, ensuring we deliver excellence 
+              in engineering while empowering global progress through innovative lifting solutions.
+            </p>
           </AnimatedSection>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <AnimatedSection direction="left">
-              <div className="p-10 bg-white rounded-2xl border border-border/50 h-full">
-                <div className="w-14 h-14 rounded-xl bg-accent/10 text-accent flex items-center justify-center mb-6">
-                  <Target size={28} />
+          <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-10">
+            <StaggerItem className="h-full">
+              <div className="group p-10 rounded-2xl bg-white/5 border border-white/10 hover:border-accent/40 transition-all duration-300 hover-lift h-full overflow-hidden">
+                <div className="flex items-start gap-6">
+                  <div className="shrink-0 w-16 h-16 rounded-xl bg-accent/10 text-accent flex items-center justify-center group-hover:bg-accent group-hover:text-primary transition-all">
+                    <Target size={32} />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-2xl font-bold text-white mb-4 tracking-tight">Our Mission</h3>
+                    <p className="text-white/50 leading-relaxed">
+                      To foster 'A World of Creativity and Engineering Excellence' by delivering high-quality construction and material handling solutions. Our multidisciplinary approach bridges the gap between engineering and design, offering clients holistic solutions that are both technically sound and aesthetically refined.
+                    </p>
+                  </div>
                 </div>
-                <h3 className="text-2xl font-black text-primary mb-4">Our Mission</h3>
-                <p className="text-muted leading-relaxed">
-                  To foster "A World of Creativity and Engineering Excellence" by delivering 
-                  high-quality construction and material handling solutions. Our multidisciplinary 
-                  approach bridges the gap between engineering and design, offering clients 
-                  holistic solutions that are both technically sound and aesthetically refined.
-                </p>
               </div>
-            </AnimatedSection>
-
-            <AnimatedSection direction="right">
-              <div className="p-10 bg-white rounded-2xl border border-border/50 h-full">
-                <div className="w-14 h-14 rounded-xl bg-accent/10 text-accent flex items-center justify-center mb-6">
-                  <Eye size={28} />
+            </StaggerItem>
+            <StaggerItem className="h-full">
+              <div className="group p-10 rounded-2xl bg-white/5 border border-white/10 hover:border-accent/40 transition-all duration-300 hover-lift h-full overflow-hidden">
+                <div className="flex items-start gap-6">
+                  <div className="shrink-0 w-16 h-16 rounded-xl bg-accent/10 text-accent flex items-center justify-center group-hover:bg-accent group-hover:text-primary transition-all">
+                    <Eye size={32} />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-2xl font-bold text-white mb-4 tracking-tight">Our Vision</h3>
+                    <p className="text-white/50 leading-relaxed">
+                      To empower progress through smart lifting and handling solutions across the globe. We aim to be the most trusted partner in construction equipment, continuously evolving to meet the changing needs of the market while staying true to our core principles of quality, reliability, and innovation.
+                    </p>
+                  </div>
                 </div>
-                <h3 className="text-2xl font-black text-primary mb-4">Our Vision</h3>
-                <p className="text-muted leading-relaxed">
-                  To empower progress through smart lifting and handling solutions across 
-                  the globe. We aim to be the most trusted partner in construction equipment, 
-                  continuously evolving to meet the changing needs of the market while staying 
-                  true to our core principles of quality, reliability, and innovation.
-                </p>
               </div>
-            </AnimatedSection>
-          </div>
+            </StaggerItem>
+          </StaggerContainer>
         </div>
       </section>
 
       {/* Core Values */}
-      <section className="section-padding bg-primary text-white">
+      <section className="section-padding bg-surface">
         <div className="container-custom">
-          <AnimatedSection className="text-center mb-16">
+          <AnimatedSection className="flex flex-col items-center text-center mb-16">
             <span className="text-sm font-bold text-accent uppercase tracking-wider">What Drives Us</span>
-            <h2 className="text-3xl lg:text-4xl font-black text-white mt-3">
+            <h2 className="text-3xl lg:text-4xl font-black text-primary mt-3 mb-4">
               Our Core Values
             </h2>
+            <p className="text-muted max-w-2xl mx-auto text-center">
+              Our foundation is built on four core principles that guide our technical innovation 
+              and our commitment to worldwide customer success.
+            </p>
           </AnimatedSection>
 
-          <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {[
-              { icon: <Lightbulb size={24} />, title: 'Innovation', desc: 'Constantly evolving with cutting-edge technology and forward-thinking solutions.' },
-              { icon: <Users size={24} />, title: 'Customer Focus', desc: 'Building lasting partnerships through exceptional service and support.' },
-              { icon: <Briefcase size={24} />, title: 'Quality', desc: 'Unwavering commitment to premium, durable, high-performing equipment.' },
-              { icon: <Globe size={24} />, title: 'Global Reach', desc: 'Expanding our networks to serve clients across 20+ countries worldwide.' },
+              { 
+                icon: <Lightbulb size={28} />, 
+                title: 'Innovation', 
+                desc: 'Constantly evolving with cutting-edge technology and forward-thinking engineering solutions that solve real-world industrial challenges.' 
+              },
+              { 
+                icon: <Users size={28} />, 
+                title: 'Customer Focus', 
+                desc: 'Building lasting global partnerships through exceptional after-sales support and a deep understanding of unique operational needs.' 
+              },
+              { 
+                icon: <Briefcase size={28} />, 
+                title: 'Quality Excellence', 
+                desc: 'Unwavering commitment to premium, durable, and high-performing equipment that exceeds international industry standards.' 
+              },
+              { 
+                icon: <Globe size={28} />, 
+                title: 'Global Reach', 
+                desc: 'Expanding our networks and service systems to provide reliable products and expertise to more than 20 countries worldwide.' 
+              },
             ].map((val, i) => (
-              <StaggerItem key={i}>
-                <div className="p-8 rounded-2xl bg-white/5 border border-white/10 text-center h-full">
-                  <div className="w-12 h-12 rounded-lg bg-accent/10 text-accent flex items-center justify-center mx-auto mb-4">
-                    {val.icon}
-                  </div>
-                  <h3 className="text-lg font-bold text-white mb-2">{val.title}</h3>
-                  <p className="text-white/50 text-sm">{val.desc}</p>
-                </div>
+              <StaggerItem key={i} className="h-full">
+                <ServiceCard
+                  icon={val.icon}
+                  title={val.title}
+                  desc={val.desc}
+                />
               </StaggerItem>
             ))}
           </StaggerContainer>
@@ -152,14 +176,13 @@ export default function About() {
       {/* Key Domains */}
       <section className="section-padding bg-white">
         <div className="container-custom">
-          <AnimatedSection className="text-center mb-16">
+          <AnimatedSection className="flex flex-col items-center text-center mb-16">
             <span className="text-sm font-bold text-accent uppercase tracking-wider">What We Do</span>
             <h2 className="text-3xl lg:text-4xl font-black text-primary mt-3 mb-4">
               Three Key Domains
             </h2>
-            <p className="text-muted max-w-2xl mx-auto">
-              With a focus on innovation and technical excellence, we deliver high-quality 
-              solutions across three key domains.
+            <p className="text-muted max-w-4xl mx-auto text-center">
+              With a focus on innovation and technical excellence, we deliver high-quality solutions across three key domains.
             </p>
           </AnimatedSection>
 
@@ -181,10 +204,13 @@ export default function About() {
                 desc: 'Dependable after-sales service including maintenance, spare parts, technical assistance and operator training programs.',
               },
             ].map((domain, i) => (
-              <StaggerItem key={i}>
-                <div className="p-8 rounded-2xl bg-surface border border-border/50 h-full group hover:border-accent/30 transition-colors">
-                  <span className="text-5xl font-black text-accent/20 group-hover:text-accent/40 transition-colors">{domain.num}</span>
-                  <h3 className="text-xl font-bold text-primary mt-4 mb-3">{domain.title}</h3>
+              <StaggerItem key={i} className="h-full">
+                <div 
+                  className="p-10 rounded-2xl bg-surface border border-border/50 h-full group hover:border-accent/30 transition-all duration-300 hover-lift overflow-hidden"
+                  style={{ margin: '0.75rem 0' }}
+                >
+                  <span className="text-6xl font-black text-accent/10 group-hover:text-accent/25 transition-colors block mb-6">{domain.num}</span>
+                  <h3 className="text-xl font-bold text-primary mb-4 leading-tight">{domain.title}</h3>
                   <p className="text-muted text-sm leading-relaxed">{domain.desc}</p>
                 </div>
               </StaggerItem>
@@ -194,18 +220,37 @@ export default function About() {
       </section>
 
       {/* CTA */}
-      <section className="py-20 bg-[#001f3f]">
-        <div className="container-custom text-center">
+      <section className="bg-[#001f3f]" style={{ paddingTop: '5rem', paddingBottom: '7rem' }}>
+        <div 
+          className="container-custom"
+          style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+        >
           <AnimatedSection>
-            <h2 className="text-3xl lg:text-4xl font-black text-white mb-5">
-              Ready to Work With Us?
-            </h2>
-            <p className="text-gray-400 max-w-lg mx-auto mb-8">
-              Contact our team to discuss your equipment needs and discover how Vikamusk can help.
-            </p>
-            <Link href="/contact" className="bg-accent hover:bg-white text-[#001f3f] hover:text-[#001f3f] font-bold px-7 py-3.5 rounded-xl transition-all inline-flex items-center gap-2 text-sm hover:scale-105 hover:shadow-[0_0_25px_rgba(255,255,255,0.4)] border-2 border-transparent hover:border-black">
-              Get in Touch <ArrowRight size={16} />
-            </Link>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              <h2 className="text-3xl lg:text-4xl font-black text-white text-center" style={{ marginBottom: '2rem' }}>
+                Ready to Work With Us?
+              </h2>
+              <p className="text-gray-400 max-w-2xl mx-auto text-center leading-relaxed" style={{ fontSize: '1.05rem', marginBottom: '2rem' }}>
+                Contact our team today to discuss your industrial equipment needs and discover 
+                how Vikamusk&apos;s technical expertise can empower your operation.
+              </p>
+              <div className="flex flex-wrap justify-center gap-5">
+                <Link 
+                  href="/contact"
+                  className="btn-primary hover:!bg-white hover:!text-[#001f3f] hover:!border-black font-bold rounded-xl transition-all duration-300 inline-flex items-center gap-2.5 hover:scale-105 shadow-lg shadow-amber-500/20 hover:shadow-none"
+                  style={{ padding: '1rem 2.25rem', fontSize: '0.95rem' }}
+                >
+                  Get in Touch <Phone size={18} />
+                </Link>
+                <Link 
+                  href="/products"
+                  className="bg-white/10 hover:!bg-white text-white hover:!text-[#001f3f] font-semibold rounded-xl border-2 border-white/20 hover:!border-black transition-all duration-300 inline-flex items-center gap-2.5 hover:scale-105"
+                  style={{ padding: '1rem 2.25rem', fontSize: '0.95rem' }}
+                >
+                  Explore Products <ArrowRight size={18} />
+                </Link>
+              </div>
+            </div>
           </AnimatedSection>
         </div>
       </section>
