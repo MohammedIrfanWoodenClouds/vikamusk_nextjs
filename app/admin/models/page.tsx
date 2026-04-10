@@ -171,7 +171,11 @@ export default function AdminModels() {
 
   const openEdit = (model: Model) => {
     setEditing(model);
-    const imgs = Array.isArray(model.images) ? model.images : [];
+    let imgs: string[] = [];
+    if (Array.isArray(model.images)) imgs = model.images;
+    else if (typeof model.images === 'string') {
+      try { imgs = JSON.parse(model.images); } catch {}
+    }
     const [mainImage, ...rest] = imgs;
     let featuresStr = '';
     try { const a = JSON.parse(model.features || '[]'); featuresStr = Array.isArray(a) ? a.join('\n') : ''; }

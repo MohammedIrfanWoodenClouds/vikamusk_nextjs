@@ -485,15 +485,15 @@ function ProductsContent() {
             style={{ top: '6rem' }}
           >
             <div 
-              className="inline-flex items-center gap-4 border-2 border-accent/40 rounded-full font-black text-accent uppercase shadow-2xl"
+              className="inline-flex items-center gap-3 border-2 border-accent/40 rounded-full font-black text-accent uppercase shadow-2xl"
               style={{ 
-                padding: '1.25rem 3.5rem', 
+                padding: '0.85rem 2.5rem', 
                 backgroundColor: 'rgba(245, 158, 11, 0.25)',
-                letterSpacing: '0.5em',
-                fontSize: '15px'
+                letterSpacing: '0.3em',
+                fontSize: '13px'
               }}
             >
-              <SlidersHorizontal size={18} /> Need Help Choosing?
+              <SlidersHorizontal size={16} /> Need Help Choosing?
             </div>
           </div>
           
@@ -514,17 +514,17 @@ function ProductsContent() {
               <div className="flex flex-wrap justify-center items-center gap-2 mb-8">
                 <Link 
                   href="/contact" 
-                  className="bg-accent text-[#001f3f] rounded-[2rem] font-black uppercase tracking-[0.2em] hover:bg-white hover:scale-105 transition-all mb-8 flex items-center justify-center gap-4 shadow-[0_25px_60px_rgba(245,158,11,0.4)] group"
-                  style={{ padding: '1.25rem 4rem', margin: '1rem', fontSize: '16px' }}
+                  className="bg-accent text-[#001f3f] rounded-[2rem] font-black uppercase tracking-[0.2em] hover:bg-white hover:scale-105 transition-all mb-8 flex items-center justify-center gap-3 shadow-[0_25px_60px_rgba(245,158,11,0.4)] group"
+                  style={{ padding: '1rem 2.5rem', margin: '1rem', fontSize: '14px' }}
                 >
-                  Contact Sales <ArrowRight size={22} className="group-hover:translate-x-2 transition-transform" />
+                  Contact Sales <ArrowRight size={20} className="group-hover:translate-x-2 transition-transform" />
                 </Link>
                 <a 
                   href="/vikamusk-company-profile.pdf" 
                   target="_blank" 
                   rel="noopener noreferrer" 
                   className="bg-white/5 border-2 border-white/20 text-white rounded-[2rem] font-black uppercase tracking-[0.2em] hover:bg-white hover:text-primary hover:scale-105 transition-all mb-8 flex items-center justify-center shadow-xl"
-                  style={{ padding: '1.25rem 4rem', margin: '1rem', fontSize: '16px' }}
+                  style={{ padding: '1rem 2.5rem', margin: '1rem', fontSize: '14px' }}
                 >
                   Download Catalogue
                 </a>

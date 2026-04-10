@@ -49,21 +49,21 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
         className="group flex-1 flex flex-col h-full bg-white rounded-[2rem] border-2 border-black shadow-[0_5px_0_#000] hover:shadow-[0_2px_0_#000] hover:translate-y-0.5 transition-all duration-300 overflow-hidden pt-0.5"
       >
         {/* Image Box */}
-        <div className="relative h-[320px] sm:h-[380px] w-full bg-gradient-to-br from-slate-50 via-white to-slate-100 flex items-center justify-center overflow-hidden shrink-0">
+        <div className="relative h-[280px] sm:h-[320px] w-full bg-gradient-to-br from-slate-50 via-white to-slate-100 flex items-center justify-center overflow-hidden shrink-0">
           <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-[linear-gradient(135deg,rgba(245,158,11,0.06)_0%,transparent_50%)] pointer-events-none" />
           {displayImage ? (
             displayImage.startsWith('data:') ? (
               <img
                 src={displayImage}
                 alt={product.name}
-                className="w-full h-full object-contain p-12 group-hover:scale-[1.05] transition-transform duration-700 ease-out"
+                className="w-full h-full object-contain p-10 group-hover:scale-[1.05] transition-transform duration-700 ease-out"
               />
             ) : (
               <Image
                 src={displayImage}
                 alt={product.name}
                 fill
-                className="object-contain p-12 group-hover:scale-[1.05] transition-transform duration-700 ease-out"
+                className="object-contain p-10 group-hover:scale-[1.05] transition-transform duration-700 ease-out"
                 sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
               />
             )

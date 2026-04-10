@@ -419,6 +419,7 @@ export async function createProductModel(data: {
       model_name: data.model_name,
       sort_order: data.sort_order,
       specs: data.specs,
+      images: data.images ? JSON.stringify(data.images) : null,
     })
     .select()
     .single();

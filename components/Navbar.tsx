@@ -176,11 +176,7 @@ export default function Navbar() {
           {/* Logo */}
           <Link 
             href="/" 
-            className={`flex-shrink-0 relative transition-all duration-500 ${
-              scrolled 
-                ? 'h-[34px] w-[140px] lg:h-[38px] lg:w-[155px]' 
-                : 'h-[44px] w-[180px] lg:h-[52px] lg:w-[210px]'
-            }`}
+            className="flex-shrink-0 relative transition-all duration-500 h-[44px] w-[180px] lg:h-[52px] lg:w-[210px]"
           >
             <Image
               src={isTransparent ? "/images/logo-white.png" : "/images/logo-black.png"}

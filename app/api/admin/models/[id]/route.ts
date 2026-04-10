@@ -28,7 +28,7 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
     if (data.model_name !== undefined) updateData.model_name = data.model_name;
     if (data.sort_order !== undefined) updateData.sort_order = data.sort_order;
     if (data.product_id !== undefined) updateData.product_id = data.product_id;
-    if (Array.isArray(data.images)) updateData.images = data.images;
+    if (Array.isArray(data.images)) updateData.images = JSON.stringify(data.images);
 
     if (data.specs !== undefined) {
       updateData.specs = parseSpecs(data.specs);
@@ -37,6 +37,9 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
     await updateProductModel(id, updateData);
     return NextResponse.json({ success: true });
   } catch (e: any) {
+    try {
+      require('fs').writeFileSync('api-error.log', JSON.stringify({ message: e.message, code: e.code, details: e.details, hint: e.hint }, null, 2));
+    } catch {}
     return NextResponse.json({ error: e.message }, { status: 500 });
   }
 }
