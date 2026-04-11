@@ -481,7 +481,7 @@ export default function Home() {
           )}
 
           {categories.length > 0 && (
-            <div className="text-center" style={{ marginTop: '1rem' }}>
+            <div className="text-center mt-12 mb-8">
               <Link href="/products" className="btn-outline text-sm px-8 py-3.5 rounded-xl">
                 View all products <ArrowRight size={15} />
               </Link>
@@ -534,36 +534,39 @@ export default function Home() {
               </Link>
             </div>
           ) : !isCarousel ? (
-            <div className="flex flex-wrap justify-center gap-6 lg:gap-8">
+            <div className="flex flex-wrap justify-center gap-8 pb-4">
               {featuredProducts.map((product, i) => (
-                <div key={product.id} className="w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] flex flex-col">
+                <div key={product.id} className="w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] flex flex-col px-1 pb-2">
                   <ProductCard product={product} index={i} />
                 </div>
               ))}
             </div>
           ) : (
-            <div className="relative -mx-4 px-4 sm:mx-0 sm:px-0">
+            <div className="relative overflow-visible pb-10">
               <div 
                 ref={featuredScrollRef} 
-                className="flex gap-6 overflow-x-auto snap-x snap-mandatory hide-scrollbar pb-8 pt-5"
+                className="flex items-stretch gap-6 overflow-x-auto overflow-y-hidden snap-x snap-mandatory hide-scrollbar pt-8 pb-20 px-4"
                 style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
               >
                 {[...featuredProducts, ...featuredProducts, ...featuredProducts].map((product, i) => (
                   <div 
                     key={`${product.id}-${i}`} 
-                    className="w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] flex-none shrink-0 snap-start flex flex-col"
+                    className="w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] flex-none shrink-0 snap-start flex flex-col p-2"
                   >
                     <ProductCard product={product} index={i} />
                   </div>
                 ))}
               </div>
-              <style dangerouslySetInnerHTML={{__html: `\n.hide-scrollbar::-webkit-scrollbar { display: none; }\n`}} />
+              <style dangerouslySetInnerHTML={{__html: `
+                .hide-scrollbar::-webkit-scrollbar { display: none; }
+                .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+              `}} />
             </div>
           )}
 
           {/* View All Button */}
           {featuredProducts.length > 0 && (
-            <div className="text-center w-full flex justify-center" style={{ marginTop: '1rem' }}>
+            <div className="text-center w-full flex justify-center mt-8 mb-8">
               <Link href="/products" className="btn-outline text-sm px-8 py-3.5 rounded-xl flex items-center justify-center gap-2">
                 View all products <ArrowRight size={15} />
               </Link>
@@ -614,7 +617,7 @@ export default function Home() {
             </p>
           </AnimatedSection>
 
-          <StaggerContainer className="grid w-full grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-7">
+          <StaggerContainer className="grid w-full grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {whyItems.map((item, i) => (
               <StaggerItem key={i}>
                 <motion.div

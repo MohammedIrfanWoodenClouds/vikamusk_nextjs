@@ -424,8 +424,8 @@ function ProductsContent() {
           {/* Product Grid / List */}
           {loading ? (
             <div className={viewMode === 'grid'
-              ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'
-              : 'flex flex-col gap-4'
+              ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'
+              : 'flex flex-col gap-8'
             }>
               {Array.from({ length: 6 }).map((_, i) => <ProductSkeleton key={i} view={viewMode} />)}
             </div>
@@ -458,8 +458,8 @@ function ProductsContent() {
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.2 }}
                 className={viewMode === 'grid'
-                  ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-7'
-                  : 'flex flex-col gap-4'
+                  ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'
+                  : 'flex flex-col gap-8'
                 }
               >
                 {filteredAndSorted.map((product, i) =>
@@ -511,7 +511,7 @@ function ProductsContent() {
                 </p>
               </div>
               
-              <div className="flex flex-wrap justify-center items-center gap-2 mb-8">
+                <div className="flex flex-wrap justify-center items-center gap-2 mb-8 mt-20">
                 <Link 
                   href="/contact" 
                   className="bg-accent text-[#001f3f] rounded-[2rem] font-black uppercase tracking-[0.2em] hover:bg-white hover:scale-105 transition-all mb-8 flex items-center justify-center gap-3 shadow-[0_25px_60px_rgba(245,158,11,0.4)] group"

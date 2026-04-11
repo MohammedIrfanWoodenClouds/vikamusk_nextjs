@@ -1,13 +1,16 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
 import {
-  ArrowLeft, Plus, Pencil, Trash2, Loader2, X, Upload, Save,
-  Package, LayoutGrid, ChevronDown, Star, StarOff,
+  LayoutDashboard, FolderTree, Package, LayoutGrid, Briefcase,
+  Mail, LogOut, Globe, Shield, ExternalLink,
+  Plus, Pencil, Trash2, Loader2, X, Upload, Save,
+  Search, AlertTriangle, ChevronRight,
 } from 'lucide-react';
 
+/* ─── Types ─── */
 interface Model {
   id: string;
   product_id: string;
@@ -20,13 +23,111 @@ interface Model {
   images: string[];
   sort_order: number;
 }
-
 interface Product { id: string; name: string; main_category_name: string; }
 
-function slugifyModel(t: string) {
-  return t.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+/* ─── Sidebar nav ─── */
+const NAV_LINKS = [
+  { label: 'Dashboard',  href: '/admin/dashboard',  icon: LayoutDashboard },
+  { label: 'Products',   href: '/admin/products',   icon: Package },
+  { label: 'Categories', href: '/admin/categories', icon: FolderTree },
+  { label: 'Models',     href: '/admin/models',     icon: LayoutGrid },
+  { label: 'Careers',    href: '/admin/careers',    icon: Briefcase },
+  { label: 'Enquiries',  href: '/admin/enquiries',  icon: Mail },
+];
+
+/* ─── Sidebar ─── */
+function Sidebar({ pathname }: { pathname: string }) {
+  return (
+    <aside style={{
+      width: 232, flexShrink: 0, background: '#ffffff',
+      borderRight: '1px solid #e5e7eb', display: 'flex', flexDirection: 'column',
+      position: 'sticky', top: 0, height: '100vh', overflowY: 'auto',
+    }}>
+      <div style={{ padding: '20px 16px 16px', borderBottom: '1px solid #f3f4f6' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <div style={{ width: 36, height: 36, borderRadius: 10, background: '#f59e0b', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+            <Shield size={18} color="#fff" />
+          </div>
+          <div>
+            <p style={{ fontWeight: 700, fontSize: 14, color: '#111827', lineHeight: 1.2 }}>Vikamusk</p>
+            <p style={{ fontSize: 11, color: '#9ca3af', lineHeight: 1.2 }}>Admin Panel</p>
+          </div>
+        </div>
+      </div>
+      <nav style={{ flex: 1, padding: '12px 10px', display: 'flex', flexDirection: 'column', gap: 2 }}>
+        <p style={{ fontSize: 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#9ca3af', padding: '0 10px', marginBottom: 4 }}>Menu</p>
+        {NAV_LINKS.map(({ label, href, icon: Icon }) => {
+          const isActive = pathname === href;
+          return (
+            <Link key={href} href={href} style={{
+              display: 'flex', alignItems: 'center', gap: 10, padding: '9px 12px', borderRadius: 10,
+              fontSize: 13, fontWeight: isActive ? 600 : 500, color: isActive ? '#92400e' : '#6b7280',
+              background: isActive ? '#fffbeb' : 'transparent', textDecoration: 'none',
+              transition: 'all 0.15s', position: 'relative',
+            }}
+              onMouseEnter={(e) => { if (!isActive) { e.currentTarget.style.background = '#f9fafb'; e.currentTarget.style.color = '#111827'; } }}
+              onMouseLeave={(e) => { if (!isActive) { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#6b7280'; } }}
+            >
+              {isActive && <span style={{ position: 'absolute', left: 0, top: '20%', bottom: '20%', width: 3, borderRadius: '0 3px 3px 0', background: '#f59e0b' }} />}
+              <Icon size={16} />
+              <span style={{ flex: 1 }}>{label}</span>
+            </Link>
+          );
+        })}
+      </nav>
+      <div style={{ padding: '10px 10px 16px', borderTop: '1px solid #f3f4f6', display: 'flex', flexDirection: 'column', gap: 2 }}>
+        <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '9px 12px', borderRadius: 10, fontSize: 13, fontWeight: 500, color: '#6b7280', textDecoration: 'none', transition: 'all 0.15s' }}
+          onMouseEnter={(e) => { e.currentTarget.style.background = '#f9fafb'; e.currentTarget.style.color = '#111827'; }}
+          onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#6b7280'; }}
+        >
+          <Globe size={16} /><span style={{ flex: 1 }}>View Site</span>
+          <ExternalLink size={12} style={{ opacity: 0.4 }} />
+        </Link>
+      </div>
+    </aside>
+  );
 }
 
+/* ─── Delete Confirm Modal ─── */
+function DeleteModal({ title, message, onCancel, onConfirm, loading }: {
+  title: string; message: string; onCancel: () => void; onConfirm: () => void; loading: boolean;
+}) {
+  return (
+    <div style={{ position: 'fixed', inset: 0, zIndex: 60, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16, background: 'rgba(0,0,0,0.4)', backdropFilter: 'blur(4px)' }}>
+      <div style={{ background: '#fff', borderRadius: 18, width: '100%', maxWidth: 420, boxShadow: '0 24px 60px rgba(0,0,0,0.18)', border: '1px solid #e5e7eb', overflow: 'hidden' }}>
+        <div style={{ padding: '24px 24px 0' }}>
+          <div style={{ display: 'flex', gap: 14, alignItems: 'flex-start' }}>
+            <div style={{ width: 44, height: 44, borderRadius: 12, background: '#fef2f2', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+              <AlertTriangle size={22} style={{ color: '#ef4444' }} />
+            </div>
+            <div>
+              <h3 style={{ fontSize: 16, fontWeight: 700, color: '#111827', margin: '0 0 6px' }}>{title}</h3>
+              <p style={{ fontSize: 13, color: '#6b7280', margin: 0, lineHeight: 1.5 }}>{message}</p>
+            </div>
+          </div>
+        </div>
+        <div style={{ display: 'flex', gap: 10, padding: 24 }}>
+          <button onClick={onCancel} style={{ flex: 1, padding: '10px 0', borderRadius: 10, fontSize: 13, fontWeight: 600, background: '#f3f4f6', border: '1px solid #e5e7eb', color: '#374151', cursor: 'pointer' }}>Cancel</button>
+          <button onClick={onConfirm} disabled={loading} style={{ flex: 1, padding: '10px 0', borderRadius: 10, fontSize: 13, fontWeight: 600, background: '#ef4444', border: 'none', color: '#fff', cursor: loading ? 'not-allowed' : 'pointer', opacity: loading ? 0.7 : 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
+            {loading ? <Loader2 size={14} className="animate-spin" /> : <Trash2 size={14} />}
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Helpers ─── */
+function parseImages(val: any): string[] {
+  if (Array.isArray(val)) return val;
+  if (typeof val === 'string' && val.trim().startsWith('[')) {
+    try { const arr = JSON.parse(val); if (Array.isArray(arr)) return arr; } catch {}
+  }
+  return [];
+}
+
+/* ─── Form constants ─── */
 const EMPTY_FORM = {
   product_id: '',
   model_name: '',
@@ -38,43 +139,82 @@ const EMPTY_FORM = {
   sort_order: 0,
 };
 
+const SCISSOR_LIFT_TEMPLATE = [
+  { label: '--- DIMENSIONS ---', value: '' },
+  { label: 'Maximum Working Height (m)', value: '' },
+  { label: 'Maximum Platform Height (m)', value: '' },
+  { label: 'Safe Working Load (kg)', value: '' },
+  { label: 'Extension Platform Safe Working Load (kg)', value: '' },
+  { label: 'Working Platform Size (L x W x H) (m)', value: '' },
+  { label: 'Overall Dimensions (L x W x H, Guardrail Folded) (m)', value: '' },
+  { label: 'Platform Extension Size (m)', value: '' },
+  { label: 'Minimum Ground Clearance (m)', value: '' },
+  { label: '--- PERFORMANCE ---', value: '' },
+  { label: 'Wheelbase (m)', value: '' },
+  { label: 'Turning Radius (Inner / Outer) (m)', value: '' },
+  { label: 'Lifting / Lowering Motor', value: '' },
+  { label: 'Motor Power (24V)', value: '' },
+  { label: 'Lifting / Lowering Speed (m/min)', value: '' },
+  { label: 'Machine Driving Speed (Travel State) (km/h)', value: '' },
+  { label: 'Machine Driving Speed (Lifting State) (km/h)', value: '' },
+  { label: '--- BATTERY ---', value: '' },
+  { label: 'Type', value: '' },
+  { label: 'Battery Spec', value: '' },
+  { label: 'Charger', value: '' },
+  { label: 'Maximum Gradeability (%)', value: '' },
+  { label: 'Maximum Allowable Angle of Work (°)', value: '' },
+  { label: 'Tire Size', value: '' },
+  { label: 'Controller Brand', value: '' },
+  { label: 'Self-weight (kg)', value: '' },
+];
+
+/* ═══════════════════════════════ Main Page ═══════════════════════════════ */
 export default function AdminModels() {
-  const router = useRouter();
-  const [token, setToken] = useState<string | null>(null);
-  const [models, setModels] = useState<Model[]>([]);
-  const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [showForm, setShowForm] = useState(false);
-  const [editing, setEditing] = useState<Model | null>(null);
-  const [saving, setSaving] = useState(false);
-  const [deleting, setDeleting] = useState<string | null>(null);
-  const [error, setError] = useState('');
+  const router   = useRouter();
+  const pathname = usePathname();
+
+  const [token,     setToken]     = useState<string | null>(null);
+  const [models,    setModels]    = useState<Model[]>([]);
+  const [products,  setProducts]  = useState<Product[]>([]);
+  const [loading,   setLoading]   = useState(true);
+  const [showForm,  setShowForm]  = useState(false);
+  const [editing,   setEditing]   = useState<Model | null>(null);
+  const [saving,    setSaving]    = useState(false);
+  const [deleting,  setDeleting]  = useState<string | null>(null);
+  const [error,     setError]     = useState('');
+  const [search,    setSearch]    = useState('');
   const [filterProduct, setFilterProduct] = useState('all');
+  const [deleteConfirm,     setDeleteConfirm]     = useState<{ id: string; name: string } | null>(null);
+  const [selectedIds,       setSelectedIds]       = useState<Set<string>>(new Set());
+  const [bulkDeleteConfirm, setBulkDeleteConfirm] = useState(false);
+  const [bulkDeleting,      setBulkDeleting]      = useState(false);
   const [form, setForm] = useState({ ...EMPTY_FORM });
 
+  /* ── Auth ── */
   useEffect(() => {
     const t = localStorage.getItem('admin_token');
     if (!t) { router.push('/admin/login'); return; }
     setToken(t);
   }, [router]);
 
+  /* ── Fetch ── */
   const fetchData = useCallback(async () => {
     if (!token) return;
     const headers = { Authorization: `Bearer ${token}` };
     try {
       const [modelsRes, prodsRes] = await Promise.all([
-        fetch('/api/admin/models', { headers }),
+        fetch('/api/admin/models',   { headers }),
         fetch('/api/admin/products', { headers }),
       ]);
       const [modelsData, prodsData] = await Promise.all([modelsRes.json(), prodsRes.json()]);
-      setModels(modelsData.models || []);
+      setModels((modelsData.models || []).map((m: any) => ({ ...m, images: parseImages(m.images) })));
       setProducts(prodsData.products || []);
     } catch {} finally { setLoading(false); }
   }, [token]);
 
   useEffect(() => { fetchData(); }, [fetchData]);
 
-  /* ── Helpers ── */
+  /* ── Spec helpers ── */
   const parseFeatures = (str: string): string[] => {
     try { const a = JSON.parse(str); return Array.isArray(a) ? a : []; }
     catch { return str.split('\n').map(s => s.trim()).filter(Boolean); }
@@ -85,48 +225,9 @@ export default function AdminModels() {
     list[idx] = { ...list[idx], [field]: val };
     setForm({ ...form, specsList: list });
   };
-
-  const addSpecRow = () => setForm({ ...form, specsList: [...form.specsList, { label: '', value: '' }] });
-  
-  const removeSpecRow = (idx: number) => {
-    const list = [...form.specsList];
-    list.splice(idx, 1);
-    setForm({ ...form, specsList: list });
-  };
-
-  const loadTemplate = () => {
-    setForm(p => ({
-      ...p,
-      specsList: [
-        { label: '--- DIMENSIONS ---', value: '' },
-        { label: 'Maximum Working Height (m)', value: '' },
-        { label: 'Maximum Platform Height (m)', value: '' },
-        { label: 'Safe Working Load (kg)', value: '' },
-        { label: 'Extension Platform Safe Working Load (kg)', value: '' },
-        { label: 'Working Platform Size (L x W x H) (m)', value: '' },
-        { label: 'Overall Dimensions (L x W x H, Guardrail Folded) (m)', value: '' },
-        { label: 'Platform Extension Size (m)', value: '' },
-        { label: 'Minimum Ground Clearance (m)', value: '' },
-        { label: '--- PERFORMANCE ---', value: '' },
-        { label: 'Wheelbase (m)', value: '' },
-        { label: 'Turning Radius (Inner / Outer) (m)', value: '' },
-        { label: 'Lifting / Lowering Motor', value: '' },
-        { label: 'Motor Power (24V)', value: '' },
-        { label: 'Lifting / Lowering Speed (m/min)', value: '' },
-        { label: 'Machine Driving Speed (Travel State) (km/h)', value: '' },
-        { label: 'Machine Driving Speed (Lifting State) (km/h)', value: '' },
-        { label: '--- BATTERY ---', value: '' },
-        { label: 'Type', value: '' },
-        { label: 'Battery Spec', value: '' },
-        { label: 'Charger', value: '' },
-        { label: 'Maximum Gradeability (%)', value: '' },
-        { label: 'Maximum Allowable Angle of Work (°)', value: '' },
-        { label: 'Tire Size', value: '' },
-        { label: 'Controller Brand', value: '' },
-        { label: 'Self-weight (kg)', value: '' },
-      ]
-    }));
-  };
+  const addSpecRow    = () => setForm({ ...form, specsList: [...form.specsList, { label: '', value: '' }] });
+  const removeSpecRow = (idx: number) => { const l = [...form.specsList]; l.splice(idx, 1); setForm({ ...form, specsList: l }); };
+  const loadTemplate  = () => setForm(p => ({ ...p, specsList: SCISSOR_LIFT_TEMPLATE.map(r => ({ ...r })) }));
 
   /* ── Image helpers ── */
   const handleMainImage = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -173,13 +274,10 @@ export default function AdminModels() {
     setEditing(model);
     let imgs: string[] = [];
     if (Array.isArray(model.images)) imgs = model.images;
-    else if (typeof model.images === 'string') {
-      try { imgs = JSON.parse(model.images); } catch {}
-    }
+    else if (typeof model.images === 'string') { try { imgs = JSON.parse(model.images); } catch {} }
     const [mainImage, ...rest] = imgs;
     let featuresStr = '';
-    try { const a = JSON.parse(model.features || '[]'); featuresStr = Array.isArray(a) ? a.join('\n') : ''; }
-    catch { featuresStr = ''; }
+    try { const a = JSON.parse(model.features || '[]'); featuresStr = Array.isArray(a) ? a.join('\n') : ''; } catch {}
     setForm({
       product_id: model.product_id,
       model_name: model.model_name,
@@ -198,11 +296,9 @@ export default function AdminModels() {
     e.preventDefault();
     if (!token) return;
     setSaving(true); setError('');
-
     let galleryImgs: string[] = [];
     try { galleryImgs = JSON.parse(form.galleryImages); } catch {}
     const allImages = [...(form.mainImage ? [form.mainImage] : []), ...galleryImgs];
-
     const payload = {
       product_id: form.product_id,
       model_name: form.model_name,
@@ -212,277 +308,466 @@ export default function AdminModels() {
       images: allImages,
       sort_order: form.sort_order,
     };
-
     try {
       const url = editing ? `/api/admin/models/${editing.id}` : '/api/admin/models';
-      const res = await fetch(url, {
-        method: editing ? 'PUT' : 'POST',
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-        body: JSON.stringify(payload),
-      });
+      const res = await fetch(url, { method: editing ? 'PUT' : 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` }, body: JSON.stringify(payload) });
       const data = await res.json();
       if (!res.ok) { setError(data.error || 'Failed to save'); return; }
-      setShowForm(false);
-      fetchData();
+      setShowForm(false); fetchData();
     } catch { setError('Network error'); } finally { setSaving(false); }
   };
 
-  const handleDelete = async (id: string) => {
-    if (!token || !confirm('Delete this model?')) return;
-    setDeleting(id);
+  /* ── Delete ── */
+  const executeDelete = async () => {
+    if (!deleteConfirm || !token) return;
+    setDeleting(deleteConfirm.id);
     try {
-      await fetch(`/api/admin/models/${id}`, { method: 'DELETE', headers: { Authorization: `Bearer ${token}` } });
+      await fetch(`/api/admin/models/${deleteConfirm.id}`, { method: 'DELETE', headers: { Authorization: `Bearer ${token}` } });
       fetchData();
-    } catch {} finally { setDeleting(null); }
+    } catch {} finally { setDeleting(null); setDeleteConfirm(null); }
   };
 
-  /* ── Derived state ── */
-  const filtered = filterProduct === 'all' ? models : models.filter(m => m.product_id === filterProduct);
+  /* ── Bulk delete ── */
+  const executeBulkDelete = async () => {
+    if (!token) return;
+    setBulkDeleting(true);
+    try {
+      await Promise.all(
+        Array.from(selectedIds).map(id =>
+          fetch(`/api/admin/models/${id}`, { method: 'DELETE', headers: { Authorization: `Bearer ${token}` } })
+        )
+      );
+      setSelectedIds(new Set());
+      fetchData();
+    } catch {} finally { setBulkDeleting(false); setBulkDeleteConfirm(false); }
+  };
+
+  /* ── Selection helpers ── */
+  const toggleSelect = (id: string) => {
+    setSelectedIds(prev => {
+      const next = new Set(prev);
+      next.has(id) ? next.delete(id) : next.add(id);
+      return next;
+    });
+  };
+
+  const toggleSelectAll = () => {
+    if (filtered.length > 0 && filtered.every(m => selectedIds.has(m.id))) {
+      setSelectedIds(prev => { const next = new Set(prev); filtered.forEach(m => next.delete(m.id)); return next; });
+    } else {
+      setSelectedIds(prev => { const next = new Set(prev); filtered.forEach(m => next.add(m.id)); return next; });
+    }
+  };
+
+  /* ── Filtered list ── */
+  const filtered = useMemo(() => {
+    let result = filterProduct === 'all' ? models : models.filter(m => m.product_id === filterProduct);
+    if (search.trim()) {
+      const q = search.toLowerCase();
+      result = result.filter(m =>
+        m.model_name.toLowerCase().includes(q) ||
+        (m.product_name || '').toLowerCase().includes(q) ||
+        (m.category_name || '').toLowerCase().includes(q) ||
+        (m.short_description || '').toLowerCase().includes(q)
+      );
+    }
+    return result;
+  }, [models, filterProduct, search]);
+
   let galleryImages: string[] = [];
   try { galleryImages = JSON.parse(form.galleryImages); } catch {}
 
-  const inputCls = 'w-full px-4 py-3 rounded-xl text-white placeholder-white/20 text-sm focus:outline-none transition-colors';
-  const inputStyle = { background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)' };
-  const labelCls = 'block text-[10px] font-semibold uppercase tracking-wider mb-2';
-  const labelStyle = { color: 'rgba(255,255,255,0.5)' };
+  /* ─── Shared light input style ─── */
+  const inp: React.CSSProperties = { width: '100%', padding: '11px 14px', borderRadius: 10, fontSize: 13, background: '#f9fafb', border: '1px solid #e5e7eb', color: '#111827', outline: 'none', boxSizing: 'border-box', transition: 'border-color 0.15s' };
+  const lbl: React.CSSProperties = { display: 'block', fontSize: 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.07em', color: '#6b7280', marginBottom: 6 };
+  const filterSelect: React.CSSProperties = { padding: '8px 12px', borderRadius: 10, fontSize: 13, fontWeight: 500, background: '#fff', border: '1px solid #e5e7eb', color: '#374151', cursor: 'pointer', outline: 'none' };
 
+  const focusAmber = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    e.currentTarget.style.borderColor = '#f59e0b';
+    e.currentTarget.style.boxShadow   = '0 0 0 2px rgba(245,158,11,0.12)';
+  };
+  const blurReset = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    e.currentTarget.style.borderColor = '#e5e7eb';
+    e.currentTarget.style.boxShadow   = 'none';
+  };
+
+  /* ════════════════════════ Render ════════════════════════ */
   return (
-    <div className="min-h-screen" style={{ background: '#001229' }}>
-      {/* Header */}
-      <header style={{ background: '#001f3f', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <Link href="/admin/dashboard" className="w-10 h-10 rounded-xl flex items-center justify-center transition-all" style={{ background: 'rgba(255,255,255,0.05)', color: 'rgba(255,255,255,0.5)' }}>
-              <ArrowLeft size={20} />
-            </Link>
-            <div>
-              <h1 className="text-white font-bold text-lg">Models</h1>
-              <p className="text-xs" style={{ color: 'rgba(255,255,255,0.3)' }}>Manage product variants & specifications</p>
-            </div>
+    <div style={{ minHeight: '100vh', display: 'flex', background: '#f8fafc' }}>
+      <Sidebar pathname={pathname || ''} />
+
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0 }}>
+
+        {/* ── Top bar ── */}
+        <header style={{ background: '#fff', borderBottom: '1px solid #e5e7eb', boxShadow: '0 1px 4px rgba(0,0,0,0.05)', padding: '14px 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16 }}>
+          <div>
+            <h1 style={{ fontSize: 20, fontWeight: 800, color: '#111827', margin: 0, lineHeight: 1.2 }}>Models</h1>
+            <p style={{ fontSize: 12, color: '#9ca3af', margin: '2px 0 0' }}>
+              {loading ? '...' : `${filtered.length} of ${models.length} models`}
+            </p>
           </div>
           <button
             onClick={openCreate}
             disabled={products.length === 0}
-            className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-sm transition-all disabled:opacity-50 shadow-lg"
-            style={{ background: 'linear-gradient(to right, #f59e0b, #d97706)', color: '#001f3f', boxShadow: '0 4px 15px rgba(245,158,11,0.2)' }}
+            style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '9px 18px', borderRadius: 10, fontSize: 13, fontWeight: 700, background: '#f59e0b', border: 'none', color: '#fff', cursor: products.length === 0 ? 'not-allowed' : 'pointer', opacity: products.length === 0 ? 0.5 : 1, boxShadow: '0 4px 12px rgba(245,158,11,0.3)', transition: 'all 0.15s' }}
+            onMouseEnter={(e) => { if (products.length > 0) e.currentTarget.style.background = '#d97706'; }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = '#f59e0b'; }}
           >
-            <Plus size={18} /> Add Model
+            <Plus size={16} /> Add Model
           </button>
-        </div>
-      </header>
+        </header>
 
-      <main className="max-w-7xl mx-auto px-6 py-8">
-        {/* Filter */}
-        {products.length > 0 && (
-          <div className="mb-6 flex items-center gap-3">
-            <span className="text-sm" style={{ color: 'rgba(255,255,255,0.4)' }}>Filter by product:</span>
-            <select
-              value={filterProduct}
-              onChange={e => setFilterProduct(e.target.value)}
-              className="px-4 py-2 rounded-xl text-white text-sm focus:outline-none"
-              style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)' }}
-            >
-              <option value="all" style={{ background: '#001f3f' }}>All Products</option>
-              {products.map(p => (
-                <option key={p.id} value={p.id} style={{ background: '#001f3f' }}>{p.name}</option>
-              ))}
-            </select>
-          </div>
-        )}
+        <main style={{ flex: 1, padding: '24px 32px 40px' }}>
 
-        {loading ? (
-          <div className="flex justify-center py-20">
-            <Loader2 size={32} className="animate-spin" style={{ color: '#f59e0b' }} />
-          </div>
-        ) : products.length === 0 ? (
-          <div className="text-center py-20">
-            <p className="text-lg mb-2" style={{ color: 'rgba(255,255,255,0.4)' }}>Create products first</p>
-            <Link href="/admin/products" className="px-6 py-3 rounded-xl font-bold text-sm inline-block" style={{ background: '#f59e0b', color: '#001f3f' }}>Go to Products</Link>
-          </div>
-        ) : filtered.length === 0 ? (
-          <div className="text-center py-20">
-            <div className="w-20 h-20 mx-auto mb-4 rounded-2xl flex items-center justify-center" style={{ background: 'rgba(255,255,255,0.04)' }}>
-              <LayoutGrid size={32} style={{ color: 'rgba(255,255,255,0.15)' }} />
+          {/* ── Search + filter ── */}
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, marginBottom: 20, alignItems: 'center' }}>
+            <div style={{ position: 'relative', flex: '1 1 220px', minWidth: 200, maxWidth: 360 }}>
+              <Search size={15} style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: '#9ca3af', pointerEvents: 'none' }} />
+              <input
+                type="text"
+                placeholder="Search models..."
+                value={search}
+                onChange={e => setSearch(e.target.value)}
+                style={{ ...inp, paddingLeft: 36, paddingRight: search ? 36 : 14 }}
+                onFocus={focusAmber}
+                onBlur={blurReset}
+              />
+              {search && (
+                <button onClick={() => setSearch('')} style={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', color: '#9ca3af', cursor: 'pointer', padding: 2, display: 'flex' }}>
+                  <X size={13} />
+                </button>
+              )}
             </div>
-            <p className="text-lg mb-2" style={{ color: 'rgba(255,255,255,0.4)' }}>No models yet</p>
-            <button onClick={openCreate} className="px-6 py-3 rounded-xl font-bold text-sm" style={{ background: '#f59e0b', color: '#001f3f' }}>
-              <Plus size={16} className="inline mr-1" /> Add Model
-            </button>
+            <select value={filterProduct} onChange={e => setFilterProduct(e.target.value)} style={filterSelect}>
+              <option value="all">All Products</option>
+              {products.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}
+            </select>
+            {(filterProduct !== 'all' || search) && (
+              <button onClick={() => { setFilterProduct('all'); setSearch(''); }} style={{ padding: '8px 12px', borderRadius: 10, fontSize: 12, fontWeight: 600, background: '#fef2f2', border: '1px solid #fecaca', color: '#dc2626', cursor: 'pointer' }}>
+                Clear filters
+              </button>
+            )}
           </div>
-        ) : (
-          <div className="grid gap-3">
-            {filtered.map(model => {
-              const thumb = (model.images || [])[0];
-              return (
-                <div key={model.id} className="rounded-2xl p-5 flex items-center gap-5 transition-all group" style={{ background: '#001f3f', border: '1px solid rgba(255,255,255,0.05)' }}>
-                  {/* Thumbnail */}
-                  <div className="w-16 h-16 rounded-xl flex items-center justify-center flex-shrink-0 overflow-hidden" style={{ background: 'rgba(255,255,255,0.05)' }}>
-                    {thumb
-                      ? <img src={thumb} alt={model.model_name} className="w-full h-full object-contain p-1" />
-                      : <LayoutGrid size={22} style={{ color: 'rgba(96,165,250,0.4)' }} />
-                    }
-                  </div>
 
-                  {/* Info */}
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <h3 className="text-white font-bold text-base">{model.model_name}</h3>
-                      <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase" style={{ background: 'rgba(96,165,250,0.1)', color: '#60a5fa' }}>
-                        {(model.specs || []).length} specs
-                      </span>
-                      {(model.images || []).length > 0 && (
-                        <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase" style={{ background: 'rgba(52,211,153,0.1)', color: '#34d399' }}>
-                          {model.images.length} image{model.images.length !== 1 ? 's' : ''}
-                        </span>
-                      )}
-                    </div>
-                    <p className="text-sm truncate mt-0.5" style={{ color: 'rgba(255,255,255,0.3)' }}>
-                      {model.short_description || 'No description'}
-                    </p>
-                    <p className="text-xs mt-1" style={{ color: 'rgba(96,165,250,0.7)' }}>
-                      {model.category_name && <span className="mr-2">{model.category_name} →</span>}
-                      {model.product_name}
-                    </p>
-                  </div>
+          {/* ── Bulk action bar ── */}
+          {selectedIds.size > 0 && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 16px', borderRadius: 12, background: '#fffbeb', border: '1px solid #fde68a', marginBottom: 14 }}>
+              <span style={{ fontSize: 13, fontWeight: 600, color: '#92400e' }}>
+                {selectedIds.size} model{selectedIds.size !== 1 ? 's' : ''} selected
+              </span>
+              <button
+                onClick={() => setBulkDeleteConfirm(true)}
+                style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 14px', borderRadius: 8, fontSize: 12, fontWeight: 700, background: '#ef4444', border: 'none', color: '#fff', cursor: 'pointer' }}
+              >
+                <Trash2 size={13} /> Delete Selected
+              </button>
+              <button
+                onClick={() => setSelectedIds(new Set())}
+                style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 14px', borderRadius: 8, fontSize: 12, fontWeight: 600, background: '#fff', border: '1px solid #e5e7eb', color: '#6b7280', cursor: 'pointer' }}
+              >
+                <X size={13} /> Clear
+              </button>
+            </div>
+          )}
 
-                  {/* Actions */}
-                  <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <button onClick={() => openEdit(model)} className="p-2.5 rounded-lg transition-all" style={{ background: 'rgba(255,255,255,0.05)', color: 'rgba(255,255,255,0.4)' }} title="Edit">
-                      <Pencil size={16} />
-                    </button>
-                    <button onClick={() => handleDelete(model.id)} disabled={deleting === model.id} className="p-2.5 rounded-lg transition-all disabled:opacity-50" style={{ background: 'rgba(255,255,255,0.05)', color: 'rgba(255,255,255,0.4)' }} title="Delete">
-                      {deleting === model.id ? <Loader2 size={16} className="animate-spin" /> : <Trash2 size={16} />}
-                    </button>
-                  </div>
+          {/* ── Content ── */}
+          {loading ? (
+            <div style={{ display: 'flex', justifyContent: 'center', paddingTop: 80 }}>
+              <Loader2 size={32} className="animate-spin" style={{ color: '#f59e0b' }} />
+            </div>
+          ) : products.length === 0 ? (
+            <div style={{ textAlign: 'center', paddingTop: 80 }}>
+              <div style={{ width: 72, height: 72, borderRadius: 20, background: '#f3f4f6', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px' }}>
+                <Package size={28} style={{ color: '#d1d5db' }} />
+              </div>
+              <p style={{ fontSize: 16, fontWeight: 600, color: '#374151', margin: '0 0 6px' }}>Create products first</p>
+              <p style={{ fontSize: 13, color: '#9ca3af', margin: '0 0 20px' }}>You need at least one product before adding models.</p>
+              <Link href="/admin/products" style={{ padding: '10px 24px', borderRadius: 10, fontWeight: 700, fontSize: 13, background: '#f59e0b', color: '#fff', textDecoration: 'none', display: 'inline-block' }}>
+                Go to Products
+              </Link>
+            </div>
+          ) : filtered.length === 0 ? (
+            <div style={{ textAlign: 'center', paddingTop: 80 }}>
+              <div style={{ width: 72, height: 72, borderRadius: 20, background: '#f3f4f6', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px' }}>
+                <LayoutGrid size={28} style={{ color: '#d1d5db' }} />
+              </div>
+              <p style={{ fontSize: 16, fontWeight: 600, color: '#374151', margin: '0 0 6px' }}>
+                {search || filterProduct !== 'all' ? 'No models match your filters' : 'No models yet'}
+              </p>
+              <p style={{ fontSize: 13, color: '#9ca3af', margin: '0 0 20px' }}>
+                {search || filterProduct !== 'all' ? 'Try adjusting your search or filter.' : 'Add your first model to get started.'}
+              </p>
+              {!(search || filterProduct !== 'all') && (
+                <button onClick={openCreate} style={{ padding: '10px 24px', borderRadius: 10, fontWeight: 700, fontSize: 13, background: '#f59e0b', border: 'none', color: '#fff', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+                  <Plus size={15} /> Add Model
+                </button>
+              )}
+            </div>
+          ) : (
+            <div style={{ display: 'grid', gap: 10 }}>
+              {/* Select-all row */}
+              {filtered.length > 1 && (
+                <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '6px 18px', borderRadius: 10, background: '#f9fafb', border: '1px solid #f3f4f6' }}>
+                  <input
+                    type="checkbox"
+                    checked={filtered.length > 0 && filtered.every(m => selectedIds.has(m.id))}
+                    onChange={toggleSelectAll}
+                    style={{ width: 15, height: 15, cursor: 'pointer', accentColor: '#f59e0b' }}
+                  />
+                  <span style={{ fontSize: 12, color: '#6b7280', fontWeight: 500 }}>Select all {filtered.length} models</span>
                 </div>
-              );
-            })}
-          </div>
-        )}
-      </main>
+              )}
 
-      {/* ── Create / Edit Modal ── */}
+              {filtered.map((model) => {
+                const thumb    = (model.images || [])[0];
+                const specCount = (model.specs || []).length;
+                const imgCount  = (model.images || []).length;
+                const isSelected = selectedIds.has(model.id);
+                return (
+                  <div
+                    key={model.id}
+                    style={{ background: isSelected ? '#fffbeb' : '#fff', border: `1px solid ${isSelected ? '#fde68a' : '#e5e7eb'}`, borderRadius: 16, padding: '14px 18px', display: 'flex', alignItems: 'center', gap: 14, boxShadow: '0 1px 3px rgba(0,0,0,0.04)', transition: 'all 0.2s', cursor: 'pointer' }}
+                    onClick={() => openEdit(model)}
+                    onMouseEnter={(e) => { if (!isSelected) { e.currentTarget.style.boxShadow = '0 6px 20px rgba(0,0,0,0.08)'; e.currentTarget.style.borderColor = '#d1d5db'; e.currentTarget.style.transform = 'translateY(-1px)'; } }}
+                    onMouseLeave={(e) => { if (!isSelected) { e.currentTarget.style.boxShadow = '0 1px 3px rgba(0,0,0,0.04)'; e.currentTarget.style.borderColor = '#e5e7eb'; e.currentTarget.style.transform = 'translateY(0)'; } }}
+                  >
+                    {/* Checkbox */}
+                    <div onClick={e => { e.stopPropagation(); toggleSelect(model.id); }} style={{ flexShrink: 0 }}>
+                      <input
+                        type="checkbox"
+                        checked={isSelected}
+                        onChange={() => toggleSelect(model.id)}
+                        style={{ width: 15, height: 15, cursor: 'pointer', accentColor: '#f59e0b' }}
+                      />
+                    </div>
+
+                    {/* Thumbnail */}
+                    <div style={{ width: 52, height: 52, borderRadius: 12, overflow: 'hidden', background: '#f3f4f6', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, border: '1px solid #e5e7eb' }}>
+                      {thumb
+                        ? <img src={thumb} alt={model.model_name} style={{ width: '100%', height: '100%', objectFit: 'contain', padding: 4 }} />
+                        : <LayoutGrid size={20} style={{ color: '#9ca3af' }} />
+                      }
+                    </div>
+
+                    {/* Info */}
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap', marginBottom: 3 }}>
+                        <span style={{ fontSize: 14, fontWeight: 700, color: '#111827', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: 300 }}>
+                          {model.model_name}
+                        </span>
+                        {specCount > 0 && (
+                          <span style={{ fontSize: 10, fontWeight: 700, padding: '2px 7px', borderRadius: 999, background: '#eff6ff', color: '#3b82f6', border: '1px solid #dbeafe' }}>
+                            {specCount} specs
+                          </span>
+                        )}
+                        {imgCount > 0 && (
+                          <span style={{ fontSize: 10, fontWeight: 700, padding: '2px 7px', borderRadius: 999, background: '#f0fdf4', color: '#10b981', border: '1px solid #d1fae5' }}>
+                            {imgCount} image{imgCount !== 1 ? 's' : ''}
+                          </span>
+                        )}
+                      </div>
+                      <p style={{ fontSize: 12, color: '#9ca3af', margin: '0 0 4px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: 420 }}>
+                        {model.short_description || 'No description'}
+                      </p>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 11, color: '#9ca3af' }}>
+                        {model.category_name && <span style={{ color: '#6b7280', fontWeight: 500 }}>{model.category_name}</span>}
+                        {model.category_name && <ChevronRight size={11} />}
+                        <span style={{ color: '#374151', fontWeight: 600 }}>{model.product_name}</span>
+                      </div>
+                    </div>
+
+                    {/* Actions */}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexShrink: 0 }} onClick={e => e.stopPropagation()}>
+                      <button
+                        onClick={() => openEdit(model)}
+                        title="Edit"
+                        style={{ padding: 8, borderRadius: 9, border: 'none', background: '#f3f4f6', color: '#6b7280', cursor: 'pointer', transition: 'all 0.15s', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                        onMouseEnter={(e) => { e.currentTarget.style.background = '#eff6ff'; e.currentTarget.style.color = '#3b82f6'; e.currentTarget.style.transform = 'scale(1.1)'; }}
+                        onMouseLeave={(e) => { e.currentTarget.style.background = '#f3f4f6'; e.currentTarget.style.color = '#6b7280'; e.currentTarget.style.transform = 'scale(1)'; }}
+                      >
+                        <Pencil size={15} />
+                      </button>
+                      <button
+                        onClick={() => setDeleteConfirm({ id: model.id, name: model.model_name })}
+                        disabled={deleting === model.id}
+                        title="Delete"
+                        style={{ padding: 8, borderRadius: 9, border: 'none', background: '#f3f4f6', color: '#6b7280', cursor: 'pointer', transition: 'all 0.15s', display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: deleting === model.id ? 0.5 : 1 }}
+                        onMouseEnter={(e) => { e.currentTarget.style.background = '#fef2f2'; e.currentTarget.style.color = '#ef4444'; e.currentTarget.style.transform = 'scale(1.1)'; }}
+                        onMouseLeave={(e) => { e.currentTarget.style.background = '#f3f4f6'; e.currentTarget.style.color = '#6b7280'; e.currentTarget.style.transform = 'scale(1)'; }}
+                      >
+                        {deleting === model.id ? <Loader2 size={15} className="animate-spin" /> : <Trash2 size={15} />}
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </main>
+      </div>
+
+      {/* ── Delete confirm ── */}
+      {deleteConfirm && (
+        <DeleteModal
+          title="Delete model?"
+          message={`"${deleteConfirm.name}" will be permanently deleted. This action cannot be undone.`}
+          onCancel={() => setDeleteConfirm(null)}
+          onConfirm={executeDelete}
+          loading={!!deleting}
+        />
+      )}
+
+      {/* ── Bulk delete confirm ── */}
+      {bulkDeleteConfirm && (
+        <DeleteModal
+          title={`Delete ${selectedIds.size} model${selectedIds.size !== 1 ? 's' : ''}?`}
+          message={`${selectedIds.size} model${selectedIds.size !== 1 ? 's' : ''} will be permanently deleted. This action cannot be undone.`}
+          onCancel={() => setBulkDeleteConfirm(false)}
+          onConfirm={executeBulkDelete}
+          loading={bulkDeleting}
+        />
+      )}
+
+      {/* ── Create / Edit modal ── */}
       {showForm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ background: 'rgba(0,0,0,0.65)', backdropFilter: 'blur(4px)' }}>
-          <div className="rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl" style={{ background: '#001f3f', border: '1px solid rgba(255,255,255,0.08)' }}>
+        <div style={{ position: 'fixed', inset: 0, zIndex: 50, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16, background: 'rgba(0,0,0,0.4)', backdropFilter: 'blur(6px)' }}>
+          <div style={{ borderRadius: 20, width: '100%', maxWidth: 700, maxHeight: '92vh', overflowY: 'auto', background: '#ffffff', border: '1px solid #e5e7eb', boxShadow: '0 24px 80px rgba(0,0,0,0.18)' }}>
+
             {/* Modal header */}
-            <div className="flex items-center justify-between p-6 sticky top-0 z-10" style={{ background: '#001f3f', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-              <h2 className="text-white font-bold text-lg">{editing ? 'Edit Model' : 'New Model'}</h2>
-              <button onClick={() => setShowForm(false)} className="p-2 rounded-lg transition-all" style={{ color: 'rgba(255,255,255,0.4)' }}>
-                <X size={20} />
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '20px 24px', borderBottom: '1px solid #f3f4f6', position: 'sticky', top: 0, background: '#fff', zIndex: 1 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                <div style={{ width: 36, height: 36, borderRadius: 10, background: '#f59e0b', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <LayoutGrid size={17} color="#fff" />
+                </div>
+                <div>
+                  <h2 style={{ fontSize: 15, fontWeight: 700, color: '#111827', margin: 0, lineHeight: 1.2 }}>{editing ? 'Edit Model' : 'New Model'}</h2>
+                  {editing && <p style={{ fontSize: 11, color: '#9ca3af', margin: 0 }}>{editing.model_name}</p>}
+                </div>
+              </div>
+              <button onClick={() => setShowForm(false)}
+                style={{ padding: 8, borderRadius: 9, background: '#f3f4f6', border: '1px solid #e5e7eb', color: '#6b7280', cursor: 'pointer', display: 'flex', alignItems: 'center', transition: 'all 0.15s' }}
+                onMouseEnter={(e) => { e.currentTarget.style.background = '#fef2f2'; e.currentTarget.style.color = '#ef4444'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.background = '#f3f4f6'; e.currentTarget.style.color = '#6b7280'; }}
+              >
+                <X size={17} />
               </button>
             </div>
 
-            <form onSubmit={handleSubmit} className="p-6 space-y-5">
+            {/* Form */}
+            <form onSubmit={handleSubmit} style={{ padding: '20px 24px 24px', background: '#f8fafc', display: 'flex', flexDirection: 'column', gap: 18 }}>
               {error && (
-                <div className="p-3 rounded-lg text-sm" style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.2)', color: '#f87171' }}>
-                  {error}
+                <div style={{ padding: '10px 14px', borderRadius: 10, fontSize: 13, background: '#fef2f2', border: '1px solid #fecaca', color: '#dc2626', display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <AlertTriangle size={14} /> {error}
                 </div>
               )}
 
               {/* Product selector */}
               <div>
-                <label className={labelCls} style={labelStyle}>Product *</label>
-                <select
-                  value={form.product_id}
-                  onChange={e => setForm(p => ({ ...p, product_id: e.target.value }))}
-                  className={inputCls} style={inputStyle} required
-                >
-                  <option value="" disabled style={{ background: '#001f3f' }}>Select product</option>
+                <label style={lbl}>Product *</label>
+                <select value={form.product_id} onChange={e => setForm(p => ({ ...p, product_id: e.target.value }))} style={inp} required onFocus={focusAmber} onBlur={blurReset}>
+                  <option value="" disabled>Select product</option>
                   {products.map(p => (
-                    <option key={p.id} value={p.id} style={{ background: '#001f3f' }}>
+                    <option key={p.id} value={p.id}>
                       {p.main_category_name ? `${p.main_category_name} → ` : ''}{p.name}
                     </option>
                   ))}
                 </select>
               </div>
 
-              {/* Model name */}
-              <div>
-                <label className={labelCls} style={labelStyle}>Model Name *</label>
-                <input
-                  value={form.model_name}
-                  onChange={e => setForm(p => ({ ...p, model_name: e.target.value }))}
-                  className={inputCls} style={inputStyle}
-                  placeholder="e.g. VM-1500, ES1932E, 3T Diesel"
-                  required
-                />
+              {/* Model name + Sort order */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 120px', gap: 14 }}>
+                <div>
+                  <label style={lbl}>Model Name *</label>
+                  <input value={form.model_name} onChange={e => setForm(p => ({ ...p, model_name: e.target.value }))} style={inp} placeholder="e.g. VM-1500, ES1932E" required onFocus={focusAmber} onBlur={blurReset} />
+                </div>
+                <div>
+                  <label style={lbl}>Sort Order</label>
+                  <input type="number" value={form.sort_order} onChange={e => setForm(p => ({ ...p, sort_order: parseInt(e.target.value) || 0 }))} style={inp} onFocus={focusAmber} onBlur={blurReset} />
+                </div>
               </div>
 
               {/* Short description */}
               <div>
-                <label className={labelCls} style={labelStyle}>Short Description</label>
-                <input
-                  value={form.short_description}
-                  onChange={e => setForm(p => ({ ...p, short_description: e.target.value }))}
-                  className={inputCls} style={inputStyle}
-                  placeholder="Brief one-liner about this model"
-                />
+                <label style={lbl}>Short Description</label>
+                <input value={form.short_description} onChange={e => setForm(p => ({ ...p, short_description: e.target.value }))} style={inp} placeholder="Brief one-liner about this model" onFocus={focusAmber} onBlur={blurReset} />
               </div>
 
               {/* Features */}
               <div>
-                <label className={labelCls} style={labelStyle}>Features (one per line)</label>
-                <textarea
-                  value={form.features}
-                  onChange={e => setForm(p => ({ ...p, features: e.target.value }))}
-                  rows={4}
-                  className={`${inputCls} resize-none font-mono`} style={inputStyle}
-                  placeholder={'Heavy duty lift system\nFull hydraulic control\nSafety certified'}
-                />
+                <label style={lbl}>Features (one per line)</label>
+                <textarea value={form.features} onChange={e => setForm(p => ({ ...p, features: e.target.value }))} rows={4} style={{ ...inp, resize: 'vertical', lineHeight: 1.6, fontFamily: 'inherit' }} placeholder={'Heavy duty lift system\nFull hydraulic control\nSafety certified'} onFocus={focusAmber} onBlur={blurReset} />
               </div>
 
-              {/* Specs Table */}
-              <div className="pt-2">
-                <div className="flex items-center justify-between mb-3">
-                  <label className={labelCls} style={{ ...labelStyle, marginBottom: 0 }}>Specifications Table</label>
+              {/* Specs table */}
+              <div style={{ background: '#fff', border: '1px solid #e5e7eb', borderRadius: 14, overflow: 'hidden' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 16px', borderBottom: '1px solid #f3f4f6', background: '#f9fafb' }}>
+                  <span style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.07em', color: '#6b7280' }}>Specifications Table</span>
                   <button type="button" onClick={loadTemplate}
-                    className="text-[10px] px-2.5 py-1.5 rounded-lg bg-amber-500/10 text-amber-500 font-bold hover:bg-amber-500/20 transition-all border border-amber-500/20">
-                    Load Scissor Lift Template
+                    style={{ fontSize: 11, padding: '4px 10px', borderRadius: 7, background: '#fffbeb', border: '1px solid #fde68a', color: '#d97706', fontWeight: 700, cursor: 'pointer', transition: 'all 0.15s' }}
+                    onMouseEnter={(e) => { e.currentTarget.style.background = '#fef3c7'; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.background = '#fffbeb'; }}
+                  >
+                    Load Template
                   </button>
                 </div>
-                <div className="space-y-2 mb-3">
-                  <div className="flex gap-2">
-                     <div className="flex-1 text-[10px] uppercase font-bold text-white/30">Label / Spec Name</div>
-                     <div className="flex-1 text-[10px] uppercase font-bold text-white/30">Value</div>
-                     <div className="w-[38px]"></div>
-                  </div>
-                  {form.specsList.map((row, idx) => (
-                    <div key={idx} className="flex items-center gap-2">
-                       <input value={row.label} onChange={e => handleSpecChange(idx, 'label', e.target.value)}
-                         className={inputCls} style={{...inputStyle, padding: '8px 12px', fontSize: '12px'}} placeholder="e.g. Dimensions" />
-                       <input value={row.value} onChange={e => handleSpecChange(idx, 'value', e.target.value)}
-                         className={inputCls} style={{...inputStyle, padding: '8px 12px', fontSize: '12px'}} placeholder="Value (leave blank for group headers)" />
-                       <button type="button" onClick={() => removeSpecRow(idx)} className="p-2 text-red-400 hover:bg-red-400/10 rounded-lg transition-colors flex-shrink-0">
-                         <X size={14} />
-                       </button>
+
+                <div style={{ padding: 12 }}>
+                  {form.specsList.length > 0 && (
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 32px', gap: '0 8px', marginBottom: 6 }}>
+                      <span style={{ fontSize: 10, fontWeight: 700, textTransform: 'uppercase', color: '#9ca3af', paddingLeft: 4 }}>Label / Spec Name</span>
+                      <span style={{ fontSize: 10, fontWeight: 700, textTransform: 'uppercase', color: '#9ca3af', paddingLeft: 4 }}>Value</span>
+                      <span />
                     </div>
-                  ))}
+                  )}
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 6, maxHeight: 280, overflowY: 'auto', paddingRight: 2 }}>
+                    {form.specsList.map((row, idx) => {
+                      const isHeader = row.label.startsWith('---');
+                      return (
+                        <div key={idx} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 32px', gap: 8, alignItems: 'center' }}>
+                          <input value={row.label} onChange={e => handleSpecChange(idx, 'label', e.target.value)}
+                            style={{ ...inp, padding: '7px 10px', fontSize: 12, background: isHeader ? '#fffbeb' : '#f9fafb', fontWeight: isHeader ? 700 : 400, color: isHeader ? '#92400e' : '#111827' }}
+                            placeholder="Spec label" onFocus={focusAmber} onBlur={blurReset} />
+                          <input value={row.value} onChange={e => handleSpecChange(idx, 'value', e.target.value)}
+                            style={{ ...inp, padding: '7px 10px', fontSize: 12 }}
+                            placeholder={isHeader ? 'Leave blank for headers' : 'Value'} onFocus={focusAmber} onBlur={blurReset} />
+                          <button type="button" onClick={() => removeSpecRow(idx)}
+                            style={{ width: 28, height: 28, borderRadius: 7, border: 'none', background: '#fef2f2', color: '#ef4444', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                            <X size={12} />
+                          </button>
+                        </div>
+                      );
+                    })}
+                  </div>
+                  <button type="button" onClick={addSpecRow}
+                    style={{ marginTop: 8, fontSize: 12, display: 'flex', alignItems: 'center', gap: 6, padding: '7px 12px', borderRadius: 9, border: '1.5px dashed #d1d5db', background: '#fff', color: '#6b7280', cursor: 'pointer', fontWeight: 600, transition: 'all 0.15s' }}
+                    onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#f59e0b'; e.currentTarget.style.color = '#d97706'; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#d1d5db'; e.currentTarget.style.color = '#6b7280'; }}
+                  >
+                    <Plus size={13} /> Add Row
+                  </button>
                 </div>
-                <button type="button" onClick={addSpecRow}
-                  className="text-xs flex items-center gap-1.5 px-3 py-2 rounded-lg transition-all"
-                  style={{ border: '1px dashed rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.4)' }}>
-                  <Plus size={12} /> Add Row
-                </button>
               </div>
 
               {/* Main image */}
               <div>
-                <label className={labelCls} style={labelStyle}>Main Image</label>
-                <div className="flex items-center gap-4">
+                <label style={lbl}>Main Image</label>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                   {form.mainImage && (
-                    <div className="w-20 h-20 rounded-xl overflow-hidden flex-shrink-0" style={{ background: 'rgba(255,255,255,0.05)' }}>
-                      <img src={form.mainImage} alt="" className="w-full h-full object-contain p-1" />
+                    <div style={{ width: 64, height: 64, borderRadius: 12, overflow: 'hidden', background: '#fff', border: '1px solid #e5e7eb', flexShrink: 0 }}>
+                      <img src={form.mainImage} alt="" style={{ width: '100%', height: '100%', objectFit: 'contain', padding: 4 }} />
                     </div>
                   )}
-                  <label className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl cursor-pointer transition-all" style={{ border: '2px dashed rgba(255,255,255,0.1)' }}>
-                    <Upload size={18} style={{ color: 'rgba(255,255,255,0.3)' }} />
-                    <span className="text-sm" style={{ color: 'rgba(255,255,255,0.4)' }}>Upload main image</span>
-                    <input type="file" accept="image/*" onChange={handleMainImage} className="hidden" />
+                  <label style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, padding: '14px 16px', borderRadius: 12, cursor: 'pointer', border: '2px dashed #d1d5db', background: '#fff', transition: 'all 0.15s' }}
+                    onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#f59e0b'; e.currentTarget.style.background = '#fffbeb'; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#d1d5db'; e.currentTarget.style.background = '#fff'; }}
+                  >
+                    <Upload size={16} style={{ color: '#9ca3af' }} />
+                    <span style={{ fontSize: 13, color: '#9ca3af', fontWeight: 500 }}>Upload main image</span>
+                    <input type="file" accept="image/*" onChange={handleMainImage} style={{ display: 'none' }} />
                   </label>
                 </div>
                 {form.mainImage && (
-                  <button type="button" onClick={() => setForm(p => ({ ...p, mainImage: '' }))} className="text-xs mt-2" style={{ color: 'rgba(239,68,68,0.6)' }}>
+                  <button type="button" onClick={() => setForm(p => ({ ...p, mainImage: '' }))} style={{ fontSize: 12, color: '#ef4444', background: 'none', border: 'none', cursor: 'pointer', padding: '4px 0', fontWeight: 600, marginTop: 4 }}>
                     Remove image
                   </button>
                 )}
@@ -490,59 +775,45 @@ export default function AdminModels() {
 
               {/* Gallery images */}
               <div>
-                <label className={labelCls} style={labelStyle}>Gallery Images (additional)</label>
+                <label style={lbl}>Gallery Images</label>
                 {galleryImages.length > 0 && (
-                  <div className="flex gap-2 flex-wrap mb-3">
+                  <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 10 }}>
                     {galleryImages.map((img, idx) => (
-                      <div key={idx} className="relative w-16 h-16 rounded-lg overflow-hidden group" style={{ background: 'rgba(255,255,255,0.05)' }}>
-                        <img src={img} alt="" className="w-full h-full object-contain p-1" />
-                        <button
-                          type="button"
-                          onClick={() => removeGalleryImage(idx)}
-                          className="absolute inset-0 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-all"
-                          style={{ background: 'rgba(239,68,68,0.6)' }}
-                        >
-                          <X size={14} />
+                      <div key={idx} style={{ position: 'relative', width: 60, height: 60, borderRadius: 10, overflow: 'hidden', background: '#f3f4f6', border: '1px solid #e5e7eb' }}>
+                        <img src={img} alt="" style={{ width: '100%', height: '100%', objectFit: 'contain', padding: 2 }} />
+                        <button type="button" onClick={() => removeGalleryImage(idx)}
+                          style={{ position: 'absolute', top: 2, right: 2, width: 18, height: 18, borderRadius: 5, background: 'rgba(239,68,68,0.9)', border: 'none', color: '#fff', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                          <X size={10} />
                         </button>
                       </div>
                     ))}
                   </div>
                 )}
-                <label className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl cursor-pointer transition-all" style={{ border: '2px dashed rgba(255,255,255,0.08)' }}>
-                  <Upload size={16} style={{ color: 'rgba(255,255,255,0.3)' }} />
-                  <span className="text-sm" style={{ color: 'rgba(255,255,255,0.4)' }}>Add gallery images (multi-select)</span>
-                  <input type="file" accept="image/*" multiple onChange={handleGalleryImages} className="hidden" />
+                <label style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, padding: '12px 16px', borderRadius: 12, cursor: 'pointer', border: '2px dashed #d1d5db', background: '#fff', transition: 'all 0.15s' }}
+                  onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#f59e0b'; e.currentTarget.style.background = '#fffbeb'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#d1d5db'; e.currentTarget.style.background = '#fff'; }}
+                >
+                  <Upload size={16} style={{ color: '#9ca3af' }} />
+                  <span style={{ fontSize: 13, color: '#9ca3af', fontWeight: 500 }}>Add gallery images (multi-select)</span>
+                  <input type="file" accept="image/*" multiple onChange={handleGalleryImages} style={{ display: 'none' }} />
                 </label>
               </div>
 
-              {/* Sort order */}
-              <div>
-                <label className={labelCls} style={labelStyle}>Sort Order</label>
-                <input
-                  type="number"
-                  value={form.sort_order}
-                  onChange={e => setForm(p => ({ ...p, sort_order: parseInt(e.target.value) || 0 }))}
-                  className={inputCls} style={inputStyle}
-                />
-              </div>
-
-              {/* Actions */}
-              <div className="flex gap-3 pt-2">
-                <button
-                  type="button"
-                  onClick={() => setShowForm(false)}
-                  className="flex-1 py-3 rounded-xl font-medium text-sm transition-all"
-                  style={{ background: 'rgba(255,255,255,0.05)', color: 'rgba(255,255,255,0.6)' }}
+              {/* Buttons */}
+              <div style={{ display: 'flex', gap: 10, paddingTop: 4, borderTop: '1px solid #f3f4f6', marginTop: 4 }}>
+                <button type="button" onClick={() => setShowForm(false)}
+                  style={{ flex: 1, padding: '11px 0', borderRadius: 10, fontSize: 13, fontWeight: 600, background: '#fff', border: '1px solid #e5e7eb', color: '#374151', cursor: 'pointer', transition: 'all 0.15s' }}
+                  onMouseEnter={(e) => { e.currentTarget.style.background = '#f9fafb'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.background = '#fff'; }}
                 >
                   Cancel
                 </button>
-                <button
-                  type="submit"
-                  disabled={saving}
-                  className="flex-1 py-3 rounded-xl font-bold text-sm transition-all disabled:opacity-50 flex items-center justify-center gap-2"
-                  style={{ background: 'linear-gradient(to right, #f59e0b, #d97706)', color: '#001f3f' }}
+                <button type="submit" disabled={saving}
+                  style={{ flex: 2, padding: '11px 0', borderRadius: 10, fontSize: 13, fontWeight: 700, background: '#f59e0b', border: 'none', color: '#fff', cursor: saving ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, opacity: saving ? 0.7 : 1, boxShadow: '0 4px 12px rgba(245,158,11,0.3)', transition: 'all 0.15s' }}
+                  onMouseEnter={(e) => { if (!saving) e.currentTarget.style.background = '#d97706'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.background = '#f59e0b'; }}
                 >
-                  {saving ? <Loader2 size={16} className="animate-spin" /> : <Save size={16} />}
+                  {saving ? <Loader2 size={15} className="animate-spin" /> : <Save size={15} />}
                   {saving ? 'Saving...' : editing ? 'Update Model' : 'Create Model'}
                 </button>
               </div>

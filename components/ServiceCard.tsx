@@ -14,7 +14,7 @@ export default function ServiceCard({ icon, title, desc }: ServiceCardProps) {
       className="bg-white rounded-2xl border border-border/50 h-full group hover:border-accent/30 transition-all duration-300 hover-lift overflow-hidden"
       style={{
         padding: '2rem 1.75rem',
-        margin: '0.5rem 0',
+        margin: '0 0 3rem 0',
       }}
     >
       <div className="flex items-start gap-5">

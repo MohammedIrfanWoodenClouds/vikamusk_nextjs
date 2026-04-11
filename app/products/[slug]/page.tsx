@@ -17,7 +17,7 @@ interface ProductModel {
   product_id: string;
   model_name: string;
   specs: { label: string; value: string }[];
-  images: string[];
+  images: string[] | string | null;
   sort_order: number;
 }
 
@@ -534,7 +534,7 @@ export default function ProductDetail() {
                             <p className="text-[10px] font-black uppercase tracking-widest text-muted/60">Select a model to view details</p>
                           </div>
                           {/* Model cards grid */}
-                          <div className="grid grid-cols-2 gap-4 mb-8">
+                          <div className="grid grid-cols-2 gap-8 mb-8">
                             {models.map(m => (
                               <ModelCard
                                 key={m.id}

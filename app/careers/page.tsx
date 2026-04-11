@@ -123,7 +123,7 @@ export default function Careers() {
               </div>
             </AnimatedSection>
           ) : (
-            <div className="flex flex-col items-center gap-4 max-w-7xl mx-auto">
+            <div className="flex flex-col items-center max-w-7xl mx-auto">
               {careers.map((career) => {
                 const requirements = parseJson(career.requirements);
                 const benefits = parseJson(career.benefits);
@@ -132,6 +132,8 @@ export default function Careers() {
                 return (
                   <AnimatedSection key={career.id} className="w-full flex justify-center">
                     <div 
+                      key={career.id}
+                      style={{ marginBottom: '2rem' }}
                       className={`group bg-white rounded-2xl border transition-all duration-500 overflow-hidden w-full max-w-4xl mx-auto ${
                         isExpanded 
                         ? 'border-accent/40 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.1)]' 
