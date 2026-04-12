@@ -15,11 +15,11 @@ export const metadata: Metadata = {
     default: 'Vikamusk International | Construction Equipment & Material Handling Solutions',
     template: '%s | Vikamusk International',
   },
-  description: 'Vikamusk International — trusted supplier of advanced construction and material handling equipment. Diesel & Electric Forklifts, Scissor Lifts, Boom Lifts across UAE, India & beyond.',
-  keywords: ['construction equipment', 'forklifts', 'scissor lifts', 'boom lifts', 'aerial work platforms', 'material handling', 'Vikamusk', 'UAE', 'India'],
+  description: 'Vikamusk International — trusted supplier of advanced construction and material handling equipment. Diesel & Electric Forklifts, Scissor Lifts, Boom Lifts across UAE & beyond.',
+  keywords: ['construction equipment', 'forklifts', 'scissor lifts', 'boom lifts', 'aerial work platforms', 'material handling', 'Vikamusk', 'UAE'],
   openGraph: {
     title: 'Vikamusk International | Construction Equipment & Material Handling',
-    description: 'Trusted supplier of advanced construction and material handling solutions across UAE, India & beyond.',
+    description: 'Trusted supplier of advanced construction and material handling solutions across UAE & beyond.',
     type: 'website',
     siteName: 'Vikamusk International',
   },
@@ -47,7 +47,7 @@ export default function RootLayout({
               alternateName: 'Vikamusk Construction Equipment FZE',
               url: 'https://vikamusk.com',
               logo: 'https://vikamusk.com/images/logo.png',
-              description: 'Trusted supplier of advanced construction and material handling solutions across UAE, India & beyond.',
+              description: 'Trusted supplier of advanced construction and material handling solutions across UAE & beyond.',
               foundingDate: '2015',
               contactPoint: [
                 {
@@ -68,14 +68,6 @@ export default function RootLayout({
                   addressLocality: 'Ajman',
                   addressCountry: 'AE',
                   postalCode: '932',
-                },
-                {
-                  '@type': 'PostalAddress',
-                  streetAddress: 'Shanmugham Rd, Marine Drive',
-                  addressLocality: 'Kochi',
-                  addressRegion: 'Kerala',
-                  addressCountry: 'IN',
-                  postalCode: '682031',
                 },
               ],
               sameAs: [],

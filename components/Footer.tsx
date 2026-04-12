@@ -246,7 +246,6 @@ export default function Footer() {
                 {/* Office cards */}
                 {[
                   { region: 'UAE Office (HQ)', address: 'PO Box 932, Ajman Free Zone, Ajman, UAE' },
-                  { region: 'India Office', address: 'Marine Drive, Kochi, Kerala, India' },
                 ].map(({ region, address }) => (
                   <div
                     key={region}

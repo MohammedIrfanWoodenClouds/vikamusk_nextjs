@@ -103,7 +103,7 @@ export default function Contact() {
               </h1>
 
               <p className="text-white/55 text-lg leading-relaxed max-w-xl font-medium">
-                Connect with our specialists across UAE and India. From equipment
+                Connect with our specialists. From equipment
                 sourcing to after-sales — we respond within 24 hours.
               </p>
             </AnimatedSection>

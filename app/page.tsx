@@ -70,7 +70,7 @@ const statIcons = [Truck, Package, Boxes, Award, Globe, Headphones];
 
 const whyItems = [
   { icon: <Shield size={22} />, title: 'Quality Assurance', desc: 'Collaboration with 10+ leading industrial manufacturers ensures premium equipment meeting international standards.' },
-  { icon: <Globe size={22} />, title: 'Global Presence', desc: 'Operations across UAE, India, China, Saudi Arabia & Oman — serving 20+ countries worldwide.' },
+  { icon: <Globe size={22} />, title: 'Global Presence', desc: 'Operations across UAE, China, Saudi Arabia & Oman — serving 15+ countries worldwide.' },
   { icon: <Wrench size={22} />, title: 'Technical Excellence', desc: 'Expert engineering team bridging innovation and reliability for holistic equipment solutions.' },
   { icon: <Award size={22} />, title: '10+ Years Experience', desc: 'A decade of proven success in construction and material handling, building lasting partnerships.' },
   { icon: <Truck size={22} />, title: 'Comprehensive Range', desc: '6 categories, 35+ series, and 100+ models covering Forklifts, Aerial Platforms and more.' },
@@ -169,7 +169,7 @@ export default function Home() {
               style={{ padding: '0.45rem 1.25rem', margin: '0.5rem' }}
             >
               <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse flex-shrink-0" />
-              Established 2015 &nbsp;·&nbsp; UAE, India & Global
+              Established 2015 &nbsp;·&nbsp; UAE & Global
             </motion.div>
 
             {/* Headline */}
@@ -193,7 +193,7 @@ export default function Home() {
               className="text-base lg:text-lg text-white/60 max-w-xl leading-relaxed"
               style={{ marginTop: '1.5rem' }}
             >
-              Trusted supplier of advanced construction and material handling solutions. Specialising in Forklifts and Aerial Work Platforms across UAE, India & beyond.
+              Trusted supplier of advanced construction and material handling solutions. Specialising in Forklifts and Aerial Work Platforms across UAE & beyond.
             </motion.p>
 
             {/* CTAs */}
@@ -330,10 +330,10 @@ export default function Home() {
 
               <div style={{ marginTop: '1rem' }}>
                 <p className="text-muted leading-relaxed mb-4">
-                  Founded in 2015 in India and proudly established in the Ajman Free Zone of UAE, Vikamusk Construction Equipment is a trusted supplier of advanced construction and material handling solutions.
+                  Founded in 2015 and proudly established in the Ajman Free Zone of UAE, Vikamusk Construction Equipment is a trusted supplier of advanced construction and material handling solutions.
                 </p>
                 <p className="text-muted leading-relaxed">
-                  Serving clients across China, UAE, Saudi Arabia, Oman and India. Collaborating with 10+ industrial manufacturers worldwide for reliable, high-performance equipment.
+                  Serving clients across China, UAE, Saudi Arabia and Oman. Collaborating with 10+ industrial manufacturers worldwide for reliable, high-performance equipment.
                 </p>
               </div>
 
@@ -661,7 +661,6 @@ export default function Home() {
               <div className="flex flex-col">
                 {[
                   { flag: '🇦🇪', country: 'UAE (Headquarters)', city: 'Ajman Free Zone', detail: 'Head Office & Warehouse' },
-                  { flag: '🇮🇳', country: 'India', city: 'Kochi, Kerala', detail: 'Regional Operations Office' },
                   { flag: '🇨🇳', country: 'China', city: 'Qingdao', detail: 'Manufacturing Partnership' },
                 ].map((loc, i) => (
                   <div key={i} className="flex items-center gap-4 p-4 rounded-xl bg-surface border border-border/40 hover:border-accent/20 hover:shadow-sm transition-all" style={{ marginBottom: '1rem' }}>

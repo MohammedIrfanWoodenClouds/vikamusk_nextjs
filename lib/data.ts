@@ -81,14 +81,6 @@ export const locations: Location[] = [
     mapUrl:
       'https://www.google.com/maps/place/Vikamusk+Construction+Equipment+FZE/@25.419355,55.45035,860m',
   },
-  {
-    id: 'loc-2',
-    country: 'India',
-    city: 'Kochi',
-    address:
-      'PO 682031, Shanmugham Rd, Marine Drive, Kochi, Ernakulam, Kerala, India',
-    isHeadOffice: false,
-  },
 ];
 
 /* ---------- Stats (company‑level metrics) ---------- */

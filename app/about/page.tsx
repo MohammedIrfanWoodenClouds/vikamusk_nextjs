@@ -38,9 +38,9 @@ export default function About() {
                 Discover Our Story
               </h2>
               <p className="text-muted leading-relaxed mb-4">
-                Founded in 2015 in India and now proudly established in the Ajman Free Zone of UAE, 
+                Founded in 2015 and now proudly established in the Ajman Free Zone of UAE, 
                 Vikamusk Construction Equipment is a trusted supplier of advanced construction and 
-                material handling solutions, serving clients across China, UAE, Saudi Arabia, Oman and India.
+                material handling solutions, serving clients across China, UAE, Saudi Arabia and Oman.
               </p>
               <p className="text-muted leading-relaxed mb-4">
                 Specializing in Forklifts and Aerial Work Platforms, Vikamusk provides reliable 
