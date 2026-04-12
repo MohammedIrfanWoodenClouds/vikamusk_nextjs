@@ -154,24 +154,24 @@ function ModelCard({ model, isActive, onClick, fallbackImage }: {
       </div>
 
       {/* Info */}
-      <div className="px-3.5 py-3" style={{ borderTop: `1px solid ${isActive ? 'rgba(245,158,11,0.2)' : '#f1f5f9'}` }}>
-        <p className="font-bold text-[13px] mb-2 leading-tight transition-colors"
-          style={{ color: isActive ? '#d97706' : '#001f3f' }}>
+      <div className="py-4" style={{ paddingLeft: '1.5rem', paddingRight: '1.5rem', borderTop: `1px solid ${isActive ? 'rgba(245,158,11,0.2)' : '#f1f5f9'}` }}>
+        <p className="font-black text-[14px] mb-2.5 leading-tight transition-colors"
+          style={{ color: isActive ? '#f59e0b' : '#001f3f' }}>
           {model.model_name}
         </p>
         {keySpecs.length > 0 ? (
-          <div className="space-y-1">
+          <div className="space-y-1.5">
             {keySpecs.map((spec, i) => (
-              <div key={i} className="flex justify-between items-start gap-2">
-                <span className="text-[10px] font-semibold uppercase tracking-wide leading-tight"
+              <div key={i} className="flex justify-between items-start gap-3">
+                <span className="text-[10px] font-bold uppercase tracking-widest leading-tight"
                   style={{ color: '#94a3b8' }}>{spec.label}</span>
-                <span className="text-[11px] font-bold text-right shrink-0"
-                  style={{ color: '#334155' }}>{spec.value}</span>
+                <span className="text-[11px] font-black text-right shrink-0"
+                  style={{ color: isActive ? '#001f3f' : '#64748b' }}>{spec.value}</span>
               </div>
             ))}
           </div>
         ) : (
-          <p className="text-[11px] italic" style={{ color: '#cbd5e1' }}>Click for details</p>
+          <p className="text-[11px] italic" style={{ color: '#cbd5e1' }}>Select to view technical data</p>
         )}
       </div>
     </button>
@@ -187,19 +187,28 @@ function SpecTable({ models }: { models: ProductModel[] }) {
     m.specs?.find(s => s.label === label)?.value ?? '—';
 
   return (
-    <div className="overflow-x-auto rounded-2xl" style={{ border: '1px solid #e2e8f0', maxHeight: 580 }}>
-      <table className="w-full text-sm border-collapse" style={{ minWidth: Math.max(540, models.length * 140) }}>
+    <div className="overflow-x-auto rounded-2xl" style={{ border: '1px solid #e2e8f0' }}>
+      <table className="w-full text-base border-collapse" style={{ minWidth: Math.max(680, models.length * 200) }}>
         <thead className="sticky top-0 z-20">
           <tr style={{ background: '#001f3f' }}>
             <th
-              className="sticky left-0 z-30 text-left px-5 py-4 text-[10px] font-bold uppercase tracking-widest"
-              style={{ color: 'rgba(255,255,255,0.45)', background: '#001229', borderRight: '1px solid rgba(255,255,255,0.06)', minWidth: 180 }}
+              className="sticky left-0 z-30 text-left py-5 uppercase tracking-widest"
+              style={{ 
+                color: 'rgba(255,255,255,0.45)', 
+                background: '#001229', 
+                borderRight: '1px solid rgba(255,255,255,0.06)', 
+                minWidth: 320,
+                paddingLeft: '2.5rem',
+                paddingRight: '1.25rem',
+                fontWeight: 900,
+                fontSize: '12.5px'
+              }}
             >
               Specification
             </th>
             {models.map(m => (
-              <th key={m.id} className="px-5 py-4 text-center text-[11px] font-bold whitespace-nowrap"
-                style={{ color: '#f59e0b', borderRight: '1px solid rgba(255,255,255,0.06)', minWidth: 140 }}>
+              <th key={m.id} className="px-5 py-5 text-center font-black whitespace-nowrap"
+                style={{ color: '#f59e0b', borderRight: '1px solid rgba(255,255,255,0.06)', minWidth: 160, fontSize: '15px' }}>
                 {m.model_name}
               </th>
             ))}
@@ -210,22 +219,32 @@ function SpecTable({ models }: { models: ProductModel[] }) {
             const values = models.map(m => getValue(m, label));
             const isDiff = new Set(values.filter(v => v !== '—')).size > 1;
             const rowBg = i % 2 === 0 ? '#f8fafc' : '#ffffff';
+            const isSection = label.includes('---');
+            
             return (
               <tr key={label} className="group" style={{ background: rowBg }}>
                 <td
-                  className="sticky left-0 z-10 px-5 py-3.5 text-[11px] font-semibold uppercase tracking-wide"
-                  style={{ color: '#475569', background: rowBg, borderRight: '1px solid #e2e8f0' }}
+                  className="sticky left-0 z-10 py-4 uppercase tracking-wide"
+                  style={{ 
+                    color: isSection ? '#001f3f' : '#475569', 
+                    background: rowBg, 
+                    borderRight: '1px solid #e2e8f0',
+                    paddingLeft: isSection ? '2.5rem' : '4.25rem',
+                    paddingRight: '1.25rem',
+                    fontWeight: isSection ? 900 : 700,
+                    fontSize: isSection ? '13px' : '13.5px'
+                  }}
                 >
                   <span className="flex items-center gap-2">
                     {label}
-                    {isDiff && (
+                    {!isSection && isDiff && (
                       <span className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: '#f59e0b' }} />
                     )}
                   </span>
                 </td>
                 {models.map(m => (
-                  <td key={m.id} className="px-5 py-3.5 text-center text-[12px] font-semibold"
-                    style={{ color: '#001f3f', borderRight: '1px solid #f1f5f9' }}>
+                  <td key={m.id} className="px-5 py-4 text-center font-bold"
+                    style={{ color: '#001f3f', borderRight: '1px solid #f1f5f9', fontSize: '16px' }}>
                     {getValue(m, label)}
                   </td>
                 ))}
@@ -238,61 +257,7 @@ function SpecTable({ models }: { models: ProductModel[] }) {
   );
 }
 
-/* ─────────────────────────────── Floating CTA ─────────────────────────────── */
-function FloatingCTA({ product, visible }: { product: any; visible: boolean }) {
-  return (
-    <AnimatePresence>
-      {visible && (
-        <motion.div
-          initial={{ y: 80, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          exit={{ y: 80, opacity: 0 }}
-          transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-          className="fixed bottom-0 left-0 right-0 z-40"
-          style={{
-            background: '#001229',
-            borderTop: '1px solid rgba(255,255,255,0.06)',
-            boxShadow: '0 -6px 24px rgba(0,0,0,0.25)',
-          }}
-        >
-          <div className="container-custom flex items-center justify-between gap-4 py-3.5">
-            {/* Product info */}
-            <div className="hidden sm:flex flex-col min-w-0">
-              <p className="text-white text-[13px] font-bold leading-tight truncate">{product.name}</p>
-              {product.category && (
-                <p className="text-[11px] leading-tight" style={{ color: 'rgba(255,255,255,0.38)' }}>{product.category}</p>
-              )}
-            </div>
-            {/* Actions */}
-            <div className="flex items-center gap-2.5 ml-auto flex-shrink-0">
-              {product.brochure_url ? (
-                <a
-                  href={product.brochure_url}
-                  target="_blank" rel="noopener noreferrer"
-                  className="hidden sm:flex items-center gap-2 text-[12px] font-bold px-4 py-2 rounded-xl transition-colors"
-                  style={{ color: 'rgba(255,255,255,0.6)', border: '1px solid rgba(255,255,255,0.12)' }}
-                  onMouseEnter={e => { e.currentTarget.style.color = '#fff'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.3)'; }}
-                  onMouseLeave={e => { e.currentTarget.style.color = 'rgba(255,255,255,0.6)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)'; }}
-                >
-                  <Download size={13} /> Brochure
-                </a>
-              ) : null}
-              <Link
-                href={`/contact?product=${encodeURIComponent(product.name)}`}
-                className="flex items-center gap-2 text-[13px] font-black px-5 py-2.5 rounded-xl transition-all"
-                style={{ background: '#f59e0b', color: '#001f3f' }}
-                onMouseEnter={e => { e.currentTarget.style.background = '#d97706'; }}
-                onMouseLeave={e => { e.currentTarget.style.background = '#f59e0b'; }}
-              >
-                <Mail size={14} /> Request Quote
-              </Link>
-            </div>
-          </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
-  );
-}
+
 
 /* ══════════════════════════════ Main Page ══════════════════════════════ */
 export default function ProductDetail() {
@@ -309,12 +274,6 @@ export default function ProductDetail() {
   const [lightboxIndex, setLightboxIndex]   = useState(0);
   const [copied, setCopied]                 = useState(false);
   const [activeModelId, setActiveModelId]   = useState<string | null>(null);
-
-  // Two visibility flags for floating CTA:
-  // show when main CTA is off-screen AND the bottom section hasn't appeared yet
-  const [ctaOffScreen, setCtaOffScreen]     = useState(false);
-  const [bottomVisible, setBottomVisible]   = useState(false);
-  const showFloatingCTA = ctaOffScreen && !bottomVisible;
 
   const ctaRef    = useRef<HTMLDivElement>(null);
   const bottomRef = useRef<HTMLElement>(null);
@@ -346,22 +305,7 @@ export default function ProductDetail() {
       .catch(() => setLoading(false));
   }, [slug]);
 
-  /* ── Floating CTA observers ── */
-  useEffect(() => {
-    if (!product) return;
 
-    const obs1 = new IntersectionObserver(
-      ([e]) => setCtaOffScreen(!e.isIntersecting),
-      { threshold: 0.2 }
-    );
-    const obs2 = new IntersectionObserver(
-      ([e]) => setBottomVisible(e.isIntersecting),
-      { threshold: 0.1 }
-    );
-    if (ctaRef.current)    obs1.observe(ctaRef.current);
-    if (bottomRef.current) obs2.observe(bottomRef.current);
-    return () => { obs1.disconnect(); obs2.disconnect(); };
-  }, [product]);
 
   /* ── Lightbox keyboard ── */
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
@@ -435,15 +379,15 @@ export default function ProductDetail() {
   const quickSpecs   = specsEntries.slice(0, 4);
 
   const tabs: { id: Tab; label: string; icon: React.ReactNode; count?: number }[] = [
-    { id: 'overview',  label: 'Overview', icon: <FileText size={13} /> },
+    { id: 'overview',  label: 'Overview', icon: <FileText size={15} /> },
     ...(modelsCount > 0
-      ? [{ id: 'models' as Tab,   label: 'Models',   icon: <LayoutGrid size={13} />, count: modelsCount }]
+      ? [{ id: 'models' as Tab,   label: 'Models',   icon: <LayoutGrid size={15} />, count: modelsCount }]
       : []),
     ...(specsCount > 0
-      ? [{ id: 'specs' as Tab,    label: 'Specs',    icon: <Settings size={13} />,   count: specsCount }]
+      ? [{ id: 'specs' as Tab,    label: 'Specs',    icon: <Settings size={15} />,   count: specsCount }]
       : []),
     ...(featuresCount > 0
-      ? [{ id: 'features' as Tab, label: 'Features', icon: <List size={13} />,       count: featuresCount }]
+      ? [{ id: 'features' as Tab, label: 'Features', icon: <List size={15} />,       count: featuresCount }]
       : []),
   ];
 
@@ -454,8 +398,7 @@ export default function ProductDetail() {
 
   /* ══════════════════════════════ Render ══════════════════════════════ */
   return (
-    /* page wrapper — adds bottom padding when floating CTA is active */
-    <div style={{ paddingBottom: showFloatingCTA ? 72 : 0 }}>
+    <div className="overflow-hidden">
 
       {/* Navbar spacer */}
       <div className="h-[88px] lg:h-[104px] w-full bg-white" />
@@ -602,8 +545,8 @@ export default function ProductDetail() {
               </motion.div>
             </div>
 
-            {/* ───── RIGHT: Product Info ───── */}
             <motion.div
+              className="px-12"
               initial={{ opacity: 0, x: 16 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.45, delay: 0.1 }}
@@ -636,8 +579,8 @@ export default function ProductDetail() {
 
               {/* ── Product name ── */}
               <h1
-                className="font-black leading-[1.08] tracking-tight mb-4"
-                style={{ color: '#001f3f', fontSize: 'clamp(1.75rem, 3.5vw, 2.6rem)' }}
+                className="font-black leading-[1.08] tracking-tight"
+                style={{ color: '#001f3f', fontSize: 'clamp(1.75rem, 3.5vw, 2.6rem)', marginBottom: '1rem' }}
               >
                 {product.name}
               </h1>
@@ -645,8 +588,8 @@ export default function ProductDetail() {
               {/* ── Short description ── */}
               {product.shortDescription && (
                 <p
-                  className="text-[15px] leading-relaxed mb-6 pl-4 py-0.5"
-                  style={{ color: '#475569', borderLeft: '3px solid #f59e0b' }}
+                  className="text-[15px] leading-relaxed pl-4 py-0.5"
+                  style={{ color: '#475569', borderLeft: '3px solid #f59e0b', marginBottom: '1rem' }}
                 >
                   {product.shortDescription}
                 </p>
@@ -654,7 +597,7 @@ export default function ProductDetail() {
 
               {/* ── Quick spec highlights (only when product has own specs) ── */}
               {quickSpecs.length > 0 && (
-                <div className="grid grid-cols-2 gap-2.5 mb-6">
+                <div className="grid grid-cols-2 gap-2.5" style={{ marginBottom: '1rem' }}>
                   {quickSpecs.map(([key, value], i) => {
                     const [Icon] = getSpecIcon(key);
                     return (
@@ -693,8 +636,8 @@ export default function ProductDetail() {
               {/* ── Models badge ── */}
               {modelsCount > 0 && (
                 <div
-                  className="flex items-center gap-3 p-3 rounded-xl mb-6"
-                  style={{ background: '#f0fdf4', border: '1px solid #bbf7d0' }}
+                  className="flex items-center gap-3 p-3 rounded-xl"
+                  style={{ background: '#f0fdf4', border: '1px solid #bbf7d0', marginBottom: '1rem' }}
                 >
                   <div className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0"
                     style={{ background: '#dcfce7' }}>
@@ -712,39 +655,70 @@ export default function ProductDetail() {
 
               {/* ── Tab Navigation ── */}
               <div
-                className="flex rounded-xl p-1 mb-5 overflow-x-auto"
-                style={{ background: '#f1f5f9', border: '1px solid #e2e8f0', gap: 2 }}
+                className="flex items-center rounded-full p-2 overflow-x-auto no-scrollbar"
+                style={{ 
+                  background: '#f1f5f9', 
+                  border: '1px solid #e2e8f0', 
+                  gap: 12, 
+                  marginTop: '1.5rem', 
+                  marginBottom: '2.5rem' 
+                }}
               >
-                {tabs.map(tab => (
-                  <button
-                    key={tab.id}
-                    onClick={() => setActiveTab(tab.id)}
-                    className="flex-shrink-0 flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-lg text-[11px] font-bold uppercase tracking-wider transition-all"
-                    style={activeTab === tab.id
-                      ? {
-                          background: '#fff',
-                          color: '#001f3f',
-                          boxShadow: '0 1px 6px rgba(0,0,0,0.08)',
-                          borderBottom: '2px solid #f59e0b',
+                {tabs.map(tab => {
+                  const isActive = activeTab === tab.id;
+                  return (
+                    <button
+                      key={tab.id}
+                      onClick={() => setActiveTab(tab.id)}
+                      className="flex-1 min-w-[160px] relative flex items-center justify-center gap-4 px-12 py-6 rounded-full text-[14px] font-bold uppercase tracking-widest transition-all duration-300 group"
+                      style={isActive
+                        ? {
+                            background: '#fff',
+                            color: '#001f3f',
+                            boxShadow: '0 4px 15px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.02)',
+                          }
+                        : { color: '#64748b' }
+                      }
+                      onMouseEnter={e => {
+                        if (!isActive) {
+                          e.currentTarget.style.background = 'rgba(255,255,255,0.7)';
+                          e.currentTarget.style.color = '#001f3f';
                         }
-                      : { color: '#64748b' }
-                    }
-                  >
-                    {tab.icon}
-                    <span>{tab.label}</span>
-                    {tab.count !== undefined && tab.count > 0 && (
-                      <span
-                        className="px-1.5 py-0.5 text-[9px] rounded-full font-black"
-                        style={activeTab === tab.id
-                          ? { background: 'rgba(245,158,11,0.15)', color: '#b45309' }
-                          : { background: '#e2e8f0', color: '#94a3b8' }
+                      }}
+                      onMouseLeave={e => {
+                        if (!isActive) {
+                          e.currentTarget.style.background = 'transparent';
+                          e.currentTarget.style.color = '#64748b';
                         }
-                      >
-                        {tab.count}
+                      }}
+                    >
+                      <span className="shrink-0 transition-transform duration-300 group-hover:scale-110" style={{ color: isActive ? '#f59e0b' : 'inherit' }}>
+                        {tab.icon}
                       </span>
-                    )}
-                  </button>
-                ))}
+                      <span>{tab.label}</span>
+                      {tab.count !== undefined && tab.count > 0 && (
+                        <span
+                          className="min-w-[24px] h-[24px] flex items-center justify-center px-2 text-[10px] rounded-full font-black transition-colors"
+                          style={isActive
+                            ? { background: 'rgba(245,158,11,0.15)', color: '#b45309' }
+                            : { background: '#e2e8f0', color: '#94a3b8' }
+                          }
+                        >
+                          {tab.count}
+                        </span>
+                      )}
+
+                      {/* Active Indicator Underline */}
+                      {isActive && (
+                        <motion.div
+                          layoutId="activeTabUnderline"
+                          className="absolute bottom-0 left-6 right-6 h-0.5 rounded-full"
+                          style={{ background: '#f59e0b' }}
+                        />
+                      )}
+                    </button>
+                  );
+                })}
               </div>
 
               {/* ── Tab Content ── */}
@@ -797,15 +771,15 @@ export default function ProductDetail() {
                       </div>
                     ) : (
                       <>
-                        <p className="text-[10px] font-black uppercase tracking-widest mb-3"
-                          style={{ color: '#94a3b8' }}>
+                        <p className="text-[10px] font-black uppercase tracking-widest"
+                          style={{ color: '#94a3b8', marginBottom: '1rem' }}>
                           Select a model to view specifications
                         </p>
 
                         {/* Model cards — auto-fill grid, handles any count cleanly */}
                         <div
                           className="grid gap-3 mb-5"
-                          style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))' }}
+                          style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', paddingLeft: '2rem', paddingRight: '2rem' }}
                         >
                           {models.map(m => (
                             <ModelCard
@@ -830,7 +804,7 @@ export default function ProductDetail() {
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, y: 8 }}
                                 transition={{ duration: 0.18 }}
-                                className="rounded-xl overflow-hidden mb-4"
+                                className="rounded-xl overflow-hidden mb-4 mx-6"
                                 style={{ border: '1px solid rgba(245,158,11,0.28)' }}
                               >
                                 {/* Panel header */}
@@ -860,34 +834,28 @@ export default function ProductDetail() {
                                 </div>
                                 {/* Spec rows */}
                                 {sel.specs.map((s, i) => (
-                                  <div
-                                    key={i}
-                                    className="flex justify-between items-center px-4 py-2.5"
-                                    style={{
-                                      background: i % 2 === 0 ? '#f8fafc' : '#fff',
-                                      borderBottom: i < sel.specs.length - 1 ? '1px solid #f1f5f9' : 'none',
-                                    }}
-                                  >
-                                    <span className="text-[11px] font-semibold uppercase tracking-wide"
-                                      style={{ color: '#94a3b8' }}>{s.label}</span>
-                                    <span className="text-[12px] font-bold text-right ml-4"
-                                      style={{ color: '#001f3f' }}>{s.value}</span>
-                                  </div>
+                                    <div
+                                      key={i}
+                                      className="flex justify-between items-center pr-4 py-3"
+                                      style={{
+                                        background: i % 2 === 0 ? '#f8fafc' : '#fff',
+                                        borderBottom: i < sel.specs.length - 1 ? '1px solid #f1f5f9' : 'none',
+                                        paddingLeft: s.label.includes('---') ? '1.5rem' : '2.5rem'
+                                      }}
+                                    >
+                                      <span className={`text-[13px] uppercase tracking-wide ${s.label.includes('---') ? 'font-black text-[#001f3f]' : 'font-bold text-[#64748b]'}`}>
+                                        {s.label}
+                                      </span>
+                                      <span className="text-[15px] font-black text-right ml-4"
+                                        style={{ color: '#001f3f' }}>{s.value}</span>
+                                    </div>
                                 ))}
                               </motion.div>
                             );
                           })()}
                         </AnimatePresence>
 
-                        {modelsCount > 1 && (
-                          <div className="flex items-center gap-2 p-3 rounded-lg"
-                            style={{ background: '#f8fafc', border: '1px solid #e2e8f0' }}>
-                            <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: '#f59e0b' }} />
-                            <p className="text-[10px] font-bold uppercase tracking-widest" style={{ color: '#94a3b8' }}>
-                              Full side-by-side comparison available below
-                            </p>
-                          </div>
-                        )}
+
                       </>
                     )}
                   </motion.div>
@@ -905,20 +873,23 @@ export default function ProductDetail() {
                         No specifications listed.
                       </p>
                     ) : (
-                      <div className="rounded-xl overflow-hidden" style={{ border: '1px solid #e2e8f0' }}>
+                      <div className="rounded-xl overflow-hidden mx-6" style={{ border: '1px solid #e2e8f0' }}>
                         {specsEntries.map(([key, value], i) => (
                           <div
                             key={key}
-                            className="flex justify-between items-center px-4 py-3 transition-colors"
+                            className="flex justify-between items-center pr-4 py-3.5 transition-colors"
                             style={{
                               background: i % 2 === 0 ? '#f8fafc' : '#fff',
                               borderBottom: i < specsCount - 1 ? '1px solid #f1f5f9' : 'none',
+                              paddingLeft: key.includes('---') ? '1.5rem' : '2.5rem'
                             }}
                             onMouseEnter={e => { e.currentTarget.style.background = 'rgba(245,158,11,0.03)'; }}
                             onMouseLeave={e => { e.currentTarget.style.background = i % 2 === 0 ? '#f8fafc' : '#fff'; }}
                           >
-                            <span className="text-[12px] font-semibold" style={{ color: '#64748b' }}>{key}</span>
-                            <span className="text-[12px] font-bold ml-4 text-right" style={{ color: '#001f3f' }}>
+                            <span className={`text-[14px] ${key.includes('---') ? 'font-black text-[#001f3f]' : 'font-bold text-[#64748b]'}`}>
+                              {key}
+                            </span>
+                            <span className="text-[16px] font-black ml-4 text-right" style={{ color: '#001f3f' }}>
                               {String(value)}
                             </span>
                           </div>
@@ -938,7 +909,7 @@ export default function ProductDetail() {
                     {flatFeatures.length === 0 ? (
                       <p className="text-sm italic py-4" style={{ color: '#94a3b8' }}>No features listed.</p>
                     ) : (
-                      <div className="flex flex-col gap-2">
+                      <div className="flex flex-col gap-2" style={{ paddingLeft: '2rem', paddingRight: '2rem' }}>
                         {flatFeatures.map((feature, i) => (
                           <motion.div
                             key={i}
@@ -974,82 +945,110 @@ export default function ProductDetail() {
               </AnimatePresence>
 
               {/* ── CTA Block ── */}
-              <div ref={ctaRef} className="mt-8">
+              <div ref={ctaRef} className="mt-12" style={{ marginTop: '3rem' }}>
                 <div
-                  className="rounded-2xl px-8 py-7 relative overflow-hidden shadow-sm"
-                  style={{ background: '#fff', border: '1px solid #e2e8f0' }}
+                  className="rounded-3xl p-8 lg:p-10 relative overflow-hidden shadow-xl"
+                  style={{ 
+                    background: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)', 
+                    border: '1px solid #e2e8f0' 
+                  }}
                 >
-                  <div className="relative z-10">
-                    <p className="text-[10px] font-black uppercase tracking-[0.22em] mb-1.5"
+                  <div className="relative z-10 flex flex-col items-center text-center gap-6">
+                    {/* Row 1: Label */}
+                    <p className="text-[11px] font-black uppercase tracking-[0.25em]"
                       style={{ color: '#f59e0b' }}>
                       Ready to proceed?
                     </p>
-                    <h3 className="text-base font-black mb-5 leading-snug" style={{ color: '#001f3f' }}>
-                      Get a quote or download the spec sheet
-                    </h3>
-
-                    {/* Buttons — now side-by-side in one line */}
-                    <div className="flex flex-row gap-3">
+ 
+                    {/* Row 2: Title */}
+                    <div className="max-w-md">
+                      <h3 className="text-xl lg:text-2xl font-black leading-tight" 
+                        style={{ color: '#001f3f' }}>
+                        Get a tailored quote or download the product spec sheet
+                      </h3>
+                    </div>
+ 
+                    {/* Row 3: Buttons */}
+                    <div className="flex flex-wrap justify-center gap-4 w-full">
                       <Link
                         href={`/contact?product=${encodeURIComponent(product.name)}`}
-                        className="flex-1 flex items-center justify-center gap-2 py-5 px-2 rounded-xl font-bold text-[13px] transition-all hover:scale-105 hover:shadow-[0_0_25px_rgba(245,158,11,0.2)]"
+                        className="flex-1 min-w-[200px] max-w-[240px] flex items-center justify-center gap-3.5 rounded-2xl font-black text-[14px] transition-all hover:scale-[1.03] shadow-lg shadow-amber-500/20"
                         style={{
                           background: '#f59e0b',
                           color: '#001f3f',
-                          border: '1px solid transparent'
+                          height: '60px',
                         }}
-                        onMouseEnter={e => { e.currentTarget.style.borderColor = '#001f3f'; }}
-                        onMouseLeave={e => { e.currentTarget.style.borderColor = 'transparent'; }}
+                        onMouseEnter={e => { 
+                          e.currentTarget.style.background = '#001f3f'; 
+                          e.currentTarget.style.color = '#fff';
+                        }}
+                        onMouseLeave={e => { 
+                          e.currentTarget.style.background = '#f59e0b'; 
+                          e.currentTarget.style.color = '#001f3f';
+                        }}
                       >
-                        <Mail size={16} /> Request Quote
+                        <Mail size={18} /> Request Quote
                       </Link>
-
+ 
                       {product.brochure_url ? (
                         <a
                           href={product.brochure_url}
                           target="_blank" rel="noopener noreferrer"
-                          className="flex-1 flex items-center justify-center gap-2 py-5 px-2 rounded-xl font-bold text-[13px] transition-all border border-[#001f3f]/15 hover:border-[#001f3f] hover:scale-105 hover:bg-[#001f3f] hover:text-white hover:shadow-[0_0_25px_rgba(0,31,63,0.1)]"
+                          className="flex-1 min-w-[200px] max-w-[240px] flex items-center justify-center gap-3.5 rounded-2xl font-black text-[14px] transition-all border-2 border-[#001f3f]/10 hover:scale-[1.03]"
                           style={{
                             background: '#fff',
-                            color: '#001f3f'
+                            color: '#001f3f',
+                            height: '60px',
+                          }}
+                          onMouseEnter={e => { 
+                            e.currentTarget.style.borderColor = '#001f3f';
+                          }}
+                          onMouseLeave={e => { 
+                            e.currentTarget.style.borderColor = 'rgba(0,31,63,0.1)';
                           }}
                         >
-                          <Download size={16} /> Brochure
+                          <Download size={18} /> Brochure
                         </a>
                       ) : (
-                        <a
+                        <Link
                           href="/vikamusk-company-profile.pdf"
-                          target="_blank" rel="noopener noreferrer"
-                          className="flex-1 flex items-center justify-center gap-2 py-5 px-2 rounded-xl font-bold text-[13px] transition-all border border-[#001f3f]/15 hover:border-[#001f3f] hover:scale-105 hover:bg-[#001f3f] hover:text-white hover:shadow-[0_0_25px_rgba(0,31,63,0.1)]"
+                          className="flex-1 min-w-[200px] max-w-[240px] flex items-center justify-center gap-3.5 rounded-2xl font-black text-[14px] transition-all border-2 border-[#001f3f]/10 hover:scale-[1.03]"
                           style={{
                             background: '#fff',
-                            color: '#001f3f'
+                            color: '#001f3f',
+                            height: '60px',
+                          }}
+                          onMouseEnter={e => { 
+                            e.currentTarget.style.borderColor = '#001f3f';
+                          }}
+                          onMouseLeave={e => { 
+                            e.currentTarget.style.borderColor = 'rgba(0,31,63,0.1)';
                           }}
                         >
-                          <Download size={16} /> Profile
-                        </a>
+                          <Download size={18} /> Profile
+                        </Link>
                       )}
                     </div>
-
-                    {/* Trust badges — 3-col grid */}
+ 
+                    {/* Row 4: Trust Badges */}
                     <div
-                      className="grid grid-cols-3 gap-3 mt-6 pt-6"
-                      style={{ borderTop: '1px solid #f1f5f9' }}
+                      className="w-full grid grid-cols-1 sm:grid-cols-3 gap-6 pt-8 mt-2"
+                      style={{ borderTop: '1px solid #eef2f6' }}
                     >
                       {[
-                        { icon: <Shield size={14} />, label: '24h Reply' },
-                        { icon: <Wrench size={14} />, label: 'Tech Support' },
-                        { icon: <Phone size={14} />, label: 'Expert Help' },
+                        { icon: <Shield size={16} />, label: 'Fast Response' },
+                        { icon: <Wrench size={16} />, label: 'Expert Support' },
+                        { icon: <Phone size={16} />, label: 'Ready to Help' },
                       ].map((item, i) => (
-                        <div key={i} className="flex flex-col items-center gap-1.5 text-center">
+                        <div key={i} className="flex flex-col items-center gap-2">
                           <div
-                            className="w-8 h-8 rounded-full flex items-center justify-center"
-                            style={{ background: '#fef3c7', color: '#d97706' }}
+                            className="w-10 h-10 rounded-xl flex items-center justify-center"
+                            style={{ background: 'rgba(245,158,11,0.1)', color: '#d97706' }}
                           >
                             {item.icon}
                           </div>
-                          <span className="text-[10px] font-bold leading-tight"
-                            style={{ color: '#64748b' }}>
+                          <span className="text-[11px] font-black uppercase tracking-widest leading-tight"
+                            style={{ color: '#94a3b8' }}>
                             {item.label}
                           </span>
                         </div>
@@ -1057,6 +1056,7 @@ export default function ProductDetail() {
                     </div>
                   </div>
                 </div>
+              </div>
 
                 {/* Back / Share row */}
                 <div className="flex items-center justify-between mt-4 px-1">
@@ -1081,7 +1081,6 @@ export default function ProductDetail() {
                       : <><Share2 size={12} style={{ color: '#f59e0b' }} /> Share</>}
                   </button>
                 </div>
-              </div>
             </motion.div>
           </div>
         </div>
@@ -1280,8 +1279,6 @@ export default function ProductDetail() {
         </div>
       </section>
 
-      {/* ── Floating Sticky CTA ── */}
-      <FloatingCTA product={product} visible={showFloatingCTA} />
     </div>
   );
 }

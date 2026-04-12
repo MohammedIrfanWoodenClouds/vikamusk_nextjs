@@ -358,3 +358,12 @@ img {
 [data-nimg="fill"] {
   object-fit: contain;
 }
+
+/* ==================== HIDE SCROLLBAR ==================== */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
