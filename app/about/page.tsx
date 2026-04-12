@@ -132,7 +132,7 @@ export default function About() {
             <h2 className="text-3xl lg:text-4xl font-black text-primary mt-3 mb-4">
               Our Core Values
             </h2>
-            <p className="text-muted max-w-2xl mx-auto text-center">
+            <p className="text-muted max-w-2xl mx-auto text-center" style={{ marginBottom: '2rem' }}>
               Our foundation is built on four core principles that guide our technical innovation 
               and our commitment to worldwide customer success.
             </p>
