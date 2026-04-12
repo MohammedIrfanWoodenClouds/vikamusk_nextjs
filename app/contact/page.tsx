@@ -62,7 +62,7 @@ export default function Contact() {
       >
         {/* Background image — very subtle */}
         <div className="absolute inset-0 opacity-10 pointer-events-none">
-          <Image src="/images/hero-bg.png" alt="" fill className="object-cover" priority />
+          <Image src="/images/hero-bg.png" alt="" fill className="object-cover" />
         </div>
 
         {/* Base gradient — fully contained, no bottom bleed */}
@@ -302,6 +302,7 @@ export default function Contact() {
                   style={{
                     background: 'linear-gradient(145deg, #0B2C4A 0%, #0D3459 55%, #0E3A5D 100%)',
                     boxShadow: '0 24px 64px rgba(0,0,0,0.22), 0 0 0 1px rgba(30,74,107,0.55), inset 0 1px 0 rgba(255,255,255,0.06)',
+                    padding: '48px',
                   }}
                 >
                   {/* Dot grid texture */}
@@ -320,10 +321,10 @@ export default function Contact() {
                   <div className="absolute -bottom-12 -left-12 w-36 h-36 rounded-full bg-[#0a7abf]/[0.08] blur-2xl pointer-events-none" />
 
                   {/* Card content */}
-                  <div className="relative px-9 pt-9 pb-8">
+                  <div className="relative">
 
                     {/* ── Header ── */}
-                    <div className="flex items-center justify-between mb-10">
+                    <div className="flex items-center justify-between mb-16">
                       <h3 className="text-[19px] font-semibold text-white tracking-tight">Contact Details</h3>
                       {/* Live status badge */}
                       <div className="flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/20 rounded-full px-3 py-1.5">
@@ -344,7 +345,7 @@ export default function Contact() {
                           <Phone size={16} className="text-[#F5B400]" />
                         </div>
                         <div>
-                          <p className="text-[10px] font-bold text-[#AFC3D4] uppercase tracking-[0.55px] mb-1.5">Call Our Team</p>
+                          <p className="text-[11px] font-bold text-[#AFC3D4] uppercase tracking-[0.1em] mb-2">Call Our Team</p>
                           <a
                             href="tel:+97174044433"
                             className="text-[15px] font-medium text-white hover:text-[#F5B400] transition-colors"
@@ -360,7 +361,7 @@ export default function Contact() {
                           <Mail size={16} className="text-[#F5B400]" />
                         </div>
                         <div>
-                          <p className="text-[10px] font-bold text-[#AFC3D4] uppercase tracking-[0.55px] mb-1.5">Email Us</p>
+                          <p className="text-[11px] font-bold text-[#AFC3D4] uppercase tracking-[0.1em] mb-2">Email Us</p>
                           <a
                             href="mailto:sales@vikamusk.com"
                             className="text-[15px] font-medium text-white hover:text-[#F5B400] transition-colors break-all"
@@ -376,7 +377,7 @@ export default function Contact() {
                           <Clock size={16} className="text-[#F5B400]" />
                         </div>
                         <div>
-                          <p className="text-[10px] font-bold text-[#AFC3D4] uppercase tracking-[0.55px] mb-1.5">Business Hours</p>
+                          <p className="text-[11px] font-bold text-[#AFC3D4] uppercase tracking-[0.1em] mb-2">Business Hours</p>
                           <p className="text-[15px] font-medium text-white">Sun – Thu: 09:00 – 18:00</p>
                           <p className="text-[12px] text-[#AFC3D4] mt-0.5">Gulf Standard Time (GST)</p>
                         </div>
@@ -393,7 +394,7 @@ export default function Contact() {
                         <Building2 size={16} className="text-white/70" />
                       </div>
                       <div className="flex-1">
-                        <p className="text-[10px] font-bold text-[#AFC3D4] uppercase tracking-[0.55px] mb-2">UAE Headquarters</p>
+                        <p className="text-[11px] font-bold text-[#AFC3D4] uppercase tracking-[0.1em] mb-2.5">UAE Headquarters</p>
                         <p className="text-[14px] font-medium text-white/85 leading-[1.75]">
                           PO Box 932, Ajman Free Zone,<br />
                           Sheikh Rashid Bin Saeed Al Maktoum St,<br />
@@ -420,7 +421,7 @@ export default function Contact() {
 
                     {/* ── WhatsApp Quick Connect ── */}
                     <div>
-                      <p className="text-[10px] font-bold text-[#AFC3D4] uppercase tracking-[0.55px] mb-4">Quick Connect</p>
+                      <p className="text-[11px] font-bold text-[#AFC3D4] uppercase tracking-[0.1em] mb-5">Quick Connect</p>
                       <a
                         href="https://wa.me/97174044433"
                         target="_blank"
@@ -444,7 +445,7 @@ export default function Contact() {
                     </div>
 
                     {/* ── Footer trust line ── */}
-                    <p className="text-center text-[11px] text-[#AFC3D4]/60 mt-8 pb-1 tracking-wide">
+                    <p className="text-center text-[11px] text-[#AFC3D4]/60 mt-14 pb-4 tracking-wide">
                       🔒 Your information is always kept private
                     </p>
 

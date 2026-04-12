@@ -144,10 +144,10 @@ export default function Footer() {
                 handling solutions across UAE, India, and beyond.
               </p>
 
-              {/* 1rem forced margin */}
+              {/* Stat cards in a line */}
               <div 
-                className="grid grid-cols-3 gap-3" 
-                style={{ marginBottom: '1rem', display: 'block' }}
+                className="flex gap-4 flex-wrap" 
+                style={{ marginBottom: '1rem', display: 'flex' }}
               >
                 {[
                   { value: '10+', label: 'Years' },
@@ -196,7 +196,7 @@ export default function Footer() {
             </div>
 
             {/* Quick Links */}
-            <div className="lg:pt-16" style={{ paddingTop: '4rem' }}>
+            <div className="lg:pt-8" style={{ marginTop: '1rem' }}>
               <SectionTitle>Quick Links</SectionTitle>
               <ul className="space-y-4">
                 {quickLinks.map(link => (
@@ -206,7 +206,7 @@ export default function Footer() {
             </div>
 
             {/* Product Categories */}
-            <div className="lg:pt-16" style={{ paddingTop: '4rem' }}>
+            <div className="lg:pt-8" style={{ marginTop: '1rem' }}>
               <SectionTitle>Product Categories</SectionTitle>
               <ul className="space-y-4">
                 <FooterLink href="/products">All Products</FooterLink>
@@ -240,9 +240,9 @@ export default function Footer() {
             </div>
 
             {/* Contact Info */}
-            <div className="lg:pt-16" style={{ paddingTop: '4rem' }}>
+            <div className="lg:pt-8" style={{ marginTop: '1rem' }}>
               <SectionTitle>Contact Info</SectionTitle>
-              <div className="space-y-5">
+              <div className="space-y-4" style={{ marginTop: '1rem' }}>
                 {/* Office cards */}
                 {[
                   { region: 'UAE Office (HQ)', address: 'PO Box 932, Ajman Free Zone, Ajman, UAE' },
@@ -250,7 +250,8 @@ export default function Footer() {
                 ].map(({ region, address }) => (
                   <div
                     key={region}
-                    className="rounded-xl p-3.5 bg-white/[0.03] border border-white/[0.07] hover:border-white/[0.13] transition-colors duration-200"
+                    className="rounded-xl p-5 bg-white/[0.03] border border-white/[0.07] hover:border-white/[0.13] transition-colors duration-200"
+                    style={{ marginBottom: '1rem' }}
                   >
                     <p className="text-[10px] font-bold uppercase tracking-widest text-accent/60 mb-2.5">
                       {region}
@@ -260,7 +261,10 @@ export default function Footer() {
                 ))}
 
                 {/* Email links */}
-                <div className="space-y-4 pt-4">
+                <div 
+                  className="space-y-4"
+                  style={{ marginTop: '1.5rem' }}
+                >
                   {[
                     { href: 'mailto:sales@vikamusk.com', label: 'Sales', address: 'sales@vikamusk.com' },
                     { href: 'mailto:info@vikamusk.com', label: 'General', address: 'info@vikamusk.com' },

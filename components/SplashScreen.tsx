@@ -52,7 +52,6 @@ export default function SplashScreen() {
                 alt="Vikamusk"
                 fill
                 className="object-contain"
-                priority
                 sizes="(max-width: 768px) 300px, 450px"
               />
             </div>
