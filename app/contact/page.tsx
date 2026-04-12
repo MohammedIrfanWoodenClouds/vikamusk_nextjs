@@ -234,7 +234,7 @@ export default function Contact() {
                   </div>
 
                   {/* Message */}
-                  <div className="space-y-3">
+                  <div className="space-y-3" style={{ marginTop: '2rem' }}>
                     <label htmlFor="message" className="block text-[12px] font-bold text-slate-400 uppercase tracking-[0.2em]">
                       What Do You Have In Mind
                     </label>
