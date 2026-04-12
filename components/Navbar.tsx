@@ -232,9 +232,8 @@ export default function Navbar() {
                     transition={{ duration: 0.22, ease: 'easeOut' }}
                     onMouseEnter={cancelCloseMega}
                     onMouseLeave={closeMega}
-                    className="absolute top-full left-1/2 -translate-x-1/2 mt-4 bg-white shadow-[0_40px_80px_-15px_rgba(0,0,0,0.15)] border border-gray-100 z-50 overflow-hidden rounded-2xl"
+                    className="absolute top-full left-1/2 -translate-x-1/2 mt-4 bg-white shadow-[0_40px_80px_-15px_rgba(0,0,0,0.15)] border border-gray-100 z-50 overflow-hidden rounded-2xl w-fit"
                     style={{ 
-                      minWidth: '1080px',
                       padding: '1.25rem 2rem' 
                     }}
                   >
@@ -319,48 +318,53 @@ export default function Navbar() {
                            </div>
                         </div>
 
-                        {/* Right: Products Display */}
-                        <div className="flex-1 pl-10 py-1">
-                           <p className="text-[9px] font-black text-gray-300 uppercase tracking-[0.2em] mb-3">
-                             Products in {activeCategory?.name || 'Category'}
-                           </p>
-                           
+                        {/* Right: Products Display - Dynamic Width */}
+                        <motion.div 
+                          className="pl-10 py-1 border-l border-gray-50/50"
+                          initial={false}
+                          animate={{ 
+                            width: (activeCategory?.products?.length ?? 0) > 0 ? 640 : 340,
+                            opacity: activeCategory ? 1 : 0.5 
+                          }}
+                          transition={{ type: 'spring', damping: 25, stiffness: 180 }}
+                        >
                            <AnimatePresence mode="wait">
                              <motion.div
                                key={activeCatSlug || 'empty'}
-                               initial={{ opacity: 0, x: 10 }}
+                               initial={{ opacity: 0, x: 15 }}
                                animate={{ opacity: 1, x: 0 }}
                                exit={{ opacity: 0, x: -10 }}
-                               transition={{ duration: 0.2, ease: "easeOut" }}
-                               className="grid grid-cols-2 gap-x-8 gap-y-1.5"
+                               transition={{ duration: 0.2 }}
                              >
-                               {activeCategory ? (
-                                 activeCategory.products?.length ? (
-                                   activeCategory.products.map((p) => (
-                                     <Link
-                                       key={p.id}
-                                       href={`/products/${p.slug}`}
-                                       className="group py-1.5 px-2 -mx-2 rounded-md hover:bg-slate-50 transition-all duration-200"
-                                     >
-                                         <p className="text-[13px] font-bold text-gray-700 group-hover:text-accent transition-colors leading-tight">
-                                           {p.name}
-                                         </p>
-                                     </Link>
-                                   ))
-                                 ) : (
-                                   <div className="col-span-2 py-10 text-center">
-                                      <Package size={24} className="mx-auto text-gray-200 mb-2" />
-                                      <p className="text-xs text-gray-400 font-medium">No specialized products listed yet.</p>
+                                <p className="text-[9px] font-black text-gray-300 uppercase tracking-[0.2em] mb-3">
+                                  {activeCategory ? `Products in ${activeCategory.name}` : 'Select Category'}
+                                </p>
+
+                               {activeCategory && activeCategory.products?.length ? (
+                                   <div className="grid grid-cols-2 gap-x-8 gap-y-1.5">
+                                     {activeCategory.products.map((p) => (
+                                       <Link
+                                         key={p.id}
+                                         href={`/products/${p.slug}`}
+                                         className="group py-1.5 px-2 -mx-2 rounded-md hover:bg-slate-50 transition-all duration-200"
+                                       >
+                                           <p className="text-[13px] font-bold text-gray-700 group-hover:text-accent transition-colors leading-tight">
+                                             {p.name}
+                                           </p>
+                                       </Link>
+                                     ))}
                                    </div>
-                                 )
                                ) : (
-                                 <div className="col-span-2 py-10 text-center border-2 border-dashed border-gray-50 rounded-xl">
-                                    <p className="text-xs text-gray-400 font-medium italic">Select a category to view equipment</p>
+                                 <div className="py-12 text-center">
+                                    <Package size={20} className="mx-auto text-gray-200 mb-2" />
+                                    <p className="text-[11px] text-gray-400 font-medium italic">
+                                      {activeCategory ? 'No specialized items listed yet' : 'Choose a category to browse products'}
+                                    </p>
                                  </div>
                                )}
                              </motion.div>
                            </AnimatePresence>
-                        </div>
+                        </motion.div>
                       </div>
 
                       {/* Footer */}
