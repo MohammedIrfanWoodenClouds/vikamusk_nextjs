@@ -127,7 +127,7 @@ export default function Industries() {
       {/* Industries Grid */}
       <section className="section-padding bg-surface">
         <div className="container-custom">
-          <AnimatedSection className="text-center mb-16">
+          <AnimatedSection className="text-center mb-16 flex flex-col items-center w-full">
             <span className="text-sm font-bold text-accent uppercase tracking-wider">Sectors</span>
             <h2 className="text-3xl lg:text-4xl font-black text-primary mt-3 mb-4">
               Applications & Sectors
