@@ -269,7 +269,7 @@ export default function Footer() {
                   {[
                     { href: 'mailto:sales@vikamusk.com', label: 'Official Support', address: 'sales@vikamusk.com' },
                   ].map(({ href, label, address }) => (
-                    <a key={href} href={href} className="flex items-center gap-2.5 group">
+                    <a key={href} href={href} className="flex items-center gap-2.5 group" style={{ marginBottom: '1rem' }}>
                       <div className="w-6 h-6 rounded-md bg-accent/10 border border-accent/20 flex items-center justify-center flex-shrink-0 group-hover:bg-accent/20 transition-colors duration-200">
                         <Mail size={11} className="text-accent" />
                       </div>
@@ -321,8 +321,8 @@ export default function Footer() {
         {/* ── Bottom bar ────────────────────────────────────────────── */}
         <div className="relative border-t border-white/[0.06] bg-black/20">
           <div className="container-custom py-5 flex flex-col sm:flex-row justify-between items-center gap-3">
-            <p className="text-white/25 text-xs">
-              © {new Date().getFullYear()} Vikamusk International. All rights reserved. <span className="opacity-50 ml-2">(Verified v2.1)</span>
+            <p className="text-white/25 text-xs" style={{ marginTop: '1rem' }}>
+              © {new Date().getFullYear()} Vikamusk International. All rights reserved.
             </p>
             <div className="flex items-center gap-5">
               <Link href="/privacy" className="text-white/25 hover:text-white/60 text-xs transition-colors">
