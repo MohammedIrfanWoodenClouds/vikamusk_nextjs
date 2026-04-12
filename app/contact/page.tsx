@@ -337,7 +337,7 @@ export default function Contact() {
                     </div>
 
                     {/* ── Contact Rows ── */}
-                    <div className="space-y-7">
+                    <div className="space-y-10">
 
                       {/* Hidden Temporarily: Call Our Team */}
                       {/* 
@@ -388,7 +388,7 @@ export default function Contact() {
                     </div>
 
                     {/* ── Divider ── */}
-                    <div className="border-t border-[#1E4A6B]/80 mt-8 mb-8" />
+                    <div className="border-t border-[#1E4A6B]/80 mt-10 mb-10" />
 
                     {/* ── Address ── */}
                     <div className="flex items-start gap-4 group/row">
@@ -419,7 +419,7 @@ export default function Contact() {
                     </div>
 
                     {/* ── Divider ── */}
-                    <div className="border-t border-[#1E4A6B]/80 mt-8 mb-8" />
+                    <div className="border-t border-[#1E4A6B]/80 mt-10 mb-10" />
 
                     {/* Hidden Temporarily: WhatsApp Quick Connect */}
                     {/*

@@ -661,6 +661,7 @@ export default function Home() {
               <div className="flex flex-col">
                 {[
                   { flag: '🇦🇪', country: 'UAE (Headquarters)', city: 'Ajman Free Zone', detail: 'Head Office & Warehouse' },
+                  { flag: '🇦🇪', country: 'Dubai - UAE', city: 'Bur Dubai', detail: 'Vikamusk Construction Equipment LLC' },
                   { flag: '🇨🇳', country: 'China', city: 'Qingdao', detail: 'Manufacturing Partnership' },
                 ].map((loc, i) => (
                   <div key={i} className="flex items-center gap-4 p-4 rounded-xl bg-surface border border-border/40 hover:border-accent/20 hover:shadow-sm transition-all" style={{ marginBottom: '1rem' }}>
