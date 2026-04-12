@@ -135,18 +135,19 @@ export default function Footer() {
                 </div>
               </Link>
 
+              {/* 1rem forced margin */}
               <p 
-                className="text-white/45 text-sm leading-relaxed max-w-[300px]"
-                style={{ marginBottom: '64px' }}
+                className="text-white/45 text-sm leading-relaxed max-w-[280px]" 
+                style={{ marginBottom: '1rem', display: 'block' }}
               >
                 Founded in 2015. Trusted supplier of advanced construction and material
                 handling solutions across UAE, India, and beyond.
               </p>
 
-              {/* Key stats */}
+              {/* 1rem forced margin */}
               <div 
-                className="grid grid-cols-3 gap-4"
-                style={{ marginTop: '48px', marginBottom: '80px' }}
+                className="grid grid-cols-3 gap-3" 
+                style={{ marginBottom: '1rem', display: 'block' }}
               >
                 {[
                   { value: '10+', label: 'Years' },
@@ -165,8 +166,8 @@ export default function Footer() {
 
               {/* Icon buttons */}
               <div 
-                className="flex gap-6"
-                style={{ marginTop: '48px' }}
+                className="flex gap-4" 
+                style={{ marginTop: '1rem', display: 'flex' }}
               >
                 {iconLinks.map(({ href, icon, label, external }) =>
                   external ? (
