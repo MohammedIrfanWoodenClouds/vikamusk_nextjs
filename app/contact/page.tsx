@@ -102,7 +102,7 @@ export default function Contact() {
                 <span className="text-[#f59e0b]">Direct&nbsp;Support.</span>
               </h1>
 
-              <p className="text-white/55 text-lg leading-relaxed max-w-xl font-medium">
+              <p className="text-white/55 text-lg leading-relaxed max-w-xl font-medium" style={{ marginBottom: '2rem' }}>
                 Connect with our specialists. From equipment
                 sourcing to after-sales — we respond within 24 hours.
               </p>
