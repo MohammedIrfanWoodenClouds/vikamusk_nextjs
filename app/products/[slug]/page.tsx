@@ -1059,7 +1059,7 @@ export default function ProductDetail() {
               </div>
 
                 {/* Back / Share row */}
-                <div className="flex items-center justify-between mt-4 px-1">
+                <div className="flex items-center justify-between px-1" style={{ marginTop: '2.5rem', marginBottom: '2.5rem' }}>
                   <Link
                     href="/products"
                     className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-widest transition-colors"
