@@ -4,10 +4,10 @@ import nodemailer from 'nodemailer';
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { firstName, email, phone, subject, message } = body;
+    const { fullName, email, phone, subject, message } = body;
 
     // Validation
-    if (!firstName || !email || !phone) {
+    if (!fullName || !email || !phone) {
       return NextResponse.json(
         { error: 'Name, email, and phone are required.' },
         { status: 400 }
@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
       from: `"Vikamusk Website" <${process.env.SMTP_USER || 'noreply@vikamusk.com'}>`,
       to: process.env.CONTACT_EMAIL_TO || 'sales@vikamusk.com',
       replyTo: email,
-      subject: `[Website Enquiry] ${subject} — ${firstName}`,
+      subject: `[Website Enquiry] ${subject} — ${fullName}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <div style="background: #001f3f; padding: 24px 32px; border-radius: 8px 8px 0 0;">
@@ -51,7 +51,7 @@ export async function POST(request: NextRequest) {
             <table style="width: 100%; border-collapse: collapse;">
               <tr>
                 <td style="padding: 8px 0; font-weight: bold; color: #001f3f; width: 120px; vertical-align: top;">Name:</td>
-                <td style="padding: 8px 0; color: #334155;">${firstName}</td>
+                <td style="padding: 8px 0; color: #334155;">${fullName}</td>
               </tr>
               <tr>
                 <td style="padding: 8px 0; font-weight: bold; color: #001f3f; vertical-align: top;">Email:</td>

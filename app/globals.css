@@ -343,8 +343,44 @@ input:focus,
 select:focus,
 textarea:focus {
   outline: none;
-  border-color: #94a3b8 !important;
+  border-color: #94a3b8;
   box-shadow: 0 0 0 3px rgba(148, 163, 184, 0.15);
+}
+
+/* ==================== CONTACT FORM INPUT ==================== */
+.contact-input {
+  width: 100%;
+  padding: 0.8125rem 1rem;
+  background: #ffffff;
+  color: #0f172a;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  font-family: inherit;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.contact-input::placeholder {
+  color: #94a3b8;
+  font-weight: 400;
+}
+
+.contact-input:focus {
+  outline: none;
+  border-color: #f59e0b;
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.12);
+  background: #fffdf7;
+}
+
+/* ==================== MAP ==================== */
+.map-container:hover .map-iframe {
+  filter: grayscale(0);
+}
+
+.map-iframe {
+  filter: grayscale(0.3);
+  transition: filter 0.7s ease;
 }
 
 /* ==================== IMAGE FIX ==================== */
