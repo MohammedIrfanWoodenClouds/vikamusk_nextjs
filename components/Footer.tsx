@@ -101,8 +101,7 @@ export default function Footer() {
   return (
     <>
       <footer 
-        className="relative z-20 bg-[#05101f] text-white overflow-hidden mt-32 md:mt-48 lg:mt-64"
-        style={{ marginTop: '8rem' }}
+        className="relative z-20 bg-[#05101f] text-white overflow-hidden pt-20 lg:pt-24"
       >
         {/* Dot-grid texture */}
         <div
@@ -136,13 +135,19 @@ export default function Footer() {
                 </div>
               </Link>
 
-              <p className="text-white/45 text-sm leading-relaxed mb-10 max-w-[280px]">
+              <p 
+                className="text-white/45 text-sm leading-relaxed max-w-[300px]"
+                style={{ marginBottom: '64px' }}
+              >
                 Founded in 2015. Trusted supplier of advanced construction and material
                 handling solutions across UAE, India, and beyond.
               </p>
 
               {/* Key stats */}
-              <div className="grid grid-cols-3 gap-3 mb-10">
+              <div 
+                className="grid grid-cols-3 gap-4"
+                style={{ marginTop: '48px', marginBottom: '80px' }}
+              >
                 {[
                   { value: '10+', label: 'Years' },
                   { value: '50+', label: 'Products' },
@@ -159,7 +164,10 @@ export default function Footer() {
               </div>
 
               {/* Icon buttons */}
-              <div className="flex gap-4">
+              <div 
+                className="flex gap-6"
+                style={{ marginTop: '48px' }}
+              >
                 {iconLinks.map(({ href, icon, label, external }) =>
                   external ? (
                     <a
