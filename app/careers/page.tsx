@@ -109,176 +109,87 @@ export default function Careers() {
             </div>
           ) : careers.length === 0 ? (
             <AnimatedSection>
-              <div className="bg-white rounded-2xl p-12 lg:p-20 text-center border border-border/50 shadow-sm max-w-4xl mx-auto">
+              <div className="bg-white rounded-3xl p-12 lg:p-20 text-center border border-gray-100 shadow-[0_20px_50px_-15px_rgba(0,0,0,0.05)] max-w-4xl mx-auto">
                 <div className="w-20 h-20 bg-surface rounded-2xl flex items-center justify-center mx-auto mb-8">
                   <Briefcase size={40} className="text-gray-300" />
                 </div>
                 <h3 className="text-3xl font-black text-primary mb-4">No Active Openings</h3>
-                <p className="text-muted max-w-md mx-auto mb-10 text-lg">
+                <p className="text-muted max-w-md mx-auto mb-10 text-lg font-medium">
                   We don&apos;t have any specific roles open right now, but we&apos;re always expanding. Send us your profile for future opportunities.
                 </p>
-                <a href="mailto:sales@vikamusk.com" className="btn-primary px-10 py-5 inline-flex items-center gap-3 text-lg">
-                  <Mail size={20} /> Drop Your Resume
+                <a href="mailto:sales@vikamusk.com" className="bg-accent hover:bg-primary text-[#001f3f] hover:text-white font-black text-xs uppercase tracking-widest px-10 py-5 rounded-2xl transition-all inline-flex items-center gap-3">
+                  <Mail size={18} /> Drop Your Resume
                 </a>
               </div>
             </AnimatedSection>
           ) : (
-            <div className="flex flex-col items-center max-w-7xl mx-auto">
-              {careers.map((career) => {
-                const requirements = parseJson(career.requirements);
-                const benefits = parseJson(career.benefits);
-                const isExpanded = expanded === career.id;
-
-                return (
-                  <AnimatedSection key={career.id} className="w-full flex justify-center">
-                    <div 
-                      key={career.id}
-                      style={{ marginBottom: '2rem' }}
-                      className={`group bg-white rounded-2xl border transition-all duration-500 overflow-hidden w-full max-w-4xl mx-auto ${
-                        isExpanded 
-                        ? 'border-accent/40 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.1)]' 
-                        : 'border-border/50 hover:border-accent/30 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] shadow-sm'
-                      }`}
-                    >
-                      {/* Main Card Header */}
-                      <div className="p-6 md:p-8 lg:p-10">
-                        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
-                          <div className="flex-1">
-                            <div className="flex flex-wrap items-center gap-3 mb-5">
-                              {career.department && (
-                                <span className="px-3 py-1 rounded-full bg-accent/10 text-accent text-[11px] font-black uppercase tracking-widest border border-accent/20">
-                                  {career.department}
-                                </span>
-                              )}
-                              <span className="px-3 py-1 rounded-full bg-primary/5 text-primary/60 text-[11px] font-black uppercase tracking-widest border border-primary/10">
-                                {career.type}
-                              </span>
-                            </div>
-                            
-                            <h3 className="text-2xl md:text-3xl font-black text-primary group-hover:text-accent transition-colors duration-300">
-                              {career.title}
-                            </h3>
-                            
-                            <div className="flex flex-wrap items-center gap-y-2 gap-x-6 mt-6">
-                              {career.location && (
-                                <div className="flex items-center gap-2 text-muted font-medium">
-                                  <div className="w-8 h-8 rounded-lg bg-surface flex items-center justify-center">
-                                    <MapPin size={16} className="text-accent" />
-                                  </div>
-                                  {career.location}
-                                </div>
-                              )}
-                              <div className="flex items-center gap-2 text-muted font-medium">
-                                <div className="w-8 h-8 rounded-lg bg-surface flex items-center justify-center">
-                                  <Clock size={16} className="text-accent" />
-                                </div>
-                                Posted Recently
-                              </div>
-                            </div>
+            <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {careers.map((career) => (
+                <StaggerItem key={career.id}>
+                  <div 
+                    className="group bg-white border border-gray-100 shadow-[0_15px_40px_-15px_rgba(0,0,0,0.03)] hover:shadow-[0_45px_100px_-30px_rgba(0,0,0,0.08)] transition-all duration-700 flex flex-col h-full overflow-hidden"
+                    style={{ 
+                      borderRadius: '2rem',
+                      padding: '2.5rem 2.5rem' 
+                    }}
+                  >
+                    {/* Card Header & Dept */}
+                    <div className="flex items-center justify-between mb-8">
+                       <span className="px-4 py-2 rounded-xl bg-accent/10 border border-accent/20 text-accent text-[11px] font-black uppercase tracking-widest">
+                         {career.department || 'General'}
+                       </span>
+                       <div className="text-[10px] font-black text-gray-300 uppercase tracking-widest flex items-center gap-2">
+                         <div className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
+                         Recent
+                       </div>
+                    </div>
+                    
+                    <div className="flex-1">
+                      <h3 className="text-3xl font-black text-[#001f3f] mb-6 leading-[1.15] group-hover:text-accent transition-colors duration-500 line-clamp-2">
+                        {career.title}
+                      </h3>
+                      
+                      <div className="space-y-4 mb-8">
+                        <div className="flex items-center gap-3 text-gray-500 font-bold text-xs uppercase tracking-[0.1em]">
+                          <div className="w-9 h-9 rounded-xl bg-gray-50 flex items-center justify-center border border-gray-100 group-hover:bg-white transition-colors">
+                            <MapPin size={14} className="text-accent" />
                           </div>
-                          
-                          <div className="flex flex-wrap items-center gap-4 lg:self-center">
-                            <button
-                              onClick={() => setExpanded(isExpanded ? null : career.id)}
-                              className={`px-7 py-4 rounded-2xl font-bold transition-all flex items-center gap-3 border-2 ${
-                                isExpanded 
-                                ? 'bg-primary text-white border-primary' 
-                                : 'bg-transparent text-primary border-border hover:border-primary/20 hover:bg-surface'
-                              }`}
-                            >
-                              {isExpanded ? 'Hide Details' : 'View Details'}
-                              <ChevronDown size={20} className={`transition-transform duration-500 ${isExpanded ? 'rotate-180' : ''}`} />
-                            </button>
-                            <a
-                              href={`mailto:sales@vikamusk.com?subject=Application for ${career.title}`}
-                              className="px-7 py-4 rounded-2xl bg-accent text-[#001f3f] font-bold hover:bg-primary hover:text-white transition-all shadow-lg shadow-accent/20 flex items-center gap-3 border-2 border-accent hover:border-primary"
-                            >
-                              Apply Now <ArrowRight size={20} />
-                            </a>
-                          </div>
+                          {career.location}
                         </div>
-                        
-                        {/* Expandable Details Container */}
-                        <div 
-                          className={`grid transition-all duration-500 ease-in-out ${
-                            isExpanded ? 'grid-rows-[1fr] opacity-100 mt-12' : 'grid-rows-[0fr] opacity-0'
-                          }`}
-                        >
-                          <div className="overflow-hidden">
-                            <div className="pt-10 border-t border-border/50 space-y-12">
-                              {/* About the Role */}
-                              {career.description && (
-                                <div className="max-w-3xl">
-                                  <h4 className="text-xs font-black text-primary uppercase tracking-[0.3em] mb-5 flex items-center gap-3">
-                                    <div className="w-1.5 h-1.5 rounded-full bg-accent" />
-                                    The Opportunity
-                                  </h4>
-                                  <p className="text-muted text-[16px] leading-[1.8] font-medium">
-                                    {career.description}
-                                  </p>
-                                </div>
-                              )}
-
-                              <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20">
-                                {/* Requirements */}
-                                {requirements.length > 0 && (
-                                  <div>
-                                    <h4 className="text-xs font-black text-primary uppercase tracking-[0.3em] mb-6 flex items-center gap-3">
-                                      <div className="w-1.5 h-1.5 rounded-full bg-accent" />
-                                      What We Look For
-                                    </h4>
-                                    <ul className="space-y-4">
-                                      {requirements.map((req, i) => (
-                                        <li key={i} className="flex items-start gap-4 group/item">
-                                          <div className="w-6 h-6 rounded-full bg-accent/10 flex items-center justify-center shrink-0 mt-0.5 group-hover/item:bg-accent group-hover/item:text-white transition-all">
-                                            <Check size={14} className="text-accent group-hover/item:text-white" />
-                                          </div>
-                                          <span className="text-[15px] text-muted font-medium leading-normal">{req}</span>
-                                        </li>
-                                      ))}
-                                    </ul>
-                                  </div>
-                                )}
-
-                                {/* Benefits */}
-                                {benefits.length > 0 && (
-                                  <div>
-                                    <h4 className="text-xs font-black text-primary uppercase tracking-[0.3em] mb-6 flex items-center gap-3">
-                                      <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                                      Why Join Us
-                                    </h4>
-                                    <ul className="space-y-4">
-                                      {benefits.map((ben, i) => (
-                                        <li key={i} className="flex items-start gap-4 group/item">
-                                          <div className="w-6 h-6 rounded-full bg-emerald-500/10 flex items-center justify-center shrink-0 mt-0.5 group-hover/item:bg-emerald-500 group-hover/item:text-white transition-all">
-                                            <Check size={14} className="text-emerald-500 group-hover/item:text-white" />
-                                          </div>
-                                          <span className="text-[15px] text-muted font-medium leading-normal">{ben}</span>
-                                        </li>
-                                      ))}
-                                    </ul>
-                                  </div>
-                                )}
-                              </div>
-
-                              {/* Footer Action */}
-                              <div className="pt-8 flex justify-center border-t border-border/10">
-                                <a 
-                                  href={`mailto:sales@vikamusk.com?subject=Application for ${career.title}`} 
-                                  className="group inline-flex items-center gap-4 text-primary font-black uppercase tracking-widest text-sm hover:text-accent transition-colors"
-                                >
-                                  Finalize Application <Mail size={18} className="group-hover:translate-x-1 transition-transform" />
-                                </a>
-                              </div>
-                            </div>
+                        <div className="flex items-center gap-3 text-gray-500 font-bold text-xs uppercase tracking-[0.1em]">
+                          <div className="w-9 h-9 rounded-xl bg-gray-50 flex items-center justify-center border border-gray-100 group-hover:bg-white transition-colors">
+                            <Briefcase size={14} className="text-accent" />
                           </div>
+                          {career.type}
                         </div>
                       </div>
+
+                      <div className="border-l-2 border-accent/20 pl-4 py-1 mb-8">
+                        <p className="text-[14px] text-gray-400 font-medium leading-[1.6] italic opacity-80">
+                          "{career.description}"
+                        </p>
+                      </div>
                     </div>
-                  </AnimatedSection>
-                );
-              })}
-            </div>
+
+                    {/* Action Area */}
+                    <div className="pt-8 border-t border-gray-50 mt-auto flex flex-col gap-4">
+                      <a
+                        href={`mailto:sales@vikamusk.com?subject=Application for ${career.title}`}
+                        className="w-full bg-[#001f3f] hover:bg-accent text-white hover:text-[#001f3f] font-black text-[12px] uppercase tracking-[0.25em] py-5 rounded-xl transition-all duration-500 text-center shadow-xl shadow-blue-900/10 hover:shadow-accent/30"
+                      >
+                        Send Resume
+                      </a>
+                      <Link
+                        href="/contact"
+                        className="w-full text-gray-400 hover:text-primary font-black text-[11px] uppercase tracking-[0.2em] py-1 transition-all duration-300 text-center hover:underline underline-offset-8 decoration-accent/30"
+                      >
+                        Learn More
+                      </Link>
+                    </div>
+                  </div>
+                </StaggerItem>
+              ))}
+            </StaggerContainer>
           )}
         </div>
       </section>
