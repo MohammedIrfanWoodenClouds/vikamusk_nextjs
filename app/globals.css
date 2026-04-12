@@ -347,30 +347,32 @@ textarea:focus {
   box-shadow: 0 0 0 3px rgba(148, 163, 184, 0.15);
 }
 
-/* ==================== CONTACT FORM INPUT ==================== */
-.contact-input {
+/* ==================== MODERN CONTACT INPUT ==================== */
+.modern-input {
   width: 100%;
-  padding: 0.8125rem 1rem;
-  background: #ffffff;
+  padding: 1rem 1.25rem;
+  background: #f8fafc;
   color: #0f172a;
-  border: 1.5px solid #e2e8f0;
-  border-radius: 10px;
+  border: 2px solid transparent;
+  border-radius: 16px;
   font-size: 0.9375rem;
-  font-weight: 500;
+  font-weight: 600;
   font-family: inherit;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.contact-input::placeholder {
-  color: #94a3b8;
-  font-weight: 400;
+.modern-input::placeholder {
+  color: #cbd5e1;
+  font-weight: 500;
+  opacity: 0.8;
 }
 
-.contact-input:focus {
+.modern-input:focus {
   outline: none;
-  border-color: #f59e0b;
-  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.12);
-  background: #fffdf7;
+  background: #ffffff;
+  border-color: #fabc22;
+  box-shadow: 0 15px 35px rgba(250, 188, 34, 0.1);
+  transform: translateY(-1px);
 }
 
 /* ==================== MAP ==================== */
