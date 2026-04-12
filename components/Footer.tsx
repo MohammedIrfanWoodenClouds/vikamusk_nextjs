@@ -91,7 +91,7 @@ export default function Footer() {
       external: true,
     },
     {
-      href: 'https://linkedin.com/company/vikamusk',
+      href: 'https://www.linkedin.com/company/vikamusk-construction-equipment-fze/posts/?feedView=all',
       icon: <Linkedin size={15} />,
       label: 'LinkedIn',
       external: true,
