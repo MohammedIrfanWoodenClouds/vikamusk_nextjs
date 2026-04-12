@@ -88,16 +88,8 @@ export default function Home() {
 
   useEffect(() => {
     if (!isCarousel) return;
-    let isHovered = false;
-    
-    const handleMouseEnter = () => isHovered = true;
-    const handleMouseLeave = () => isHovered = false;
-    
     const elem = featuredScrollRef.current;
     if (elem) {
-      elem.addEventListener('mouseenter', handleMouseEnter);
-      elem.addEventListener('mouseleave', handleMouseLeave);
-      
       // Initialize to the middle block of duplicates to allow smooth swiping left & right
       setTimeout(() => {
         if (!featuredScrollRef.current) return;
@@ -109,7 +101,7 @@ export default function Home() {
     }
 
     const interval = setInterval(() => {
-      if (!featuredScrollRef.current || isHovered) return;
+      if (!featuredScrollRef.current) return;
       const el = featuredScrollRef.current;
       const firstChild = el.children[0] as HTMLElement;
       if (!firstChild) return;
@@ -129,10 +121,6 @@ export default function Home() {
 
     return () => {
       clearInterval(interval);
-      if (elem) {
-        elem.removeEventListener('mouseenter', handleMouseEnter);
-        elem.removeEventListener('mouseleave', handleMouseLeave);
-      }
     };
   }, [featuredProducts]);
 
@@ -534,7 +522,7 @@ export default function Home() {
               </Link>
             </div>
           ) : !isCarousel ? (
-            <div className="flex flex-wrap justify-center gap-8 pb-4">
+            <div className="flex flex-wrap justify-center gap-8 pb-24">
               {featuredProducts.map((product, i) => (
                 <div key={product.id} className="w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] flex flex-col px-1 pb-2">
                   <ProductCard product={product} index={i} />
@@ -542,7 +530,7 @@ export default function Home() {
               ))}
             </div>
           ) : (
-            <div className="relative overflow-visible pb-10">
+            <div className="relative overflow-visible pb-0">
               <div 
                 ref={featuredScrollRef} 
                 className="flex items-stretch gap-6 overflow-x-auto overflow-y-hidden snap-x snap-mandatory hide-scrollbar pt-8 pb-20 px-4"
@@ -566,7 +554,7 @@ export default function Home() {
 
           {/* View All Button */}
           {featuredProducts.length > 0 && (
-            <div className="text-center w-full flex justify-center mt-8 mb-8">
+            <div className="text-center w-full flex justify-center mt-12 mb-12">
               <Link href="/products" className="btn-outline text-sm px-8 py-3.5 rounded-xl flex items-center justify-center gap-2">
                 View all products <ArrowRight size={15} />
               </Link>

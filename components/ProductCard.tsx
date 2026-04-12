@@ -48,12 +48,10 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
     >
       <Link
         href={`/products/${product.slug}`}
-        className="group flex-1 flex flex-col h-full bg-white rounded-[2rem] border-2 border-black shadow-[0_5px_0_#000] hover:shadow-[0_2px_0_#000] hover:translate-y-[3px] transition-all duration-300 overflow-hidden"
+        className="group flex-1 flex flex-col h-full bg-white rounded-[2rem] border-2 border-black shadow-[0_5px_0_#000] transition-all duration-300 overflow-hidden"
       >
         {/* Image Box */}
         <div className="relative h-[280px] sm:h-[320px] w-full bg-gradient-to-br from-slate-50 via-white to-slate-100 flex items-center justify-center shrink-0 overflow-hidden">
-          {/* Hover gradient overlay */}
-          <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-[linear-gradient(135deg,rgba(245,158,11,0.06)_0%,transparent_50%)] pointer-events-none z-10" />
 
           {primaryImage ? (
             primaryImage.startsWith('data:') ? (
@@ -62,14 +60,14 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
                 <img
                   src={primaryImage}
                   alt={product.name}
-                  className="primary-img absolute inset-0 w-full h-full object-contain p-10 transition-all duration-500 ease-out group-hover:scale-[1.05] group-hover:opacity-0"
+                  className="primary-img absolute inset-0 w-full h-full object-contain p-10 transition-all duration-500 ease-out"
                   style={{ zIndex: 1 }}
                 />
                 {secondaryImage && (
                   <img
                     src={secondaryImage}
                     alt={`${product.name} – alternate view`}
-                    className="secondary-img absolute inset-0 w-full h-full object-contain p-10 opacity-0 transition-all duration-500 ease-out group-hover:opacity-100 group-hover:scale-[1.05]"
+                    className="secondary-img absolute inset-0 w-full h-full object-contain p-10 opacity-0 transition-all duration-500 ease-out"
                     style={{ zIndex: 2 }}
                   />
                 )}
@@ -81,7 +79,7 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
                   src={primaryImage}
                   alt={product.name}
                   fill
-                  className="object-contain p-10 transition-all duration-500 ease-out group-hover:scale-[1.05] group-hover:opacity-0"
+                  className="object-contain p-10 transition-all duration-500 ease-out"
                   sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   style={{ zIndex: 1 }}
                 />
@@ -90,7 +88,7 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
                     src={secondaryImage}
                     alt={`${product.name} – alternate view`}
                     fill
-                    className="object-contain p-10 opacity-0 transition-all duration-500 ease-out group-hover:opacity-100 group-hover:scale-[1.05]"
+                    className="object-contain p-10 opacity-0 transition-all duration-500 ease-out"
                     sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     style={{ zIndex: 2 }}
                   />
@@ -136,7 +134,7 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
 
           {/* Button Container */}
           <div className="w-full flex justify-center items-center mt-auto">
-            <span className="flex items-center justify-center w-[92%] py-3.5 bg-accent text-white border-2 border-black rounded-xl text-sm sm:text-[15px] font-black uppercase tracking-wider shadow-[0_4px_0_#000] group-hover:translate-y-[2px] group-hover:shadow-[0_2px_0_#000] transition-all duration-200">
+            <span className="flex items-center justify-center w-[92%] py-3.5 bg-accent text-white border-2 border-black rounded-xl text-sm sm:text-[15px] font-black uppercase tracking-wider shadow-[0_4px_0_#000] transition-all duration-200">
               Explore Equipment <ArrowRight size={18} className="ml-2" />
             </span>
           </div>

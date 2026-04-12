@@ -1,17 +1,20 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   ArrowLeft, ArrowRight, Check, Download, Mail, ChevronRight,
-  Loader2, Star, Share2, Package, Wrench, FileText, ZoomIn, LayoutGrid,
+  Loader2, Share2, Package, Wrench, FileText, ZoomIn, LayoutGrid,
+  X, ChevronLeft, Star, Shield, Settings, List,
+  Phone, CheckCircle, Zap, TrendingUp, Maximize2, ArrowUpRight,
 } from 'lucide-react';
 import { AnimatedSection, StaggerContainer, StaggerItem } from '@/components/AnimatedSection';
 import ProductCard from '@/components/ProductCard';
 
+/* ─────────────────────────────── Types ─────────────────────────────── */
 interface ProductModel {
   id: string;
   product_id: string;
@@ -21,20 +24,16 @@ interface ProductModel {
   sort_order: number;
 }
 
+/* ─────────────────────────────── Helpers ─────────────────────────────── */
 function normalizeProduct(p: any): any {
   let mainImg = p.image || '';
   let imgList: string[] = [];
   if (mainImg && mainImg.startsWith('[')) {
-    try {
-      imgList = JSON.parse(mainImg);
-      mainImg = imgList[0] || '';
-    } catch {
-      imgList = [mainImg];
-    }
+    try { imgList = JSON.parse(mainImg); mainImg = imgList[0] || ''; }
+    catch { imgList = [mainImg]; }
   } else if (mainImg) {
     imgList = [mainImg];
   }
-
   return {
     id: String(p.id),
     name: p.name,
@@ -43,8 +42,12 @@ function normalizeProduct(p: any): any {
     categorySlug: p.main_category_slug || p.category_slug || '',
     shortDescription: p.short_description || '',
     fullDescription: p.full_description || '',
-    features: typeof p.features === 'string' ? (() => { try { return JSON.parse(p.features); } catch { return []; } })() : (p.features || []),
-    specs: typeof p.specs === 'string' ? (() => { try { return JSON.parse(p.specs); } catch { return {}; } })() : (p.specs || {}),
+    features: typeof p.features === 'string'
+      ? (() => { try { return JSON.parse(p.features); } catch { return []; } })()
+      : (p.features || []),
+    specs: typeof p.specs === 'string'
+      ? (() => { try { return JSON.parse(p.specs); } catch { return {}; } })()
+      : (p.specs || {}),
     images: imgList,
     image: mainImg,
     brochure_url: p.brochure_url || '',
@@ -55,110 +58,148 @@ function normalizeProduct(p: any): any {
   };
 }
 
+function getModelImages(model: ProductModel): string[] {
+  const raw = model.images;
+  if (Array.isArray(raw)) return raw;
+  if (typeof raw === 'string' && raw.startsWith('[')) {
+    try { return JSON.parse(raw); } catch {}
+  }
+  if (raw) return [raw as unknown as string];
+  return [];
+}
+
 type Tab = 'overview' | 'specs' | 'models' | 'features';
 
-/* ── Single Model Card ── */
-function ModelCard({ model, isActive, onClick, fallbackImage }: { model: ProductModel; isActive: boolean; onClick: () => void; fallbackImage?: string }) {
-  const rawImages = model.images;
-  const images: string[] = Array.isArray(rawImages)
-    ? rawImages
-    : typeof rawImages === 'string' && rawImages.startsWith('[')
-      ? (() => { try { return JSON.parse(rawImages); } catch { return rawImages ? [rawImages] : []; } })()
-      : rawImages
-        ? [rawImages as unknown as string]
-        : [];
-  const displayImg = images[0] || '';
+/* Spec icon — returns [Icon, rotated] pair */
+function getSpecIcon(label: string): [typeof Settings, boolean] {
+  const l = label.toLowerCase();
+  if (l.includes('height') || l.includes('elevation') || l.includes('range'))
+    return [TrendingUp, false];
+  if (l.includes('capacity') || l.includes('load') || l.includes('weight'))
+    return [Package, false];
+  if (l.includes('power') || l.includes('electric') || l.includes('battery') || l.includes('motor'))
+    return [Zap, false];
+  if (l.includes('width') || l.includes('length') || l.includes('dimension') || l.includes('size'))
+    return [Maximize2, false];
+  if (l.includes('speed') || l.includes('travel'))
+    return [ArrowUpRight, false];
+  if (l.includes('platform') || l.includes('floor'))
+    return [ArrowUpRight, false];
+  return [Settings, false];
+}
 
-  // Get key specs for the card (e.g., first two specs)
-  const keySpecs = model.specs?.slice(0, 2) || [];
+/* Render image with data: or URL support */
+function ProductImage({ src, alt, fill, className, sizes, width, height, priority }: {
+  src: string; alt: string; className?: string; priority?: boolean;
+  fill?: boolean; sizes?: string; width?: number; height?: number;
+}) {
+  if (src.startsWith('data:')) {
+    return <img src={src} alt={alt} className={className} />;
+  }
+  if (fill) {
+    return <Image src={src} alt={alt} fill className={className} sizes={sizes} priority={priority} />;
+  }
+  return <Image src={src} alt={alt} width={width ?? 80} height={height ?? 80} className={className} />;
+}
+
+/* ─────────────────────────────── Model Card ─────────────────────────────── */
+function ModelCard({ model, isActive, onClick, fallbackImage }: {
+  model: ProductModel; isActive: boolean; onClick: () => void; fallbackImage?: string;
+}) {
+  const images = getModelImages(model);
+  const displayImg = images[0] || '';
+  const keySpecs = (model.specs || []).slice(0, 3);
 
   return (
     <button
       onClick={onClick}
-      className={`text-left w-full rounded-2xl overflow-hidden border-2 transition-all duration-300 group ${
-        isActive ? 'border-accent bg-accent/5 ring-4 ring-accent/10' : 'border-border/40 bg-white hover:border-accent/40 shadow-sm hover:shadow-md'
-      }`}
+      className="text-left w-full rounded-2xl overflow-hidden transition-all duration-200 group"
+      style={{
+        border: `2px solid ${isActive ? '#f59e0b' : '#e2e8f0'}`,
+        background: isActive ? 'rgba(245,158,11,0.02)' : '#fff',
+        boxShadow: isActive
+          ? '0 0 0 3px rgba(245,158,11,0.12), 0 4px 16px rgba(0,0,0,0.08)'
+          : '0 1px 4px rgba(0,0,0,0.05)',
+      }}
     >
-      <div className="relative h-44 bg-gradient-to-br from-gray-50 to-slate-100 overflow-hidden">
+      {/* Image */}
+      <div className="relative h-40 overflow-hidden"
+        style={{ background: 'linear-gradient(135deg, #f8fafc, #f1f5f9)' }}>
         {displayImg ? (
-          displayImg.startsWith('data:') ? (
-            <img src={displayImg} alt={model.model_name} className="w-full h-full object-contain p-6 transition-transform duration-500 group-hover:scale-110" />
-          ) : (
-            <Image src={displayImg} alt={model.model_name} fill className="object-contain p-6 transition-transform duration-500 group-hover:scale-110" sizes="300px" />
-          )
+          <ProductImage
+            src={displayImg} alt={model.model_name}
+            fill className="object-contain p-5 transition-transform duration-400 group-hover:scale-105"
+            sizes="250px"
+          />
+        ) : fallbackImage ? (
+          <ProductImage
+            src={fallbackImage} alt={model.model_name}
+            fill className="object-contain p-6 opacity-40 group-hover:opacity-70 transition-opacity"
+            sizes="250px"
+          />
         ) : (
-          /* Fallback to main product image if available, else show icon */
-          fallbackImage ? (
-            fallbackImage.startsWith('data:') ? (
-              <img src={fallbackImage} alt={model.model_name} className="w-full h-full object-contain p-10 opacity-60 grayscale group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 group-hover:scale-110" />
-            ) : (
-              <Image src={fallbackImage} alt={model.model_name} fill className="object-contain p-10 opacity-60 grayscale group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 group-hover:scale-110" />
-            )
-          ) : (
-            <div className="w-full h-full flex flex-col items-center justify-center text-muted/20 gap-2">
-              <Package size={48} strokeWidth={1} />
-              <span className="text-[10px] font-bold uppercase tracking-widest text-muted/40">No Image</span>
-            </div>
-          )
+          <div className="w-full h-full flex items-center justify-center">
+            <Package size={36} style={{ color: '#cbd5e1' }} />
+          </div>
         )}
-        
-        <div className="absolute top-3 right-3">
-          <div className={`w-6 h-6 rounded-full flex items-center justify-center border-2 transition-all ${
-            isActive ? 'bg-accent border-accent text-primary scale-110 shadow-lg' : 'bg-white/80 border-gray-200 text-transparent opacity-0 group-hover:opacity-100'
-          }`}>
-            <Check size={12} strokeWidth={4} />
+
+        {/* Selected check */}
+        <div className="absolute top-2.5 right-2.5 transition-all duration-200"
+          style={{ opacity: isActive ? 1 : 0, transform: isActive ? 'scale(1)' : 'scale(0.7)' }}>
+          <div className="w-6 h-6 rounded-full flex items-center justify-center"
+            style={{ background: '#f59e0b', boxShadow: '0 2px 8px rgba(245,158,11,0.4)' }}>
+            <Check size={12} strokeWidth={3} style={{ color: '#001f3f' }} />
           </div>
         </div>
-        
-        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/20 to-transparent py-2 px-3 opacity-0 group-hover:opacity-100 transition-opacity">
-          <span className="text-[9px] font-black text-white uppercase tracking-widest">Select to view specs</span>
-        </div>
       </div>
-      
-      <div className="p-4">
-        <h4 className="font-black text-primary text-base mb-2 group-hover:text-accent transition-colors">{model.model_name}</h4>
-        
+
+      {/* Info */}
+      <div className="px-3.5 py-3" style={{ borderTop: `1px solid ${isActive ? 'rgba(245,158,11,0.2)' : '#f1f5f9'}` }}>
+        <p className="font-bold text-[13px] mb-2 leading-tight transition-colors"
+          style={{ color: isActive ? '#d97706' : '#001f3f' }}>
+          {model.model_name}
+        </p>
         {keySpecs.length > 0 ? (
-          <div className="space-y-1.5">
+          <div className="space-y-1">
             {keySpecs.map((spec, i) => (
-              <div key={i} className="flex justify-between items-center gap-2">
-                <span className="text-[10px] font-bold text-muted/60 uppercase tracking-tighter truncate">{spec.label}</span>
-                <span className="text-[10px] font-black text-primary whitespace-nowrap">{spec.value}</span>
+              <div key={i} className="flex justify-between items-start gap-2">
+                <span className="text-[10px] font-semibold uppercase tracking-wide leading-tight"
+                  style={{ color: '#94a3b8' }}>{spec.label}</span>
+                <span className="text-[11px] font-bold text-right shrink-0"
+                  style={{ color: '#334155' }}>{spec.value}</span>
               </div>
             ))}
           </div>
         ) : (
-          <p className="text-[10px] text-muted/40 italic">Click for details</p>
+          <p className="text-[11px] italic" style={{ color: '#cbd5e1' }}>Click for details</p>
         )}
       </div>
     </button>
   );
 }
 
-
-/* ── Model Spec Comparison Table ── */
+/* ─────────────────────────────── Spec Table ─────────────────────────────── */
 function SpecTable({ models }: { models: ProductModel[] }) {
-  if (models.length === 0) return null;
-
-  const allLabels = Array.from(
-    new Set(models.flatMap(m => (m.specs || []).map(s => s.label)))
-  );
-
-  if (allLabels.length === 0) return null;
-
-  const getValue = (model: ProductModel, label: string) =>
-    model.specs?.find(s => s.label === label)?.value ?? '—';
+  if (!models.length) return null;
+  const allLabels = Array.from(new Set(models.flatMap(m => (m.specs || []).map(s => s.label))));
+  if (!allLabels.length) return null;
+  const getValue = (m: ProductModel, label: string) =>
+    m.specs?.find(s => s.label === label)?.value ?? '—';
 
   return (
-    <div className="overflow-x-auto rounded-2xl border-2 border-primary/10 shadow-xl bg-white max-h-[600px] custom-scrollbar">
-      <table className="w-full text-sm border-collapse min-w-[700px]">
-        <thead className="sticky top-0 z-30">
-          <tr className="bg-primary">
-            <th className="text-left px-6 py-5 font-black text-[10px] uppercase tracking-[0.2em] text-white/50 sticky left-0 z-40 bg-primary border-r border-white/5 shadow-[2px_0_5px_rgba(0,0,0,0.1)]">
-              Parameters
+    <div className="overflow-x-auto rounded-2xl" style={{ border: '1px solid #e2e8f0', maxHeight: 580 }}>
+      <table className="w-full text-sm border-collapse" style={{ minWidth: Math.max(540, models.length * 140) }}>
+        <thead className="sticky top-0 z-20">
+          <tr style={{ background: '#001f3f' }}>
+            <th
+              className="sticky left-0 z-30 text-left px-5 py-4 text-[10px] font-bold uppercase tracking-widest"
+              style={{ color: 'rgba(255,255,255,0.45)', background: '#001229', borderRight: '1px solid rgba(255,255,255,0.06)', minWidth: 180 }}
+            >
+              Specification
             </th>
             {models.map(m => (
-              <th key={m.id} className="px-6 py-5 font-black text-xs text-center whitespace-nowrap min-w-[160px] text-accent uppercase tracking-widest border-r border-white/5 last:border-0 shadow-[inset_0_-2px_0_rgba(255,255,255,0.05)]">
+              <th key={m.id} className="px-5 py-4 text-center text-[11px] font-bold whitespace-nowrap"
+                style={{ color: '#f59e0b', borderRight: '1px solid rgba(255,255,255,0.06)', minWidth: 140 }}>
                 {m.model_name}
               </th>
             ))}
@@ -167,16 +208,24 @@ function SpecTable({ models }: { models: ProductModel[] }) {
         <tbody>
           {allLabels.map((label, i) => {
             const values = models.map(m => getValue(m, label));
-            const isDifferent = new Set(values.filter(v => v !== '—')).size > 1;
-
+            const isDiff = new Set(values.filter(v => v !== '—')).size > 1;
+            const rowBg = i % 2 === 0 ? '#f8fafc' : '#ffffff';
             return (
-              <tr key={label} className={`group hover:bg-accent/5 transition-colors ${i % 2 === 0 ? 'bg-surface/30' : 'bg-white'}`}>
-                <td className={`px-6 py-4 font-bold text-primary text-[11px] uppercase tracking-wider sticky left-0 z-10 border-r border-primary/5 transition-colors group-hover:bg-accent/5 ${i % 2 === 0 ? 'bg-surface/10' : 'bg-white'}`}>
-                  {label}
-                  {isDifferent && <span className="ml-2 w-1.5 h-1.5 rounded-full bg-accent inline-block" title="Values differ across models" />}
+              <tr key={label} className="group" style={{ background: rowBg }}>
+                <td
+                  className="sticky left-0 z-10 px-5 py-3.5 text-[11px] font-semibold uppercase tracking-wide"
+                  style={{ color: '#475569', background: rowBg, borderRight: '1px solid #e2e8f0' }}
+                >
+                  <span className="flex items-center gap-2">
+                    {label}
+                    {isDiff && (
+                      <span className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: '#f59e0b' }} />
+                    )}
+                  </span>
                 </td>
                 {models.map(m => (
-                  <td key={m.id} className="px-6 py-4 text-center font-bold text-primary/80 text-xs border-r border-primary/5 last:border-0">
+                  <td key={m.id} className="px-5 py-3.5 text-center text-[12px] font-semibold"
+                    style={{ color: '#001f3f', borderRight: '1px solid #f1f5f9' }}>
                     {getValue(m, label)}
                   </td>
                 ))}
@@ -189,18 +238,88 @@ function SpecTable({ models }: { models: ProductModel[] }) {
   );
 }
 
+/* ─────────────────────────────── Floating CTA ─────────────────────────────── */
+function FloatingCTA({ product, visible }: { product: any; visible: boolean }) {
+  return (
+    <AnimatePresence>
+      {visible && (
+        <motion.div
+          initial={{ y: 80, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: 80, opacity: 0 }}
+          transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+          className="fixed bottom-0 left-0 right-0 z-40"
+          style={{
+            background: '#001229',
+            borderTop: '1px solid rgba(255,255,255,0.06)',
+            boxShadow: '0 -6px 24px rgba(0,0,0,0.25)',
+          }}
+        >
+          <div className="container-custom flex items-center justify-between gap-4 py-3.5">
+            {/* Product info */}
+            <div className="hidden sm:flex flex-col min-w-0">
+              <p className="text-white text-[13px] font-bold leading-tight truncate">{product.name}</p>
+              {product.category && (
+                <p className="text-[11px] leading-tight" style={{ color: 'rgba(255,255,255,0.38)' }}>{product.category}</p>
+              )}
+            </div>
+            {/* Actions */}
+            <div className="flex items-center gap-2.5 ml-auto flex-shrink-0">
+              {product.brochure_url ? (
+                <a
+                  href={product.brochure_url}
+                  target="_blank" rel="noopener noreferrer"
+                  className="hidden sm:flex items-center gap-2 text-[12px] font-bold px-4 py-2 rounded-xl transition-colors"
+                  style={{ color: 'rgba(255,255,255,0.6)', border: '1px solid rgba(255,255,255,0.12)' }}
+                  onMouseEnter={e => { e.currentTarget.style.color = '#fff'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.3)'; }}
+                  onMouseLeave={e => { e.currentTarget.style.color = 'rgba(255,255,255,0.6)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)'; }}
+                >
+                  <Download size={13} /> Brochure
+                </a>
+              ) : null}
+              <Link
+                href={`/contact?product=${encodeURIComponent(product.name)}`}
+                className="flex items-center gap-2 text-[13px] font-black px-5 py-2.5 rounded-xl transition-all"
+                style={{ background: '#f59e0b', color: '#001f3f' }}
+                onMouseEnter={e => { e.currentTarget.style.background = '#d97706'; }}
+                onMouseLeave={e => { e.currentTarget.style.background = '#f59e0b'; }}
+              >
+                <Mail size={14} /> Request Quote
+              </Link>
+            </div>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
+
+/* ══════════════════════════════ Main Page ══════════════════════════════ */
 export default function ProductDetail() {
   const { slug } = useParams<{ slug: string }>();
-  const [product, setProduct] = useState<any>(null);
-  const [models, setModels] = useState<ProductModel[]>([]);
-  const [relatedProducts, setRelatedProducts] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<Tab>('overview');
-  const [activeImage, setActiveImage] = useState(0);
-  const [imageZoomed, setImageZoomed] = useState(false);
-  const [copied, setCopied] = useState(false);
-  const [activeModelId, setActiveModelId] = useState<string | null>(null);
 
+  const [product, setProduct]               = useState<any>(null);
+  const [models, setModels]                 = useState<ProductModel[]>([]);
+  const [relatedProducts, setRelatedProducts] = useState<any[]>([]);
+  const [loading, setLoading]               = useState(true);
+
+  const [activeTab, setActiveTab]           = useState<Tab>('overview');
+  const [activeImage, setActiveImage]       = useState(0);
+  const [imageZoomed, setImageZoomed]       = useState(false);
+  const [lightboxIndex, setLightboxIndex]   = useState(0);
+  const [copied, setCopied]                 = useState(false);
+  const [activeModelId, setActiveModelId]   = useState<string | null>(null);
+
+  // Two visibility flags for floating CTA:
+  // show when main CTA is off-screen AND the bottom section hasn't appeared yet
+  const [ctaOffScreen, setCtaOffScreen]     = useState(false);
+  const [bottomVisible, setBottomVisible]   = useState(false);
+  const showFloatingCTA = ctaOffScreen && !bottomVisible;
+
+  const ctaRef    = useRef<HTMLDivElement>(null);
+  const bottomRef = useRef<HTMLElement>(null);
+
+  /* ── Fetch ── */
   useEffect(() => {
     fetch(`/api/public/products?slug=${slug}`)
       .then(r => r.json())
@@ -209,7 +328,6 @@ export default function ProductDetail() {
           const norm = normalizeProduct(data.product);
           setProduct(norm);
           setModels(data.models || []);
-
           const catSlug = norm.main_category_slug || norm.categorySlug;
           if (catSlug) {
             fetch(`/api/public/products?main_category=${catSlug}`)
@@ -228,6 +346,39 @@ export default function ProductDetail() {
       .catch(() => setLoading(false));
   }, [slug]);
 
+  /* ── Floating CTA observers ── */
+  useEffect(() => {
+    if (!product) return;
+
+    const obs1 = new IntersectionObserver(
+      ([e]) => setCtaOffScreen(!e.isIntersecting),
+      { threshold: 0.2 }
+    );
+    const obs2 = new IntersectionObserver(
+      ([e]) => setBottomVisible(e.isIntersecting),
+      { threshold: 0.1 }
+    );
+    if (ctaRef.current)    obs1.observe(ctaRef.current);
+    if (bottomRef.current) obs2.observe(bottomRef.current);
+    return () => { obs1.disconnect(); obs2.disconnect(); };
+  }, [product]);
+
+  /* ── Lightbox keyboard ── */
+  const handleKeyDown = useCallback((e: KeyboardEvent) => {
+    if (!imageZoomed) return;
+    if (e.key === 'Escape') setImageZoomed(false);
+    if (e.key === 'ArrowRight')
+      setLightboxIndex(i => Math.min(i + 1, (product?.images?.length ?? 1) - 1));
+    if (e.key === 'ArrowLeft')
+      setLightboxIndex(i => Math.max(i - 1, 0));
+  }, [imageZoomed, product]);
+
+  useEffect(() => {
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [handleKeyDown]);
+
+  /* ── Share ── */
   const handleShare = async () => {
     const url = window.location.href;
     if (navigator.share) {
@@ -235,28 +386,35 @@ export default function ProductDetail() {
     } else {
       await navigator.clipboard.writeText(url).catch(() => {});
       setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      setTimeout(() => setCopied(false), 2500);
     }
   };
 
+  /* ── Loading ── */
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-surface">
+      <div className="min-h-screen flex items-center justify-center" style={{ background: '#f8fafc' }}>
         <div className="text-center">
-          <Loader2 size={36} className="animate-spin text-accent mx-auto mb-4" />
-          <p className="text-muted text-sm">Loading product...</p>
+          <Loader2 size={36} className="animate-spin mx-auto mb-4" style={{ color: '#f59e0b' }} />
+          <p className="text-sm font-medium" style={{ color: '#64748b' }}>Loading product…</p>
         </div>
       </div>
     );
   }
 
+  /* ── 404 ── */
   if (!product) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-surface">
+      <div className="min-h-screen flex items-center justify-center" style={{ background: '#f8fafc' }}>
         <div className="text-center max-w-md px-6">
-          <Package size={56} className="text-gray-200 mx-auto mb-5" />
-          <h1 className="text-3xl font-black text-primary mb-3">Product Not Found</h1>
-          <p className="text-muted mb-8 text-sm">This product does not exist or has been removed.</p>
+          <div className="w-24 h-24 rounded-3xl flex items-center justify-center mx-auto mb-6"
+            style={{ background: '#f1f5f9' }}>
+            <Package size={40} style={{ color: '#cbd5e1' }} />
+          </div>
+          <h1 className="text-3xl font-black mb-3" style={{ color: '#001f3f' }}>Product Not Found</h1>
+          <p className="mb-8 text-sm" style={{ color: '#64748b' }}>
+            This product does not exist or has been removed.
+          </p>
           <Link href="/products" className="btn-primary">
             <ArrowLeft size={15} /> Back to Products
           </Link>
@@ -265,535 +423,865 @@ export default function ProductDetail() {
     );
   }
 
-  // Build image list
-  const imageList: string[] = product.images?.length > 0 ? product.images : product.image ? [product.image] : [];
+  /* ── Derived data ── */
+  const imageList: string[] = product.images?.length > 0
+    ? product.images
+    : product.image ? [product.image] : [];
   const currentImage = imageList[activeImage] || '';
-
-  const specsCount = Object.keys(product.specs || {}).length;
+  const specsEntries = Object.entries(product.specs || {});
+  const specsCount   = specsEntries.length;
   const featuresCount = (product.features || []).length;
-  const modelsCount = models.length;
-
-  // Calculate dynamic ranges for specs
-  const getSpecRange = (labelPatterns: string[]) => {
-    if (models.length === 0) return null;
-    const values = models
-      .flatMap(m => m.specs || [])
-      .filter(s => labelPatterns.some(p => s.label.toLowerCase().includes(p.toLowerCase())))
-      .map(s => {
-        const num = parseFloat(s.value);
-        return isNaN(num) ? null : num;
-      })
-      .filter((v): v is number => v !== null);
-
-    if (values.length === 0) return null;
-    const min = Math.min(...values);
-    const max = Math.max(...values);
-    return min === max ? `${min}` : `${min} – ${max}`;
-  };
-
-  const heightRange = getSpecRange(['height', 'elevation']);
-  const loadRange = getSpecRange(['load', 'capacity', 'weight']);
+  const modelsCount  = models.length;
+  const quickSpecs   = specsEntries.slice(0, 4);
 
   const tabs: { id: Tab; label: string; icon: React.ReactNode; count?: number }[] = [
-    { id: 'overview', label: 'Overview', icon: <FileText size={14} /> },
-    ...(modelsCount > 0 ? [{ id: 'models' as Tab, label: 'Models & Specs', icon: <LayoutGrid size={14} />, count: modelsCount }] : []),
-    ...(specsCount > 0 ? [{ id: 'specs' as Tab, label: 'Specifications', icon: <Wrench size={14} />, count: specsCount }] : []),
-    { id: 'features', label: 'Features', icon: <Check size={14} />, count: featuresCount },
+    { id: 'overview',  label: 'Overview', icon: <FileText size={13} /> },
+    ...(modelsCount > 0
+      ? [{ id: 'models' as Tab,   label: 'Models',   icon: <LayoutGrid size={13} />, count: modelsCount }]
+      : []),
+    ...(specsCount > 0
+      ? [{ id: 'specs' as Tab,    label: 'Specs',    icon: <Settings size={13} />,   count: specsCount }]
+      : []),
+    ...(featuresCount > 0
+      ? [{ id: 'features' as Tab, label: 'Features', icon: <List size={13} />,       count: featuresCount }]
+      : []),
   ];
 
-  return (
-    <>
-      {/* Spacer for fixed navbar */}
-      <div className="h-[90px] lg:h-[120px] w-full bg-white" />
+  const flatFeatures: string[] = (product.features || [])
+    .flatMap((f: string) =>
+      f.split(/(?:\d+\.|\r?\n|;)/).map((s: string) => s.trim()).filter(Boolean)
+    );
 
-      {/* Breadcrumb */}
-      <div className="bg-white border-b border-border py-4 sticky top-[64px] lg:top-[72px] z-30 backdrop-blur-md bg-white/95">
-        <div className="container-custom">
-          <nav className="flex items-center gap-2.5 text-[11px] font-black uppercase tracking-widest text-primary/40 overflow-x-auto whitespace-nowrap">
-            <Link href="/" className="hover:text-accent transition-colors">Home</Link>
-            <span className="w-1 h-1 rounded-full bg-border" />
-            <Link href="/products" className="hover:text-accent transition-colors">Products</Link>
+  /* ══════════════════════════════ Render ══════════════════════════════ */
+  return (
+    /* page wrapper — adds bottom padding when floating CTA is active */
+    <div style={{ paddingBottom: showFloatingCTA ? 72 : 0 }}>
+
+      {/* Navbar spacer */}
+      <div className="h-[88px] lg:h-[104px] w-full bg-white" />
+
+      {/* ── Breadcrumb ── */}
+      <div
+        className="bg-white border-b sticky z-30"
+        style={{ borderColor: '#e2e8f0', top: 0 }}
+      >
+        <div className="container-custom py-3">
+          <nav
+            className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-widest overflow-x-auto whitespace-nowrap"
+            style={{ color: '#94a3b8' }}
+          >
+            <Link href="/" className="hover:text-amber-500 transition-colors shrink-0">Home</Link>
+            <ChevronRight size={11} className="shrink-0" />
+            <Link href="/products" className="hover:text-amber-500 transition-colors shrink-0">Products</Link>
             {product.category && (
               <>
-                <span className="w-1 h-1 rounded-full bg-border" />
-                <Link href={`/categories/${product.main_category_slug}`} className="hover:text-accent transition-colors">{product.category}</Link>
+                <ChevronRight size={11} className="shrink-0" />
+                <Link
+                  href={`/categories/${product.main_category_slug}`}
+                  className="hover:text-amber-500 transition-colors shrink-0"
+                >
+                  {product.category}
+                </Link>
               </>
             )}
-            <span className="w-1 h-1 rounded-full bg-border" />
-            <span className="text-primary">{product.name}</span>
+            <ChevronRight size={11} className="shrink-0" />
+            <span className="font-bold shrink-0" style={{ color: '#1e293b' }}>{product.name}</span>
           </nav>
         </div>
       </div>
 
-      {/* Product Hero */}
-      <section className="bg-white pt-10 pb-20 lg:pt-16 lg:pb-28">
+      {/* ── Hero ── */}
+      <section className="bg-white pt-8 pb-16 lg:pt-12 lg:pb-24">
         <div className="container-custom">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 xl:gap-20 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-10 xl:gap-16 items-start">
 
-            {/* Left: Image Gallery */}
-            <div className="lg:sticky lg:top-24">
-              <motion.div initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5 }}>
+            {/* ───── LEFT: Image Gallery ───── */}
+            <div className="lg:sticky" style={{ top: 56 }}>
+              <motion.div
+                initial={{ opacity: 0, x: -16 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.45 }}
+              >
                 {/* Main image */}
-                  <div
-                    className="relative aspect-square bg-gradient-to-br from-gray-50 to-slate-100 rounded-2xl overflow-hidden border border-gray-100 cursor-zoom-in group transition-transform duration-500 hover:scale-[1.02]"
-                    onClick={() => currentImage && setImageZoomed(true)}
-                  >
-                    {currentImage ? (
-                      currentImage.startsWith('data:') ? (
-                        <img src={currentImage} alt={product.name} className="w-full h-full object-contain p-10 transition-transform duration-700 group-hover:scale-110" />
-                      ) : (
-                        <Image src={currentImage} alt={product.name} fill className="object-contain p-10 transition-transform duration-700 group-hover:scale-110" priority />
-                      )
-                    ) : (
-                      <div className="w-full h-full flex flex-col items-center justify-center gap-3 text-gray-200">
-                        <Package size={64} /><span className="text-sm">No Image Available</span>
-                      </div>
-                    )}
-
-                  {product.featured && (
-                    <div className="absolute top-5 left-5 flex items-center gap-1.5 px-3 py-1.5 text-xs font-black rounded-full uppercase tracking-wider shadow-lg" style={{ background: '#f59e0b', color: '#001f3f' }}>
-                      <Star size={11} fill="currentColor" /> Featured
+                <div
+                  className="relative overflow-hidden rounded-2xl cursor-zoom-in group"
+                  style={{
+                    aspectRatio: '1 / 1',
+                    background: 'linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)',
+                    border: '1px solid #e2e8f0',
+                  }}
+                  onClick={() => currentImage && (() => { setLightboxIndex(activeImage); setImageZoomed(true); })()}
+                >
+                  {currentImage ? (
+                    <ProductImage
+                      src={currentImage}
+                      alt={product.name}
+                      fill
+                      priority
+                      sizes="(max-width: 1024px) 100vw, 50vw"
+                      className="object-contain p-10 transition-transform duration-600 group-hover:scale-[1.04]"
+                    />
+                  ) : (
+                    <div className="absolute inset-0 flex flex-col items-center justify-center gap-2"
+                      style={{ color: '#cbd5e1' }}>
+                      <Package size={56} />
+                      <span className="text-xs font-medium">No Image</span>
                     </div>
                   )}
 
-                  {currentImage && (
-                    <div className="absolute bottom-4 right-4 flex items-center gap-1.5 px-3 py-1.5 bg-black/50 backdrop-blur-sm text-white text-[10px] font-semibold rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
-                      <ZoomIn size={11} /> Click to zoom
+                  {/* Featured badge */}
+                  {product.featured && (
+                    <div
+                      className="absolute top-4 left-4 flex items-center gap-1.5 px-3 py-1.5 text-[10px] font-black rounded-full uppercase tracking-widest shadow-md"
+                      style={{ background: '#f59e0b', color: '#001f3f' }}
+                    >
+                      <Star size={10} fill="currentColor" /> Featured
                     </div>
+                  )}
+
+                  {/* Zoom hint */}
+                  {currentImage && (
+                    <div
+                      className="absolute bottom-3 right-3 flex items-center gap-1.5 px-2.5 py-1.5 text-white text-[10px] font-semibold rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                      style={{ background: 'rgba(0,0,0,0.52)', backdropFilter: 'blur(6px)' }}
+                    >
+                      <ZoomIn size={11} /> Zoom
+                    </div>
+                  )}
+
+                  {/* Prev/Next arrows */}
+                  {imageList.length > 1 && (
+                    <>
+                      <button
+                        onClick={e => { e.stopPropagation(); setActiveImage(i => Math.max(i - 1, 0)); }}
+                        disabled={activeImage === 0}
+                        className="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full flex items-center justify-center transition-all opacity-0 group-hover:opacity-100 disabled:!opacity-0"
+                        style={{ background: 'rgba(255,255,255,0.88)', boxShadow: '0 2px 8px rgba(0,0,0,0.12)' }}
+                      >
+                        <ChevronLeft size={16} style={{ color: '#001f3f' }} />
+                      </button>
+                      <button
+                        onClick={e => { e.stopPropagation(); setActiveImage(i => Math.min(i + 1, imageList.length - 1)); }}
+                        disabled={activeImage === imageList.length - 1}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full flex items-center justify-center transition-all opacity-0 group-hover:opacity-100 disabled:!opacity-0"
+                        style={{ background: 'rgba(255,255,255,0.88)', boxShadow: '0 2px 8px rgba(0,0,0,0.12)' }}
+                      >
+                        <ChevronRight size={16} style={{ color: '#001f3f' }} />
+                      </button>
+                    </>
                   )}
                 </div>
 
                 {/* Thumbnails */}
                 {imageList.length > 1 && (
-                  <div className="flex gap-3 mt-5 overflow-x-auto pb-2 custom-scrollbar">
+                  <div className="flex gap-2.5 mt-3 overflow-x-auto pb-1 pr-1">
                     {imageList.map((img, i) => (
                       <button
                         key={i}
                         onClick={() => setActiveImage(i)}
-                        className={`flex-shrink-0 w-20 h-20 rounded-2xl overflow-hidden border-2 transition-all duration-300 ${
-                          activeImage === i ? 'border-accent shadow-lg scale-105' : 'border-border/40 hover:border-accent/40 bg-white'
-                        }`}
+                        className="flex-shrink-0 w-14 h-14 rounded-xl overflow-hidden transition-all duration-200"
+                        style={{
+                          border: `2px solid ${activeImage === i ? '#f59e0b' : '#e2e8f0'}`,
+                          background: '#f8fafc',
+                          transform: activeImage === i ? 'scale(1.06)' : 'scale(1)',
+                          boxShadow: activeImage === i ? '0 2px 10px rgba(245,158,11,0.3)' : 'none',
+                        }}
                       >
-                        {img.startsWith('data:') ? (
-                          <img src={img} alt="" className="w-full h-full object-contain p-2" />
-                        ) : (
-                          <Image src={img} alt="" width={80} height={80} className="object-contain p-2" />
-                        )}
+                        <ProductImage src={img} alt="" width={56} height={56} className="object-contain p-1.5 w-full h-full" />
                       </button>
                     ))}
                   </div>
                 )}
 
-                {product.category && (
-                  <div className="mt-4 flex justify-center">
-                    <Link href={`/categories/${product.main_category_slug}`} className="inline-flex items-center gap-1.5 text-xs font-semibold text-muted hover:text-primary transition-colors">
-                      <span className="w-1 h-1 rounded-full bg-accent" />
-                      {product.category}
-                    </Link>
-                  </div>
+                {/* Image counter */}
+                {imageList.length > 1 && (
+                  <p className="text-center text-[11px] mt-2" style={{ color: '#94a3b8' }}>
+                    {activeImage + 1} / {imageList.length}
+                  </p>
                 )}
               </motion.div>
             </div>
 
-            {/* Right: Details */}
-            <div>
-              <AnimatedSection>
-                <h1 className="text-3xl lg:text-[44px] font-black text-primary leading-[1.1] mb-4 tracking-tight">{product.name}</h1>
-                {product.shortDescription && (
-                  <p className="text-base text-muted/80 leading-relaxed mb-6 border-l-4 pl-4 py-1" style={{ borderColor: '#f59e0b' }}>
-                    {product.shortDescription}
-                  </p>
-                )}
-
-                {/* Key Specs Summary */}
-                <div className="grid grid-cols-2 gap-3 mb-8">
-                  <div className="bg-surface border border-border/60 rounded-2xl p-4 flex items-center gap-4 hover:border-accent/40 transition-colors group">
-                    <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-sm group-hover:bg-accent/10 transition-colors">
-                      <ArrowRight size={16} className="text-accent -rotate-45" />
-                    </div>
-                    <div>
-                      <p className="text-[10px] font-black text-muted uppercase tracking-widest mb-0.5">Working Height</p>
-                      <p className="text-sm font-black text-primary">
-                        {product.specs['Working Height'] || product.specs['Max. Working Height'] || (heightRange ? `~${heightRange}m` : '8–15m range')}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="bg-surface border border-border/60 rounded-2xl p-4 flex items-center gap-4 hover:border-accent/40 transition-colors group">
-                    <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-sm group-hover:bg-accent/10 transition-colors">
-                      <Package size={16} className="text-accent" />
-                    </div>
-                    <div>
-                      <p className="text-[10px] font-black text-muted uppercase tracking-widest mb-0.5">Load Capacity</p>
-                      <p className="text-sm font-black text-primary">
-                        {product.specs['Load Capacity'] || product.specs['Lift Capacity'] || (loadRange ? `${loadRange}kg` : '320–550kg range')}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="bg-surface border border-border/60 rounded-2xl p-4 flex items-center gap-4 hover:border-accent/40 transition-colors group">
-                    <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-sm group-hover:bg-accent/10 transition-colors">
-                      <Wrench size={16} className="text-accent" />
-                    </div>
-                    <div>
-                      <p className="text-[10px] font-black text-muted uppercase tracking-widest mb-0.5">Power Source</p>
-                      <p className="text-sm font-black text-primary">{product.specs['Power Source'] || product.specs['Engine'] || 'Electric / Diesel'}</p>
-                    </div>
-                  </div>
-                  <div className="bg-surface border border-border/60 rounded-2xl p-4 flex items-center gap-4 hover:border-accent/40 transition-colors group">
-                    <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-sm group-hover:bg-accent/10 transition-colors">
-                      <Star size={16} className="text-accent" />
-                    </div>
-                    <div>
-                      <p className="text-[10px] font-black text-muted uppercase tracking-widest mb-0.5">Ideal Usage</p>
-                      <p className="text-sm font-black text-primary">Indoor & Outdoor</p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Highly Recommended Model (Star Feature) */}
-                {models.length > 0 && (
-                  <div className="mb-10 p-4 rounded-2xl bg-accent/5 border border-accent/20 flex items-center gap-4 relative overflow-hidden group">
-                    <div className="absolute -right-2 -bottom-2 opacity-10 rotate-12 group-hover:rotate-6 transition-transform">
-                      <Star size={80} fill="#f59e0b" />
-                    </div>
-                    <div className="w-10 h-10 rounded-full bg-accent flex items-center justify-center flex-shrink-0 shadow-lg shadow-accent/20">
-                      <Star size={18} fill="currentColor" className="text-primary" />
-                    </div>
-                    <div>
-                      <p className="text-[10px] font-black text-accent uppercase tracking-[0.2em] mb-0.5">Special Recognition</p>
-                      <p className="text-sm font-black text-primary">
-                        Recommended: <span className="text-accent">{models[Math.min(3, models.length - 1)].model_name}</span> — 
-                        <span className="text-xs font-bold text-muted ml-2">Best for versatile industrial maintenance</span>
-                      </p>
-                    </div>
-                  </div>
-                )}
-
-              {/* Tabs */}
-              <AnimatedSection delay={0.1}>
-                <div className="flex gap-1 bg-surface rounded-xl p-1 mb-8 border border-border/50 overflow-x-auto">
-                  {tabs.map(tab => (
-                    <button
-                      key={tab.id}
-                      onClick={() => setActiveTab(tab.id)}
-                      className="relative flex-shrink-0 flex items-center justify-center gap-1.5 px-4 py-3 rounded-lg text-xs font-black transition-all cursor-pointer group hover:bg-white/50"
-                      style={activeTab === tab.id
-                        ? { background: '#fff', color: '#001f3f', boxShadow: '0 4px 12px rgba(0,31,63,0.08)', borderBottom: '2px solid #f59e0b' }
-                        : { color: '#64748b' }}
-                    >
-                      {tab.icon}
-                      <span>{tab.label}</span>
-                      {tab.count !== undefined && tab.count > 0 && (
-                        <span className="ml-0.5 px-1.5 py-0.5 text-[10px] rounded-full font-bold"
-                          style={activeTab === tab.id
-                            ? { background: 'rgba(245,158,11,0.15)', color: '#d97706' }
-                            : { background: '#f1f5f9', color: '#94a3b8' }}
-                        >{tab.count}</span>
-                      )}
-                    </button>
-                  ))}
-                </div>
-
-                <AnimatePresence mode="wait">
-                  {activeTab === 'overview' && (
-                    <motion.div key="overview" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.2 }} className="min-h-[160px]">
-                      {product.fullDescription ? (
-                        <>
-                          <p className="text-sm text-muted leading-relaxed whitespace-pre-line mb-8">{product.fullDescription}</p>
-                          <div className="bg-surface border border-border/40 rounded-3xl p-6">
-                            <p className="text-[10px] font-black text-primary uppercase tracking-[0.2em] mb-4">Ideal Use Cases</p>
-                            <div className="flex flex-wrap gap-3">
-                              {['Warehouse Maintenance', 'Construction Sites', 'Indoor Facilities', 'Logistics Centers', 'Event Management'].map((tag, i) => (
-                                <div key={i} className="px-4 py-2 rounded-xl bg-white border border-border/60 text-[11px] font-bold text-muted flex items-center gap-2">
-                                  <div className="w-1 h-1 rounded-full bg-accent" />
-                                  {tag}
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-                        </>
-                      ) : (
-                        <div className="p-6 rounded-2xl bg-surface/50 border border-dashed border-border flex flex-col items-center justify-center text-center">
-                          <FileText size={32} className="text-muted/30 mb-3" />
-                          <p className="text-sm text-muted/60 font-medium">Detailed description for {product.name} is being updated.</p>
-                          <p className="text-[11px] text-muted/40 mt-1 italic">For immediate technical details, please download the brochure or contact our experts.</p>
-                        </div>
-                      )}
-                    </motion.div>
-                  )}
-
-                  {activeTab === 'models' && (
-                    <motion.div key="models" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.2 }} className="min-h-[160px]">
-                      {models.length === 0 ? (
-                        <div className="p-6 rounded-2xl bg-surface/50 border border-dashed border-border flex flex-col items-center justify-center text-center">
-                          <LayoutGrid size={32} className="text-muted/30 mb-3" />
-                          <p className="text-sm text-muted/60 font-medium">Model variations for this product will be available soon.</p>
-                        </div>
-                      ) : (
-                        <>
-                          <div className="mb-4 flex items-center justify-between">
-                            <p className="text-[10px] font-black uppercase tracking-widest text-muted/60">Select a model to view details</p>
-                          </div>
-                          {/* Model cards grid */}
-                          <div className="grid grid-cols-2 gap-8 mb-8">
-                            {models.map(m => (
-                              <ModelCard
-                                key={m.id}
-                                model={m}
-                                isActive={activeModelId === m.id}
-                                onClick={() => setActiveModelId(activeModelId === m.id ? null : m.id)}
-                                fallbackImage={product.image}
-                              />
-                            ))}
-                          </div>
-
-                          {/* Selected model spec detail */}
-                          <AnimatePresence>
-                            {activeModelId && (() => {
-                              const sel = models.find(m => m.id === activeModelId);
-                              if (!sel || !sel.specs?.length) return null;
-                              return (
-                                <motion.div 
-                                  initial={{ opacity: 0, height: 0 }} 
-                                  animate={{ opacity: 1, height: 'auto' }} 
-                                  exit={{ opacity: 0, height: 0 }}
-                                  className="mb-8 rounded-3xl border-2 border-accent/20 overflow-hidden shadow-lg shadow-accent/5"
-                                >
-                                  <div className="px-6 py-4 flex items-center justify-between" style={{ background: 'rgba(245,158,11,0.08)' }}>
-                                    <div className="flex items-center gap-3">
-                                      <div className="w-8 h-8 rounded-full bg-accent flex items-center justify-center">
-                                        <LayoutGrid size={14} className="text-primary" />
-                                      </div>
-                                      <span className="text-xs font-black text-primary uppercase tracking-widest">{sel.model_name} Specifications</span>
-                                    </div>
-                                    <button onClick={() => setActiveModelId(null)} className="text-muted hover:text-primary transition-colors">✕</button>
-                                  </div>
-                                  <div className="p-2 bg-white">
-                                    {sel.specs.map((s, i, arr) => (
-                                      <div key={i} className={`flex justify-between items-center px-5 py-3.5 ${i % 2 === 0 ? 'bg-surface/30' : 'bg-white'} rounded-xl transition-colors hover:bg-accent/5`}>
-                                        <span className="text-[11px] font-bold text-muted/60 uppercase tracking-wider">{s.label}</span>
-                                        <span className="text-xs font-black text-primary ml-4 text-right">{s.value}</span>
-                                      </div>
-                                    ))}
-                                  </div>
-                                </motion.div>
-                              );
-                            })()}
-                          </AnimatePresence>
-                          
-                          {models.length > 0 && (
-                            <div className="p-4 rounded-xl bg-primary/5 border border-primary/10 flex items-center gap-3">
-                              <div className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-                              <p className="text-[10px] font-bold text-primary/60 uppercase tracking-widest">Scroll down for full model comparison table</p>
-                            </div>
-                          )}
-                        </>
-                      )}
-                    </motion.div>
-                  )}
-
-                  {activeTab === 'specs' && (
-                    <motion.div key="specs" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.2 }} className="min-h-[160px]">
-                      {specsCount === 0
-                        ? <p className="text-sm text-muted italic py-4">No specifications available.</p>
-                        : (
-                          <div className="rounded-xl border border-border/60 overflow-hidden">
-                            {Object.entries(product.specs).map(([key, value], i, arr) => (
-                              <div key={key} className={`flex justify-between items-center px-5 py-3 ${i % 2 === 0 ? 'bg-surface/60' : 'bg-white'} ${i < arr.length - 1 ? 'border-b border-border/40' : ''}`}>
-                                <span className="text-xs font-semibold text-muted">{key}</span>
-                                <span className="text-xs font-bold text-primary ml-4 text-right">{String(value)}</span>
-                              </div>
-                            ))}
-                          </div>
-                        )
-                      }
-                    </motion.div>
-                  )}
-
-                  {activeTab === 'features' && (
-                    <motion.div key="features" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.2 }} className="min-h-[160px]">
-                      {featuresCount === 0
-                        ? <p className="text-sm text-muted italic py-4">No features listed.</p>
-                        : (
-                          <div className="grid grid-cols-1 gap-3">
-                            {product.features.flatMap((f: string) => f.split(/(?:\d+\.|\r?\n|;)/).map(s => s.trim()).filter(Boolean)).map((feature: string, i: number) => (
-                              <motion.div key={i} initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.04 }}
-                                className="flex items-start gap-4 p-4 rounded-xl bg-white border border-border/40 hover:border-accent/40 transition-all group shadow-sm hover:shadow-md"
-                              >
-                                <div className="w-6 h-6 rounded-full bg-accent/10 flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:bg-accent group-hover:text-primary transition-colors">
-                                  <Check size={12} strokeWidth={4} />
-                                </div>
-                                <span className="text-sm font-bold text-primary/80 leading-relaxed">{feature}</span>
-                              </motion.div>
-                            ))}
-                          </div>
-                        )
-                      }
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </AnimatedSection>
-
-              {/* CTAs */}
-              <AnimatedSection delay={0.25} className="mt-12">
-                <div className="bg-primary text-white rounded-[32px] p-6 lg:p-10 shadow-3xl shadow-primary/30 relative overflow-hidden">
-                  <div className="relative z-10">
-                    <div className="flex flex-col sm:flex-row gap-5">
-                      <Link href={`/contact?product=${encodeURIComponent(product.name)}`} className="bg-accent hover:bg-accent/90 text-primary font-black py-5 px-10 rounded-2xl flex-1 flex items-center justify-center gap-3 transition-all transform hover:-translate-y-1 active:scale-95 shadow-xl shadow-accent/30 text-base">
-                        <Mail size={20} /> Request a Quote
-                      </Link>
-                      {product.brochure_url ? (
-                        <a href={product.brochure_url} target="_blank" rel="noopener noreferrer" className="bg-white/10 hover:bg-white/20 backdrop-blur-xl text-white font-black py-5 px-10 rounded-2xl flex-1 flex items-center justify-center gap-3 transition-all transform hover:-translate-y-1 active:scale-95 border border-white/20">
-                          <Download size={20} /> Full Brochure
-                        </a>
-                      ) : (
-                        <a href="/vikamusk-company-profile.pdf" target="_blank" rel="noopener noreferrer" className="bg-white/10 hover:bg-white/20 backdrop-blur-xl text-white font-black py-5 px-10 rounded-2xl flex-1 flex items-center justify-center gap-3 transition-all transform hover:-translate-y-1 active:scale-95 border border-white/20">
-                          <Download size={20} /> Company Profile
-                        </a>
-                      )}
-                    </div>
-
-                    <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-4 mt-8 pt-8 border-t border-white/10">
-                      <div className="flex items-center gap-2.5">
-                        <div className="w-6 h-6 rounded-full bg-accent/20 flex items-center justify-center">
-                          <Check size={12} className="text-accent" />
-                        </div>
-                        <span className="text-[11px] font-black text-white/70 uppercase tracking-widest">24h Response</span>
-                      </div>
-                      <div className="flex items-center gap-2.5">
-                        <div className="w-6 h-6 rounded-full bg-accent/20 flex items-center justify-center">
-                          <Check size={12} className="text-accent" />
-                        </div>
-                        <span className="text-[11px] font-black text-white/70 uppercase tracking-widest">Technical Support</span>
-                      </div>
-                      <div className="flex items-center gap-2.5">
-                        <div className="w-6 h-6 rounded-full bg-accent/20 flex items-center justify-center">
-                          <Check size={12} className="text-accent" />
-                        </div>
-                        <span className="text-[11px] font-black text-white/70 uppercase tracking-widest">Global Shipping</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-6 px-4">
-                  <button onClick={handleShare} className="flex items-center gap-2 text-[11px] font-black text-muted/60 uppercase tracking-[0.2em] hover:text-primary transition-colors">
-                    <Share2 size={14} className="text-accent" /> {copied ? 'Copied!' : 'Share Product'}
-                  </button>
-                  <Link href="/products" className="flex items-center gap-2 text-[11px] font-black text-muted/60 uppercase tracking-[0.2em] hover:text-primary transition-colors">
-                    <ArrowLeft size={14} className="text-accent" /> Back to Catalog
+            {/* ───── RIGHT: Product Info ───── */}
+            <motion.div
+              initial={{ opacity: 0, x: 16 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.45, delay: 0.1 }}
+            >
+              {/* ── Header row: category + share ── */}
+              <div className="flex items-center justify-between mb-3">
+                {product.category ? (
+                  <Link
+                    href={`/categories/${product.main_category_slug}`}
+                    className="text-[10px] font-black uppercase tracking-[0.2em] transition-opacity hover:opacity-70"
+                    style={{ color: '#f59e0b' }}
+                  >
+                    {product.category}
                   </Link>
+                ) : <span />}
+
+                <button
+                  onClick={handleShare}
+                  className="flex items-center gap-1.5 text-[11px] font-semibold px-3 py-1.5 rounded-lg transition-all"
+                  style={{ color: '#64748b', background: '#f8fafc', border: '1px solid #e2e8f0' }}
+                  onMouseEnter={e => { e.currentTarget.style.background = '#f1f5f9'; e.currentTarget.style.color = '#001f3f'; }}
+                  onMouseLeave={e => { e.currentTarget.style.background = '#f8fafc'; e.currentTarget.style.color = '#64748b'; }}
+                >
+                  {copied
+                    ? <CheckCircle size={13} style={{ color: '#10b981' }} />
+                    : <Share2 size={13} />}
+                  {copied ? 'Copied!' : 'Share'}
+                </button>
+              </div>
+
+              {/* ── Product name ── */}
+              <h1
+                className="font-black leading-[1.08] tracking-tight mb-4"
+                style={{ color: '#001f3f', fontSize: 'clamp(1.75rem, 3.5vw, 2.6rem)' }}
+              >
+                {product.name}
+              </h1>
+
+              {/* ── Short description ── */}
+              {product.shortDescription && (
+                <p
+                  className="text-[15px] leading-relaxed mb-6 pl-4 py-0.5"
+                  style={{ color: '#475569', borderLeft: '3px solid #f59e0b' }}
+                >
+                  {product.shortDescription}
+                </p>
+              )}
+
+              {/* ── Quick spec highlights (only when product has own specs) ── */}
+              {quickSpecs.length > 0 && (
+                <div className="grid grid-cols-2 gap-2.5 mb-6">
+                  {quickSpecs.map(([key, value], i) => {
+                    const [Icon] = getSpecIcon(key);
+                    return (
+                      <div
+                        key={i}
+                        className="flex items-center gap-3 p-3.5 rounded-xl transition-all"
+                        style={{ background: '#f8fafc', border: '1px solid #e2e8f0' }}
+                        onMouseEnter={e => {
+                          e.currentTarget.style.borderColor = 'rgba(245,158,11,0.45)';
+                          e.currentTarget.style.background = 'rgba(245,158,11,0.03)';
+                        }}
+                        onMouseLeave={e => {
+                          e.currentTarget.style.borderColor = '#e2e8f0';
+                          e.currentTarget.style.background = '#f8fafc';
+                        }}
+                      >
+                        <div
+                          className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
+                          style={{ background: 'rgba(245,158,11,0.1)' }}
+                        >
+                          <Icon size={14} style={{ color: '#f59e0b' }} />
+                        </div>
+                        <div className="min-w-0">
+                          <p className="text-[9px] font-black uppercase tracking-widest mb-0.5"
+                            style={{ color: '#94a3b8' }}>{key}</p>
+                          <p className="text-[13px] font-bold truncate" style={{ color: '#001f3f' }}>
+                            {String(value)}
+                          </p>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
-              </AnimatedSection>
-              </AnimatedSection>
-            </div>
+              )}
+
+              {/* ── Models badge ── */}
+              {modelsCount > 0 && (
+                <div
+                  className="flex items-center gap-3 p-3 rounded-xl mb-6"
+                  style={{ background: '#f0fdf4', border: '1px solid #bbf7d0' }}
+                >
+                  <div className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0"
+                    style={{ background: '#dcfce7' }}>
+                    <LayoutGrid size={13} style={{ color: '#16a34a' }} />
+                  </div>
+                  <p className="text-[12px] font-semibold leading-snug" style={{ color: '#166534' }}>
+                    Available in{' '}
+                    <span className="font-black" style={{ color: '#16a34a' }}>
+                      {modelsCount} model{modelsCount > 1 ? 's' : ''}
+                    </span>
+                    {' '}— select in the <strong>Models</strong> tab for full specs
+                  </p>
+                </div>
+              )}
+
+              {/* ── Tab Navigation ── */}
+              <div
+                className="flex rounded-xl p-1 mb-5 overflow-x-auto"
+                style={{ background: '#f1f5f9', border: '1px solid #e2e8f0', gap: 2 }}
+              >
+                {tabs.map(tab => (
+                  <button
+                    key={tab.id}
+                    onClick={() => setActiveTab(tab.id)}
+                    className="flex-shrink-0 flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-lg text-[11px] font-bold uppercase tracking-wider transition-all"
+                    style={activeTab === tab.id
+                      ? {
+                          background: '#fff',
+                          color: '#001f3f',
+                          boxShadow: '0 1px 6px rgba(0,0,0,0.08)',
+                          borderBottom: '2px solid #f59e0b',
+                        }
+                      : { color: '#64748b' }
+                    }
+                  >
+                    {tab.icon}
+                    <span>{tab.label}</span>
+                    {tab.count !== undefined && tab.count > 0 && (
+                      <span
+                        className="px-1.5 py-0.5 text-[9px] rounded-full font-black"
+                        style={activeTab === tab.id
+                          ? { background: 'rgba(245,158,11,0.15)', color: '#b45309' }
+                          : { background: '#e2e8f0', color: '#94a3b8' }
+                        }
+                      >
+                        {tab.count}
+                      </span>
+                    )}
+                  </button>
+                ))}
+              </div>
+
+              {/* ── Tab Content ── */}
+              <AnimatePresence mode="wait">
+
+                {/* Overview */}
+                {activeTab === 'overview' && (
+                  <motion.div
+                    key="overview"
+                    initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.18 }}
+                    className="min-h-[120px]"
+                  >
+                    {product.fullDescription ? (
+                      <p className="text-[14px] leading-relaxed whitespace-pre-line"
+                        style={{ color: '#475569' }}>
+                        {product.fullDescription}
+                      </p>
+                    ) : (
+                      <div
+                        className="flex flex-col items-center justify-center py-10 text-center rounded-xl"
+                        style={{ background: '#f8fafc', border: '1px dashed #e2e8f0' }}
+                      >
+                        <FileText size={28} className="mb-2" style={{ color: '#cbd5e1' }} />
+                        <p className="text-[13px] font-semibold mb-1" style={{ color: '#64748b' }}>
+                          Description being updated
+                        </p>
+                        <p className="text-[11px]" style={{ color: '#94a3b8' }}>
+                          Download the brochure or contact us for details
+                        </p>
+                      </div>
+                    )}
+                  </motion.div>
+                )}
+
+                {/* Models */}
+                {activeTab === 'models' && (
+                  <motion.div
+                    key="models"
+                    initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.18 }}
+                  >
+                    {models.length === 0 ? (
+                      <div className="flex flex-col items-center justify-center py-10 text-center rounded-xl"
+                        style={{ background: '#f8fafc', border: '1px dashed #e2e8f0' }}>
+                        <LayoutGrid size={28} className="mb-2" style={{ color: '#cbd5e1' }} />
+                        <p className="text-[13px] font-semibold" style={{ color: '#64748b' }}>
+                          No model variants yet
+                        </p>
+                      </div>
+                    ) : (
+                      <>
+                        <p className="text-[10px] font-black uppercase tracking-widest mb-3"
+                          style={{ color: '#94a3b8' }}>
+                          Select a model to view specifications
+                        </p>
+
+                        {/* Model cards — auto-fill grid, handles any count cleanly */}
+                        <div
+                          className="grid gap-3 mb-5"
+                          style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))' }}
+                        >
+                          {models.map(m => (
+                            <ModelCard
+                              key={m.id}
+                              model={m}
+                              isActive={activeModelId === m.id}
+                              onClick={() => setActiveModelId(prev => prev === m.id ? null : m.id)}
+                              fallbackImage={product.image}
+                            />
+                          ))}
+                        </div>
+
+                        {/* Selected model spec panel */}
+                        <AnimatePresence>
+                          {activeModelId && (() => {
+                            const sel = models.find(m => m.id === activeModelId);
+                            if (!sel || !sel.specs?.length) return null;
+                            return (
+                              <motion.div
+                                key={activeModelId}
+                                initial={{ opacity: 0, y: 8 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: 8 }}
+                                transition={{ duration: 0.18 }}
+                                className="rounded-xl overflow-hidden mb-4"
+                                style={{ border: '1px solid rgba(245,158,11,0.28)' }}
+                              >
+                                {/* Panel header */}
+                                <div
+                                  className="flex items-center justify-between px-4 py-3"
+                                  style={{ background: 'rgba(245,158,11,0.05)', borderBottom: '1px solid rgba(245,158,11,0.15)' }}
+                                >
+                                  <div className="flex items-center gap-2.5">
+                                    <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0"
+                                      style={{ background: '#f59e0b' }}>
+                                      <LayoutGrid size={13} style={{ color: '#001f3f' }} />
+                                    </div>
+                                    <span className="text-[11px] font-black uppercase tracking-widest"
+                                      style={{ color: '#001f3f' }}>
+                                      {sel.model_name}
+                                    </span>
+                                  </div>
+                                  <button
+                                    onClick={() => setActiveModelId(null)}
+                                    className="w-6 h-6 rounded-full flex items-center justify-center transition-colors"
+                                    style={{ color: '#94a3b8' }}
+                                    onMouseEnter={e => { e.currentTarget.style.background = '#f1f5f9'; }}
+                                    onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; }}
+                                  >
+                                    <X size={13} />
+                                  </button>
+                                </div>
+                                {/* Spec rows */}
+                                {sel.specs.map((s, i) => (
+                                  <div
+                                    key={i}
+                                    className="flex justify-between items-center px-4 py-2.5"
+                                    style={{
+                                      background: i % 2 === 0 ? '#f8fafc' : '#fff',
+                                      borderBottom: i < sel.specs.length - 1 ? '1px solid #f1f5f9' : 'none',
+                                    }}
+                                  >
+                                    <span className="text-[11px] font-semibold uppercase tracking-wide"
+                                      style={{ color: '#94a3b8' }}>{s.label}</span>
+                                    <span className="text-[12px] font-bold text-right ml-4"
+                                      style={{ color: '#001f3f' }}>{s.value}</span>
+                                  </div>
+                                ))}
+                              </motion.div>
+                            );
+                          })()}
+                        </AnimatePresence>
+
+                        {modelsCount > 1 && (
+                          <div className="flex items-center gap-2 p-3 rounded-lg"
+                            style={{ background: '#f8fafc', border: '1px solid #e2e8f0' }}>
+                            <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: '#f59e0b' }} />
+                            <p className="text-[10px] font-bold uppercase tracking-widest" style={{ color: '#94a3b8' }}>
+                              Full side-by-side comparison available below
+                            </p>
+                          </div>
+                        )}
+                      </>
+                    )}
+                  </motion.div>
+                )}
+
+                {/* Specs */}
+                {activeTab === 'specs' && (
+                  <motion.div
+                    key="specs"
+                    initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.18 }}
+                  >
+                    {specsCount === 0 ? (
+                      <p className="text-sm italic py-4" style={{ color: '#94a3b8' }}>
+                        No specifications listed.
+                      </p>
+                    ) : (
+                      <div className="rounded-xl overflow-hidden" style={{ border: '1px solid #e2e8f0' }}>
+                        {specsEntries.map(([key, value], i) => (
+                          <div
+                            key={key}
+                            className="flex justify-between items-center px-4 py-3 transition-colors"
+                            style={{
+                              background: i % 2 === 0 ? '#f8fafc' : '#fff',
+                              borderBottom: i < specsCount - 1 ? '1px solid #f1f5f9' : 'none',
+                            }}
+                            onMouseEnter={e => { e.currentTarget.style.background = 'rgba(245,158,11,0.03)'; }}
+                            onMouseLeave={e => { e.currentTarget.style.background = i % 2 === 0 ? '#f8fafc' : '#fff'; }}
+                          >
+                            <span className="text-[12px] font-semibold" style={{ color: '#64748b' }}>{key}</span>
+                            <span className="text-[12px] font-bold ml-4 text-right" style={{ color: '#001f3f' }}>
+                              {String(value)}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </motion.div>
+                )}
+
+                {/* Features */}
+                {activeTab === 'features' && (
+                  <motion.div
+                    key="features"
+                    initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.18 }}
+                  >
+                    {flatFeatures.length === 0 ? (
+                      <p className="text-sm italic py-4" style={{ color: '#94a3b8' }}>No features listed.</p>
+                    ) : (
+                      <div className="flex flex-col gap-2">
+                        {flatFeatures.map((feature, i) => (
+                          <motion.div
+                            key={i}
+                            initial={{ opacity: 0, x: -8 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: i * 0.025 }}
+                            className="flex items-start gap-3 p-3.5 rounded-xl transition-all"
+                            style={{ background: '#fff', border: '1px solid #e2e8f0' }}
+                            onMouseEnter={e => {
+                              e.currentTarget.style.borderColor = 'rgba(245,158,11,0.35)';
+                              e.currentTarget.style.background = 'rgba(245,158,11,0.02)';
+                            }}
+                            onMouseLeave={e => {
+                              e.currentTarget.style.borderColor = '#e2e8f0';
+                              e.currentTarget.style.background = '#fff';
+                            }}
+                          >
+                            <div
+                              className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"
+                              style={{ background: 'rgba(245,158,11,0.12)' }}
+                            >
+                              <Check size={11} strokeWidth={3} style={{ color: '#d97706' }} />
+                            </div>
+                            <span className="text-[13px] leading-relaxed" style={{ color: '#334155' }}>
+                              {feature}
+                            </span>
+                          </motion.div>
+                        ))}
+                      </div>
+                    )}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              {/* ── CTA Block ── */}
+              <div ref={ctaRef} className="mt-8">
+                <div
+                  className="rounded-2xl px-8 py-7 relative overflow-hidden shadow-sm"
+                  style={{ background: '#fff', border: '1px solid #e2e8f0' }}
+                >
+                  <div className="relative z-10">
+                    <p className="text-[10px] font-black uppercase tracking-[0.22em] mb-1.5"
+                      style={{ color: '#f59e0b' }}>
+                      Ready to proceed?
+                    </p>
+                    <h3 className="text-base font-black mb-5 leading-snug" style={{ color: '#001f3f' }}>
+                      Get a quote or download the spec sheet
+                    </h3>
+
+                    {/* Buttons — now side-by-side in one line */}
+                    <div className="flex flex-row gap-3">
+                      <Link
+                        href={`/contact?product=${encodeURIComponent(product.name)}`}
+                        className="flex-1 flex items-center justify-center gap-2 py-5 px-2 rounded-xl font-bold text-[13px] transition-all hover:scale-105 hover:shadow-[0_0_25px_rgba(245,158,11,0.2)]"
+                        style={{
+                          background: '#f59e0b',
+                          color: '#001f3f',
+                          border: '1px solid transparent'
+                        }}
+                        onMouseEnter={e => { e.currentTarget.style.borderColor = '#001f3f'; }}
+                        onMouseLeave={e => { e.currentTarget.style.borderColor = 'transparent'; }}
+                      >
+                        <Mail size={16} /> Request Quote
+                      </Link>
+
+                      {product.brochure_url ? (
+                        <a
+                          href={product.brochure_url}
+                          target="_blank" rel="noopener noreferrer"
+                          className="flex-1 flex items-center justify-center gap-2 py-5 px-2 rounded-xl font-bold text-[13px] transition-all border border-[#001f3f]/15 hover:border-[#001f3f] hover:scale-105 hover:bg-[#001f3f] hover:text-white hover:shadow-[0_0_25px_rgba(0,31,63,0.1)]"
+                          style={{
+                            background: '#fff',
+                            color: '#001f3f'
+                          }}
+                        >
+                          <Download size={16} /> Brochure
+                        </a>
+                      ) : (
+                        <a
+                          href="/vikamusk-company-profile.pdf"
+                          target="_blank" rel="noopener noreferrer"
+                          className="flex-1 flex items-center justify-center gap-2 py-5 px-2 rounded-xl font-bold text-[13px] transition-all border border-[#001f3f]/15 hover:border-[#001f3f] hover:scale-105 hover:bg-[#001f3f] hover:text-white hover:shadow-[0_0_25px_rgba(0,31,63,0.1)]"
+                          style={{
+                            background: '#fff',
+                            color: '#001f3f'
+                          }}
+                        >
+                          <Download size={16} /> Profile
+                        </a>
+                      )}
+                    </div>
+
+                    {/* Trust badges — 3-col grid */}
+                    <div
+                      className="grid grid-cols-3 gap-3 mt-6 pt-6"
+                      style={{ borderTop: '1px solid #f1f5f9' }}
+                    >
+                      {[
+                        { icon: <Shield size={14} />, label: '24h Reply' },
+                        { icon: <Wrench size={14} />, label: 'Tech Support' },
+                        { icon: <Phone size={14} />, label: 'Expert Help' },
+                      ].map((item, i) => (
+                        <div key={i} className="flex flex-col items-center gap-1.5 text-center">
+                          <div
+                            className="w-8 h-8 rounded-full flex items-center justify-center"
+                            style={{ background: '#fef3c7', color: '#d97706' }}
+                          >
+                            {item.icon}
+                          </div>
+                          <span className="text-[10px] font-bold leading-tight"
+                            style={{ color: '#64748b' }}>
+                            {item.label}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Back / Share row */}
+                <div className="flex items-center justify-between mt-4 px-1">
+                  <Link
+                    href="/products"
+                    className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-widest transition-colors"
+                    style={{ color: '#94a3b8' }}
+                    onMouseEnter={e => { e.currentTarget.style.color = '#334155'; }}
+                    onMouseLeave={e => { e.currentTarget.style.color = '#94a3b8'; }}
+                  >
+                    <ArrowLeft size={12} style={{ color: '#f59e0b' }} /> Back to Catalog
+                  </Link>
+                  <button
+                    onClick={handleShare}
+                    className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-widest transition-colors"
+                    style={{ color: '#94a3b8' }}
+                    onMouseEnter={e => { e.currentTarget.style.color = '#334155'; }}
+                    onMouseLeave={e => { e.currentTarget.style.color = '#94a3b8'; }}
+                  >
+                    {copied
+                      ? <><CheckCircle size={12} style={{ color: '#10b981' }} /> Copied!</>
+                      : <><Share2 size={12} style={{ color: '#f59e0b' }} /> Share</>}
+                  </button>
+                </div>
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
-
-      {/* Lightbox */}
+      {/* ── Lightbox ── */}
       <AnimatePresence>
-        {imageZoomed && currentImage && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}
+        {imageZoomed && (
+          <motion.div
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            transition={{ duration: 0.18 }}
             className="fixed inset-0 z-[100] flex items-center justify-center p-4"
-            style={{ background: 'rgba(0,0,0,0.92)' }}
+            style={{ background: 'rgba(0,0,0,0.93)' }}
             onClick={() => setImageZoomed(false)}
           >
-            <motion.div initial={{ scale: 0.9 }} animate={{ scale: 1 }} exit={{ scale: 0.9 }}
-              className="relative w-full max-w-3xl aspect-square rounded-2xl overflow-hidden"
-              style={{ background: 'rgba(255,255,255,0.05)' }}
+            <motion.div
+              initial={{ scale: 0.93 }} animate={{ scale: 1 }} exit={{ scale: 0.93 }}
+              className="relative w-full max-w-3xl overflow-hidden rounded-2xl"
+              style={{ aspectRatio: '1 / 1', background: 'rgba(255,255,255,0.03)' }}
               onClick={e => e.stopPropagation()}
             >
-              {currentImage.startsWith('data:')
-                ? <img src={currentImage} alt={product.name} className="w-full h-full object-contain p-8" />
-                : <Image src={currentImage} alt={product.name} fill className="object-contain p-8" />
-              }
-              <button onClick={() => setImageZoomed(false)}
-                className="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/60 text-white flex items-center justify-center hover:bg-black/80 transition-colors"
-              >✕</button>
+              {imageList[lightboxIndex] && (
+                <ProductImage
+                  src={imageList[lightboxIndex]}
+                  alt={product.name}
+                  fill
+                  className="object-contain p-8"
+                  sizes="90vw"
+                />
+              )}
+
+              {/* Close */}
+              <button
+                onClick={() => setImageZoomed(false)}
+                className="absolute top-3 right-3 w-9 h-9 rounded-full flex items-center justify-center text-white transition-colors"
+                style={{ background: 'rgba(0,0,0,0.65)' }}
+                onMouseEnter={e => { e.currentTarget.style.background = 'rgba(0,0,0,0.9)'; }}
+                onMouseLeave={e => { e.currentTarget.style.background = 'rgba(0,0,0,0.65)'; }}
+              >
+                <X size={16} />
+              </button>
+
+              {/* Prev */}
+              {imageList.length > 1 && lightboxIndex > 0 && (
+                <button
+                  onClick={() => setLightboxIndex(i => i - 1)}
+                  className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full flex items-center justify-center text-white transition-colors"
+                  style={{ background: 'rgba(0,0,0,0.65)' }}
+                  onMouseEnter={e => { e.currentTarget.style.background = 'rgba(0,0,0,0.9)'; }}
+                  onMouseLeave={e => { e.currentTarget.style.background = 'rgba(0,0,0,0.65)'; }}
+                >
+                  <ChevronLeft size={20} />
+                </button>
+              )}
+
+              {/* Next */}
+              {imageList.length > 1 && lightboxIndex < imageList.length - 1 && (
+                <button
+                  onClick={() => setLightboxIndex(i => i + 1)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full flex items-center justify-center text-white transition-colors"
+                  style={{ background: 'rgba(0,0,0,0.65)' }}
+                  onMouseEnter={e => { e.currentTarget.style.background = 'rgba(0,0,0,0.9)'; }}
+                  onMouseLeave={e => { e.currentTarget.style.background = 'rgba(0,0,0,0.65)'; }}
+                >
+                  <ChevronRight size={20} />
+                </button>
+              )}
+
+              {/* Counter */}
+              {imageList.length > 1 && (
+                <div
+                  className="absolute bottom-3 left-1/2 -translate-x-1/2 px-3 py-1.5 rounded-full text-white text-[11px] font-semibold"
+                  style={{ background: 'rgba(0,0,0,0.65)' }}
+                >
+                  {lightboxIndex + 1} / {imageList.length}
+                </div>
+              )}
+
+              {/* ESC hint */}
+              <p className="absolute bottom-3 right-3 text-[10px]" style={{ color: 'rgba(255,255,255,0.25)' }}>
+                ESC to close
+              </p>
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Full-width spec table for many models */}
-      {models.length > 2 && (
-        <section className="section-padding bg-surface border-t border-border/50">
+      {/* ── Full Model Comparison ── */}
+      {models.length > 1 && (
+        <section className="section-padding" style={{ background: '#f8fafc', borderTop: '1px solid #e2e8f0' }}>
           <div className="container-custom">
-            <AnimatedSection className="mb-10">
-              <span className="text-xs font-bold uppercase tracking-widest mb-3 block" style={{ color: '#f59e0b' }}>Technical Data</span>
-              <h2 className="text-2xl lg:text-3xl font-black text-primary">Full Model Comparison</h2>
-              <p className="text-muted text-sm mt-2">Scroll horizontally to compare all models</p>
+            <AnimatedSection className="mb-8">
+              <span className="text-[11px] font-bold uppercase tracking-widest block mb-2"
+                style={{ color: '#f59e0b' }}>Technical Data</span>
+              <h2 className="text-2xl lg:text-3xl font-black" style={{ color: '#001f3f' }}>
+                Full Model Comparison
+              </h2>
+              <p className="text-sm mt-1.5" style={{ color: '#64748b' }}>
+                Compare all {modelsCount} models side by side — scroll horizontally for more columns
+              </p>
             </AnimatedSection>
             <SpecTable models={models} />
           </div>
         </section>
       )}
 
-      {/* Related Products */}
+      {/* ── Related Products ── */}
       {relatedProducts.length > 0 && (
-        <section className="section-padding bg-surface">
+        <section className="section-padding" style={{ background: '#fff' }}>
           <div className="container-custom">
-            <AnimatedSection className="flex justify-between items-end mb-12">
+            <AnimatedSection className="flex justify-between items-end mb-10">
               <div>
-                <span className="text-xs font-bold uppercase tracking-widest" style={{ color: '#f59e0b' }}>More From This Category</span>
-                <h2 className="text-2xl lg:text-3xl font-black text-primary mt-3">Related Products</h2>
+                <span className="text-[11px] font-bold uppercase tracking-widest block mb-2"
+                  style={{ color: '#f59e0b' }}>More From This Category</span>
+                <h2 className="text-2xl lg:text-3xl font-black" style={{ color: '#001f3f' }}>
+                  Related Products
+                </h2>
               </div>
-              <Link href={`/products?category=${product.main_category_slug}`} className="btn-outline text-xs py-2 px-4 hidden sm:inline-flex">
+              <Link
+                href={`/products?category=${product.main_category_slug}`}
+                className="btn-outline text-xs py-2 px-5 hidden sm:inline-flex"
+              >
                 View All <ArrowRight size={13} />
               </Link>
             </AnimatedSection>
-            <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-7">
+            <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {relatedProducts.map((p, i) => (
-                <StaggerItem key={p.id}><ProductCard product={p} index={i} /></StaggerItem>
+                <StaggerItem key={p.id}>
+                  <ProductCard product={p} index={i} />
+                </StaggerItem>
               ))}
             </StaggerContainer>
           </div>
         </section>
       )}
 
-      {/* Bottom CTA */}
-      <section className="py-20 lg:py-28 relative overflow-hidden" style={{ background: '#001f3f' }}>
-        {/* Background elements */}
-        <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-accent rounded-full blur-[120px]" />
-        </div>
-
-        <div className="container-custom text-center relative z-10">
+      {/* ── Bottom CTA — observed to hide floating bar ── */}
+      <section 
+        ref={bottomRef}
+        className="bg-[#001f3f]" 
+        style={{ paddingTop: '3rem', paddingBottom: '7rem' }}
+      >
+        <div
+          className="container-custom"
+          style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+        >
           <AnimatedSection>
-            <span className="text-xs font-black uppercase tracking-[0.3em]" style={{ color: '#f59e0b' }}>Consulting & Expert Advice</span>
-            <h2 className="text-3xl lg:text-5xl font-black text-white mt-6 mb-6 tracking-tight">Need help choosing the right model?</h2>
-            <p className="text-white/60 max-w-2xl mx-auto text-base lg:text-lg mb-12 leading-relaxed">
-              Our technical specialist team is ready to guide you through the specifications and find the perfect material handling solution for your specific needs.
-            </p>
-            <div className="flex flex-wrap justify-center gap-5">
-              <Link href="/contact" className="bg-accent hover:bg-accent/90 text-primary font-black py-4 px-10 rounded-2xl flex items-center gap-3 transition-all transform hover:-translate-y-1 active:scale-95 shadow-xl shadow-accent/20">
-                <Mail size={20} /> Get Expert Advice
-              </Link>
-              <Link href="/products" className="bg-white/10 hover:bg-white/20 backdrop-blur-md text-white font-black py-4 px-10 rounded-2xl flex items-center gap-3 transition-all transform hover:-translate-y-1 active:scale-95 border border-white/10">
-                Browse Full Catalog
-              </Link>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              <h2
+                className="text-3xl lg:text-4xl font-black text-white"
+                style={{ marginBottom: '1.5rem', whiteSpace: 'nowrap', textAlign: 'center' }}
+              >
+                Need help choosing the right model?
+              </h2>
+              <p
+                className="text-gray-400 leading-relaxed"
+                style={{
+                  maxWidth: '640px',
+                  marginBottom: '2.5rem',
+                  fontSize: '1.05rem',
+                  lineHeight: '1.75',
+                  textAlign: 'center',
+                }}
+              >
+                Our technical specialists are ready to guide you through the specifications
+                and find the perfect solution for your operation.
+              </p>
+              <div
+                className="flex flex-wrap justify-center"
+                style={{ gap: '1.25rem', marginTop: '0.5rem' }}
+              >
+                <Link
+                  href="/contact"
+                  className="bg-accent hover:bg-white text-[#001f3f] hover:text-[#001f3f] font-bold rounded-xl transition-all inline-flex items-center gap-2.5 hover:scale-105 hover:shadow-[0_0_25px_rgba(255,255,255,0.4)]"
+                  style={{
+                    padding: '1rem 2.25rem',
+                    fontSize: '0.95rem',
+                    boxShadow: '0 4px 20px rgba(245, 158, 11, 0.3)',
+                  }}
+                >
+                  Get Expert Advice <Phone size={18} />
+                </Link>
+                <Link
+                  href="/products"
+                  className="bg-white/10 hover:bg-white text-white hover:text-[#001f3f] font-semibold rounded-xl border border-white/20 hover:border-white transition-all inline-flex items-center justify-center gap-2.5 hover:scale-105 hover:shadow-[0_0_25px_rgba(255,255,255,0.4)]"
+                  style={{
+                    padding: '1rem 2.25rem',
+                    fontSize: '0.95rem',
+                  }}
+                >
+                  Browse Full Catalog
+                </Link>
+              </div>
             </div>
           </AnimatedSection>
         </div>
       </section>
-      <style jsx global>{`
-        .custom-scrollbar::-webkit-scrollbar {
-          height: 6px;
-          width: 6px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-          background: rgba(0, 31, 63, 0.03);
-          border-radius: 10px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-          background: rgba(0, 31, 63, 0.1);
-          border-radius: 10px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-          background: #f59e0b;
-        }
-      `}</style>
-    </>
+
+      {/* ── Floating Sticky CTA ── */}
+      <FloatingCTA product={product} visible={showFloatingCTA} />
+    </div>
   );
 }
