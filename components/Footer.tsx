@@ -25,9 +25,9 @@ const quickLinks = [
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex items-center gap-2.5 mb-5">
-      <div className="w-[3px] h-[14px] bg-accent rounded-full flex-shrink-0" />
-      <h4 className="text-[11px] font-bold uppercase tracking-[0.16em] text-white/55">{children}</h4>
+    <div className="flex items-center gap-3 mb-8">
+      <div className="w-[3px] h-[16px] bg-accent rounded-full flex-shrink-0" />
+      <h4 className="text-[12px] font-bold uppercase tracking-[0.2em] text-white/60">{children}</h4>
     </div>
   );
 }
@@ -100,7 +100,10 @@ export default function Footer() {
 
   return (
     <>
-      <footer className="relative z-20 bg-[#05101f] text-white overflow-hidden mt-16">
+      <footer 
+        className="relative z-20 bg-[#05101f] text-white overflow-hidden mt-32 md:mt-48 lg:mt-64"
+        style={{ marginTop: '8rem' }}
+      >
         {/* Dot-grid texture */}
         <div
           className="absolute inset-0 pointer-events-none select-none"
@@ -116,12 +119,12 @@ export default function Footer() {
         <div className="relative h-px bg-gradient-to-r from-transparent via-accent/45 to-transparent" />
 
         {/* ── Main grid ─────────────────────────────────────────────── */}
-        <div className="relative container-custom pt-8 pb-10 lg:pt-8 lg:pb-12">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-x-12 items-start">
+        <div className="relative container-custom pt-24 pb-16 lg:pt-32 lg:pb-24">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-x-20 items-start">
 
             {/* Brand */}
             <div>
-              <Link href="/" className="inline-block mb-6">
+              <Link href="/" className="inline-block mb-10">
                 <div className="relative" style={{ width: '150px', height: '40px' }}>
                   <Image
                     src="/images/logo-white.png"
@@ -133,13 +136,13 @@ export default function Footer() {
                 </div>
               </Link>
 
-              <p className="text-white/45 text-sm leading-relaxed mb-6 max-w-[260px]">
+              <p className="text-white/45 text-sm leading-relaxed mb-10 max-w-[280px]">
                 Founded in 2015. Trusted supplier of advanced construction and material
                 handling solutions across UAE, India, and beyond.
               </p>
 
               {/* Key stats */}
-              <div className="grid grid-cols-3 gap-2 mb-6">
+              <div className="grid grid-cols-3 gap-3 mb-10">
                 {[
                   { value: '10+', label: 'Years' },
                   { value: '50+', label: 'Products' },
@@ -156,7 +159,7 @@ export default function Footer() {
               </div>
 
               {/* Icon buttons */}
-              <div className="flex gap-2">
+              <div className="flex gap-4">
                 {iconLinks.map(({ href, icon, label, external }) =>
                   external ? (
                     <a
@@ -184,9 +187,9 @@ export default function Footer() {
             </div>
 
             {/* Quick Links */}
-            <div className="mt-8">
+            <div className="lg:pt-16" style={{ paddingTop: '4rem' }}>
               <SectionTitle>Quick Links</SectionTitle>
-              <ul className="space-y-2.5">
+              <ul className="space-y-4">
                 {quickLinks.map(link => (
                   <FooterLink key={link.name} href={link.href}>{link.name}</FooterLink>
                 ))}
@@ -194,9 +197,9 @@ export default function Footer() {
             </div>
 
             {/* Product Categories */}
-            <div className="mt-8">
+            <div className="lg:pt-16" style={{ paddingTop: '4rem' }}>
               <SectionTitle>Product Categories</SectionTitle>
-              <ul className="space-y-2.5">
+              <ul className="space-y-4">
                 <FooterLink href="/products">All Products</FooterLink>
                 {categories.map(cat => (
                   <li key={cat.id}>
@@ -228,9 +231,9 @@ export default function Footer() {
             </div>
 
             {/* Contact Info */}
-            <div className="mt-8">
+            <div className="lg:pt-16" style={{ paddingTop: '4rem' }}>
               <SectionTitle>Contact Info</SectionTitle>
-              <div className="space-y-3">
+              <div className="space-y-5">
                 {/* Office cards */}
                 {[
                   { region: 'UAE Office (HQ)', address: 'PO Box 932, Ajman Free Zone, Ajman, UAE' },
@@ -240,7 +243,7 @@ export default function Footer() {
                     key={region}
                     className="rounded-xl p-3.5 bg-white/[0.03] border border-white/[0.07] hover:border-white/[0.13] transition-colors duration-200"
                   >
-                    <p className="text-[9px] font-bold uppercase tracking-widest text-accent/55 mb-1.5">
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-accent/60 mb-2.5">
                       {region}
                     </p>
                     <p className="text-white/50 text-sm leading-relaxed">{address}</p>
@@ -248,7 +251,7 @@ export default function Footer() {
                 ))}
 
                 {/* Email links */}
-                <div className="space-y-2 pt-1">
+                <div className="space-y-4 pt-4">
                   {[
                     { href: 'mailto:sales@vikamusk.com', label: 'Sales', address: 'sales@vikamusk.com' },
                     { href: 'mailto:info@vikamusk.com', label: 'General', address: 'info@vikamusk.com' },
@@ -306,7 +309,7 @@ export default function Footer() {
         <div className="relative border-t border-white/[0.06] bg-black/20">
           <div className="container-custom py-5 flex flex-col sm:flex-row justify-between items-center gap-3">
             <p className="text-white/25 text-xs">
-              © {new Date().getFullYear()} Vikamusk International. All rights reserved.
+              © {new Date().getFullYear()} Vikamusk International. All rights reserved. <span className="opacity-50 ml-2">(Verified v2.1)</span>
             </p>
             <div className="flex items-center gap-5">
               <Link href="/privacy" className="text-white/25 hover:text-white/60 text-xs transition-colors">
