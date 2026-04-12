@@ -83,7 +83,7 @@ export default function About() {
             <h2 className="text-3xl lg:text-4xl font-black text-white mt-3 mb-4">
               Mission & Vision
             </h2>
-            <p className="text-white/60 max-w-2xl mx-auto text-center">
+            <p className="text-white/60 max-w-2xl mx-auto text-center" style={{ marginBottom: '2rem' }}>
               Our core values guide every decision we make, ensuring we deliver excellence 
               in engineering while empowering global progress through innovative lifting solutions.
             </p>
