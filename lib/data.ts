@@ -63,6 +63,26 @@ export const categories: Category[] = [
     image: '/images/products/electric-scissor-lift.png',
     productCount: 0,
   },
+  {
+    id: 'cat-3',
+    name: 'Earthmoving & Excavation',
+    slug: 'earthmoving-excavation',
+    description:
+      'Robust Excavators, Wheel Loaders, and Backhoes for heavy-duty project requirements.',
+    icon: '🚜',
+    image: '/images/products/excavator.png',
+    productCount: 0,
+  },
+  {
+    id: 'cat-4',
+    name: 'Road & Construction',
+    slug: 'road-construction',
+    description:
+      'Rollers, Pavers, and specialized road equipment for infrastructure development.',
+    icon: '🛣️',
+    image: '/images/products/roller.png',
+    productCount: 0,
+  },
 ];
 
 // Minimal product seeds — admin should manage the full catalog.

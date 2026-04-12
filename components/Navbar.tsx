@@ -140,6 +140,7 @@ export default function Navbar() {
 
   const isTransparent = pathname === '/' && !scrolled;
   const textColor = isTransparent ? 'text-white' : 'text-gray-700';
+  const bgColor = scrolled ? 'bg-white/80 backdrop-blur-xl' : isTransparent ? 'bg-transparent' : 'bg-white';
 
   const isActive = (href: string) => {
     if (href === '/') return pathname === '/';
@@ -231,8 +232,11 @@ export default function Navbar() {
                     transition={{ duration: 0.22, ease: 'easeOut' }}
                     onMouseEnter={cancelCloseMega}
                     onMouseLeave={closeMega}
-                    className="absolute top-full left-1/2 -translate-x-1/2 mt-2 bg-white rounded-2xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.15)] border border-gray-100 z-50 overflow-hidden"
-                    style={{ minWidth: '720px' }}
+                    className="absolute top-full left-1/2 -translate-x-1/2 mt-4 bg-white shadow-[0_40px_80px_-15px_rgba(0,0,0,0.15)] border border-gray-100 z-50 overflow-hidden rounded-2xl"
+                    style={{ 
+                      minWidth: '1080px',
+                      padding: '1.25rem 2rem' 
+                    }}
                   >
                     {/* Loading state */}
                     {loading && (
@@ -265,123 +269,110 @@ export default function Navbar() {
 
                     {/* Loaded state with categories */}
                     {!loading && !error && categories.length > 0 && (
-                      <div className="flex">
-                        {/* ── Left: Main Categories Column ── */}
-                        <div className="w-[250px] bg-gray-50/80 border-r border-gray-100 py-3 flex flex-col">
-                          <p className="px-5 py-2 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
-                            Categories
-                          </p>
+                    <div className="w-full relative">
+                      {/* Header */}
+                      <div className="flex items-center justify-between mb-4 pb-3 border-b border-gray-100/60">
+                        <div className="flex items-center gap-6">
+                          <h3 className="text-lg font-black text-[#001f3f] tracking-tight">
+                            Product Catalog
+                          </h3>
+                        </div>
+                        <Link 
+                          href="/products"
+                          className="group flex items-center gap-1.5 text-[11px] font-bold text-gray-400 hover:text-accent transition-all"
+                        >
+                          View All Equipment
+                          <ChevronRight size={13} className="group-hover:translate-x-0.5 transition-transform" />
+                        </Link>
+                      </div>
 
-                          <div className="flex-1 overflow-y-auto max-h-[360px] scrollbar-thin">
-                            {categories.map((mc) => (
-                              <div
-                                key={mc.id}
-                                onMouseEnter={() => setActiveCatSlug(mc.slug)}
-                                className={`flex items-center justify-between px-5 py-3 cursor-pointer transition-all duration-200 ${
-                                  activeCatSlug === mc.slug
-                                    ? 'bg-white text-accent shadow-sm'
-                                    : 'text-gray-600 hover:bg-white/60'
+                      {/* Main Split Layout */}
+                      <div className="flex gap-1">
+                        {/* Left: Category Navigation */}
+                        <div className="w-[320px] pr-8 border-r border-gray-50 py-1">
+                           <p className="text-[9px] font-black text-gray-300 uppercase tracking-[0.2em] mb-3 px-3">
+                             Categories
+                           </p>
+                           <div className="space-y-0.5">
+                            {categories.map((cat) => (
+                              <Link
+                                key={cat.id}
+                                href={`/categories/${cat.slug}`}
+                                onMouseEnter={() => setActiveCatSlug(cat.slug)}
+                                className={`group flex items-center justify-between px-3 py-2 rounded-lg transition-all duration-200 ${
+                                  activeCatSlug === cat.slug 
+                                    ? 'bg-amber-50 text-accent translate-x-1' 
+                                    : 'text-gray-600 hover:bg-gray-50 hover:text-[#001f3f]'
                                 }`}
                               >
-                                <div className="flex items-center gap-2.5 min-w-0">
-                                  <span className="text-sm font-semibold truncate">{mc.name}</span>
-                                </div>
-                                <ChevronRight
-                                  size={14}
-                                  className={`flex-shrink-0 ml-2 transition-all duration-200 ${
-                                    activeCatSlug === mc.slug ? 'text-accent translate-x-0.5' : 'text-gray-300'
-                                  }`}
+                                <span className="text-[14px] font-bold">
+                                  {cat.name}
+                                </span>
+                                <ChevronRight 
+                                  size={14} 
+                                  className={`transition-all duration-300 ${
+                                    activeCatSlug === cat.slug ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-2'
+                                  }`} 
                                 />
-                              </div>
+                              </Link>
                             ))}
-                          </div>
-
-                          {/* View all link */}
-                          <div className="border-t border-gray-100 mt-2 pt-2 px-5">
-                            <Link
-                              href="/products"
-                              className="block py-2.5 text-sm font-bold text-accent hover:text-amber-600 transition-colors"
-                            >
-                              View All Products →
-                            </Link>
-                          </div>
+                           </div>
                         </div>
 
-                        {/* ── Right: Products Panel ── */}
-                        <div className="flex-1 py-3 px-2 min-h-[300px] max-h-[420px] overflow-y-auto">
-                          <AnimatePresence mode="wait">
-                            {activeCategory ? (
-                              <motion.div
-                                key={activeCategory.slug}
-                                initial={{ opacity: 0, x: 8 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                exit={{ opacity: 0, x: -8 }}
-                                transition={{ duration: 0.18 }}
-                              >
-                                {/* Header */}
-                                <div className="px-4 py-2 flex items-center justify-between">
-                                  <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
-                                    {activeCategory.name}
-                                  </p>
-                                  <Link
-                                    href={`/categories/${activeCategory.slug}`}
-                                    className="text-[11px] font-semibold text-accent hover:text-amber-600 transition-colors"
-                                  >
-                                    View All →
-                                  </Link>
-                                </div>
-
-                                {/* Product items in category */}
-                                {activeCategory.products && activeCategory.products.length > 0 ? (
-                                  <div className="grid grid-cols-2 gap-1 border-gray-100 flex-1">
-                                    {activeCategory.products.map((p) => (
-                                      <Link
-                                        key={p.id}
-                                        href={`/products/${p.slug}`}
-                                        className="group px-4 py-3 rounded-xl hover:bg-gray-50 transition-all duration-200"
-                                      >
-                                        <div className="flex items-center gap-3">
-                                          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-amber-50 to-amber-100 flex-shrink-0 flex items-center justify-center ring-1 ring-amber-200/50">
-                                            <Package size={16} className="text-amber-500" />
-                                          </div>
-                                          <div className="min-w-0">
-                                            <p className="text-sm font-semibold text-gray-700 group-hover:text-accent transition-colors truncate">
-                                              {p.name}
-                                            </p>
-                                            <p className="text-[10px] text-gray-400 mt-0.5 truncate">
-                                              {activeCategory.name}
-                                            </p>
-                                          </div>
-                                        </div>
-                                      </Link>
-                                    ))}
-                                  </div>
-                                ) : (
-                                  <div className="flex flex-col items-center justify-center py-12 text-gray-300">
-                                    <Package size={28} className="mb-2" />
-                                    <p className="text-sm">No products in this category</p>
-                                    <Link
-                                      href={`/categories/${activeCategory.slug}`}
-                                      className="mt-1.5 text-xs font-semibold text-accent hover:text-amber-600 transition-colors"
-                                    >
-                                      Go to category →
-                                    </Link>
-                                  </div>
-                                )}
-                              </motion.div>
-                            ) : (
-                              <motion.div
-                                key="placeholder"
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                className="flex items-center justify-center h-full text-gray-300 text-sm"
-                              >
-                                Hover on a category to see details
-                              </motion.div>
-                            )}
-                          </AnimatePresence>
+                        {/* Right: Products Display */}
+                        <div className="flex-1 pl-10 py-1">
+                           <p className="text-[9px] font-black text-gray-300 uppercase tracking-[0.2em] mb-3">
+                             Products in {activeCategory?.name || 'Category'}
+                           </p>
+                           
+                           <AnimatePresence mode="wait">
+                             <motion.div
+                               key={activeCatSlug || 'empty'}
+                               initial={{ opacity: 0, x: 10 }}
+                               animate={{ opacity: 1, x: 0 }}
+                               exit={{ opacity: 0, x: -10 }}
+                               transition={{ duration: 0.2, ease: "easeOut" }}
+                               className="grid grid-cols-2 gap-x-8 gap-y-1.5"
+                             >
+                               {activeCategory ? (
+                                 activeCategory.products?.length ? (
+                                   activeCategory.products.map((p) => (
+                                     <Link
+                                       key={p.id}
+                                       href={`/products/${p.slug}`}
+                                       className="group py-1.5 px-2 -mx-2 rounded-md hover:bg-slate-50 transition-all duration-200"
+                                     >
+                                         <p className="text-[13px] font-bold text-gray-700 group-hover:text-accent transition-colors leading-tight">
+                                           {p.name}
+                                         </p>
+                                     </Link>
+                                   ))
+                                 ) : (
+                                   <div className="col-span-2 py-10 text-center">
+                                      <Package size={24} className="mx-auto text-gray-200 mb-2" />
+                                      <p className="text-xs text-gray-400 font-medium">No specialized products listed yet.</p>
+                                   </div>
+                                 )
+                               ) : (
+                                 <div className="col-span-2 py-10 text-center border-2 border-dashed border-gray-50 rounded-xl">
+                                    <p className="text-xs text-gray-400 font-medium italic">Select a category to view equipment</p>
+                                 </div>
+                               )}
+                             </motion.div>
+                           </AnimatePresence>
                         </div>
                       </div>
+
+                      {/* Footer */}
+                      <div className="mt-4 pt-3 border-t border-gray-100/60 flex items-center gap-2">
+                         <div className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
+                         <p className="text-[9px] text-gray-400 font-bold uppercase tracking-widest">
+                            Official Global Catalog — Heavy-Duty Industrial Equipment
+                         </p>
+                      </div>
+                    </div>
+
+
                     )}
                   </motion.div>
                 )}
