@@ -600,9 +600,10 @@ export default function Home() {
               A partner dedicated to{' '}
               <span className="gradient-text">your success</span>
             </h2>
-            <p className="text-white/55 text-base lg:text-lg leading-relaxed text-center text-balance max-w-2xl mx-auto">
-              We don&apos;t just supply equipment; we deliver engineering excellence and strategic support that helps you build a legacy of creativity and performance.
-            </p>
+            <div className="text-white/55 text-base lg:text-lg leading-relaxed text-center mx-auto flex flex-col items-center w-full">
+              <span className="block w-full text-center">We don&apos;t just supply equipment; we deliver engineering excellence and</span>
+              <span className="block w-full text-center" style={{ marginBottom: '2rem' }}>strategic support that helps you build a legacy of creativity and performance.</span>
+            </div>
           </AnimatedSection>
 
           <StaggerContainer className="grid w-full grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
