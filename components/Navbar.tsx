@@ -323,7 +323,7 @@ export default function Navbar() {
                           className="pl-10 py-1 border-l border-gray-50/50"
                           initial={false}
                           animate={{ 
-                            width: (activeCategory?.products?.length ?? 0) > 0 ? 640 : 340,
+                            width: (activeCategory?.products?.length ?? 0) > 0 ? 460 : 340,
                             opacity: activeCategory ? 1 : 0.5 
                           }}
                           transition={{ type: 'spring', damping: 25, stiffness: 180 }}
@@ -341,7 +341,7 @@ export default function Navbar() {
                                 </p>
 
                                {activeCategory && activeCategory.products?.length ? (
-                                   <div className="grid grid-cols-2 gap-x-8 gap-y-1.5">
+                                   <div className="grid grid-cols-1 gap-y-1">
                                      {activeCategory.products.map((p) => (
                                        <Link
                                          key={p.id}
