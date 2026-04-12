@@ -339,7 +339,8 @@ export default function Contact() {
                     {/* ── Contact Rows ── */}
                     <div className="space-y-7">
 
-                      {/* Phone */}
+                      {/* Hidden Temporarily: Call Our Team */}
+                      {/* 
                       <div className="flex items-start gap-4 group/row">
                         <div className="w-10 h-10 rounded-xl bg-[#F5B400]/10 border border-[#F5B400]/20 flex items-center justify-center shrink-0 transition-all duration-300 group-hover/row:bg-[#F5B400]/20 group-hover/row:border-[#F5B400]/40">
                           <Phone size={16} className="text-[#F5B400]" />
@@ -354,6 +355,7 @@ export default function Contact() {
                           </a>
                         </div>
                       </div>
+                      */}
 
                       {/* Email */}
                       <div className="flex items-start gap-4 group/row">
@@ -396,9 +398,9 @@ export default function Contact() {
                       <div className="flex-1">
                         <p className="text-[11px] font-bold text-[#AFC3D4] uppercase tracking-[0.1em] mb-2.5">UAE Headquarters</p>
                         <p className="text-[14px] font-medium text-white/85 leading-[1.75]">
-                          PO Box 932, Ajman Free Zone,<br />
-                          Sheikh Rashid Bin Saeed Al Maktoum St,<br />
-                          Ajman, UAE
+                          Vikamusk Construction Equipment FZE,<br />
+                          Ajman Free Zone, Ajman,<br />
+                          United Arab Emirates
                         </p>
                         {/* Navigate CTA */}
                         <a
@@ -419,7 +421,8 @@ export default function Contact() {
                     {/* ── Divider ── */}
                     <div className="border-t border-[#1E4A6B]/80 mt-8 mb-8" />
 
-                    {/* ── WhatsApp Quick Connect ── */}
+                    {/* Hidden Temporarily: WhatsApp Quick Connect */}
+                    {/*
                     <div>
                       <p className="text-[11px] font-bold text-[#AFC3D4] uppercase tracking-[0.1em] mb-5">Quick Connect</p>
                       <a
@@ -443,11 +446,14 @@ export default function Contact() {
                         />
                       </a>
                     </div>
+                    */}
 
-                    {/* ── Footer trust line ── */}
+                    {/* Hidden Temporarily: Privacy trust line */}
+                    {/*
                     <p className="text-center text-[11px] text-[#AFC3D4]/60 mt-14 pb-4 tracking-wide">
                       🔒 Your information is always kept private
                     </p>
+                    */}
 
                   </div>
                 </div>

@@ -72,7 +72,7 @@ export default function Careers() {
           <div style={{ padding: '0 0.5rem', marginTop: '1rem' }}>
             <StaggerContainer className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {[
-                { icon: <Globe size={28} />, title: 'Global Exposure', desc: 'Work across UAE, India, and China in a truly international environment. Gain valuable experience in diverse global markets.' },
+                { icon: <Globe size={28} />, title: 'Global Exposure', desc: 'Work across UAE and China in a truly international environment. Gain valuable experience in diverse global markets.' },
                 { icon: <TrendingUp size={28} />, title: 'Career Growth', desc: 'Clear paths for advancement with mentorship and professional development programs to help you reach your full potential.' },
                 { icon: <Users size={28} />, title: 'Dynamic Team', desc: 'Collaborate with talented engineers, designers, and business professionals in a supportive and inclusive culture.' },
                 { icon: <Lightbulb size={28} />, title: 'Innovation First', desc: 'Work with cutting-edge equipment and modern engineering solutions that solve real-world industrial challenges.' },
@@ -117,7 +117,7 @@ export default function Careers() {
                 <p className="text-muted max-w-md mx-auto mb-10 text-lg">
                   We don&apos;t have any specific roles open right now, but we&apos;re always expanding. Send us your profile for future opportunities.
                 </p>
-                <a href="mailto:career@vikamusk.com" className="btn-primary px-10 py-5 inline-flex items-center gap-3 text-lg">
+                <a href="mailto:sales@vikamusk.com" className="btn-primary px-10 py-5 inline-flex items-center gap-3 text-lg">
                   <Mail size={20} /> Drop Your Resume
                 </a>
               </div>
@@ -190,7 +190,7 @@ export default function Careers() {
                               <ChevronDown size={20} className={`transition-transform duration-500 ${isExpanded ? 'rotate-180' : ''}`} />
                             </button>
                             <a
-                              href={`mailto:career@vikamusk.com?subject=Application for ${career.title}`}
+                              href={`mailto:sales@vikamusk.com?subject=Application for ${career.title}`}
                               className="px-7 py-4 rounded-2xl bg-accent text-[#001f3f] font-bold hover:bg-primary hover:text-white transition-all shadow-lg shadow-accent/20 flex items-center gap-3 border-2 border-accent hover:border-primary"
                             >
                               Apply Now <ArrowRight size={20} />
@@ -264,7 +264,7 @@ export default function Careers() {
                               {/* Footer Action */}
                               <div className="pt-8 flex justify-center border-t border-border/10">
                                 <a 
-                                  href={`mailto:career@vikamusk.com?subject=Application for ${career.title}`} 
+                                  href={`mailto:sales@vikamusk.com?subject=Application for ${career.title}`} 
                                   className="group inline-flex items-center gap-4 text-primary font-black uppercase tracking-widest text-sm hover:text-accent transition-colors"
                                 >
                                   Finalize Application <Mail size={18} className="group-hover:translate-x-1 transition-transform" />
@@ -314,7 +314,7 @@ export default function Careers() {
                 style={{ gap: '1.25rem', marginTop: '0.5rem' }}
               >
                 <a
-                  href="mailto:career@vikamusk.com"
+                  href="mailto:sales@vikamusk.com"
                   className="bg-accent hover:bg-white text-[#001f3f] hover:text-[#001f3f] font-bold rounded-xl transition-all inline-flex items-center gap-2.5 hover:scale-105 hover:shadow-[0_0_25px_rgba(255,255,255,0.4)]"
                   style={{
                     padding: '1rem 2.25rem',

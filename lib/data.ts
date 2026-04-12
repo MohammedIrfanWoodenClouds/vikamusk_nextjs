@@ -73,13 +73,25 @@ export const products: Product[] = [];
 export const locations: Location[] = [
   {
     id: 'loc-1',
-    country: 'UAE',
+    country: 'United Arab Emirates',
     city: 'Ajman',
-    address:
-      'PO Box 932, Ajman Free Zone, Sheikh Rashid Bin Saeed Al Maktoum St, Ajman, UAE',
+    address: 'Vikamusk Construction Equipment FZE, Ajman Free Zone, Ajman, United Arab Emirates',
     isHeadOffice: true,
-    mapUrl:
-      'https://www.google.com/maps/place/Vikamusk+Construction+Equipment+FZE/@25.419355,55.45035,860m',
+    mapUrl: 'https://www.google.com/maps/place/Vikamusk+Construction+Equipment+FZE/@25.419355,55.45035,860m',
+  },
+  {
+    id: 'loc-2',
+    country: 'United Arab Emirates',
+    city: 'Dubai',
+    address: 'Vikamusk Construction Equipment LLC, Bur Dubai, Dubai, United Arab Emirates',
+    isHeadOffice: false,
+  },
+  {
+    id: 'loc-3',
+    country: 'United Arab Emirates',
+    city: 'Sharjah',
+    address: 'Vikamusk Construction Equipment, Al Sajaa Industrial Area, Sharjah, United Arab Emirates',
+    isHeadOffice: false,
   },
 ];
 

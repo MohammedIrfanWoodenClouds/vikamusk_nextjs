@@ -105,8 +105,8 @@ export default function TermsOfService() {
               </p>
               <div className="mt-3 p-4 bg-surface rounded-lg border border-border/50">
                 <p className="text-sm text-primary font-semibold">Vikamusk International</p>
-                <p className="text-sm text-muted">Email: <a href="mailto:info@vikamusk.com" className="text-accent hover:underline">info@vikamusk.com</a></p>
-                <p className="text-sm text-muted">Address: PO Box 932, Ajman Free Zone, UAE</p>
+                <p className="text-sm text-muted">Email: <a href="mailto:sales@vikamusk.com" className="text-accent hover:underline">sales@vikamusk.com</a></p>
+                <p className="text-sm text-muted">Address: Vikamusk Construction Equipment FZE, Ajman Free Zone, UAE</p>
               </div>
             </div>
           </div>

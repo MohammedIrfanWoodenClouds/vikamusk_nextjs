@@ -141,7 +141,7 @@ export default function Footer() {
                 style={{ marginBottom: '1rem', display: 'block' }}
               >
                 Founded in 2015. Trusted supplier of advanced construction and material
-                handling solutions across UAE, India, and beyond.
+                handling solutions across UAE & beyond.
               </p>
 
               {/* Stat cards in a line */}
@@ -245,7 +245,9 @@ export default function Footer() {
               <div className="space-y-4" style={{ marginTop: '1rem' }}>
                 {/* Office cards */}
                 {[
-                  { region: 'UAE Office (HQ)', address: 'PO Box 932, Ajman Free Zone, Ajman, UAE' },
+                  { region: 'Ajman - UAE (HQ)', address: 'Vikamusk Construction Equipment FZE, Ajman Free Zone, Ajman, United Arab Emirates' },
+                  { region: 'Dubai - UAE', address: 'Vikamusk Construction Equipment LLC, Bur Dubai, Dubai, United Arab Emirates' },
+                  { region: 'Sharjah - UAE (Warehouse)', address: 'Vikamusk Construction Equipment, Al Sajaa Industrial Area, Sharjah, United Arab Emirates' },
                 ].map(({ region, address }) => (
                   <div
                     key={region}
@@ -265,8 +267,7 @@ export default function Footer() {
                   style={{ marginTop: '1.5rem' }}
                 >
                   {[
-                    { href: 'mailto:sales@vikamusk.com', label: 'Sales', address: 'sales@vikamusk.com' },
-                    { href: 'mailto:info@vikamusk.com', label: 'General', address: 'info@vikamusk.com' },
+                    { href: 'mailto:sales@vikamusk.com', label: 'Official Support', address: 'sales@vikamusk.com' },
                   ].map(({ href, label, address }) => (
                     <a key={href} href={href} className="flex items-center gap-2.5 group">
                       <div className="w-6 h-6 rounded-md bg-accent/10 border border-accent/20 flex items-center justify-center flex-shrink-0 group-hover:bg-accent/20 transition-colors duration-200">

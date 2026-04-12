@@ -124,7 +124,7 @@ export default function Services() {
               {
                 icon: <Truck size={28} />,
                 title: 'Equipment Delivery',
-                desc: 'Reliable logistics and transportation of equipment to your job site across UAE, India, and the broader region.',
+                desc: 'Reliable logistics and transportation of equipment to your job site across UAE and the broader region.',
               },
             ].map((service, i) => (
               <StaggerItem key={i}>

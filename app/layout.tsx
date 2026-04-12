@@ -55,19 +55,25 @@ export default function RootLayout({
                   email: 'sales@vikamusk.com',
                   contactType: 'sales',
                 },
-                {
-                  '@type': 'ContactPoint',
-                  email: 'info@vikamusk.com',
-                  contactType: 'customer service',
-                },
               ],
               address: [
                 {
                   '@type': 'PostalAddress',
-                  streetAddress: 'Ajman Free Zone, Sheikh Rashid Bin Saeed Al Maktoum St',
+                  streetAddress: 'Ajman Free Zone',
                   addressLocality: 'Ajman',
                   addressCountry: 'AE',
-                  postalCode: '932',
+                },
+                {
+                  '@type': 'PostalAddress',
+                  streetAddress: 'Bur Dubai',
+                  addressLocality: 'Dubai',
+                  addressCountry: 'AE',
+                },
+                {
+                  '@type': 'PostalAddress',
+                  streetAddress: 'Al Sajaa Industrial Area',
+                  addressLocality: 'Sharjah',
+                  addressCountry: 'AE',
                 },
               ],
               sameAs: [],
