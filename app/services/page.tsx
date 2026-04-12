@@ -59,7 +59,7 @@ export default function Services() {
                 designed to enhance efficiency, safety, and productivity on every job site. Our products 
                 serve construction, maintenance, logistics, and service sectors globally.
               </p>
-              <Link href="/products" className="btn-primary">
+              <Link href="/products" className="btn-primary" style={{ marginTop: '1rem' }}>
                 View Our Equipment <ArrowRight size={16} />
               </Link>
             </AnimatedSection>
