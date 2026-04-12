@@ -554,7 +554,7 @@ export default function Home() {
 
           {/* View All Button */}
           {featuredProducts.length > 0 && (
-            <div className="text-center w-full flex justify-center" style={{ marginTop: '5rem', marginBottom: '3rem' }}>
+            <div className="text-center w-full flex justify-center" style={{ marginTop: '3.5rem', marginBottom: '3rem' }}>
               <Link href="/products" className="btn-outline text-sm px-8 py-3.5 rounded-xl flex items-center justify-center gap-2">
                 View all products <ArrowRight size={15} />
               </Link>
