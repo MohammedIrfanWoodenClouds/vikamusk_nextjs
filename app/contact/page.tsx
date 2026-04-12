@@ -337,7 +337,7 @@ export default function Contact() {
                     </div>
 
                     {/* ── Contact Rows ── */}
-                    <div className="space-y-10">
+                    <div className="flex flex-col">
 
                       {/* Hidden Temporarily: Call Our Team */}
                       {/* 
@@ -358,7 +358,7 @@ export default function Contact() {
                       */}
 
                       {/* Email */}
-                      <div className="flex items-start gap-4 group/row">
+                      <div className="flex items-start gap-4 group/row" style={{ marginTop: '1rem', marginBottom: '1.5rem' }}>
                         <div className="w-10 h-10 rounded-xl bg-[#F5B400]/10 border border-[#F5B400]/20 flex items-center justify-center shrink-0 transition-all duration-300 group-hover/row:bg-[#F5B400]/20 group-hover/row:border-[#F5B400]/40">
                           <Mail size={16} className="text-[#F5B400]" />
                         </div>
@@ -374,7 +374,7 @@ export default function Contact() {
                       </div>
 
                       {/* Business Hours */}
-                      <div className="flex items-start gap-4 group/row">
+                      <div className="flex items-start gap-4 group/row" style={{ marginBottom: '1rem' }}>
                         <div className="w-10 h-10 rounded-xl bg-[#F5B400]/10 border border-[#F5B400]/20 flex items-center justify-center shrink-0 transition-all duration-300 group-hover/row:bg-[#F5B400]/20 group-hover/row:border-[#F5B400]/40">
                           <Clock size={16} className="text-[#F5B400]" />
                         </div>
@@ -387,8 +387,10 @@ export default function Contact() {
 
                     </div>
 
-                    {/* ── Divider ── */}
-                    <div className="border-t border-[#1E4A6B]/80 mt-10 mb-10" />
+                    <div 
+                      className="border-t border-[#1E4A6B]/80" 
+                      style={{ marginTop: '1.5rem', marginBottom: '1.5rem' }} 
+                    />
 
                     {/* ── Address ── */}
                     <div className="flex items-start gap-4 group/row">
