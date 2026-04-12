@@ -379,15 +379,15 @@ export default function ProductDetail() {
   const quickSpecs   = specsEntries.slice(0, 4);
 
   const tabs: { id: Tab; label: string; icon: React.ReactNode; count?: number }[] = [
-    { id: 'overview',  label: 'Overview', icon: <FileText size={15} /> },
+    { id: 'overview',  label: 'Overview', icon: <FileText size={18} /> },
     ...(modelsCount > 0
-      ? [{ id: 'models' as Tab,   label: 'Models',   icon: <LayoutGrid size={15} />, count: modelsCount }]
+      ? [{ id: 'models' as Tab,   label: 'Models',   icon: <LayoutGrid size={18} />, count: modelsCount }]
       : []),
     ...(specsCount > 0
-      ? [{ id: 'specs' as Tab,    label: 'Specs',    icon: <Settings size={15} />,   count: specsCount }]
+      ? [{ id: 'specs' as Tab,    label: 'Specs',    icon: <Settings size={18} />,   count: specsCount }]
       : []),
     ...(featuresCount > 0
-      ? [{ id: 'features' as Tab, label: 'Features', icon: <List size={15} />,       count: featuresCount }]
+      ? [{ id: 'features' as Tab, label: 'Features', icon: <List size={18} />,       count: featuresCount }]
       : []),
   ];
 
@@ -670,7 +670,7 @@ export default function ProductDetail() {
                     <button
                       key={tab.id}
                       onClick={() => setActiveTab(tab.id)}
-                      className="flex-1 min-w-[160px] relative flex items-center justify-center gap-4 px-12 py-6 rounded-full text-[14px] font-bold uppercase tracking-widest transition-all duration-300 group"
+                      className="flex-1 min-w-[170px] h-[60px] relative flex items-center justify-center gap-5 px-10 rounded-full text-[15px] font-black uppercase tracking-widest transition-all duration-300 group"
                       style={isActive
                         ? {
                             background: '#fff',
