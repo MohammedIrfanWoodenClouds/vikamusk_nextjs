@@ -100,7 +100,7 @@ export default function Footer() {
 
   return (
     <>
-      <footer className="relative z-20 bg-[#05101f] text-white overflow-hidden mt-8">
+      <footer className="relative z-20 bg-[#05101f] text-white overflow-hidden mt-16">
         {/* Dot-grid texture */}
         <div
           className="absolute inset-0 pointer-events-none select-none"
@@ -184,7 +184,7 @@ export default function Footer() {
             </div>
 
             {/* Quick Links */}
-            <div>
+            <div className="mt-8">
               <SectionTitle>Quick Links</SectionTitle>
               <ul className="space-y-2.5">
                 {quickLinks.map(link => (
@@ -194,7 +194,7 @@ export default function Footer() {
             </div>
 
             {/* Product Categories */}
-            <div>
+            <div className="mt-8">
               <SectionTitle>Product Categories</SectionTitle>
               <ul className="space-y-2.5">
                 <FooterLink href="/products">All Products</FooterLink>
@@ -228,7 +228,7 @@ export default function Footer() {
             </div>
 
             {/* Contact Info */}
-            <div>
+            <div className="mt-8">
               <SectionTitle>Contact Info</SectionTitle>
               <div className="space-y-3">
                 {/* Office cards */}

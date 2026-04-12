@@ -142,7 +142,6 @@ export default function Contact() {
             <AnimatedSection direction="up">
               <div className="text-center mb-16">
                 <h2 className="text-4xl md:text-5xl font-black text-[#001f3f] mb-4">Get in Touch</h2>
-                <p className="text-slate-500 text-lg">Nunc erat cursus tellus gravida.</p>
               </div>
             </AnimatedSection>
 
