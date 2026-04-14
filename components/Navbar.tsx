@@ -182,10 +182,22 @@ export default function Navbar() {
             }`}
           >
             <Image
-              src={isTransparent ? "/images/logo-white.png" : "/images/logo-black.png"}
+              src="/images/logo-white.png"
               alt="Vikamusk International"
               fill
-              className="object-contain object-left transition-all duration-500"
+              className={`object-contain object-left transition-opacity duration-500 ${
+                isTransparent ? 'opacity-100' : 'opacity-0'
+              }`}
+              priority
+              sizes="(max-width: 1024px) 250px, 300px"
+            />
+            <Image
+              src="/images/logo-black.png"
+              alt="Vikamusk International"
+              fill
+              className={`object-contain object-left transition-opacity duration-500 ${
+                isTransparent ? 'opacity-0' : 'opacity-100'
+              }`}
               priority
               sizes="(max-width: 1024px) 250px, 300px"
             />
