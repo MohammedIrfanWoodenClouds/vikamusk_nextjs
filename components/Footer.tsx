@@ -269,6 +269,7 @@ export default function Footer() {
                 >
                   {[
                     { href: 'mailto:sales@vikamusk.com', label: 'Official Support', address: 'sales@vikamusk.com' },
+                    { href: 'mailto:career@vikamusk.com', label: 'Career Support', address: 'career@vikamusk.com' },
                   ].map(({ href, label, address }) => (
                     <a key={href} href={href} className="flex items-center gap-2.5 group" style={{ marginBottom: '1rem' }}>
                       <div className="w-6 h-6 rounded-md bg-accent/10 border border-accent/20 flex items-center justify-center flex-shrink-0 group-hover:bg-accent/20 transition-colors duration-200">

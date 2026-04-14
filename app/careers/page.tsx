@@ -117,7 +117,7 @@ export default function Careers() {
                 <p className="text-muted max-w-md mx-auto mb-10 text-lg font-medium">
                   We don&apos;t have any specific roles open right now, but we&apos;re always expanding. Send us your profile for future opportunities.
                 </p>
-                <a href="mailto:sales@vikamusk.com" className="bg-accent hover:bg-primary text-[#001f3f] hover:text-white font-black text-xs uppercase tracking-widest px-10 py-5 rounded-2xl transition-all inline-flex items-center gap-3">
+                <a href="mailto:career@vikamusk.com" className="bg-accent hover:bg-primary text-[#001f3f] hover:text-white font-black text-xs uppercase tracking-widest px-10 py-5 rounded-2xl transition-all inline-flex items-center gap-3">
                   <Mail size={18} /> Drop Your Resume
                 </a>
               </div>
@@ -164,27 +164,91 @@ export default function Careers() {
                         </div>
                       </div>
 
-                      <div className="border-l-2 border-accent/20 pl-4 py-1 mb-8">
+                      <div className="border-l-2 border-accent/20 pl-4 py-1 mb-4">
                         <p className="text-[14px] text-gray-400 font-medium leading-[1.6] italic opacity-80">
                           "{career.description}"
                         </p>
                       </div>
                     </div>
 
+                    {/* Expandable Details Area */}
+                    <div
+                      className={`overflow-hidden transition-all duration-500 ease-in-out ${
+                        expanded === career.id ? 'max-h-[800px] opacity-100 mb-6' : 'max-h-0 opacity-0 mb-0'
+                      }`}
+                    >
+                      <div className="space-y-6 pt-4 border-t border-gray-50">
+                        {(() => {
+                           const raw = career.requirements || '';
+                           const fromJson = parseJson(raw);
+                           const finalReqs = (fromJson.length > 0 ? fromJson : raw.split('\n'))
+                             .map(r => r.trim())
+                             .filter(r => r && r !== '[]' && r !== '[""]' && r !== 'null');
+                           
+                           if (finalReqs.length === 0) return null;
+
+                           return (
+                             <div>
+                               <h4 className="text-[11px] font-black text-[#001f3f] uppercase tracking-widest mb-3 flex items-center gap-2">
+                                 <span className="w-1 h-3 bg-accent rounded-full"></span>
+                                 Requirements
+                               </h4>
+                               <ul className="space-y-2.5">
+                                 {finalReqs.map((req, idx) => (
+                                   <li key={idx} className="flex items-start gap-2.5 text-[13px] text-gray-500 leading-relaxed">
+                                     <Check size={14} className="text-accent mt-0.5 shrink-0" />
+                                     <span>{req.replace(/^[-*•]\s*/, '')}</span>
+                                   </li>
+                                 ))}
+                               </ul>
+                             </div>
+                           );
+                        })()}
+
+                        {(() => {
+                           const raw = career.benefits || '';
+                           const fromJson = parseJson(raw);
+                           const finalBens = (fromJson.length > 0 ? fromJson : raw.split('\n'))
+                             .map(b => b.trim())
+                             .filter(b => b && b !== '[]' && b !== '[""]' && b !== 'null');
+                           
+                           if (finalBens.length === 0) return null;
+
+                           return (
+                             <div>
+                               <h4 className="text-[11px] font-black text-[#001f3f] uppercase tracking-widest mb-3 flex items-center gap-2">
+                                 <span className="w-1 h-3 bg-accent rounded-full"></span>
+                                 Benefits
+                               </h4>
+                               <ul className="space-y-2.5">
+                                 {finalBens.map((ben, idx) => (
+                                   <li key={idx} className="flex items-start gap-2.5 text-[13px] text-gray-500 leading-relaxed">
+                                     <Check size={14} className="text-accent mt-0.5 shrink-0" />
+                                     <span>{ben.replace(/^[-*•]\s*/, '')}</span>
+                                   </li>
+                                 ))}
+                               </ul>
+                             </div>
+                           );
+                        })()}
+                      </div>
+                    </div>
+
                     {/* Action Area */}
-                    <div className="pt-8 border-t border-gray-50 mt-auto flex flex-col gap-4">
+                    <div className="pt-6 border-t border-gray-50 mt-auto flex flex-col gap-4">
                       <a
-                        href={`mailto:sales@vikamusk.com?subject=Application for ${career.title}`}
-                        className="w-full bg-[#001f3f] hover:bg-accent text-white hover:text-[#001f3f] font-black text-[12px] uppercase tracking-[0.25em] py-5 rounded-xl transition-all duration-500 text-center shadow-xl shadow-blue-900/10 hover:shadow-accent/30"
+                        href={`mailto:career@vikamusk.com?subject=Application for ${career.title}`}
+                        className="w-full bg-[#001f3f] hover:bg-accent text-white hover:text-[#001f3f] font-black text-[12px] uppercase tracking-[0.25em] py-4 rounded-xl transition-all duration-500 text-center shadow-md hover:shadow-lg"
                       >
                         Send Resume
                       </a>
-                      <Link
-                        href="/contact"
-                        className="w-full text-gray-400 hover:text-primary font-black text-[11px] uppercase tracking-[0.2em] py-1 transition-all duration-300 text-center hover:underline underline-offset-8 decoration-accent/30"
+                      <button
+                        onClick={() => setExpanded(expanded === career.id ? null : career.id)}
+                        className="w-full justify-center text-gray-400 hover:text-primary font-black text-[11px] uppercase tracking-[0.2em] py-2 transition-all duration-300 text-center flex items-center gap-1.5"
                       >
-                        Learn More
-                      </Link>
+                        <span>{expanded === career.id ? 'Show Less' : 'Learn More'}</span>
+                        <ChevronDown size={14} className={`transition-transform duration-300 ${expanded === career.id ? 'rotate-180' : ''}`} />
+                      </button>
                     </div>
                   </div>
                 </StaggerItem>
@@ -225,7 +289,7 @@ export default function Careers() {
                 style={{ gap: '1.25rem', marginTop: '0.5rem' }}
               >
                 <a
-                  href="mailto:sales@vikamusk.com"
+                  href="mailto:career@vikamusk.com"
                   className="bg-accent hover:bg-white text-[#001f3f] hover:text-[#001f3f] font-bold rounded-xl transition-all inline-flex items-center gap-2.5 hover:scale-105 hover:shadow-[0_0_25px_rgba(255,255,255,0.4)]"
                   style={{
                     padding: '1rem 2.25rem',
