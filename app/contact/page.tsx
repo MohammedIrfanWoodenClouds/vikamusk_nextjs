@@ -147,6 +147,114 @@ export default function Contact() {
         />
 
         <div className="container-custom relative z-10">
+
+          {/* Regional Operations Cards Section */}
+          <AnimatedSection direction="up" className="mb-8">
+            <div className="flex flex-col items-center justify-center text-center mb-16 w-full">
+              <span className="inline-flex items-center gap-2 text-[#f59e0b] font-bold uppercase tracking-[0.2em] text-[11px] mb-4">
+                Corporate Divisions
+              </span>
+              <h2 className="text-3xl md:text-5xl font-black text-[#001f3f]">Regional Operations</h2>
+              <p 
+                className="text-slate-500 text-sm md:text-base max-w-2xl mt-4 px-4"
+                style={{ textAlign: 'center', marginBottom: '2rem' }}
+              >
+                Explore our corporate divisions and find the right contact team for your specific market requirements. Join a network that's shaping the future of industrial equipment.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-6xl mx-auto">
+              
+              {/* Card 1: Exporters */}
+              <div className="bg-white rounded-[2rem] shadow-[0_10px_40px_rgba(0,31,63,0.04)] border border-slate-100 hover:shadow-[0_20px_50px_rgba(0,31,63,0.08)] transition-shadow duration-300 flex flex-col h-full" style={{ padding: '32px' }}>
+                <div className="flex justify-between items-center mb-8">
+                  <span className="bg-amber-50 text-amber-600 px-3 py-1 text-[10px] font-black uppercase tracking-widest rounded-md border border-amber-100">Export & HQ</span>
+                  <div className="flex items-center gap-1.5">
+                    <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></div>
+                    <span className="text-slate-300 text-[10px] font-bold uppercase tracking-widest">Active</span>
+                  </div>
+                </div>
+                
+                <h3 className="text-[22px] md:text-[24px] font-black text-[#001f3f] mb-6">International Operations</h3>
+                
+                <div className="space-y-4 mb-6">
+                  <div className="flex items-center gap-3">
+                    <MapPin size={16} className="text-amber-500 shrink-0" />
+                    <span className="text-[13px] font-bold text-slate-500 uppercase tracking-widest">Ajman Free Zone</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Globe size={16} className="text-amber-500 shrink-0" />
+                    <span className="text-[13px] font-bold text-slate-500 uppercase tracking-widest">Regional Hub</span>
+                  </div>
+                </div>
+
+                <p className="text-sm text-slate-400 italic font-medium leading-relaxed flex-1">
+                  "Dedicated export hub serving key markets across Kuwait, Qatar, Saudi Arabia, Bahrain, and Oman."
+                </p>
+              </div>
+
+              {/* Card 2: UAE Mainland */}
+              <div className="bg-white rounded-[2rem] shadow-[0_10px_40px_rgba(0,31,63,0.04)] border border-slate-100 hover:shadow-[0_20px_50px_rgba(0,31,63,0.08)] transition-shadow duration-300 flex flex-col h-full" style={{ padding: '32px' }}>
+                <div className="flex justify-between items-center mb-8">
+                  <span className="bg-amber-50 text-amber-600 px-3 py-1 text-[10px] font-black uppercase tracking-widest rounded-md border border-amber-100">UAE Mainland</span>
+                  <div className="flex items-center gap-1.5">
+                    <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></div>
+                    <span className="text-slate-300 text-[10px] font-bold uppercase tracking-widest">Active</span>
+                  </div>
+                </div>
+                
+                <h3 className="text-[22px] md:text-[24px] font-black text-[#001f3f] mb-6">Domestic Support</h3>
+                
+                <div className="space-y-4 mb-6">
+                  <div className="flex items-center gap-3">
+                    <MapPin size={16} className="text-amber-500 shrink-0" />
+                    <span className="text-[13px] font-bold text-slate-500 uppercase tracking-widest">Dubai, UAE</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Globe size={16} className="text-amber-500 shrink-0" />
+                    <span className="text-[13px] font-bold text-slate-500 uppercase tracking-widest">Mainland Sales</span>
+                  </div>
+                </div>
+
+                <p className="text-sm text-slate-400 italic font-medium leading-relaxed flex-1">
+                  "Comprehensive sales, technical support, and comprehensive maintenance operations throughout the United Arab Emirates mainland."
+                </p>
+              </div>
+
+              {/* Card 3: India */}
+              <div className="bg-white rounded-[2rem] shadow-[0_10px_40px_rgba(0,31,63,0.04)] border border-slate-100 hover:shadow-[0_20px_50px_rgba(0,31,63,0.08)] transition-shadow duration-300 flex flex-col h-full" style={{ padding: '32px' }}>
+                <div className="flex justify-between items-center mb-8">
+                  <span className="bg-amber-50 text-amber-600 px-3 py-1 text-[10px] font-black uppercase tracking-widest rounded-md border border-amber-100">South Asia</span>
+                  <div className="flex items-center gap-1.5">
+                    <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></div>
+                    <span className="text-slate-300 text-[10px] font-bold uppercase tracking-widest">Active</span>
+                  </div>
+                </div>
+                
+                <h3 className="text-[22px] md:text-[24px] font-black text-[#001f3f] mb-6">India Operations</h3>
+                
+                <div className="space-y-4 mb-6">
+                  <div className="flex items-center gap-3">
+                    <MapPin size={16} className="text-amber-500 shrink-0" />
+                    <span className="text-[13px] font-bold text-slate-500 uppercase tracking-widest">Kochi, India</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Globe size={16} className="text-amber-500 shrink-0" />
+                    <span className="text-[13px] font-bold text-slate-500 uppercase tracking-widest">Sales & Service</span>
+                  </div>
+                </div>
+
+                <p className="text-sm text-slate-400 italic font-medium leading-relaxed flex-1">
+                  "Dedicated corporate office managing all equipment sales, technical services, and regional support across India."
+                </p>
+              </div>
+
+            </div>
+          </AnimatedSection>
+
+          {/* Forceful Spacer to guarantee distance between Regional Operations and Form */}
+          <div style={{ height: '4rem', width: '100%' }} aria-hidden="true" />
+
           {/* Two-column grid: form left, details card right */}
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-16 xl:gap-20 items-start">
 

@@ -169,7 +169,7 @@ export default function Home() {
               style={{ padding: '0.45rem 1.25rem', margin: '0.5rem' }}
             >
               <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse flex-shrink-0" />
-              Established 2015 &nbsp;·&nbsp; UAE & Global
+              Since 2015
             </motion.div>
 
             {/* Headline */}
@@ -193,7 +193,7 @@ export default function Home() {
               className="text-base lg:text-lg text-white/60 max-w-xl leading-relaxed"
               style={{ marginTop: '1.5rem' }}
             >
-              Trusted supplier of advanced construction and material handling solutions. Specialising in Forklifts and Aerial Work Platforms across UAE & beyond.
+              Trusted supplier of advanced construction and material handling solutions. Specialising in Forklifts and Aerial Work Platforms across Middle East & India.
             </motion.p>
 
             {/* CTAs */}
