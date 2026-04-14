@@ -177,7 +177,9 @@ export default function Navbar() {
           {/* Logo */}
           <Link 
             href="/" 
-            className="flex-shrink-0 relative transition-all duration-500 h-[44px] w-[180px] lg:h-[52px] lg:w-[210px]"
+            className={`flex-shrink-0 relative transition-all duration-500 ${
+              isTransparent ? 'logo-white-size' : 'logo-black-size'
+            }`}
           >
             <Image
               src={isTransparent ? "/images/logo-white.png" : "/images/logo-black.png"}
@@ -185,7 +187,7 @@ export default function Navbar() {
               fill
               className="object-contain object-left transition-all duration-500"
               priority
-              sizes="(max-width: 1024px) 240px, 280px"
+              sizes="(max-width: 1024px) 250px, 300px"
             />
           </Link>
 
@@ -444,8 +446,8 @@ export default function Navbar() {
               <div className="p-5 pb-8">
                 {/* Header */}
                 <div className="flex items-center justify-between mb-8 pb-4 border-b border-gray-100">
-                  <div className="relative" style={{ width: '140px', height: '36px' }}>
-                    <Image src="/images/logo-black.png" alt="Vikamusk" fill className="object-contain object-left" sizes="140px" />
+                  <div className="relative" style={{ width: '220px', height: '56px', transform: 'scale(1.15)', transformOrigin: 'left center' }}>
+                    <Image src="/images/logo-black.png" alt="Vikamusk" fill className="object-contain object-left" sizes="220px" />
                   </div>
                   <button onClick={closeMobile} className="p-1.5 hover:bg-gray-100 rounded-md transition-colors" aria-label="Close menu">
                     <X size={20} className="text-gray-500" />

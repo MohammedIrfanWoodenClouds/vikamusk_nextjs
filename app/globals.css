@@ -405,3 +405,35 @@ img {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* ==================== NAVBAR LOGO SIZING ==================== */
+/* Bypass arbitrary Tailwind JIT issues with concrete CSS */
+.logo-white-size {
+  height: 44px;
+  width: 180px;
+}
+@media (min-width: 1024px) {
+  .logo-white-size {
+    height: 52px;
+    width: 210px;
+  }
+}
+
+.logo-black-size {
+  /* Increased layout box */
+  height: 60px;
+  width: 250px;
+  /* Visual scale enhancement to punch through PNG padding */
+  transform: scale(1.15);
+  transform-origin: left center;
+}
+@media (min-width: 1024px) {
+  .logo-black-size {
+    /* Maxed out layout box */
+    height: 75px;
+    width: 310px;
+    /* Extra visual scaling */
+    transform: scale(1.25);
+    transform-origin: left center;
+  }
+}
