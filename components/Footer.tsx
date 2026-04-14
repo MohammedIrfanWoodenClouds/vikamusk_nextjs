@@ -248,13 +248,14 @@ export default function Footer() {
                   { region: 'Ajman - UAE (HQ)', address: 'Vikamusk Construction Equipment FZE, Ajman Free Zone, Ajman, United Arab Emirates' },
                   { region: 'Dubai - UAE', address: 'Vikamusk Construction Equipment LLC, Bur Dubai, Dubai, United Arab Emirates' },
                   { region: 'Sharjah - UAE (Warehouse)', address: 'Vikamusk Construction Equipment, Al Sajaa Industrial Area, Sharjah, United Arab Emirates' },
+                  { region: 'Kochi - India', address: 'Vikamusk Construction Equipment, Kochi - India' },
                 ].map(({ region, address }) => (
                   <div
                     key={region}
-                    className="rounded-xl p-5 bg-white/[0.03] border border-white/[0.07] hover:border-white/[0.13] transition-colors duration-200"
-                    style={{ marginBottom: '1rem' }}
+                    className="rounded-xl bg-white/[0.03] border border-white/[0.07] hover:border-white/[0.13] transition-colors duration-200"
+                    style={{ padding: '16px', marginBottom: '16px' }}
                   >
-                    <p className="text-[10px] font-bold uppercase tracking-widest text-accent/60 mb-2.5">
+                    <p className="text-[11px] font-bold uppercase tracking-[0.15em] text-accent/80 mb-2">
                       {region}
                     </p>
                     <p className="text-white/50 text-sm leading-relaxed">{address}</p>
