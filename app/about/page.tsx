@@ -173,51 +173,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* Key Domains */}
-      <section className="section-padding bg-white">
-        <div className="container-custom">
-          <AnimatedSection className="flex flex-col items-center text-center mb-16">
-            <span className="text-sm font-bold text-accent uppercase tracking-wider">What We Do</span>
-            <h2 className="text-3xl lg:text-4xl font-black text-primary mt-3 mb-4">
-              Three Key Domains
-            </h2>
-            <p className="text-muted max-w-4xl mx-auto text-center">
-              With a focus on innovation and technical excellence, we deliver high-quality solutions across three key domains.
-            </p>
-          </AnimatedSection>
 
-          <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                num: '01',
-                title: 'Industrial & Construction Equipment Supply',
-                desc: 'Comprehensive range of forklifts, aerial platforms, excavators, and specialized construction machinery from 10+ leading manufacturers.',
-              },
-              {
-                num: '02',
-                title: 'Design & Drafting',
-                desc: 'Professional engineering design and drafting services that bridge the gap between technical requirements and creative solutions.',
-              },
-              {
-                num: '03',
-                title: 'Service & Support',
-                desc: 'Dependable after-sales service including maintenance, spare parts, technical assistance and operator training programs.',
-              },
-            ].map((domain, i) => (
-              <StaggerItem key={i} className="h-full">
-                <div 
-                  className="p-10 rounded-2xl bg-surface border border-border/50 h-full group hover:border-accent/30 transition-all duration-300 hover-lift overflow-hidden"
-                  style={{ margin: '0.75rem 0' }}
-                >
-                  <span className="text-6xl font-black text-accent/10 group-hover:text-accent/25 transition-colors block mb-6">{domain.num}</span>
-                  <h3 className="text-xl font-bold text-primary mb-4 leading-tight">{domain.title}</h3>
-                  <p className="text-muted text-sm leading-relaxed">{domain.desc}</p>
-                </div>
-              </StaggerItem>
-            ))}
-          </StaggerContainer>
-        </div>
-      </section>
 
       {/* CTA */}
       <section className="bg-[#001f3f]" style={{ paddingTop: '5rem', paddingBottom: '7rem' }}>

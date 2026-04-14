@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight, Wrench, Settings, Truck, ShieldCheck, Clock, Phone, HeadphonesIcon, Package } from 'lucide-react';
+import { ArrowRight, Wrench, Settings, Truck, ShieldCheck, Clock, Phone, HeadphonesIcon, Package, Globe, Activity, MapPin } from 'lucide-react';
 import { AnimatedSection, StaggerContainer, StaggerItem } from '@/components/AnimatedSection';
 import ServiceCard from '@/components/ServiceCard';
 
@@ -136,6 +136,84 @@ export default function Services() {
               </StaggerItem>
             ))}
           </StaggerContainer>
+          </div>
+        </div>
+      </section>
+
+      {/* Service Network - Globe Video with Flex Columns */}
+      <section className="relative py-24 bg-black overflow-hidden flex flex-col items-center justify-center min-h-[800px] border-b border-white/10 px-4 md:px-8">
+        {/* Decorative Grid Background */}
+        <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`, backgroundSize: '50px 50px' }}></div>
+        
+        <div className="container-custom relative z-10 w-full">
+          {/* Heading */}
+          <AnimatedSection className="w-full text-center flex justify-center mb-16 md:mb-24 z-30 relative">
+            <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight">
+              Our Global <span className="text-[#f59e0b]">Network</span>
+            </h2>
+          </AnimatedSection>
+
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-16 lg:gap-8 w-full max-w-7xl mx-auto">
+            
+            {/* Left Column: 4 Countries */}
+            <div className="flex flex-col gap-12 sm:gap-16 w-full lg:w-[30%] z-30 order-2 lg:order-1">
+              {[
+                { name: 'UAE' },
+                { name: 'Saudi Arabia' },
+                { name: 'Oman' },
+                { name: 'Kuwait' }
+              ].map((loc, i) => (
+                <AnimatedSection key={loc.name} delay={i * 0.1} className="w-full">
+                  <div className="flex items-center w-full group cursor-pointer hover:translate-x-2 transition-transform duration-300">
+                    <div className="flex items-center gap-3 shrink-0">
+                      <MapPin size={24} className="text-[#f59e0b]" />
+                      <span className="text-[#f59e0b] text-lg md:text-xl font-bold tracking-widest uppercase drop-shadow-[0_0_8px_rgba(245,158,11,0.5)]">{loc.name}</span>
+                    </div>
+                    {/* Dashed line pointing inwards to the globe */}
+                    <div className="hidden lg:block flex-1 h-[1px] border-b-2 border-dashed border-[#f59e0b]/30 mx-4 group-hover:border-[#f59e0b]/70 transition-colors"></div>
+                    <div className="w-2.5 h-2.5 rounded-full bg-[#f59e0b]/50 shadow-[0_0_12px_rgba(245,158,11,0.6)] hidden lg:block group-hover:bg-[#f59e0b] transition-colors"></div>
+                  </div>
+                </AnimatedSection>
+              ))}
+            </div>
+
+            {/* Middle Globe */}
+            <div className="relative w-full max-w-[400px] lg:max-w-[500px] xl:max-w-[600px] aspect-square flex items-center justify-center z-10 shrink-0 shadow-2xl order-1 lg:order-2 mb-12 lg:mb-0">
+              {/* Soft white glow behind the globe */}
+              <div className="absolute inset-0 bg-white/10 blur-[100px] rounded-full pointer-events-none scale-[0.75]"></div>
+              
+              <video 
+                autoPlay 
+                loop 
+                muted 
+                playsInline 
+                className="w-full h-full object-contain mix-blend-screen scale-110 relative z-20 pointer-events-none"
+              >
+                <source src="/videos/digital_globe.mp4" type="video/mp4" />
+              </video>
+            </div>
+
+            {/* Right Column: 3 Countries */}
+            <div className="flex flex-col gap-12 sm:gap-16 w-full lg:w-[30%] z-30 order-3 lg:order-3">
+              {[
+                { name: 'Qatar' },
+                { name: 'Bahrain' },
+                { name: 'India' }
+              ].map((loc, i) => (
+                <AnimatedSection key={loc.name} delay={i * 0.1 + 0.4} className="w-full">
+                  <div className="flex lg:flex-row-reverse items-center w-full group cursor-pointer hover:translate-x-2 lg:hover:-translate-x-2 transition-transform duration-300">
+                    <div className="flex items-center lg:flex-row-reverse gap-3 shrink-0 lg:text-right">
+                      <MapPin size={24} className="text-[#f59e0b]" />
+                      <span className="text-[#f59e0b] text-lg md:text-xl font-bold tracking-widest uppercase drop-shadow-[0_0_8px_rgba(245,158,11,0.5)]">{loc.name}</span>
+                    </div>
+                    {/* Dashed line pointing inwards to the globe */}
+                    <div className="hidden lg:block flex-1 h-[1px] border-b-2 border-dashed border-[#f59e0b]/30 mx-4 group-hover:border-[#f59e0b]/70 transition-colors"></div>
+                    <div className="w-2.5 h-2.5 rounded-full bg-[#f59e0b]/50 shadow-[0_0_12px_rgba(245,158,11,0.6)] hidden lg:block group-hover:bg-[#f59e0b] transition-colors"></div>
+                  </div>
+                </AnimatedSection>
+              ))}
+            </div>
+
           </div>
         </div>
       </section>
