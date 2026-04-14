@@ -27,11 +27,13 @@ interface NavMainCategory {
 /* ------------------------------------------------------------------ */
 /*  Static nav links                                                   */
 /* ------------------------------------------------------------------ */
-const staticLinks = [
-  { name: 'Home', href: '/' },
-  { name: 'Industries', href: '/industries' },
-  { name: 'Services', href: '/services' },
+const linksBeforeProducts = [
   { name: 'About', href: '/about' },
+  { name: 'Industries', href: '/industries' },
+];
+
+const linksAfterProducts = [
+  { name: 'Services', href: '/services' },
   { name: 'Careers', href: '/careers' },
   { name: 'Contact', href: '/contact' },
 ];
@@ -215,6 +217,19 @@ export default function Navbar() {
               Home
             </Link>
 
+            {/* Links Before Products */}
+            {linksBeforeProducts.map((link) => (
+              <Link
+                key={link.name}
+                href={link.href}
+                className={`px-3 py-2.5 text-[15px] font-bold rounded-md transition-all whitespace-nowrap ${
+                  isActive(link.href) ? 'text-accent' : `${textColor} hover:text-accent hover:bg-white/10`
+                }`}
+              >
+                {link.name}
+              </Link>
+            ))}
+
             {/* ── Products Mega Menu Trigger ── */}
             <div
               className="relative"
@@ -397,20 +412,18 @@ export default function Navbar() {
               </AnimatePresence>
             </div>
 
-            {/* Other static links (excluding Home — already rendered above) */}
-            {staticLinks
-              .filter((l) => l.name !== 'Home')
-              .map((link) => (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  className={`px-3 py-2.5 text-[15px] font-bold rounded-md transition-all whitespace-nowrap ${
-                    isActive(link.href) ? 'text-accent' : `${textColor} hover:text-accent hover:bg-white/10`
-                  }`}
-                >
-                  {link.name}
-                </Link>
-              ))}
+            {/* Links After Products */}
+            {linksAfterProducts.map((link) => (
+              <Link
+                key={link.name}
+                href={link.href}
+                className={`px-3 py-2.5 text-[15px] font-bold rounded-md transition-all whitespace-nowrap ${
+                  isActive(link.href) ? 'text-accent' : `${textColor} hover:text-accent hover:bg-white/10`
+                }`}
+              >
+                {link.name}
+              </Link>
+            ))}
           </div>
 
           {/* CTA + Mobile Toggle */}
@@ -478,6 +491,22 @@ export default function Navbar() {
                   >
                     Home
                   </Link>
+
+                  {/* Links Before Products */}
+                  {linksBeforeProducts.map((link) => (
+                    <Link
+                      key={link.name}
+                      href={link.href}
+                      onClick={closeMobile}
+                      className={`block px-3 py-2.5 text-[15px] font-semibold rounded-md transition-colors ${
+                        isActive(link.href)
+                          ? 'text-accent bg-amber-50'
+                          : 'text-gray-700 hover:text-accent hover:bg-gray-50'
+                      }`}
+                    >
+                      {link.name}
+                    </Link>
+                  ))}
 
                   {/* ── Products Accordion ── */}
                   <div>
@@ -586,23 +615,21 @@ export default function Navbar() {
                     </AnimatePresence>
                   </div>
 
-                  {/* Other static links */}
-                  {staticLinks
-                    .filter((l) => l.name !== 'Home')
-                    .map((link) => (
-                      <Link
-                        key={link.name}
-                        href={link.href}
-                        onClick={closeMobile}
-                        className={`block px-3 py-2.5 text-[15px] font-semibold rounded-md transition-colors ${
-                          isActive(link.href)
-                            ? 'text-accent bg-amber-50'
-                            : 'text-gray-700 hover:text-accent hover:bg-gray-50'
-                        }`}
-                      >
-                        {link.name}
-                      </Link>
-                    ))}
+                  {/* Links After Products */}
+                  {linksAfterProducts.map((link) => (
+                    <Link
+                      key={link.name}
+                      href={link.href}
+                      onClick={closeMobile}
+                      className={`block px-3 py-2.5 text-[15px] font-semibold rounded-md transition-colors ${
+                        isActive(link.href)
+                          ? 'text-accent bg-amber-50'
+                          : 'text-gray-700 hover:text-accent hover:bg-gray-50'
+                      }`}
+                    >
+                      {link.name}
+                    </Link>
+                  ))}
 
                   <Link
                     href="/downloads"
