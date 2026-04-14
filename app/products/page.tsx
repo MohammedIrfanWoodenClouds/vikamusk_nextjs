@@ -246,8 +246,7 @@ function ProductsContent() {
               Construction & Material Handling Equipment
             </div>
             <h1 className="text-4xl lg:text-[56px] font-black text-white leading-[1.05] tracking-tight mb-5 w-full">
-              Products &{' '}
-              <span className="gradient-text">Services</span>
+              Products
             </h1>
             <p className="text-white/55 max-w-5xl mx-auto text-base lg:text-lg leading-relaxed mb-4 w-full">
               Explore our complete range of forklifts, aerial work platforms, and material handling solutions<br className="hidden md:block" />
