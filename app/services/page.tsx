@@ -149,7 +149,7 @@ export default function Services() {
           {/* Heading */}
           <AnimatedSection className="w-full text-center flex justify-center mb-16 md:mb-24 z-30 relative">
             <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight">
-              Our Global <span className="text-[#f59e0b]">Network</span>
+              Our Service <span className="text-[#f59e0b]">Network</span>
             </h2>
           </AnimatedSection>
 

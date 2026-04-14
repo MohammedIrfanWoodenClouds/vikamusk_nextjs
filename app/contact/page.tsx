@@ -113,7 +113,7 @@ export default function Contact() {
               <div className="flex flex-wrap gap-6 mt-12">
                 {[
                   { value: '< 24 hrs', label: 'Response Time' },
-                  { value: '15+', label: 'Countries Served' },
+                  { value: '7+', label: 'Countries Served' },
                   { value: '50+', label: 'Team Specialists' },
                 ].map(({ value, label }) => (
                   <div key={label} className="flex items-center gap-3">
@@ -178,7 +178,8 @@ export default function Contact() {
                         id="firstName"
                         required
                         placeholder="Please enter first name..."
-                        className="w-full h-14 bg-white border-2 border-slate-100 rounded-xl px-6 text-[#001f3f] font-medium placeholder:text-slate-300 focus:border-[#fabc22] focus:ring-0 transition-all outline-none shadow-sm"
+                        className="w-full h-14 bg-white border-2 border-slate-100 rounded-xl text-[#001f3f] font-medium placeholder:text-slate-300 focus:border-[#fabc22] focus:ring-0 transition-all outline-none shadow-sm"
+                        style={{ paddingLeft: '40px', paddingRight: '24px' }}
                         value={formData.firstName}
                         onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
                       />
@@ -194,7 +195,8 @@ export default function Contact() {
                         id="lastName"
                         required
                         placeholder="Please enter last name..."
-                        className="w-full h-14 bg-white border-2 border-slate-100 rounded-xl px-6 text-[#001f3f] font-medium placeholder:text-slate-300 focus:border-[#fabc22] focus:ring-0 transition-all outline-none shadow-sm"
+                        className="w-full h-14 bg-white border-2 border-slate-100 rounded-xl text-[#001f3f] font-medium placeholder:text-slate-300 focus:border-[#fabc22] focus:ring-0 transition-all outline-none shadow-sm"
+                        style={{ paddingLeft: '40px', paddingRight: '24px' }}
                         value={formData.lastName}
                         onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
                       />
@@ -210,7 +212,8 @@ export default function Contact() {
                         id="email"
                         required
                         placeholder="Please enter email..."
-                        className="w-full h-14 bg-white border-2 border-slate-100 rounded-xl px-6 text-[#001f3f] font-medium placeholder:text-slate-300 focus:border-[#fabc22] focus:ring-0 transition-all outline-none shadow-sm"
+                        className="w-full h-14 bg-white border-2 border-slate-100 rounded-xl text-[#001f3f] font-medium placeholder:text-slate-300 focus:border-[#fabc22] focus:ring-0 transition-all outline-none shadow-sm"
+                        style={{ paddingLeft: '40px', paddingRight: '24px' }}
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       />
@@ -226,7 +229,8 @@ export default function Contact() {
                         id="phone"
                         required
                         placeholder="Please enter phone number..."
-                        className="w-full h-14 bg-white border-2 border-slate-100 rounded-xl px-6 text-[#001f3f] font-medium placeholder:text-slate-300 focus:border-[#fabc22] focus:ring-0 transition-all outline-none shadow-sm"
+                        className="w-full h-14 bg-white border-2 border-slate-100 rounded-xl text-[#001f3f] font-medium placeholder:text-slate-300 focus:border-[#fabc22] focus:ring-0 transition-all outline-none shadow-sm"
+                        style={{ paddingLeft: '40px', paddingRight: '24px' }}
                         value={formData.phone}
                         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                       />
@@ -243,7 +247,8 @@ export default function Contact() {
                       required
                       rows={6}
                       placeholder="Please enter query..."
-                      className="w-full p-6 bg-white border-2 border-slate-100 rounded-xl text-[#001f3f] font-medium placeholder:text-slate-300 focus:border-[#fabc22] focus:ring-0 transition-all outline-none resize-none shadow-sm"
+                      className="w-full py-6 bg-white border-2 border-slate-100 rounded-xl text-[#001f3f] font-medium placeholder:text-slate-300 focus:border-[#fabc22] focus:ring-0 transition-all outline-none resize-none shadow-sm"
+                      style={{ paddingLeft: '40px', paddingRight: '24px' }}
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     />
