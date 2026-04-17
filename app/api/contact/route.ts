@@ -33,12 +33,25 @@ export async function POST(request: NextRequest) {
     }
 
     const transporter = nodemailer.createTransport({
-      service: 'gmail',
+      host: process.env.SMTP_HOST || 'smtp.gmail.com',
+      port: parseInt(process.env.SMTP_PORT || '587'),
+      secure: false, // true for 465, false for other ports
       auth: {
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASS,
       },
     });
+
+    // Verify connection configuration
+    try {
+      await transporter.verify();
+    } catch (verifyError: any) {
+      console.error('SMTP Verification Error:', verifyError);
+      return NextResponse.json(
+        { error: 'Email service authentication failed.' },
+        { status: 500 }
+      );
+    }
 
     const mailOptions = {
       from: `"Vikamusk Website" <${process.env.SMTP_USER}>`,
