@@ -732,10 +732,10 @@ export default function ProductDetail() {
                     exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.18 }}
                     className="min-h-[120px]"
                   >
-                    {product.fullDescription ? (
+                    {product.fullDescription || product.shortDescription ? (
                       <p className="text-[14px] leading-relaxed whitespace-pre-line"
                         style={{ color: '#475569' }}>
-                        {product.fullDescription}
+                        {product.fullDescription || product.shortDescription}
                       </p>
                     ) : (
                       <div

@@ -759,10 +759,16 @@ export default function AdminProducts() {
                 </div>
               </div>
 
-              {/* Short description */}
-              <div>
-                <label className={labelCls} style={labelStyle}>Short Description</label>
-                <input value={form.short_description} onChange={e => setForm(p => ({ ...p, short_description: e.target.value }))} className={inputCls} style={inputStyle} placeholder="Brief one-liner" />
+              {/* Descriptions */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 14 }}>
+                <div>
+                  <label className={labelCls} style={labelStyle}>Short Description</label>
+                  <input value={form.short_description} onChange={e => setForm(p => ({ ...p, short_description: e.target.value }))} className={inputCls} style={inputStyle} placeholder="Brief one-liner (shown below product title)" />
+                </div>
+                <div>
+                  <label className={labelCls} style={labelStyle}>Full Description (Overview)</label>
+                  <textarea rows={4} value={form.full_description} onChange={e => setForm(p => ({ ...p, full_description: e.target.value }))} className={inputCls} style={{ ...inputStyle, resize: 'vertical', minHeight: 100 }} placeholder="Detailed product overview (shown in Overview tab)" />
+                </div>
               </div>
 
               {/* Main image */}
