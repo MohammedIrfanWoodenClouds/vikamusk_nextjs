@@ -10,7 +10,7 @@ export default function Services() {
   return (
     <>
       {/* Hero */}
-      <section className="relative pb-28 bg-primary overflow-hidden" style={{ paddingTop: '200px' }}>
+      <section className="relative pb-20 sm:pb-28 bg-primary overflow-hidden" style={{ paddingTop: 'clamp(140px, 15vw, 200px)' }}>
         <div className="absolute inset-0 opacity-15">
           <Image src="/images/hero-bg.png" alt="" fill className="object-cover" priority />
         </div>
@@ -156,7 +156,7 @@ export default function Services() {
           <div className="flex flex-col lg:flex-row items-center justify-between gap-16 lg:gap-8 w-full max-w-7xl mx-auto">
             
             {/* Left Column: 4 Countries */}
-            <div className="flex flex-col gap-12 sm:gap-16 w-full lg:w-[30%] z-30 order-2 lg:order-1">
+            <div className="grid grid-cols-2 lg:flex lg:flex-col gap-10 sm:gap-16 w-full lg:w-[30%] z-30 order-2 lg:order-1">
               {[
                 { name: 'UAE' },
                 { name: 'Saudi Arabia' },
@@ -194,7 +194,7 @@ export default function Services() {
             </div>
 
             {/* Right Column: 3 Countries */}
-            <div className="flex flex-col gap-12 sm:gap-16 w-full lg:w-[30%] z-30 order-3 lg:order-3">
+            <div className="grid grid-cols-2 lg:flex lg:flex-col gap-10 sm:gap-16 w-full lg:w-[30%] z-30 order-3 lg:order-3">
               {[
                 { name: 'Qatar' },
                 { name: 'Bahrain' },
@@ -246,33 +246,33 @@ export default function Services() {
           <AnimatedSection>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
               <h2
-                className="text-3xl lg:text-4xl font-black text-white"
-                style={{ marginBottom: '1.5rem', whiteSpace: 'nowrap', textAlign: 'center' }}
+                className="text-2xl sm:text-3xl lg:text-4xl font-black text-white"
+                style={{ marginBottom: '1.5rem', textAlign: 'center', lineHeight: '1.2' }}
               >
                 Need Equipment Service or Support?
               </h2>
               <p
-                className="text-gray-400 leading-relaxed"
+                className="text-gray-400 leading-relaxed px-4"
                 style={{
                   maxWidth: '640px',
                   marginBottom: '2.5rem',
-                  fontSize: '1.05rem',
-                  lineHeight: '1.75',
+                  fontSize: '1rem',
+                  lineHeight: '1.6',
                   textAlign: 'center',
                 }}
               >
                 Our service team is ready to help with maintenance, spare parts, and technical consultation.
               </p>
               <div
-                className="flex flex-wrap justify-center"
-                style={{ gap: '1.25rem', marginTop: '0.5rem' }}
+                className="flex flex-col sm:flex-row justify-center items-center w-full px-4"
+                style={{ gap: '1rem', marginTop: '0.5rem' }}
               >
                 <Link
                   href="/contact"
-                  className="bg-accent hover:bg-white text-[#001f3f] hover:text-[#001f3f] font-bold rounded-xl transition-all inline-flex items-center gap-2.5 hover:scale-105 hover:shadow-[0_0_25px_rgba(255,255,255,0.4)]"
+                  className="w-full sm:w-auto bg-accent hover:bg-white text-[#001f3f] hover:text-[#001f3f] font-bold rounded-xl transition-all inline-flex items-center justify-center gap-2.5 hover:scale-105 hover:shadow-[0_0_25px_rgba(255,255,255,0.4)]"
                   style={{
-                    padding: '1rem 2.25rem',
-                    fontSize: '0.95rem',
+                    padding: '1rem 1.5rem',
+                    fontSize: '0.9rem',
                     boxShadow: '0 4px 20px rgba(245, 158, 11, 0.3)',
                   }}
                 >
@@ -282,10 +282,10 @@ export default function Services() {
                   href="/vikamusk-company-profile.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-white/10 hover:bg-white text-white hover:text-[#001f3f] font-semibold rounded-xl border border-white/20 hover:border-white transition-all inline-flex items-center justify-center gap-2.5 hover:scale-105 hover:shadow-[0_0_25px_rgba(255,255,255,0.4)]"
+                  className="w-full sm:w-auto bg-white/10 hover:bg-white text-white hover:text-[#001f3f] font-semibold rounded-xl border border-white/20 hover:border-white transition-all inline-flex items-center justify-center gap-2.5 hover:scale-105 hover:shadow-[0_0_25px_rgba(255,255,255,0.4)]"
                   style={{
-                    padding: '1rem 2.25rem',
-                    fontSize: '0.95rem',
+                    padding: '1rem 1.5rem',
+                    fontSize: '0.9rem',
                   }}
                 >
                   Download Brochure

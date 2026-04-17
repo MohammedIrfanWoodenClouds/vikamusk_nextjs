@@ -18,7 +18,6 @@ const quickLinks = [
   { name: 'Products', href: '/products' },
   { name: 'Industries', href: '/industries' },
   { name: 'Services & Support', href: '/services' },
-  { name: 'Downloads', href: '/downloads' },
   { name: 'Careers', href: '/careers' },
   { name: 'Contact', href: '/contact' },
 ];

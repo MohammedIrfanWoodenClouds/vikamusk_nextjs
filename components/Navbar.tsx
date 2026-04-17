@@ -631,15 +631,7 @@ export default function Navbar() {
                     </Link>
                   ))}
 
-                  <Link
-                    href="/downloads"
-                    onClick={closeMobile}
-                    className={`block px-3 py-2.5 text-[15px] font-semibold rounded-md transition-colors ${
-                      isActive('/downloads') ? 'text-accent bg-amber-50' : 'text-gray-700 hover:text-accent hover:bg-gray-50'
-                    }`}
-                  >
-                    Downloads
-                  </Link>
+
                 </div>
 
                 {/* Mobile CTA */}

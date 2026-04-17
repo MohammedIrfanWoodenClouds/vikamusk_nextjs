@@ -197,11 +197,11 @@ function SpecTable({ models }: { models: ProductModel[] }) {
                 color: 'rgba(255,255,255,0.45)', 
                 background: '#001229', 
                 borderRight: '1px solid rgba(255,255,255,0.06)', 
-                minWidth: 320,
-                paddingLeft: '2.5rem',
-                paddingRight: '1.25rem',
+                minWidth: 180,
+                paddingLeft: '1.25rem',
+                paddingRight: '1rem',
                 fontWeight: 900,
-                fontSize: '12.5px'
+                fontSize: '11px'
               }}
             >
               Specification
@@ -229,10 +229,10 @@ function SpecTable({ models }: { models: ProductModel[] }) {
                     color: isSection ? '#001f3f' : '#475569', 
                     background: rowBg, 
                     borderRight: '1px solid #e2e8f0',
-                    paddingLeft: isSection ? '2.5rem' : '4.25rem',
-                    paddingRight: '1.25rem',
+                    paddingLeft: isSection ? '1.25rem' : '2rem',
+                    paddingRight: '1rem',
                     fontWeight: isSection ? 900 : 700,
-                    fontSize: isSection ? '13px' : '13.5px'
+                    fontSize: isSection ? '12px' : '12px'
                   }}
                 >
                   <span className="flex items-center gap-2">
@@ -1230,18 +1230,18 @@ export default function ProductDetail() {
           <AnimatedSection>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
               <h2
-                className="text-3xl lg:text-4xl font-black text-white"
-                style={{ marginBottom: '1.5rem', whiteSpace: 'nowrap', textAlign: 'center' }}
+                className="text-2xl sm:text-3xl lg:text-4xl font-black text-white"
+                style={{ marginBottom: '1.5rem', textAlign: 'center', lineHeight: '1.2' }}
               >
                 Need help choosing the right model?
               </h2>
               <p
-                className="text-gray-400 leading-relaxed"
+                className="text-gray-400 leading-relaxed px-4"
                 style={{
                   maxWidth: '640px',
                   marginBottom: '2.5rem',
-                  fontSize: '1.05rem',
-                  lineHeight: '1.75',
+                  fontSize: '1rem',
+                  lineHeight: '1.6',
                   textAlign: 'center',
                 }}
               >
@@ -1249,15 +1249,15 @@ export default function ProductDetail() {
                 and find the perfect solution for your operation.
               </p>
               <div
-                className="flex flex-wrap justify-center"
-                style={{ gap: '1.25rem', marginTop: '0.5rem' }}
+                className="flex flex-col sm:flex-row justify-center items-center w-full px-4"
+                style={{ gap: '1rem', marginTop: '0.5rem' }}
               >
                 <Link
                   href="/contact"
-                  className="bg-accent hover:bg-white text-[#001f3f] hover:text-[#001f3f] font-bold rounded-xl transition-all inline-flex items-center gap-2.5 hover:scale-105 hover:shadow-[0_0_25px_rgba(255,255,255,0.4)]"
+                  className="w-full sm:w-auto bg-accent hover:bg-white text-[#001f3f] hover:text-[#001f3f] font-bold rounded-xl transition-all inline-flex items-center justify-center gap-2.5 hover:scale-105 hover:shadow-[0_0_25px_rgba(255,255,255,0.4)]"
                   style={{
-                    padding: '1rem 2.25rem',
-                    fontSize: '0.95rem',
+                    padding: '1rem 1.5rem',
+                    fontSize: '0.9rem',
                     boxShadow: '0 4px 20px rgba(245, 158, 11, 0.3)',
                   }}
                 >
@@ -1265,10 +1265,10 @@ export default function ProductDetail() {
                 </Link>
                 <Link
                   href="/products"
-                  className="bg-white/10 hover:bg-white text-white hover:text-[#001f3f] font-semibold rounded-xl border border-white/20 hover:border-white transition-all inline-flex items-center justify-center gap-2.5 hover:scale-105 hover:shadow-[0_0_25px_rgba(255,255,255,0.4)]"
+                  className="w-full sm:w-auto bg-white/10 hover:bg-white text-white hover:text-[#001f3f] font-semibold rounded-xl border border-white/20 hover:border-white transition-all inline-flex items-center justify-center gap-2.5 hover:scale-105 hover:shadow-[0_0_25px_rgba(255,255,255,0.4)]"
                   style={{
-                    padding: '1rem 2.25rem',
-                    fontSize: '0.95rem',
+                    padding: '1rem 1.5rem',
+                    fontSize: '0.9rem',
                   }}
                 >
                   Browse Full Catalog

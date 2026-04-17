@@ -19,15 +19,15 @@ export default function Downloads() {
   return (
     <>
       {/* Hero */}
-      <section className="relative pt-44 lg:pt-52 pb-28 bg-primary overflow-hidden">
+      <section className="relative pb-20 sm:pb-28 bg-primary overflow-hidden" style={{ paddingTop: 'clamp(140px, 15vw, 180px)' }}>
         <div className="absolute inset-0 opacity-15">
           <Image src="/images/hero-bg.png" alt="" fill className="object-cover" />
         </div>
         <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/95 to-primary/80" />
         <div className="container-custom relative z-10">
           <AnimatedSection>
-            <span className="text-sm font-bold text-accent uppercase tracking-wider">Resources</span>
-            <h1 className="text-4xl lg:text-5xl font-black text-white mt-3 mb-6">
+            <span className="text-xs sm:text-sm font-bold text-accent uppercase tracking-wider">Resources</span>
+            <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black text-white mt-3 mb-6 leading-tight">
               Downloads & Brochures
             </h1>
             <p className="text-white/60 max-w-xl text-lg leading-relaxed">
@@ -44,8 +44,8 @@ export default function Downloads() {
             {downloads.map((item, i) => (
               <StaggerItem key={i}>
                 <div className="bg-white rounded-2xl border border-border/50 overflow-hidden hover-lift h-full flex flex-col">
-                  <div className="p-8 flex-1">
-                    <div className="w-14 h-14 rounded-xl bg-red-50 text-red-500 flex items-center justify-center mb-5">
+                  <div className="p-6 sm:p-8 flex-1">
+                    <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-red-50 text-red-500 flex items-center justify-center mb-5">
                       <FileText size={28} />
                     </div>
                     <h3 className="text-lg font-bold text-primary mb-2">{item.title}</h3>
@@ -55,12 +55,12 @@ export default function Downloads() {
                       <span>{item.size}</span>
                     </div>
                   </div>
-                  <div className="px-8 pb-8">
+                  <div className="px-6 sm:px-8 pb-8">
                     <a
                       href={item.file}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="btn-primary w-full text-center"
+                      className="btn-primary w-full text-center flex items-center justify-center gap-2"
                     >
                       <Download size={16} /> Download
                     </a>
@@ -72,8 +72,8 @@ export default function Downloads() {
             {/* Product Catalog Placeholder */}
             <StaggerItem>
               <div className="bg-white rounded-2xl border border-dashed border-border overflow-hidden h-full flex flex-col">
-                <div className="p-8 flex-1 flex flex-col items-center justify-center text-center">
-                  <div className="w-14 h-14 rounded-xl bg-surface text-muted flex items-center justify-center mb-5">
+                <div className="p-6 sm:p-8 flex-1 flex flex-col items-center justify-center text-center">
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-surface text-muted flex items-center justify-center mb-5">
                     <FileText size={28} />
                   </div>
                   <h3 className="text-lg font-bold text-primary mb-2">Product Catalogs</h3>
@@ -89,8 +89,8 @@ export default function Downloads() {
 
             <StaggerItem>
               <div className="bg-white rounded-2xl border border-dashed border-border overflow-hidden h-full flex flex-col">
-                <div className="p-8 flex-1 flex flex-col items-center justify-center text-center">
-                  <div className="w-14 h-14 rounded-xl bg-surface text-muted flex items-center justify-center mb-5">
+                <div className="p-6 sm:p-8 flex-1 flex flex-col items-center justify-center text-center">
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-surface text-muted flex items-center justify-center mb-5">
                     <FileText size={28} />
                   </div>
                   <h3 className="text-lg font-bold text-primary mb-2">Technical Specs</h3>
@@ -107,17 +107,19 @@ export default function Downloads() {
 
           {/* CTA */}
           <AnimatedSection>
-            <div className="bg-primary rounded-2xl p-10 lg:p-14 text-center">
-              <h2 className="text-2xl lg:text-3xl font-black text-white mb-4">
+            <div className="bg-primary rounded-2xl p-8 sm:p-10 lg:p-14 text-center">
+              <h2 className="text-xl sm:text-2xl lg:text-3xl font-black text-white mb-4">
                 Need Specific Documentation?
               </h2>
-              <p className="text-white/60 max-w-lg mx-auto mb-8">
+              <p className="text-white/60 max-w-lg mx-auto mb-8 text-sm sm:text-base leading-relaxed px-2">
                 Contact our sales team for specific product brochures, technical specifications, 
                 or certification documents.
               </p>
-              <Link href="/contact" className="btn-primary px-8 py-4">
-                Contact Sales <ArrowRight size={16} />
-              </Link>
+              <div className="flex justify-center">
+                <Link href="/contact" className="w-full sm:w-auto btn-primary px-8 py-4 flex items-center justify-center gap-2">
+                  Contact Sales <ArrowRight size={16} />
+                </Link>
+              </div>
             </div>
           </AnimatedSection>
         </div>
