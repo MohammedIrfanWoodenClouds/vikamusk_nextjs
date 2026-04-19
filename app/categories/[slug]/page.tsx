@@ -81,7 +81,10 @@ export default function MainCategoryPage() {
           <AnimatedSection className="text-center mb-12">
             <span className="text-sm font-bold text-accent uppercase tracking-wider">Explore</span>
             <h2 className="text-3xl lg:text-4xl font-black text-primary mt-3 mb-4">Equipment</h2>
-            <p className="text-muted max-w-5xl mx-auto">
+            <p 
+              className="text-muted mx-auto lg:whitespace-nowrap"
+              style={{ marginTop: '1rem', marginBottom: '1.5rem', maxWidth: 'none' }}
+            >
               {slug?.toLowerCase() === 'ltmg' 
                 ? 'Vikamusk Construction Equipment is the Authorized Distributor of LTMG Machinery in the UAE — Operations to Middle East & India.'
                 : `Browse our full range of ${category.name} available for your project.`
