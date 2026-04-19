@@ -163,47 +163,47 @@ export default function Contact() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 max-w-7xl mx-auto">
               
               {/* Card 1: Exporters */}
               <div className="bg-white rounded-[2rem] shadow-[0_10px_40px_rgba(0,31,63,0.04)] border border-slate-100 hover:shadow-[0_20px_50px_rgba(0,31,63,0.08)] transition-shadow duration-300 flex flex-col h-full" style={{ padding: '32px' }}>
                 <div className="flex justify-between items-center mb-8">
-                  <span className="bg-amber-50 text-amber-600 px-3 py-1 text-[10px] font-black uppercase tracking-widest rounded-md border border-amber-100">Export & HQ</span>
+                  <span className="bg-amber-50 text-amber-600 px-3 py-1 text-[10px] font-black uppercase tracking-widest rounded-md border border-amber-100">UAE - AJMAN</span>
                   <div className="flex items-center gap-1.5">
                     <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></div>
                     <span className="text-slate-300 text-[10px] font-bold uppercase tracking-widest">Active</span>
                   </div>
                 </div>
                 
-                <h3 className="text-[22px] md:text-[24px] font-black text-[#001f3f] mb-6">International Operations</h3>
+                <h3 className="text-[20px] md:text-[22px] font-black text-[#001f3f] mb-6">Ajman Free Zone</h3>
                 
                 <div className="space-y-4 mb-6">
                   <div className="flex items-center gap-3">
                     <MapPin size={16} className="text-amber-500 shrink-0" />
-                    <span className="text-[13px] font-bold text-slate-500 uppercase tracking-widest">Ajman Free Zone</span>
+                    <span className="text-[13px] font-bold text-slate-500 uppercase tracking-widest">Head Office</span>
                   </div>
                   <div className="flex items-center gap-3">
                     <Globe size={16} className="text-amber-500 shrink-0" />
-                    <span className="text-[13px] font-bold text-slate-500 uppercase tracking-widest">Regional Hub</span>
+                    <span className="text-[13px] font-bold text-slate-500 uppercase tracking-widest">International Hub</span>
                   </div>
                 </div>
 
                 <p className="text-sm text-slate-400 italic font-medium leading-relaxed flex-1">
-                  "Dedicated export hub serving key markets across Kuwait, Qatar, Saudi Arabia, Bahrain, and Oman."
+                  "Our primary corporate headquarters and central export hub serving international markets."
                 </p>
               </div>
 
               {/* Card 2: UAE Mainland */}
               <div className="bg-white rounded-[2rem] shadow-[0_10px_40px_rgba(0,31,63,0.04)] border border-slate-100 hover:shadow-[0_20px_50px_rgba(0,31,63,0.08)] transition-shadow duration-300 flex flex-col h-full" style={{ padding: '32px' }}>
                 <div className="flex justify-between items-center mb-8">
-                  <span className="bg-amber-50 text-amber-600 px-3 py-1 text-[10px] font-black uppercase tracking-widest rounded-md border border-amber-100">UAE Mainland</span>
+                  <span className="bg-amber-50 text-amber-600 px-3 py-1 text-[10px] font-black uppercase tracking-widest rounded-md border border-amber-100">UAE - DUBAI</span>
                   <div className="flex items-center gap-1.5">
                     <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></div>
                     <span className="text-slate-300 text-[10px] font-bold uppercase tracking-widest">Active</span>
                   </div>
                 </div>
                 
-                <h3 className="text-[22px] md:text-[24px] font-black text-[#001f3f] mb-6">Domestic Support</h3>
+                <h3 className="text-[20px] md:text-[22px] font-black text-[#001f3f] mb-6">Dubai Mainland</h3>
                 
                 <div className="space-y-4 mb-6">
                   <div className="flex items-center gap-3">
@@ -212,40 +212,68 @@ export default function Contact() {
                   </div>
                   <div className="flex items-center gap-3">
                     <Globe size={16} className="text-amber-500 shrink-0" />
-                    <span className="text-[13px] font-bold text-slate-500 uppercase tracking-widest">Mainland Sales</span>
+                    <span className="text-[13px] font-bold text-slate-500 uppercase tracking-widest">UAE Domestic Hub</span>
                   </div>
                 </div>
 
                 <p className="text-sm text-slate-400 italic font-medium leading-relaxed flex-1">
-                  "Comprehensive sales, technical support, and comprehensive maintenance operations throughout the United Arab Emirates mainland."
+                  "Our core operations hub for the UAE domestic market, providing sales and technical support."
                 </p>
               </div>
 
               {/* Card 3: India */}
               <div className="bg-white rounded-[2rem] shadow-[0_10px_40px_rgba(0,31,63,0.04)] border border-slate-100 hover:shadow-[0_20px_50px_rgba(0,31,63,0.08)] transition-shadow duration-300 flex flex-col h-full" style={{ padding: '32px' }}>
                 <div className="flex justify-between items-center mb-8">
-                  <span className="bg-amber-50 text-amber-600 px-3 py-1 text-[10px] font-black uppercase tracking-widest rounded-md border border-amber-100">South Asia</span>
+                  <span className="bg-amber-50 text-amber-600 px-3 py-1 text-[10px] font-black uppercase tracking-widest rounded-md border border-amber-100">INDIA</span>
                   <div className="flex items-center gap-1.5">
                     <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></div>
                     <span className="text-slate-300 text-[10px] font-bold uppercase tracking-widest">Active</span>
                   </div>
                 </div>
                 
-                <h3 className="text-[22px] md:text-[24px] font-black text-[#001f3f] mb-6">India Operations</h3>
+                <h3 className="text-[20px] md:text-[22px] font-black text-[#001f3f] mb-6">Kochi - India</h3>
                 
                 <div className="space-y-4 mb-6">
                   <div className="flex items-center gap-3">
                     <MapPin size={16} className="text-amber-500 shrink-0" />
-                    <span className="text-[13px] font-bold text-slate-500 uppercase tracking-widest">Kochi, India</span>
+                    <span className="text-[13px] font-bold text-slate-500 uppercase tracking-widest">Kochi, Kerala</span>
                   </div>
                   <div className="flex items-center gap-3">
                     <Globe size={16} className="text-amber-500 shrink-0" />
-                    <span className="text-[13px] font-bold text-slate-500 uppercase tracking-widest">Sales & Service</span>
+                    <span className="text-[13px] font-bold text-slate-500 uppercase tracking-widest">India Domestic Hub</span>
                   </div>
                 </div>
 
                 <p className="text-sm text-slate-400 italic font-medium leading-relaxed flex-1">
-                  "Dedicated corporate office managing all equipment sales, technical services, and regional support across India."
+                  "Our dedicated corporate base in India, managing regional sales and technical service networks."
+                </p>
+              </div>
+
+              {/* Card 4: China */}
+              <div className="bg-white rounded-[2rem] shadow-[0_10px_40px_rgba(0,31,63,0.04)] border border-slate-100 hover:shadow-[0_20px_50px_rgba(0,31,63,0.08)] transition-shadow duration-300 flex flex-col h-full" style={{ padding: '32px' }}>
+                <div className="flex justify-between items-center mb-8">
+                  <span className="bg-amber-50 text-amber-600 px-3 py-1 text-[10px] font-black uppercase tracking-widest rounded-md border border-amber-100">CHINA</span>
+                  <div className="flex items-center gap-1.5">
+                    <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></div>
+                    <span className="text-slate-300 text-[10px] font-bold uppercase tracking-widest">Active</span>
+                  </div>
+                </div>
+                
+                <h3 className="text-[20px] md:text-[22px] font-black text-[#001f3f] mb-6">Qingdao - China</h3>
+                
+                <div className="space-y-4 mb-6">
+                  <div className="flex items-center gap-3">
+                    <MapPin size={16} className="text-amber-500 shrink-0" />
+                    <span className="text-[13px] font-bold text-slate-500 uppercase tracking-widest">Qingdao, China</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Globe size={16} className="text-amber-500 shrink-0" />
+                    <span className="text-[13px] font-bold text-slate-500 uppercase tracking-widest">Manufacturing Hub</span>
+                  </div>
+                </div>
+
+                <p className="text-sm text-slate-400 italic font-medium leading-relaxed flex-1">
+                  "Strategic manufacturing partnership location ensuring world-class production standards for our equipment."
                 </p>
               </div>
 

@@ -70,7 +70,7 @@ const statIcons = [Truck, Package, Boxes, Award, Globe, Headphones];
 
 const whyItems = [
   { icon: <Shield size={22} />, title: 'Quality Assurance', desc: 'Collaboration with 10+ leading industrial manufacturers ensures premium equipment meeting international standards.' },
-  { icon: <Globe size={22} />, title: 'Global Presence', desc: 'Operations across UAE, China, Saudi Arabia & Oman — serving 15+ countries worldwide.' },
+  { icon: <Globe size={22} />, title: 'Global Presence', desc: 'Operations across UAE, India, and China — serving 20+ countries worldwide.' },
   { icon: <Wrench size={22} />, title: 'Technical Excellence', desc: 'Expert engineering team bridging innovation and reliability for holistic equipment solutions.' },
   { icon: <Award size={22} />, title: '10+ Years Experience', desc: 'A decade of proven success in construction and material handling, building lasting partnerships.' },
   { icon: <Truck size={22} />, title: 'Comprehensive Range', desc: '6 categories, 35+ series, and 100+ models covering Forklifts, Aerial Platforms and more.' },
@@ -333,7 +333,7 @@ export default function Home() {
                   Founded in 2015 and proudly established in the Ajman Free Zone of UAE, Vikamusk Construction Equipment is a trusted supplier of advanced construction and material handling solutions.
                 </p>
                 <p className="text-muted leading-relaxed">
-                  Serving clients across China, UAE, Saudi Arabia and Oman. Collaborating with 10+ industrial manufacturers worldwide for reliable, high-performance equipment.
+                  Serving clients across UAE, India, and China. Collaborating with 10+ industrial manufacturers worldwide for reliable, high-performance equipment.
                 </p>
               </div>
 
@@ -661,8 +661,9 @@ export default function Home() {
               </div>
               <div className="flex flex-col">
                 {[
-                  { flag: '🇦🇪', country: 'UAE (Headquarters)', city: 'Ajman Free Zone', detail: 'Head Office & Warehouse' },
-                  { flag: '🇦🇪', country: 'Dubai - UAE', city: 'Bur Dubai', detail: 'Vikamusk Construction Equipment LLC' },
+                  { flag: '🇦🇪', country: 'UAE', city: 'Ajman Free Zone', detail: 'Head Office & International Hub' },
+                  { flag: '🇦🇪', country: 'UAE', city: 'Dubai Mainland', detail: 'UAE Domestic Hub' },
+                  { flag: '🇮🇳', country: 'India', city: 'Kochi', detail: 'India Domestic Hub' },
                   { flag: '🇨🇳', country: 'China', city: 'Qingdao', detail: 'Manufacturing Partnership' },
                 ].map((loc, i) => (
                   <div key={i} className="flex items-center gap-4 p-4 rounded-xl bg-surface border border-border/40 hover:border-accent/20 hover:shadow-sm transition-all" style={{ marginBottom: '1rem' }}>
@@ -678,15 +679,7 @@ export default function Home() {
 
             <AnimatedSection direction="right">
               <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl shadow-primary/10">
-                <Image src="/images/company/vikamusk-company-china-.png" alt="Vikamusk China Operations" fill className="object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/75 to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-6">
-                  <div className="flex items-center gap-2 mb-1">
-                    <MapPin size={14} className="text-accent" />
-                    <p className="text-white/70 text-xs uppercase tracking-wider">Partner Facility</p>
-                  </div>
-                  <p className="text-white font-bold">Vikamusk Partner Facility — China</p>
-                </div>
+                <Image src="/images/company/vikamusk-company-china-.png" alt="Vikamusk Operations" fill className="object-cover" />
               </div>
             </AnimatedSection>
           </div>
@@ -718,8 +711,11 @@ export default function Home() {
               Build your dream with{' '}
               <span className="gradient-text">Vikamusk</span>
             </h2>
-            <div className="text-center w-full" style={{ marginBottom: '3rem' }}>
-              <p className="text-white/52 w-full max-w-[42rem] mx-auto text-base sm:text-lg lg:text-xl leading-relaxed text-center text-balance">
+            <div className="w-full flex justify-center" style={{ marginBottom: '3rem' }}>
+              <p 
+                className="text-white/52 w-full max-w-[42rem] text-base sm:text-lg lg:text-xl leading-relaxed text-center"
+                style={{ textAlign: 'center' }}
+              >
                 10+ years of undefeated success. Ready to power your next project with world-class equipment and dedicated engineering support?
               </p>
             </div>
