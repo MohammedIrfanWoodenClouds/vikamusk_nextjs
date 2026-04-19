@@ -113,7 +113,7 @@ export default function Contact() {
               <div className="flex flex-wrap gap-6 mt-12">
                 {[
                   { value: '< 24 hrs', label: 'Response Time' },
-                  { value: '7+', label: 'Countries Served' },
+                  { value: '7', label: 'Countries Served' },
                   { value: '50+', label: 'Team Specialists' },
                 ].map(({ value, label }) => (
                   <div key={label} className="flex items-center gap-3">
@@ -521,7 +521,7 @@ export default function Contact() {
                         </div>
                         <div>
                           <p className="text-[11px] font-bold text-[#AFC3D4] uppercase tracking-[0.1em] mb-2">Business Hours</p>
-                          <p className="text-[15px] font-medium text-white">Sun – Thu: 09:00 – 18:00</p>
+                          <p className="text-[15px] font-medium text-white">Mon – Sat: 09:00 – 18:00</p>
                           <p className="text-[12px] text-[#AFC3D4] mt-0.5">Gulf Standard Time (GST)</p>
                         </div>
                       </div>
@@ -541,9 +541,7 @@ export default function Contact() {
                       <div className="flex-1">
                         <p className="text-[11px] font-bold text-[#AFC3D4] uppercase tracking-[0.1em] mb-2.5">UAE Headquarters</p>
                         <p className="text-[14px] font-medium text-white/85 leading-[1.75]">
-                          Vikamusk Construction Equipment FZE,<br />
-                          Ajman Free Zone, Ajman,<br />
-                          United Arab Emirates
+                          Vikamusk Construction Equipment FZE, Ajman Free Zone, Ajman, United Arab Emirates
                         </p>
                         {/* Navigate CTA */}
                         <a
