@@ -244,20 +244,22 @@ export default function Footer() {
               <div className="space-y-4" style={{ marginTop: '1rem' }}>
                 {/* Office cards */}
                 {[
-                  { region: 'Ajman - UAE (HQ)', address: 'Vikamusk Construction Equipment FZE, Ajman Free Zone, Ajman, United Arab Emirates' },
-                  { region: 'Dubai - UAE', address: 'Vikamusk Construction Equipment LLC, Bur Dubai, Dubai, United Arab Emirates' },
-                  { region: 'Sharjah - UAE (Warehouse)', address: 'Vikamusk Construction Equipment, Al Sajaa Industrial Area, Sharjah, United Arab Emirates' },
-                  { region: 'Kochi - India', address: 'Vikamusk Construction Equipment, Kochi - India' },
-                ].map(({ region, address }) => (
+                  { company: 'Vikamusk Construction Equipment FZE', region: 'Ajman, UAE (HQ)', address: 'Ajman Free Zone, United Arab Emirates' },
+                  { company: 'Vikamusk Construction Equipment LLC', region: 'Dubai, UAE', address: 'Dubai Mainland, United Arab Emirates' },
+                  { company: 'Vikamusk International Pvt Ltd', region: 'Kochi, India', address: 'Kochi, Kerala, India' },
+                ].map(({ company, region, address }) => (
                   <div
                     key={region}
                     className="rounded-xl bg-white/[0.03] border border-white/[0.07] hover:border-white/[0.13] transition-colors duration-200"
                     style={{ padding: '16px', marginBottom: '16px' }}
                   >
-                    <p className="text-[11px] font-bold uppercase tracking-[0.15em] text-accent/80 mb-2">
+                    <p className="text-white font-bold text-[13px] mb-1.5 leading-tight truncate" title={company}>
+                      {company}
+                    </p>
+                    <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-accent/80 mb-2">
                       {region}
                     </p>
-                    <p className="text-white/50 text-sm leading-relaxed">{address}</p>
+                    <p className="text-white/40 text-[12px] leading-relaxed italic">{address}</p>
                   </div>
                 ))}
 
