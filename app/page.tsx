@@ -70,7 +70,7 @@ const statIcons = [Truck, Package, Boxes, Award, Globe, Headphones];
 
 const whyItems = [
   { icon: <Shield size={22} />, title: 'Quality Assurance', desc: 'Collaboration with 10+ leading industrial manufacturers ensures premium equipment meeting international standards.' },
-  { icon: <Globe size={22} />, title: 'Global Presence', desc: 'Operations across UAE, India, and China — serving 20+ countries worldwide.' },
+  { icon: <Globe size={22} />, title: 'Global Presence', desc: 'Operations across UAE, Saudi Arabia, Oman, Kuwait, Qatar, Bahrain, and India.' },
   { icon: <Wrench size={22} />, title: 'Technical Excellence', desc: 'Expert engineering team bridging innovation and reliability for holistic equipment solutions.' },
   { icon: <Award size={22} />, title: '10+ Years Experience', desc: 'A decade of proven success in construction and material handling, building lasting partnerships.' },
   { icon: <Truck size={22} />, title: 'Comprehensive Range', desc: '6 categories, 35+ series, and 100+ models covering Forklifts, Aerial Platforms and more.' },
@@ -333,7 +333,7 @@ export default function Home() {
                   Founded in 2015 and proudly established in the Ajman Free Zone of UAE, Vikamusk Construction Equipment is a trusted supplier of advanced construction and material handling solutions.
                 </p>
                 <p className="text-muted leading-relaxed">
-                  Serving clients across UAE, India, and China. Collaborating with 10+ industrial manufacturers worldwide for reliable, high-performance equipment.
+                  Serving clients across UAE, Saudi Arabia, Oman, Kuwait, Qatar, Bahrain, and India. Collaborating with 10+ industrial manufacturers worldwide for reliable, high-performance equipment.
                 </p>
               </div>
 
@@ -656,7 +656,7 @@ export default function Home() {
               </div>
               <div style={{ marginBottom: '1rem' }}>
                 <p className="text-muted leading-relaxed text-sm lg:text-base">
-                  Vikamusk continues to build lasting partnerships and set new standards in equipment reliability. Our market networks and service systems span the globe, delivering to 20+ countries.
+                  Vikamusk continues to build lasting partnerships and set new standards in equipment reliability. Our market networks and service systems span the globe, including 7 countries as per service network.
                 </p>
               </div>
               <div className="flex flex-col">
@@ -741,7 +741,7 @@ export default function Home() {
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-6 lg:gap-8">
                 {[
                   { value: '10+', label: 'Global Manufacturers', icon: Globe },
-                  { value: '20+', label: 'Countries Served', icon: MapPin },
+                  { value: '7', label: 'Countries Served', icon: MapPin },
                   { value: '100+', label: 'Equipment Models', icon: Boxes },
                 ].map((item, i) => {
                   const IconCmp = item.icon;

@@ -140,7 +140,7 @@ export default function Footer() {
                 style={{ marginBottom: '1rem', display: 'block' }}
               >
                 Founded in 2015. Trusted supplier of advanced construction and material
-                handling solutions across UAE & beyond.
+                handling solutions across Middle East and India. Serving 7 countries as per service network.
               </p>
 
               {/* Stat cards in a line */}
@@ -151,7 +151,7 @@ export default function Footer() {
                 {[
                   { value: '10+', label: 'Years' },
                   { value: '50+', label: 'Products' },
-                  { value: '15+', label: 'Markets' },
+                  { value: '7+', label: 'Markets' },
                 ].map(stat => (
                   <div
                     key={stat.label}
