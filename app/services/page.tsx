@@ -55,9 +55,8 @@ export default function Services() {
                 scissor lifts, boom lifts, telehandlers, and a comprehensive range of aerial work platforms.
               </p>
               <p className="text-muted leading-relaxed mb-6">
-                With collaboration with 10+ industrial manufacturers, we provide reliable equipment 
                 designed to enhance efficiency, safety, and productivity on every job site. Our products 
-                serve construction, maintenance, logistics, and service sectors globally.
+                serve construction, maintenance, logistics, and service sectors across 7 countries as per service network.
               </p>
               <Link href="/products" className="btn-primary" style={{ marginTop: '1rem' }}>
                 View Our Equipment <ArrowRight size={16} />
@@ -124,7 +123,7 @@ export default function Services() {
               {
                 icon: <Truck size={28} />,
                 title: 'Equipment Delivery',
-                desc: 'Reliable logistics and transportation of equipment to your job site across UAE and the broader region.',
+                desc: 'Reliable logistics and transportation of equipment to your job site across UAE, Saudi Arabia, Oman, Kuwait, Qatar, Bahrain, and India.',
               },
             ].map((service, i) => (
               <StaggerItem key={i}>
@@ -224,7 +223,7 @@ export default function Services() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             {[
               { value: '10+', label: 'Service Divisions' },
-              { value: '20+', label: 'Countries Served' },
+              { value: '7', label: 'Countries Served' },
               { value: '350+', label: 'Equipment Delivered' },
               { value: '24/7', label: 'Technical Support' },
             ].map((stat, i) => (
