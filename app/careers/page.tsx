@@ -72,7 +72,7 @@ export default function Careers() {
           <div style={{ padding: '0 0.5rem', marginTop: '1rem' }}>
             <StaggerContainer className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {[
-                { icon: <Globe size={28} />, title: 'Global Exposure', desc: 'Work across UAE and China in a truly international environment. Gain valuable experience in diverse global markets.' },
+                { icon: <Globe size={28} />, title: 'Global Exposure', desc: 'Work across our service network spanning 7 countries including UAE, Saudi Arabia, Oman, Kuwait, Qatar, Bahrain, and India.' },
                 { icon: <TrendingUp size={28} />, title: 'Career Growth', desc: 'Clear paths for advancement with mentorship and professional development programs to help you reach your full potential.' },
                 { icon: <Users size={28} />, title: 'Dynamic Team', desc: 'Collaborate with talented engineers, designers, and business professionals in a supportive and inclusive culture.' },
                 { icon: <Lightbulb size={28} />, title: 'Innovation First', desc: 'Work with cutting-edge equipment and modern engineering solutions that solve real-world industrial challenges.' },
