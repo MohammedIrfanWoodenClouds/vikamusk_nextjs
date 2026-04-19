@@ -38,9 +38,8 @@ export default function About() {
                 Discover Our Story
               </h2>
               <p className="text-muted leading-relaxed mb-4">
-                Founded in 2015 and now proudly established in the Ajman Free Zone of UAE, 
                 Vikamusk Construction Equipment is a trusted supplier of advanced construction and 
-                material handling solutions, serving clients across China, UAE, Saudi Arabia and Oman.
+                material handling solutions, serving clients across UAE, Saudi Arabia, Oman, Kuwait, Qatar, Bahrain, and India.
               </p>
               <p className="text-muted leading-relaxed mb-4">
                 Specializing in Forklifts and Aerial Work Platforms, Vikamusk provides reliable 
@@ -52,11 +51,9 @@ export default function About() {
                 range of industries, including construction, maintenance, logistics and service sectors.
               </p>
               <p className="text-muted leading-relaxed">
-                Driven by a vision to empower progress through smart lifting and handling solutions, 
                 Vikamusk Construction Equipment continues to build lasting partnerships and set new 
-                standards in equipment reliability across the region. The company is planning to 
-                establish market networks and service systems spanning the globe, providing products 
-                and services to more than 20 countries.
+                standards in equipment reliability across the region. The company is establishing 
+                market networks and service systems spanning the globe, including 7 countries as per service network.
               </p>
             </AnimatedSection>
 
@@ -158,7 +155,7 @@ export default function About() {
               { 
                 icon: <Globe size={28} />, 
                 title: 'Global Reach', 
-                desc: 'Expanding our networks and service systems to provide reliable products and expertise to more than 20 countries worldwide.' 
+                desc: 'Expanding our networks and service systems to provide reliable products and expertise to 7 countries as per service network.' 
               },
             ].map((val, i) => (
               <StaggerItem key={i} className="h-full">

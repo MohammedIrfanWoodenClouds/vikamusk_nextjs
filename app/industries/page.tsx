@@ -92,8 +92,7 @@ export default function Industries() {
               </h2>
               <p className="text-muted leading-relaxed mb-4">
                 Since 2015, Vikamusk Construction Equipment has supplied advanced lifting and
-                material handling solutions to clients across the UAE, India, Saudi Arabia, Oman,
-                and beyond. Our product range — from forklifts to aerial work platforms — is
+                material handling solutions to clients across the UAE, Saudi Arabia, Oman, Kuwait, Qatar, Bahrain, and India. Our product range — from forklifts to aerial work platforms — is
                 selected and configured to meet the unique demands of each sector we serve.
               </p>
               <p className="text-muted leading-relaxed mb-6">
@@ -160,7 +159,7 @@ export default function Industries() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             {[
               { value: '8+', label: 'Industries Served' },
-              { value: '20+', label: 'Countries Reached' },
+              { value: '7', label: 'Countries Served' },
               { value: '350+', label: 'Equipment Delivered' },
               { value: '10+', label: 'Manufacturing Partners' },
             ].map((stat, i) => (
