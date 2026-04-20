@@ -548,8 +548,22 @@ export async function seedDatabase() {
 // -----------------------------------------
 // Enquiries
 // -----------------------------------------
-export async function createEnquiry(data: { name: string; email: string; phone: string; product: string; message: string }) {
-  const doc = { ...data, created_at: new Date().toISOString(), is_read: false };
+export async function createEnquiry(data: { 
+  name: string; 
+  email: string; 
+  phone: string; 
+  company_name?: string;
+  location?: string;
+  subject?: string;
+  product?: string; 
+  message: string 
+}) {
+  const doc = { 
+    ...data, 
+    created_at: new Date().toISOString(), 
+    is_read: false,
+    is_contacted: false 
+  };
   const { data: enquiry, error } = await supabase
     .from('enquiries')
     .insert(doc)
@@ -568,4 +582,22 @@ export async function getAllEnquiries() {
 
   if (error) throw error;
   return data || [];
+}
+
+export async function updateEnquiry(id: string, data: any) {
+  const { error } = await supabase
+    .from('enquiries')
+    .update(data)
+    .eq('id', id);
+
+  if (error) throw error;
+}
+
+export async function deleteEnquiry(id: string) {
+  const { error } = await supabase
+    .from('enquiries')
+    .delete()
+    .eq('id', id);
+
+  if (error) throw error;
 }

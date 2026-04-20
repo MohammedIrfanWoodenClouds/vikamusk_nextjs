@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
+import { createEnquiry } from '@/lib/db';
 
 export async function POST(request: NextRequest) {
   try {
@@ -114,6 +115,24 @@ export async function POST(request: NextRequest) {
 
     // Send email
     await transporter.sendMail(mailOptions);
+
+    // Save to database (after email success, or before? User wants it saved)
+    try {
+      await createEnquiry({
+        name: fullName,
+        email,
+        phone,
+        company_name: companyName || null,
+        location: location || null,
+        subject: subject || null,
+        product: subject || null, // Map subject to product as well for legacy support
+        message: message || ''
+      });
+    } catch (dbError) {
+      console.error('Failed to save enquiry to database:', dbError);
+      // We don't fail the request if just the DB save fails, 
+      // but the email was already sent.
+    }
 
     return NextResponse.json(
       { success: true, message: 'Enquiry submitted successfully.' },
