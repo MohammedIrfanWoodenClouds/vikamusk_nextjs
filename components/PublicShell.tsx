@@ -19,7 +19,9 @@ export default function PublicShell({ children }: { children: React.ReactNode })
       <Navbar />
 
       <main className="min-h-screen overflow-x-hidden pt-[88px] lg:pt-[104px]">{children}</main>
-      <Footer />
+      <div className={pathname === '/' ? '' : 'mt-16 lg:mt-24'}>
+        <Footer />
+      </div>
     </>
   );
 }

@@ -662,7 +662,7 @@ export default function Home() {
               <div className="flex flex-col">
                 {[
                   { flag: '🇦🇪', country: 'UAE', city: 'Ajman Free Zone', detail: 'Head Office & International Hub' },
-                  { flag: '🇦🇪', country: 'UAE', city: 'Dubai Mainland', detail: 'UAE Domestic Hub' },
+                  { flag: '🇦🇪', country: 'UAE', city: 'Dubai', detail: 'UAE Domestic Hub' },
                   { flag: '🇮🇳', country: 'India', city: 'Kochi', detail: 'India Domestic Hub' },
                   { flag: '🇨🇳', country: 'China', city: 'Qingdao', detail: 'Manufacturing Partnership' },
                 ].map((loc, i) => (

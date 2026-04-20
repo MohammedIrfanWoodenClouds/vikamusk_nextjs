@@ -245,7 +245,7 @@ export default function Footer() {
                 {/* Office cards */}
                 {[
                   { company: 'Vikamusk Construction Equipment FZE', region: 'Ajman, UAE (HQ)', address: 'Ajman Free Zone, United Arab Emirates' },
-                  { company: 'Vikamusk Construction Equipment LLC', region: 'Dubai, UAE', address: 'Dubai Mainland, United Arab Emirates' },
+                  { company: 'Vikamusk Construction Equipment LLC', region: 'Dubai, UAE', address: 'Dubai, United Arab Emirates' },
                   { company: 'Vikamusk International Pvt Ltd', region: 'Kochi, India', address: 'Kochi, Kerala, India' },
                 ].map(({ company, region, address }) => (
                   <div

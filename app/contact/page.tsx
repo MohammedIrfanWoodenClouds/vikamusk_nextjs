@@ -197,7 +197,7 @@ export default function Contact() {
                 </p>
               </div>
 
-              {/* Card 2: UAE Mainland */}
+              {/* Card 2: Dubai */}
               <div className="bg-white rounded-[2rem] shadow-[0_10px_40px_rgba(0,31,63,0.04)] border border-slate-100 hover:shadow-[0_20px_50px_rgba(0,31,63,0.08)] transition-shadow duration-300 flex flex-col h-full" style={{ padding: '32px' }}>
                 <div className="flex justify-between items-center mb-8">
                   <span className="bg-amber-50 text-amber-600 px-3 py-1 text-[10px] font-black uppercase tracking-widest rounded-md border border-amber-100">UAE - DUBAI</span>
@@ -207,7 +207,7 @@ export default function Contact() {
                   </div>
                 </div>
                 
-                <h3 className="text-[20px] md:text-[22px] font-black text-[#001f3f] mb-6">Dubai Mainland</h3>
+                <h3 className="text-[20px] md:text-[22px] font-black text-[#001f3f] mb-6">Dubai</h3>
                 
                 <div className="space-y-4 mb-6">
                   <div className="flex items-center gap-3">
