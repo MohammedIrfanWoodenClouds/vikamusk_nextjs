@@ -118,7 +118,7 @@ export default function Footer() {
 
         {/* ── Main grid ─────────────────────────────────────────────── */}
         <div className="relative container-custom pt-24 pb-16 lg:pt-32 lg:pb-24">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-x-20 items-start">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1.1fr_1.8fr] gap-12 lg:gap-x-12 items-start">
 
             {/* Brand */}
             <div>
@@ -136,7 +136,7 @@ export default function Footer() {
 
               {/* 1rem forced margin */}
               <p 
-                className="text-white/45 text-sm leading-relaxed max-w-[280px]" 
+                className="text-white/45 text-sm leading-relaxed max-w-[320px]" 
                 style={{ marginBottom: '1rem', display: 'block' }}
               >
                 Founded in 2015. Trusted supplier of advanced construction and material
@@ -253,7 +253,7 @@ export default function Footer() {
                     className="rounded-xl bg-white/[0.03] border border-white/[0.07] hover:border-white/[0.13] transition-colors duration-200"
                     style={{ padding: '16px', marginBottom: '16px' }}
                   >
-                    <p className="text-white font-bold text-[13px] mb-1.5 leading-tight truncate" title={company}>
+                    <p className="text-white font-bold text-[13px] mb-1.5 leading-tight whitespace-nowrap" title={company}>
                       {company}
                     </p>
                     <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-accent/80 mb-2">
