@@ -15,6 +15,7 @@ export default function Contact() {
     email: '',
     phone: '',
     companyName: '',
+    location: '',
     message: '',
   });
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
@@ -34,6 +35,7 @@ export default function Contact() {
           email: formData.email,
           phone: formData.phone,
           companyName: formData.companyName,
+          location: formData.location,
           subject: 'General Enquiry',
           message: formData.message,
         }),
@@ -43,7 +45,7 @@ export default function Contact() {
 
       if (res.ok) {
         setStatus('success');
-        setFormData({ firstName: '', lastName: '', email: '', phone: '', companyName: '', message: '' });
+        setFormData({ firstName: '', lastName: '', email: '', phone: '', companyName: '', location: '', message: '' });
       } else {
         setStatus('error');
         setErrorMsg(data.error || 'Something went wrong.');
@@ -387,6 +389,22 @@ export default function Contact() {
                         style={{ paddingLeft: '40px', paddingRight: '24px' }}
                         value={formData.companyName}
                         onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
+                      />
+                    </div>
+
+                    {/* Location */}
+                    <div className="space-y-3">
+                      <label htmlFor="location" className="block text-[12px] font-bold text-slate-400 uppercase tracking-[0.2em]">
+                        Your Location
+                      </label>
+                      <input
+                        type="text"
+                        id="location"
+                        placeholder="City, Country..."
+                        className="w-full h-14 bg-white border-2 border-slate-100 rounded-xl text-[#001f3f] font-medium placeholder:text-slate-300 focus:border-[#fabc22] focus:ring-0 transition-all outline-none shadow-sm"
+                        style={{ paddingLeft: '40px', paddingRight: '24px' }}
+                        value={formData.location}
+                        onChange={(e) => setFormData({ ...formData, location: e.target.value })}
                       />
                     </div>
                   </div>
