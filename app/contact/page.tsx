@@ -14,6 +14,7 @@ export default function Contact() {
     lastName: '',
     email: '',
     phone: '',
+    companyName: '',
     message: '',
   });
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
@@ -32,6 +33,7 @@ export default function Contact() {
           fullName: `${formData.firstName} ${formData.lastName}`.trim(),
           email: formData.email,
           phone: formData.phone,
+          companyName: formData.companyName,
           subject: 'General Enquiry',
           message: formData.message,
         }),
@@ -41,7 +43,7 @@ export default function Contact() {
 
       if (res.ok) {
         setStatus('success');
-        setFormData({ firstName: '', lastName: '', email: '', phone: '', message: '' });
+        setFormData({ firstName: '', lastName: '', email: '', phone: '', companyName: '', message: '' });
       } else {
         setStatus('error');
         setErrorMsg(data.error || 'Something went wrong.');
@@ -369,6 +371,22 @@ export default function Contact() {
                         style={{ paddingLeft: '40px', paddingRight: '24px' }}
                         value={formData.phone}
                         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                      />
+                    </div>
+
+                    {/* Company Name */}
+                    <div className="space-y-3">
+                      <label htmlFor="companyName" className="block text-[12px] font-bold text-slate-400 uppercase tracking-[0.2em]">
+                        Company Name
+                      </label>
+                      <input
+                        type="text"
+                        id="companyName"
+                        placeholder="Please enter company name..."
+                        className="w-full h-14 bg-white border-2 border-slate-100 rounded-xl text-[#001f3f] font-medium placeholder:text-slate-300 focus:border-[#fabc22] focus:ring-0 transition-all outline-none shadow-sm"
+                        style={{ paddingLeft: '40px', paddingRight: '24px' }}
+                        value={formData.companyName}
+                        onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
                       />
                     </div>
                   </div>
