@@ -643,7 +643,7 @@ export default function Contact() {
 
       {/* ══ MAP SECTION ═════════════════════════════════════════════ */}
 
-      <section className="bg-white pt-24 pb-20">
+      <section className="bg-white pt-24" style={{ paddingBottom: '160px' }}>
         <div className="container-custom">
           <AnimatedSection direction="up">
             <div className="text-center mb-14">
@@ -687,6 +687,7 @@ export default function Contact() {
                 </div>
               </div>
             </div>
+            <div className="h-24 lg:h-40" />
           </AnimatedSection>
         </div>
       </section>
