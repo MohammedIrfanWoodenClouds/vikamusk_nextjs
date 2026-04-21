@@ -117,22 +117,26 @@ export default function Footer() {
         <div className="relative h-px bg-gradient-to-r from-transparent via-accent/45 to-transparent" />
 
         {/* ── Main grid ─────────────────────────────────────────────── */}
-        <div className="relative container-custom pt-24 pb-16 lg:pt-32 lg:pb-24">
+        <div className="relative container-custom pt-8 pb-16 lg:pt-16 lg:pb-24">
+          {/* Logo Top Line */}
+          <div className="mb-12" style={{ marginTop: '2rem' }}>
+            <Link href="/" className="inline-block">
+              <div className="relative" style={{ width: '150px', height: '40px' }}>
+                <Image
+                  src="/images/logo-white.png"
+                  alt="Vikamusk International"
+                  fill
+                  className="object-contain object-left"
+                  sizes="150px"
+                />
+              </div>
+            </Link>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1.1fr_1.8fr] gap-12 lg:gap-x-12 items-start">
 
             {/* Brand */}
             <div>
-              <Link href="/" className="inline-block mb-10">
-                <div className="relative" style={{ width: '150px', height: '40px' }}>
-                  <Image
-                    src="/images/logo-white.png"
-                    alt="Vikamusk International"
-                    fill
-                    className="object-contain object-left"
-                    sizes="150px"
-                  />
-                </div>
-              </Link>
 
               {/* 1rem forced margin */}
               <p 

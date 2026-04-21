@@ -218,7 +218,7 @@ export default function Services() {
       </section>
 
       {/* Service Stats */}
-      <section className="py-16 bg-primary text-white">
+      <section className="bg-[#001f3f] text-white" style={{ paddingTop: '6rem', paddingBottom: '4rem' }}>
         <div className="container-custom">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             {[
