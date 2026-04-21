@@ -18,7 +18,12 @@ export default function PublicShell({ children }: { children: React.ReactNode })
       <SplashScreen />
       <Navbar />
 
-      <main className="min-h-screen overflow-x-hidden pt-[168px] lg:pt-[152px]">{children}</main>
+      <main 
+        className="min-h-screen overflow-x-hidden pt-[180px] lg:pt-[152px]"
+        style={{ paddingTop: '70px' }}
+      >
+        {children}
+      </main>
       <div className={pathname === '/' ? '' : 'mt-16 lg:mt-24'}>
         <Footer />
       </div>

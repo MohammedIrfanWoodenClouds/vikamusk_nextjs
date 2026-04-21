@@ -187,73 +187,116 @@ function SpecTable({ models }: { models: ProductModel[] }) {
     m.specs?.find(s => s.label === label)?.value ?? '—';
 
   return (
-    <div className="overflow-x-auto rounded-2xl" style={{ border: '1px solid #e2e8f0' }}>
-      <table className="w-full text-base border-collapse" style={{ minWidth: Math.max(680, models.length * 200) }}>
-        <thead className="sticky top-0 z-20">
-          <tr style={{ background: '#001f3f' }}>
-            <th
-              className="sticky left-0 z-30 text-left py-5 uppercase tracking-widest"
-              style={{ 
-                color: 'rgba(255,255,255,0.45)', 
-                background: '#001229', 
-                borderRight: '1px solid rgba(255,255,255,0.06)', 
-                minWidth: 180,
-                paddingLeft: '1.25rem',
-                paddingRight: '1rem',
-                fontWeight: 900,
-                fontSize: '11px'
-              }}
-            >
-              Specification
-            </th>
-            {models.map(m => (
-              <th key={m.id} className="px-5 py-5 text-center font-black whitespace-nowrap"
-                style={{ color: '#f59e0b', borderRight: '1px solid rgba(255,255,255,0.06)', minWidth: 160, fontSize: '15px' }}>
-                {m.model_name}
+    <>
+      {/* Desktop Table View */}
+      <div className="hidden lg:block overflow-x-auto rounded-2xl scrollbar-thin scrollbar-thumb-accent/20" style={{ border: '1px solid #e2e8f0' }}>
+        <table className="w-full text-base border-collapse" style={{ minWidth: models.length * 200 }}>
+          <thead className="sticky top-0 z-20">
+            <tr style={{ background: '#001f3f' }}>
+              <th
+                className="sticky left-0 z-30 text-left py-5 uppercase tracking-widest px-8 font-black text-[11px]"
+                style={{ color: 'rgba(255,255,255,0.45)', background: '#001229', borderRight: '1px solid rgba(255,255,255,0.06)', minWidth: 220 }}
+              >
+                Specification
               </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {allLabels.map((label, i) => {
-            const values = models.map(m => getValue(m, label));
-            const isDiff = new Set(values.filter(v => v !== '—')).size > 1;
-            const rowBg = i % 2 === 0 ? '#f8fafc' : '#ffffff';
-            const isSection = label.includes('---');
-            
-            return (
-              <tr key={label} className="group" style={{ background: rowBg }}>
-                <td
-                  className="sticky left-0 z-10 py-4 uppercase tracking-wide"
-                  style={{ 
-                    color: isSection ? '#001f3f' : '#475569', 
-                    background: rowBg, 
-                    borderRight: '1px solid #e2e8f0',
-                    paddingLeft: isSection ? '1.25rem' : '2rem',
-                    paddingRight: '1rem',
-                    fontWeight: isSection ? 900 : 700,
-                    fontSize: isSection ? '12px' : '12px'
-                  }}
-                >
-                  <span className="flex items-center gap-2">
-                    {label}
-                    {!isSection && isDiff && (
-                      <span className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: '#f59e0b' }} />
-                    )}
-                  </span>
-                </td>
-                {models.map(m => (
-                  <td key={m.id} className="px-5 py-4 text-center font-bold"
-                    style={{ color: '#001f3f', borderRight: '1px solid #f1f5f9', fontSize: '16px' }}>
-                    {getValue(m, label)}
+              {models.map(m => (
+                <th key={m.id} className="px-5 py-5 text-center font-black whitespace-nowrap"
+                  style={{ color: '#f59e0b', borderRight: '1px solid rgba(255,255,255,0.06)', minWidth: 160, fontSize: '15px' }}>
+                  {m.model_name}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {allLabels.map((label, i) => {
+              const values = models.map(m => getValue(m, label));
+              const isDiff = new Set(values.filter(v => v !== '—')).size > 1;
+              const rowBg = i % 2 === 0 ? '#f8fafc' : '#ffffff';
+              const isSection = label.includes('---');
+              
+              return (
+                <tr key={label} className="group" style={{ background: rowBg }}>
+                  <td
+                    className="sticky left-0 z-10 py-5 px-8 uppercase tracking-wide font-bold text-[12px]"
+                    style={{ 
+                      color: isSection ? '#001f3f' : '#475569', 
+                      background: rowBg, 
+                      borderRight: '1px solid #e2e8f0',
+                      paddingLeft: isSection ? '2rem' : '3.5rem',
+                      fontWeight: isSection ? 900 : 700
+                    }}
+                  >
+                    <span className="flex items-center gap-2">
+                      {label}
+                      {!isSection && isDiff && (
+                        <span className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: '#f59e0b' }} />
+                      )}
+                    </span>
                   </td>
-                ))}
-              </tr>
+                  {models.map(m => (
+                    <td key={m.id} className="px-5 py-5 text-center font-bold"
+                      style={{ color: '#001f3f', borderRight: '1px solid #f1f5f9', fontSize: '16px' }}>
+                      {getValue(m, label)}
+                    </td>
+                  ))}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Mobile Professional Data List View */}
+      <div className="lg:hidden px-4 pb-16">
+        {allLabels.map((label, i) => {
+          const isSection = label.includes('---');
+          if (isSection) {
+            return (
+              <div key={label} className="mt-12 mb-6 border-l-4 border-accent pl-4 py-1">
+                <h4 className="text-[15px] font-black uppercase tracking-[0.2em] text-[#001f3f]">
+                  {label.replace(/---/g, '').trim()}
+                </h4>
+              </div>
             );
-          })}
-        </tbody>
-      </table>
-    </div>
+          }
+
+          const modelValues = models.map(m => ({ name: m.model_name, val: getValue(m, label) }));
+          const hasVariant = new Set(modelValues.map(v => v.val).filter(v => v !== '—')).size > 1;
+
+          return (
+            <div 
+              key={label} 
+              className="mb-8 border-b border-gray-200 pb-6"
+            >
+              <div className="flex items-center gap-3 mb-4">
+                <span className="text-[11px] font-black uppercase tracking-[0.25em] text-[#94a3b8]">
+                  {label}
+                </span>
+                {hasVariant && (
+                  <span className="px-2 py-0.5 rounded text-[8px] font-black bg-[#f59e0b]/10 text-[#d97706] uppercase tracking-widest border border-[#f59e0b]/20">
+                    Variant
+                  </span>
+                )}
+              </div>
+              
+              <div className="space-y-4">
+                {modelValues.map((m, idx) => (
+                  <div key={idx} className="flex justify-between items-baseline gap-8">
+                    <span className="text-[11px] font-bold text-gray-400 uppercase tracking-tight shrink-0">
+                      {m.name}
+                    </span>
+                    <div className="h-px flex-1 border-b border-dotted border-gray-200 mt-1" />
+                    <span className="text-[15px] font-black text-[#001f3f] text-right">
+                      {m.val}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </>
   );
 }
 
@@ -401,7 +444,7 @@ export default function ProductDetail() {
     <div className="overflow-hidden">
 
       {/* Navbar spacer */}
-      {/* Global Navbar spacing handled by PublicShell */}
+      <div className="h-6 sm:hidden w-full bg-white" />
 
       {/* ── Breadcrumb ── */}
       <div
@@ -893,19 +936,18 @@ export default function ProductDetail() {
                         {specsEntries.map(([key, value], i) => (
                           <div
                             key={key}
-                            className="flex justify-between items-center pr-4 py-3.5 transition-colors"
+                            className="flex flex-col sm:flex-row justify-between items-start sm:items-center px-4 sm:px-6 py-4 transition-colors gap-1.5 sm:gap-4"
                             style={{
                               background: i % 2 === 0 ? '#f8fafc' : '#fff',
                               borderBottom: i < specsCount - 1 ? '1px solid #f1f5f9' : 'none',
-                              paddingLeft: key.includes('---') ? '1.5rem' : '2.5rem'
                             }}
                             onMouseEnter={e => { e.currentTarget.style.background = 'rgba(245,158,11,0.03)'; }}
                             onMouseLeave={e => { e.currentTarget.style.background = i % 2 === 0 ? '#f8fafc' : '#fff'; }}
                           >
-                            <span className={`text-[14px] ${key.includes('---') ? 'font-black text-[#001f3f]' : 'font-bold text-[#64748b]'}`}>
+                            <span className={`text-[12px] sm:text-[14px] leading-tight ${key.includes('---') ? 'font-black text-[#001f3f]' : 'font-bold text-[#64748b]'}`}>
                               {key}
                             </span>
-                            <span className="text-[16px] font-black ml-4 text-right" style={{ color: '#001f3f' }}>
+                            <span className="text-[15px] sm:text-[16px] font-black text-left sm:text-right" style={{ color: '#001f3f' }}>
                               {String(value)}
                             </span>
                           </div>
@@ -1188,7 +1230,7 @@ export default function ProductDetail() {
       {models.length > 1 && (
         <section className="section-padding" style={{ background: '#f8fafc', borderTop: '1px solid #e2e8f0' }}>
           <div className="container-custom">
-            <AnimatedSection className="mb-8">
+            <AnimatedSection className="mb-8 px-4 sm:px-0">
               <span className="text-[11px] font-bold uppercase tracking-widest block mb-2"
                 style={{ color: '#f59e0b' }}>Technical Data</span>
               <h2 className="text-2xl lg:text-3xl font-black" style={{ color: '#001f3f' }}>

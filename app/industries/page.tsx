@@ -182,13 +182,13 @@ export default function Industries() {
           <AnimatedSection>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
               <h2
-                className="text-3xl lg:text-4xl font-black text-white"
-                style={{ marginBottom: '1.5rem', whiteSpace: 'nowrap', textAlign: 'center' }}
+                className="text-3xl md:text-4xl lg:text-5xl font-black text-white"
+                style={{ marginBottom: '1.5rem', textAlign: 'center' }}
               >
                 Need Equipment for Your Industry?
               </h2>
               <p
-                className="text-gray-400 leading-relaxed"
+                className="text-gray-400 leading-relaxed px-4"
                 style={{
                   maxWidth: '640px',
                   marginBottom: '2.5rem',
@@ -201,14 +201,14 @@ export default function Industries() {
                 support package for your operation.
               </p>
               <div
-                className="flex flex-wrap justify-center"
+                className="flex flex-col sm:flex-row justify-center items-center w-full max-w-md mx-auto"
                 style={{ gap: '1.25rem', marginTop: '0.5rem' }}
               >
                 <Link
                   href="/contact"
-                  className="btn-primary hover:!bg-white hover:!text-[#001f3f] hover:!border-black font-bold rounded-xl transition-all duration-300 inline-flex items-center gap-2.5 hover:scale-105 shadow-lg shadow-amber-500/20 hover:shadow-none"
+                  className="btn-primary w-full sm:w-auto hover:!bg-white hover:!text-[#001f3f] hover:!border-black font-bold rounded-xl transition-all duration-300 inline-flex items-center justify-center gap-2.5 hover:scale-105 shadow-lg shadow-amber-500/20 hover:shadow-none"
                   style={{
-                    padding: '1rem 2.25rem',
+                    padding: '1.25rem 2.25rem',
                     fontSize: '0.95rem',
                   }}
                 >
@@ -216,9 +216,9 @@ export default function Industries() {
                 </Link>
                 <Link
                   href="/products"
-                  className="bg-white/10 hover:!bg-white text-white hover:!text-[#001f3f] font-semibold rounded-xl border-2 border-white/20 hover:!border-black transition-all duration-300 inline-flex items-center gap-2.5 hover:scale-105"
+                  className="bg-white/10 w-full sm:w-auto hover:!bg-white text-white hover:!text-[#001f3f] font-semibold rounded-xl border-2 border-white/20 hover:!border-black transition-all duration-300 inline-flex items-center justify-center gap-2.5 hover:scale-105"
                   style={{
-                    padding: '1rem 2.25rem',
+                    padding: '1.25rem 2.25rem',
                     fontSize: '0.95rem',
                   }}
                 >

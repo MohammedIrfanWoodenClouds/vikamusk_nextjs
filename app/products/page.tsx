@@ -480,41 +480,38 @@ function ProductsContent() {
           
           {/* Section Indicator Badge - Pinned to top */}
           <div 
-            className="absolute left-1/2 -translate-x-1/2 z-20"
-            style={{ top: '6rem' }}
+            className="absolute left-1/2 -translate-x-1/2 z-20 top-8 sm:top-12 lg:top-24 w-full flex justify-center"
           >
             <div 
-              className="inline-flex items-center gap-3 border-2 border-accent/40 rounded-full font-black text-accent uppercase shadow-2xl"
+              className="inline-flex items-center gap-2 sm:gap-3 border-2 border-accent/40 rounded-full font-black text-accent uppercase shadow-2xl px-6 sm:px-10 py-3 sm:py-3.5"
               style={{ 
-                padding: '0.85rem 2.5rem', 
                 backgroundColor: 'rgba(245, 158, 11, 0.25)',
-                letterSpacing: '0.3em',
-                fontSize: '13px'
+                letterSpacing: '0.2em',
+                fontSize: '11px'
               }}
             >
-              <SlidersHorizontal size={16} /> Need Help Choosing?
+              <SlidersHorizontal size={14} /> Need Help Choosing?
             </div>
           </div>
           
-          <div className="container-custom text-center relative z-10">
+          <div className="container-custom text-center relative z-10 pt-20 sm:pt-0">
             <AnimatedSection>
-              <h2 className="text-[32px] sm:text-[48px] lg:text-[64px] font-black text-white mt-10 mb-6 leading-[1.1] text-center whitespace-nowrap">
-                Can't Find What You're <span className="text-accent underline underline-offset-[16px] decoration-[6px]">Looking For?</span>
+              <h2 className="text-3xl sm:text-5xl lg:text-[64px] font-black text-white mt-10 mb-6 leading-[1.2] sm:leading-[1.1] text-center">
+                Can't Find What You're <span className="text-accent underline underline-offset-[12px] sm:underline-offset-[16px] decoration-[4px] sm:decoration-[6px]">Looking For?</span>
               </h2>
               
               <div className="flex flex-col items-center w-full" style={{ marginTop: '2rem', marginBottom: '3rem' }}>
                 <p 
-                  className="text-white/70 max-w-4xl text-lg sm:text-xl leading-relaxed font-medium text-center"
+                  className="text-white/70 max-w-4xl text-base sm:text-xl leading-relaxed font-medium text-center px-4"
                 >
                   Our equipment specialists are ready to help you find the perfect solution<br className="hidden sm:block" /> for your project requirements. Connect with us for a custom consultation.
                 </p>
               </div>
               
-                <div className="flex flex-wrap justify-center items-center gap-2 mb-8 mt-20">
+              <div className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-6 mb-8 mt-12 sm:mt-20 w-full max-w-2xl mx-auto">
                 <Link 
                   href="/contact" 
-                  className="bg-accent text-[#001f3f] rounded-[2rem] font-black uppercase tracking-[0.2em] hover:bg-white hover:scale-105 transition-all mb-8 flex items-center justify-center gap-3 shadow-[0_25px_60px_rgba(245,158,11,0.4)] group"
-                  style={{ padding: '1rem 2.5rem', margin: '1rem', fontSize: '14px' }}
+                  className="w-full sm:w-auto bg-accent text-[#001f3f] rounded-[2rem] font-black uppercase tracking-[0.2em] hover:bg-white hover:scale-105 transition-all flex items-center justify-center gap-3 shadow-[0_25px_60px_rgba(245,158,11,0.4)] group px-8 py-4 text-sm"
                 >
                   Contact Sales <ArrowRight size={20} className="group-hover:translate-x-2 transition-transform" />
                 </Link>
@@ -522,8 +519,7 @@ function ProductsContent() {
                   href="/vikamusk-company-profile.pdf" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="bg-white/5 border-2 border-white/20 text-white rounded-[2rem] font-black uppercase tracking-[0.2em] hover:bg-white hover:text-primary hover:scale-105 transition-all mb-8 flex items-center justify-center shadow-xl"
-                  style={{ padding: '1rem 2.5rem', margin: '1rem', fontSize: '14px' }}
+                  className="w-full sm:w-auto bg-white/5 border-2 border-white/20 text-white rounded-[2rem] font-black uppercase tracking-[0.2em] hover:bg-white hover:text-primary hover:scale-105 transition-all flex items-center justify-center shadow-xl px-8 py-4 text-sm"
                 >
                   Download Catalogue
                 </a>
