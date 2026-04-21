@@ -568,7 +568,7 @@ export default function Home() {
 
       {/* ===== WHY CHOOSE US ===== */}
       <section
-        className="relative min-h-[100dvh] flex flex-col justify-center py-16 lg:py-24 overflow-x-hidden"
+        className="relative min-h-[50dvh] sm:min-h-[100dvh] flex flex-col justify-start sm:justify-center pt-20 pb-8 lg:py-24 overflow-x-hidden"
         style={{ background: '#001f3f' }}
       >
         <div className="absolute inset-0" style={{ background: 'linear-gradient(165deg, #001229 0%, #072443 42%, #001f3f 100%)' }} />
@@ -612,9 +612,9 @@ export default function Home() {
             </div>
           </AnimatedSection>
 
-          <StaggerContainer className="grid w-full grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <StaggerContainer className="grid w-full grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-6 sm:mb-0">
             {whyItems.map((item, i) => (
-              <StaggerItem key={i} className={i === 5 ? 'mb-6 sm:mb-0' : ''}>
+              <StaggerItem key={i}>
                 <motion.div
                   whileHover={{ y: -6 }}
                   className="group relative h-full flex flex-col items-center text-center p-8 sm:p-10 rounded-[1.35rem] bg-white/[0.04] border border-white/[0.09] backdrop-blur-sm overflow-hidden transition-all duration-300 hover:bg-white/[0.07] hover:border-accent/25 hover:shadow-[0_24px_48px_-12px_rgba(0,0,0,0.35)]"
@@ -699,7 +699,7 @@ export default function Home() {
       </section>
 
       {/* ===== BUILD YOUR DREAM CTA ===== */}
-      <section className="relative min-h-[100dvh] flex flex-col justify-center py-16 lg:py-24 overflow-x-hidden bg-[#001229] pb-24 lg:pb-32">
+      <section className="relative min-h-[50dvh] sm:min-h-[100dvh] flex flex-col justify-start sm:justify-center pt-20 pb-8 lg:py-24 overflow-x-hidden bg-[#001229] lg:pb-32">
         <div className="absolute inset-0 bg-gradient-to-br from-[#001f3f] via-[#001229] to-[#000d1a]" />
         <div
           className="absolute inset-0 opacity-[0.045] pointer-events-none"
@@ -760,7 +760,7 @@ export default function Home() {
                   return (
                     <div
                       key={i}
-                      className={`flex flex-col items-center text-center rounded-2xl border border-white/[0.08] bg-white/[0.03] px-6 py-8 sm:py-9 backdrop-blur-sm hover:border-accent/20 hover:bg-white/[0.05] transition-all duration-300 ${i === 2 ? 'mb-6 sm:mb-0' : ''}`}
+                      className="flex flex-col items-center text-center rounded-2xl border border-white/[0.08] bg-white/[0.03] px-6 py-8 sm:py-9 backdrop-blur-sm hover:border-accent/20 hover:bg-white/[0.05] transition-all duration-300"
                     >
                       <div className="w-14 h-14 rounded-2xl bg-white/[0.06] flex items-center justify-center text-accent/70 mb-5 ring-1 ring-white/10">
                         <IconCmp size={26} strokeWidth={1.75} />
@@ -773,6 +773,8 @@ export default function Home() {
                   );
                 })}
               </div>
+              {/* Responsive spacer after cards */}
+              <div className="h-6 sm:hidden" />
             </div>
           </AnimatedSection>
         </div>
