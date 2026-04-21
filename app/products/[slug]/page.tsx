@@ -401,7 +401,7 @@ export default function ProductDetail() {
     <div className="overflow-hidden">
 
       {/* Navbar spacer */}
-      <div className="h-[88px] lg:h-[104px] w-full bg-white" />
+      {/* Global Navbar spacing handled by PublicShell */}
 
       {/* ── Breadcrumb ── */}
       <div

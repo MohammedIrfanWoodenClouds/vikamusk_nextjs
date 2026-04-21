@@ -158,7 +158,10 @@ export default function Home() {
           />
         </div>
 
-        <div className="container-custom relative z-10 py-24 lg:py-32">
+        <div 
+          className="container-custom relative z-10 py-24 lg:py-32"
+          style={{ paddingTop: '100px' }}
+        >
           <div className="max-w-3xl">
             {/* Badge */}
             <motion.div
@@ -582,7 +585,10 @@ export default function Home() {
         <div className="absolute top-1/4 -left-32 w-[520px] h-[520px] bg-accent/[0.06] rounded-full blur-[100px] pointer-events-none" />
         <div className="absolute bottom-0 -right-24 w-[480px] h-[480px] bg-primary-light/[0.15] rounded-full blur-[100px] pointer-events-none" />
 
-        <div className="container-custom relative z-10 w-full py-4 flex flex-col items-center">
+        <div 
+          className="container-custom relative z-10 w-full flex flex-col items-center"
+          style={{ paddingTop: 'calc(1rem + 1.5rem)', paddingBottom: '1rem' }}
+        >
           <AnimatedSection className="w-full max-w-3xl mx-auto px-4 text-center mb-16">
             <div className="flex w-full justify-center mb-5">
               <motion.span
@@ -608,7 +614,7 @@ export default function Home() {
 
           <StaggerContainer className="grid w-full grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {whyItems.map((item, i) => (
-              <StaggerItem key={i}>
+              <StaggerItem key={i} className={i === 5 ? 'mb-6 sm:mb-0' : ''}>
                 <motion.div
                   whileHover={{ y: -6 }}
                   className="group relative h-full flex flex-col items-center text-center p-8 sm:p-10 rounded-[1.35rem] bg-white/[0.04] border border-white/[0.09] backdrop-blur-sm overflow-hidden transition-all duration-300 hover:bg-white/[0.07] hover:border-accent/25 hover:shadow-[0_24px_48px_-12px_rgba(0,0,0,0.35)]"
@@ -707,7 +713,7 @@ export default function Home() {
 
         <div className="container-custom relative z-10 w-full py-4 flex flex-col items-center">
           <AnimatedSection className="w-full max-w-5xl mx-auto flex flex-col items-center px-4 text-center">
-            <div className="flex w-full justify-center mb-4">
+            <div className="flex w-full justify-center mb-4" style={{ marginTop: '1.5rem' }}>
               <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-accent/10 border border-accent/25 text-accent text-xs font-bold uppercase tracking-[0.22em]">
                 <Star size={14} className="shrink-0 animate-pulse" />
                 Partner with excellence
