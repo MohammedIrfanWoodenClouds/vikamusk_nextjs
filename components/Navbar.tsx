@@ -107,6 +107,13 @@ export default function Navbar() {
   /* ---- Close mobile on route change ---- */
   useEffect(() => {
     setMobileOpen(false);
+    // Professionally reset the drawer accordions with a delay
+    // so they don't snap shut while the drawer is sliding out.
+    const t = setTimeout(() => {
+      setMobileProductsOpen(false);
+      setMobileSubOpen(null);
+    }, 300);
+    return () => clearTimeout(t);
   }, [pathname]);
 
   /* ---- Lock body scroll when mobile menu open ---- */
@@ -118,7 +125,13 @@ export default function Navbar() {
   }, [mobileOpen]);
 
   /* ---- Helpers ---- */
-  const closeMobile = useCallback(() => setMobileOpen(false), []);
+  const closeMobile = useCallback(() => {
+    setMobileOpen(false);
+    setTimeout(() => {
+      setMobileProductsOpen(false);
+      setMobileSubOpen(null);
+    }, 300);
+  }, []);
 
   const openMega = useCallback(() => {
     if (megaTimeout.current) clearTimeout(megaTimeout.current);
@@ -464,30 +477,31 @@ export default function Navbar() {
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
-              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="absolute right-0 top-0 h-full w-[min(320px,85vw)] bg-white shadow-2xl overflow-y-auto"
+              transition={{ type: 'spring', damping: 30, stiffness: 220 }}
+              className="absolute right-0 top-0 h-full w-[320px] max-w-[85vw] bg-white shadow-2xl overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="p-5 pb-8">
+              <div style={{ padding: '32px 24px 40px 24px' }}>
                 {/* Header */}
-                <div className="flex items-center justify-between mb-8 pb-4 border-b border-gray-100">
-                  <div className="relative" style={{ width: '220px', height: '56px', transform: 'scale(1.15)', transformOrigin: 'left center' }}>
-                    <Image src="/images/logo-black.png" alt="Vikamusk" fill className="object-contain object-left" sizes="220px" />
+                <div className="flex items-center justify-between mb-10 pb-5 border-b border-gray-100">
+                  <div className="relative" style={{ width: '160px', height: '40px' }}>
+                    <Image src="/images/logo-black.png" alt="Vikamusk" fill className="object-contain object-left" sizes="160px" />
                   </div>
-                  <button onClick={closeMobile} className="p-1.5 hover:bg-gray-100 rounded-md transition-colors" aria-label="Close menu">
-                    <X size={20} className="text-gray-500" />
+                  <button onClick={closeMobile} className="p-2 hover:bg-gray-100 rounded-full transition-colors" aria-label="Close menu">
+                    <X size={24} className="text-gray-600" />
                   </button>
                 </div>
 
                 {/* Links */}
-                <div className="space-y-0.5">
+                <div className="space-y-1">
                   {/* Home */}
                   <Link
                     href="/"
                     onClick={closeMobile}
-                    className={`block px-3 py-2.5 text-[15px] font-semibold rounded-md transition-colors ${
+                    className={`block text-[16px] font-semibold rounded-xl transition-colors ${
                       isActive('/') ? 'text-accent bg-amber-50' : 'text-gray-700 hover:text-accent hover:bg-gray-50'
                     }`}
+                    style={{ padding: '12px 16px' }}
                   >
                     Home
                   </Link>
@@ -498,11 +512,12 @@ export default function Navbar() {
                       key={link.name}
                       href={link.href}
                       onClick={closeMobile}
-                      className={`block px-3 py-2.5 text-[15px] font-semibold rounded-md transition-colors ${
+                      className={`block text-[16px] font-semibold rounded-xl transition-colors ${
                         isActive(link.href)
                           ? 'text-accent bg-amber-50'
                           : 'text-gray-700 hover:text-accent hover:bg-gray-50'
                       }`}
+                      style={{ padding: '12px 16px' }}
                     >
                       {link.name}
                     </Link>
@@ -512,11 +527,12 @@ export default function Navbar() {
                   <div>
                     <button
                       onClick={() => setMobileProductsOpen(!mobileProductsOpen)}
-                      className={`w-full flex items-center justify-between px-3 py-2.5 text-[15px] font-semibold rounded-md transition-colors ${
+                      className={`w-full flex items-center justify-between text-[16px] font-semibold rounded-xl transition-colors ${
                         isActive('/products') || isActive('/categories')
                           ? 'text-accent bg-amber-50'
                           : 'text-gray-700 hover:text-accent hover:bg-gray-50'
                       }`}
+                      style={{ padding: '12px 16px' }}
                     >
                       Products
                       <ChevronDown
@@ -621,11 +637,12 @@ export default function Navbar() {
                       key={link.name}
                       href={link.href}
                       onClick={closeMobile}
-                      className={`block px-3 py-2.5 text-[15px] font-semibold rounded-md transition-colors ${
+                      className={`block text-[16px] font-semibold rounded-xl transition-colors ${
                         isActive(link.href)
                           ? 'text-accent bg-amber-50'
                           : 'text-gray-700 hover:text-accent hover:bg-gray-50'
                       }`}
+                      style={{ padding: '12px 16px' }}
                     >
                       {link.name}
                     </Link>
@@ -635,12 +652,12 @@ export default function Navbar() {
                 </div>
 
                 {/* Mobile CTA */}
-                <div className="mt-8 pt-5 border-t border-gray-100">
+                <div className="border-t border-gray-100" style={{ marginTop: '24px', paddingTop: '24px' }}>
                   <Link
                     href="/contact"
                     onClick={closeMobile}
-                    className="block w-full text-center bg-accent hover:bg-amber-500 text-[#001f3f] font-bold text-[15px] rounded-xl transition-colors shadow-lg shadow-amber-500/20"
-                    style={{ padding: '14px 0' }}
+                    className="block w-full text-center bg-accent hover:bg-amber-500 text-[#001f3f] font-bold text-[16px] rounded-2xl transition-colors shadow-lg shadow-amber-500/20"
+                    style={{ padding: '16px 0', display: 'block' }}
                   >
                     Get a Quote
                   </Link>

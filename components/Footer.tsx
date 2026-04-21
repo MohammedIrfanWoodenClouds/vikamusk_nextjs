@@ -121,13 +121,13 @@ export default function Footer() {
           {/* Logo Top Line */}
           <div className="mb-12" style={{ marginTop: '2rem' }}>
             <Link href="/" className="inline-block">
-              <div className="relative" style={{ width: '150px', height: '40px' }}>
+              <div className="relative" style={{ width: '240px', height: '60px' }}>
                 <Image
                   src="/images/logo-white.png"
                   alt="Vikamusk International"
                   fill
                   className="object-contain object-left"
-                  sizes="150px"
+                  sizes="240px"
                 />
               </div>
             </Link>
