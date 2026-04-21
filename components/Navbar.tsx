@@ -252,6 +252,10 @@ export default function Navbar() {
             >
               <Link
                 href="/products"
+                onClick={() => {
+                  setMegaOpen(false);
+                  setActiveCatSlug(null);
+                }}
                 className={`flex items-center gap-1.5 px-3 py-2.5 text-[15px] font-bold rounded-md transition-all whitespace-nowrap ${
                   isActive('/products') || isActive('/categories')
                     ? 'text-accent'
