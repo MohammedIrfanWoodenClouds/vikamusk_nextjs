@@ -19,8 +19,8 @@ export default function PublicShell({ children }: { children: React.ReactNode })
       <Navbar />
 
       <main 
-        className="min-h-screen overflow-x-hidden pt-[180px] lg:pt-[152px]"
-        style={{ paddingTop: '70px' }}
+        className={`min-h-screen overflow-x-hidden ${pathname === '/' ? 'pt-0' : 'pt-[180px] lg:pt-[110px]'}`}
+        style={pathname === '/' ? { paddingTop: 0 } : {}}
       >
         {children}
       </main>

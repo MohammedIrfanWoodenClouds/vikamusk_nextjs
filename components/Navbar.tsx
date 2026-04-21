@@ -172,8 +172,8 @@ export default function Navbar() {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.5, ease: 'easeOut' }}
-        style={{ top: scrolled ? '0' : 'var(--nav-top, 24px)' }}
-        className={`fixed left-0 w-full z-50 transition-all duration-500 border-b [--nav-top:0px] lg:[--nav-top:24px] ${
+        style={{ top: scrolled ? '0' : 'var(--nav-top, 0px)' }}
+        className={`fixed left-0 w-full z-50 transition-all duration-500 border-b [--nav-top:0px] ${
           scrolled
             ? 'top-0 bg-white/80 backdrop-blur-xl shadow-lg border-gray-200'
             : isTransparent

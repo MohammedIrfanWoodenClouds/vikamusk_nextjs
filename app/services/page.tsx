@@ -152,10 +152,10 @@ export default function Services() {
             </h2>
           </AnimatedSection>
 
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-16 lg:gap-8 w-full max-w-7xl mx-auto">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-8 w-full max-w-7xl mx-auto">
             
             {/* Left Column: 4 Countries */}
-            <div className="grid grid-cols-2 lg:flex lg:flex-col gap-10 sm:gap-16 w-full lg:w-[30%] z-30 order-2 lg:order-1">
+            <div className="grid grid-cols-1 lg:flex lg:flex-col gap-8 sm:gap-16 w-full lg:w-[30%] z-30 order-2 lg:order-1 px-8 sm:px-0">
               {[
                 { name: 'UAE' },
                 { name: 'Saudi Arabia' },
@@ -193,7 +193,7 @@ export default function Services() {
             </div>
 
             {/* Right Column: 3 Countries */}
-            <div className="grid grid-cols-2 lg:flex lg:flex-col gap-10 sm:gap-16 w-full lg:w-[30%] z-30 order-3 lg:order-3">
+            <div className="grid grid-cols-1 lg:flex lg:flex-col gap-8 sm:gap-16 w-full lg:w-[30%] z-30 order-3 lg:order-3 px-8 sm:px-0">
               {[
                 { name: 'Qatar' },
                 { name: 'Bahrain' },
@@ -211,8 +211,8 @@ export default function Services() {
                   </div>
                 </AnimatedSection>
               ))}
+              <div className="h-6 lg:hidden" />
             </div>
-
           </div>
         </div>
       </section>
