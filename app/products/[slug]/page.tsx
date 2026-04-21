@@ -565,14 +565,30 @@ export default function ProductDetail() {
 
                 <button
                   onClick={handleShare}
-                  className="flex items-center gap-1.5 text-[11px] font-semibold px-3 py-1.5 rounded-lg transition-all"
-                  style={{ color: '#64748b', background: '#f8fafc', border: '1px solid #e2e8f0' }}
-                  onMouseEnter={e => { e.currentTarget.style.background = '#f1f5f9'; e.currentTarget.style.color = '#001f3f'; }}
-                  onMouseLeave={e => { e.currentTarget.style.background = '#f8fafc'; e.currentTarget.style.color = '#64748b'; }}
+                  className="flex items-center gap-3 font-black uppercase tracking-[0.15em] rounded-2xl transition-all shadow-md hover:shadow-xl"
+                  style={{ 
+                    color: '#64748b', 
+                    background: '#f8fafc', 
+                    border: '1px solid #e2e8f0',
+                    margin: '1rem 0 1.5rem 1rem',
+                    padding: '0.5rem 1rem',
+                    fontSize: '10px',
+                    lineHeight: 1
+                  }}
+                  onMouseEnter={e => { 
+                    e.currentTarget.style.background = '#001f3f'; 
+                    e.currentTarget.style.color = '#fff'; 
+                    e.currentTarget.style.borderColor = '#001f3f';
+                  }}
+                  onMouseLeave={e => { 
+                    e.currentTarget.style.background = '#f8fafc'; 
+                    e.currentTarget.style.color = '#64748b'; 
+                    e.currentTarget.style.borderColor = '#e2e8f0';
+                  }}
                 >
                   {copied
-                    ? <CheckCircle size={13} style={{ color: '#10b981' }} />
-                    : <Share2 size={13} />}
+                    ? <CheckCircle size={20} />
+                    : <Share2 size={20} />}
                   {copied ? 'Copied!' : 'Share'}
                 </button>
               </div>
@@ -1195,13 +1211,14 @@ export default function ProductDetail() {
               <div>
                 <span className="text-[11px] font-bold uppercase tracking-widest block mb-2"
                   style={{ color: '#f59e0b' }}>More From This Category</span>
-                <h2 className="text-2xl lg:text-3xl font-black" style={{ color: '#001f3f' }}>
+                <h2 className="text-2xl lg:text-3xl font-black" style={{ color: '#001f3f', marginBottom: '1rem' }}>
                   Related Products
                 </h2>
               </div>
               <Link
                 href={`/products?category=${product.main_category_slug}`}
                 className="btn-outline text-xs py-2 px-5 hidden sm:inline-flex"
+                style={{ marginBottom: '1rem' }}
               >
                 View All <ArrowRight size={13} />
               </Link>

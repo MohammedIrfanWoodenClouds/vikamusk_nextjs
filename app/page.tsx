@@ -677,9 +677,15 @@ export default function Home() {
               </div>
             </AnimatedSection>
 
-            <AnimatedSection direction="right">
-              <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl shadow-primary/10">
-                <Image src="/images/company/vikamusk-company-china-.png" alt="Vikamusk Operations" fill className="object-cover" />
+            <AnimatedSection direction="right" className="flex items-center">
+              <div className="relative w-full rounded-2xl overflow-hidden shadow-xl shadow-primary/10">
+                <Image 
+                  src="/images/company/vikamusk-company-china-.png" 
+                  alt="Vikamusk Operations" 
+                  width={800} 
+                  height={600} 
+                  className="w-full h-auto object-cover" 
+                />
               </div>
             </AnimatedSection>
           </div>
