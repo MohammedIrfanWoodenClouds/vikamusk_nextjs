@@ -135,12 +135,12 @@ export default function Careers() {
                   >
                     {/* Card Header & Dept */}
                     <div className="flex items-center justify-between mb-8">
-                       <span className="px-4 py-2 rounded-xl bg-accent/10 border border-accent/20 text-accent text-[11px] font-black uppercase tracking-widest">
+                       <span className="px-4 py-2 rounded-xl bg-accent text-[#001f3f] text-[10px] font-black uppercase tracking-[0.18em] shadow-lg shadow-accent/20">
                          {career.department || 'General'}
                        </span>
-                       <div className="text-[10px] font-black text-gray-300 uppercase tracking-widest flex items-center gap-2">
+                       <div className="text-[10px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2">
                          <div className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
-                         Recent
+                         Active Now
                        </div>
                     </div>
                     
@@ -235,10 +235,11 @@ export default function Careers() {
                     </div>
 
                     {/* Action Area */}
-                    <div className="pt-6 border-t border-gray-50 mt-auto flex flex-col gap-4">
+                    <div className="pt-6 border-t border-gray-50 mt-auto flex flex-col items-center gap-4">
                       <a
                         href={`mailto:career@vikamusk.com?subject=Application for ${career.title}`}
-                        className="w-full bg-[#001f3f] hover:bg-accent text-white hover:text-[#001f3f] font-black text-[12px] uppercase tracking-[0.25em] py-4 rounded-xl transition-all duration-500 text-center shadow-md hover:shadow-lg"
+                        className="w-[85%] flex items-center justify-center bg-[#001f3f] hover:bg-accent text-white hover:text-[#001f3f] font-black text-[15px] uppercase tracking-[0.25em] rounded-2xl transition-all duration-500 shadow-lg hover:shadow-xl hover:scale-[1.02]"
+                        style={{ height: '40px', marginTop: '1rem' }}
                       >
                         Send Resume
                       </a>
@@ -290,21 +291,21 @@ export default function Careers() {
               >
                 <a
                   href="mailto:career@vikamusk.com"
-                  className="w-full sm:w-auto bg-accent hover:bg-white text-[#001f3f] hover:text-[#001f3f] font-bold rounded-xl transition-all inline-flex items-center justify-center gap-2.5 hover:scale-105 hover:shadow-[0_0_25px_rgba(255,255,255,0.4)]"
+                  className="w-full sm:w-[280px] bg-accent hover:bg-white text-[#001f3f] hover:text-[#001f3f] font-black rounded-2xl transition-all inline-flex items-center justify-center gap-3 hover:scale-105 shadow-[0_15px_40px_-5px_rgba(245,158,11,0.35)]"
                   style={{
-                    padding: '1rem 1.5rem',
-                    fontSize: '0.9rem',
-                    boxShadow: '0 4px 20px rgba(245, 158, 11, 0.3)',
+                    height: '72px',
+                    fontSize: '1rem',
+                    letterSpacing: '0.02em'
                   }}
                 >
-                  Send Resume <Mail size={18} />
+                  Send Resume <Mail size={20} />
                 </a>
                 <Link
                   href="/contact"
-                  className="w-full sm:w-auto bg-white/10 hover:bg-white text-white hover:text-[#001f3f] font-semibold rounded-xl border border-white/20 hover:border-white transition-all inline-flex items-center justify-center gap-2.5 hover:scale-105 hover:shadow-[0_0_25_rgba(255,255,255,0.4)]"
+                  className="w-full sm:w-[280px] bg-white/10 hover:bg-white text-white hover:text-[#001f3f] font-bold rounded-2xl border border-white/20 hover:border-white transition-all inline-flex items-center justify-center gap-3 hover:scale-105 backdrop-blur-md"
                   style={{
-                    padding: '1rem 1.5rem',
-                    fontSize: '0.9rem',
+                    height: '72px',
+                    fontSize: '1rem'
                   }}
                 >
                   Contact Us

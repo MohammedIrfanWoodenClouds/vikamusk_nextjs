@@ -102,9 +102,10 @@ export default function Industries() {
               </p>
               <Link 
                 href="/products" 
-                className="btn-primary hover:!bg-white hover:!text-[#001f3f] border-2 border-transparent hover:!border-black transition-all duration-300"
+                className="w-full sm:w-[280px] flex items-center justify-center bg-accent hover:bg-[#001f3f] text-[#001f3f] hover:text-white font-black rounded-2xl transition-all duration-500 shadow-lg hover:shadow-xl hover:-translate-y-1"
+                style={{ height: '72px', marginTop: '1.5rem', fontSize: '1rem', letterSpacing: '0.02em' }}
               >
-                Browse Equipment <ArrowRight size={16} />
+                Browse Equipment <ArrowRight size={20} className="ml-2" />
               </Link>
             </AnimatedSection>
 

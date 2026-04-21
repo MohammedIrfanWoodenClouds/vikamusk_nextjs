@@ -190,17 +190,17 @@ export default function About() {
               <div className="flex flex-wrap justify-center gap-5">
                 <Link 
                   href="/contact"
-                  className="btn-primary hover:!bg-white hover:!text-[#001f3f] hover:!border-black font-bold rounded-xl transition-all duration-300 inline-flex items-center gap-2.5 hover:scale-105 shadow-lg shadow-amber-500/20 hover:shadow-none"
-                  style={{ padding: '1rem 2.25rem', fontSize: '0.95rem' }}
+                  className="w-full sm:w-[280px] bg-accent hover:bg-white text-[#001f3f] hover:text-[#001f3f] font-black rounded-2xl transition-all duration-300 inline-flex items-center justify-center gap-3 hover:scale-105 shadow-[0_15px_40px_-5px_rgba(245,158,11,0.35)]"
+                  style={{ height: '72px', fontSize: '1rem', letterSpacing: '0.02em' }}
                 >
-                  Get in Touch <Phone size={18} />
+                  Get in Touch <Phone size={20} />
                 </Link>
                 <Link 
                   href="/products"
-                  className="bg-white/10 hover:!bg-white text-white hover:!text-[#001f3f] font-semibold rounded-xl border-2 border-white/20 hover:!border-black transition-all duration-300 inline-flex items-center gap-2.5 hover:scale-105"
-                  style={{ padding: '1rem 2.25rem', fontSize: '0.95rem' }}
+                  className="w-full sm:w-[280px] bg-white/10 hover:bg-white text-white hover:text-[#001f3f] font-bold rounded-2xl border border-white/20 hover:border-white transition-all duration-300 inline-flex items-center justify-center gap-3 hover:scale-105 backdrop-blur-md"
+                  style={{ height: '72px', fontSize: '1rem' }}
                 >
-                  Explore Products <ArrowRight size={18} />
+                  Explore Products <ArrowRight size={20} />
                 </Link>
               </div>
             </div>

@@ -446,22 +446,23 @@ export default function Contact() {
                     type="submit"
                     disabled={status === 'loading'}
                     className={`
-                      w-full h-16 rounded-xl font-black uppercase tracking-[0.25em] text-sm transition-all duration-300
+                      w-full rounded-2xl font-black uppercase tracking-[0.25em] text-[15px] transition-all duration-300
                       flex items-center justify-center gap-3
                       ${status === 'loading'
                         ? 'bg-slate-100 text-slate-400 cursor-not-allowed'
-                        : 'bg-[#fabc22] text-white hover:bg-[#001f3f] hover:text-white shadow-lg hover:shadow-2xl hover:-translate-y-0.5'
+                        : 'bg-[#fabc22] text-[#001f3f] hover:bg-[#001f3f] hover:text-white shadow-[0_15px_40px_-5px_rgba(250,188,34,0.3)] hover:shadow-[0_20px_50px_rgba(0,31,63,0.2)] hover:-translate-y-1'
                       }
                     `}
+                    style={{ height: '72px' }}
                   >
                     {status === 'loading' ? (
                       <>
-                        <Loader2 className="animate-spin" size={20} />
+                        <Loader2 className="animate-spin" size={22} />
                         Processing...
                       </>
                     ) : (
                       <>
-                        <Send size={17} />
+                        <Send size={19} />
                         Send Message
                       </>
                     )}
