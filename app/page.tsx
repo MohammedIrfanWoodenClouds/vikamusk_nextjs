@@ -760,7 +760,7 @@ export default function Home() {
                   return (
                     <div
                       key={i}
-                      className="flex flex-col items-center text-center rounded-2xl border border-white/[0.08] bg-white/[0.03] px-6 py-8 sm:py-9 backdrop-blur-sm hover:border-accent/20 hover:bg-white/[0.05] transition-all duration-300"
+                      className={`flex flex-col items-center text-center rounded-2xl border border-white/[0.08] bg-white/[0.03] px-6 py-8 sm:py-9 backdrop-blur-sm hover:border-accent/20 hover:bg-white/[0.05] transition-all duration-300 ${i === 2 ? 'mb-6 sm:mb-0' : ''}`}
                     >
                       <div className="w-14 h-14 rounded-2xl bg-white/[0.06] flex items-center justify-center text-accent/70 mb-5 ring-1 ring-white/10">
                         <IconCmp size={26} strokeWidth={1.75} />
