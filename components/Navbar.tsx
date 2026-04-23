@@ -564,7 +564,7 @@ export default function Navbar() {
                         >
                           <div className="ml-3 space-y-0.5 mb-1 border-l-2 border-gray-100 pl-3">
                             {/* All Products link */}
-                            <Link href="/products" onClick={closeMobile} className="block py-2 text-sm text-accent font-semibold">
+                            <Link href="/products" onClick={closeMobile} className="block py-2 text-[17px] text-accent font-semibold">
                               All Products
                             </Link>
 
@@ -588,7 +588,7 @@ export default function Navbar() {
                                 <div key={mc.id}>
                                   <button
                                     onClick={() => setMobileSubOpen(mobileSubOpen === mc.slug ? null : mc.slug)}
-                                    className="w-full flex items-center justify-between py-2 text-sm text-gray-600 hover:text-accent transition-colors"
+                                    className="w-full flex items-center justify-between py-2 text-[17px] text-gray-600 hover:text-accent transition-colors"
                                   >
                                     <span className="truncate">{mc.name}</span>
                                     <ChevronDown
@@ -612,7 +612,7 @@ export default function Navbar() {
                                           <Link
                                             href={`/categories/${mc.slug}`}
                                             onClick={closeMobile}
-                                            className="block py-1.5 text-xs text-accent font-semibold"
+                                            className="block py-1.5 text-[16px] text-accent font-semibold"
                                           >
                                             View All {mc.name}
                                           </Link>
@@ -626,7 +626,7 @@ export default function Navbar() {
                                               key={p.id}
                                               href={`/products/${p.slug}`}
                                               onClick={closeMobile}
-                                              className="block py-1.5 text-xs text-gray-500 hover:text-accent transition-colors"
+                                              className="block py-1.5 text-[16px] text-gray-500 hover:text-accent transition-colors"
                                             >
                                               {p.name}
                                             </Link>
