@@ -10,18 +10,29 @@ export default function About() {
   return (
     <>
       {/* Hero */}
-      <section className="relative pb-28 bg-primary overflow-hidden" style={{ paddingTop: '200px' }}>
-        <div className="absolute inset-0 opacity-20">
+      <section className="relative pb-20 sm:pb-28 bg-primary overflow-hidden" style={{ paddingTop: 'clamp(140px, 15vw, 200px)' }}>
+        <div className="absolute inset-0 opacity-15">
           <Image src="/images/company/vikamusk-company-china-.png" alt="" fill className="object-cover" priority />
         </div>
         <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/95 to-primary/80" />
         <div className="container-custom relative z-10">
           <AnimatedSection className="flex flex-col items-center text-center">
-            <span className="text-sm font-bold text-accent uppercase tracking-wider block mb-4">Who We Are</span>
-            <h1 className="text-4xl lg:text-5xl font-black text-white leading-tight mb-6">
+            <span 
+              className="text-sm font-bold text-accent uppercase tracking-wider block"
+              style={{ marginTop: '0.5rem', marginBottom: '1rem' }}
+            >
+              Who We Are
+            </span>
+            <h1 
+              className="text-4xl lg:text-5xl font-black text-white leading-tight"
+              style={{ marginBottom: '2rem' }}
+            >
               About Vikamusk International
             </h1>
-            <p className="text-white/60 text-lg leading-relaxed max-w-4xl" style={{ marginBottom: '3rem' }}>
+            <p 
+              className="text-white/60 text-lg leading-relaxed max-w-xl mx-auto"
+              style={{ marginBottom: '3rem' }}
+            >
               A trusted name in construction equipment and material handling solutions since 2015.
             </p>
           </AnimatedSection>
@@ -173,34 +184,56 @@ export default function About() {
 
 
       {/* CTA */}
-      <section className="bg-[#001f3f]" style={{ paddingTop: '5rem', paddingBottom: '7rem' }}>
-        <div 
+      <section className="bg-[#001f3f]" style={{ paddingTop: '3rem', paddingBottom: '7rem' }}>
+        <div
           className="container-custom"
           style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
         >
           <AnimatedSection>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <h2 className="text-3xl lg:text-4xl font-black text-white text-center" style={{ marginBottom: '2rem' }}>
+              <h2
+                className="text-2xl sm:text-3xl lg:text-4xl font-black text-white"
+                style={{ marginBottom: '1.5rem', textAlign: 'center', lineHeight: '1.2' }}
+              >
                 Ready to Work With Us?
               </h2>
-              <p className="text-gray-400 max-w-2xl mx-auto text-center leading-relaxed" style={{ fontSize: '1.05rem', marginBottom: '2rem' }}>
+              <p
+                className="text-gray-400 leading-relaxed px-4"
+                style={{
+                  maxWidth: '640px',
+                  marginBottom: '2.5rem',
+                  fontSize: '1rem',
+                  lineHeight: '1.6',
+                  textAlign: 'center',
+                }}
+              >
                 Contact our team today to discuss your industrial equipment needs and discover 
                 how Vikamusk&apos;s technical expertise can empower your operation.
               </p>
-              <div className="flex flex-wrap justify-center gap-5">
-                <Link 
+              <div
+                className="flex flex-col sm:flex-row justify-center items-center w-full px-4"
+                style={{ gap: '1rem', marginTop: '0.5rem' }}
+              >
+                <Link
                   href="/contact"
-                  className="w-full sm:w-[280px] bg-accent hover:bg-white text-[#001f3f] hover:text-[#001f3f] font-black rounded-2xl transition-all duration-300 inline-flex items-center justify-center gap-3 hover:scale-105 shadow-[0_15px_40px_-5px_rgba(245,158,11,0.35)]"
-                  style={{ height: '72px', fontSize: '1rem', letterSpacing: '0.02em' }}
+                  className="w-full sm:w-auto bg-accent hover:bg-white text-[#001f3f] hover:text-[#001f3f] font-bold rounded-xl transition-all inline-flex items-center justify-center gap-2.5 hover:scale-105 hover:shadow-[0_0_25px_rgba(255,255,255,0.4)]"
+                  style={{
+                    padding: '1rem 1.5rem',
+                    fontSize: '0.9rem',
+                    boxShadow: '0 4px 20px rgba(245, 158, 11, 0.3)',
+                  }}
                 >
-                  Get in Touch <Phone size={20} />
+                  Get in Touch <Phone size={18} />
                 </Link>
-                <Link 
+                <Link
                   href="/products"
-                  className="w-full sm:w-[280px] bg-white/10 hover:bg-white text-white hover:text-[#001f3f] font-bold rounded-2xl border border-white/20 hover:border-white transition-all duration-300 inline-flex items-center justify-center gap-3 hover:scale-105 backdrop-blur-md"
-                  style={{ height: '72px', fontSize: '1rem' }}
+                  className="w-full sm:w-auto bg-white/10 hover:bg-white text-white hover:text-[#001f3f] font-semibold rounded-xl border border-white/20 hover:border-white transition-all inline-flex items-center justify-center gap-2.5 hover:scale-105 hover:shadow-[0_0_25px_rgba(255,255,255,0.4)]"
+                  style={{
+                    padding: '1rem 1.5rem',
+                    fontSize: '0.9rem',
+                  }}
                 >
-                  Explore Products <ArrowRight size={20} />
+                  Explore Products <ArrowRight size={18} />
                 </Link>
               </div>
             </div>

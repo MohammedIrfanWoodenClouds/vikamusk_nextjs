@@ -61,22 +61,32 @@ export default function Industries() {
   return (
     <>
       {/* Hero */}
-      <section className="relative pb-28 bg-primary overflow-hidden" style={{ paddingTop: '200px' }}>
+      <section className="relative pb-20 sm:pb-28 bg-primary overflow-hidden" style={{ paddingTop: 'clamp(140px, 15vw, 200px)' }}>
         <div className="absolute inset-0 opacity-15">
           <Image src="/images/hero-bg.png" alt="" fill className="object-cover" priority />
         </div>
         <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/95 to-primary/80" />
         <div className="container-custom relative z-10">
-          <AnimatedSection className="flex flex-col items-center text-center gap-y-10">
-            <span className="text-sm font-bold text-accent uppercase tracking-[0.2em] block">Who We Serve</span>
-            <h1 className="text-4xl lg:text-[72px] font-black text-white leading-[1.05] tracking-tight">
+          <AnimatedSection className="flex flex-col items-center text-center">
+            <span 
+              className="text-sm font-bold text-accent uppercase tracking-wider block"
+              style={{ marginTop: '0.5rem', marginBottom: '1rem' }}
+            >
+              Who We Serve
+            </span>
+            <h1 
+              className="text-4xl lg:text-5xl font-black text-white leading-tight"
+              style={{ marginBottom: '2rem' }}
+            >
               Industries We Serve
             </h1>
-            <p className="text-white/60 max-w-5xl mx-auto text-lg lg:text-xl leading-relaxed">
+            <p 
+              className="text-white/60 text-lg leading-relaxed max-w-xl mx-auto"
+              style={{ marginBottom: '3rem' }}
+            >
               Vikamusk delivers trusted equipment solutions across a wide range of sectors —
               from construction and logistics to aviation, oil & gas, and beyond.
             </p>
-            <div className="h-8" /> {/* extra spacer */}
           </AnimatedSection>
         </div>
       </section>
@@ -100,12 +110,8 @@ export default function Industries() {
                 application, backed by full after-sales support, genuine spare parts, and expert
                 technical consultation.
               </p>
-              <Link 
-                href="/products" 
-                className="w-full sm:w-[280px] flex items-center justify-center bg-accent hover:bg-[#001f3f] text-[#001f3f] hover:text-white font-black rounded-2xl transition-all duration-500 shadow-lg hover:shadow-xl hover:-translate-y-1"
-                style={{ height: '72px', marginTop: '1.5rem', fontSize: '1rem', letterSpacing: '0.02em' }}
-              >
-                Browse Equipment <ArrowRight size={20} className="ml-2" />
+              <Link href="/products" className="btn-primary" style={{ marginTop: '1rem' }}>
+                Browse Equipment <ArrowRight size={16} />
               </Link>
             </AnimatedSection>
 
@@ -182,8 +188,8 @@ export default function Industries() {
           <AnimatedSection>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
               <h2
-                className="text-3xl md:text-4xl lg:text-5xl font-black text-white"
-                style={{ marginBottom: '1.5rem', textAlign: 'center' }}
+                className="text-2xl sm:text-3xl lg:text-4xl font-black text-white"
+                style={{ marginBottom: '1.5rem', textAlign: 'center', lineHeight: '1.2' }}
               >
                 Need Equipment for Your Industry?
               </h2>
@@ -192,8 +198,8 @@ export default function Industries() {
                 style={{
                   maxWidth: '640px',
                   marginBottom: '2.5rem',
-                  fontSize: '1.05rem',
-                  lineHeight: '1.75',
+                  fontSize: '1rem',
+                  lineHeight: '1.6',
                   textAlign: 'center',
                 }}
               >
@@ -201,25 +207,26 @@ export default function Industries() {
                 support package for your operation.
               </p>
               <div
-                className="flex flex-col sm:flex-row justify-center items-center w-full max-w-md mx-auto"
-                style={{ gap: '1.25rem', marginTop: '0.5rem' }}
+                className="flex flex-col sm:flex-row justify-center items-center w-full px-4"
+                style={{ gap: '1rem', marginTop: '0.5rem' }}
               >
                 <Link
                   href="/contact"
-                  className="btn-primary w-full sm:w-auto hover:!bg-white hover:!text-[#001f3f] hover:!border-black font-bold rounded-xl transition-all duration-300 inline-flex items-center justify-center gap-2.5 hover:scale-105 shadow-lg shadow-amber-500/20 hover:shadow-none"
+                  className="w-full sm:w-auto bg-accent hover:bg-white text-[#001f3f] hover:text-[#001f3f] font-bold rounded-xl transition-all inline-flex items-center justify-center gap-2.5 hover:scale-105 hover:shadow-[0_0_25px_rgba(255,255,255,0.4)]"
                   style={{
-                    padding: '1.25rem 2.25rem',
-                    fontSize: '0.95rem',
+                    padding: '1rem 1.5rem',
+                    fontSize: '0.9rem',
+                    boxShadow: '0 4px 20px rgba(245, 158, 11, 0.3)',
                   }}
                 >
                   Get in Touch <Phone size={18} />
                 </Link>
                 <Link
                   href="/products"
-                  className="bg-white/10 w-full sm:w-auto hover:!bg-white text-white hover:!text-[#001f3f] font-semibold rounded-xl border-2 border-white/20 hover:!border-black transition-all duration-300 inline-flex items-center justify-center gap-2.5 hover:scale-105"
+                  className="w-full sm:w-auto bg-white/10 hover:bg-white text-white hover:text-[#001f3f] font-semibold rounded-xl border border-white/20 hover:border-white transition-all inline-flex items-center justify-center gap-2.5 hover:scale-105 hover:shadow-[0_0_25px_rgba(255,255,255,0.4)]"
                   style={{
-                    padding: '1.25rem 2.25rem',
-                    fontSize: '0.95rem',
+                    padding: '1rem 1.5rem',
+                    fontSize: '0.9rem',
                   }}
                 >
                   View Products <ArrowRight size={18} />

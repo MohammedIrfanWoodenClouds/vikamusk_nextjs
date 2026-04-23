@@ -49,9 +49,22 @@ export default function Careers() {
         <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/95 to-primary/80" />
         <div className="container-custom relative z-10">
           <AnimatedSection className="flex flex-col items-center text-center">
-            <span className="text-sm font-bold text-accent uppercase tracking-wider block mb-4">Join Our Team</span>
-            <h1 className="text-4xl lg:text-5xl font-black text-white mb-6">Careers at Vikamusk</h1>
-            <p className="text-white/60 text-lg leading-relaxed max-w-2xl" style={{ marginBottom: '3rem' }}>
+            <span 
+              className="text-sm font-bold text-accent uppercase tracking-wider block"
+              style={{ marginTop: '0.5rem', marginBottom: '1rem' }}
+            >
+              Join Our Team
+            </span>
+            <h1 
+              className="text-4xl lg:text-5xl font-black text-white leading-tight"
+              style={{ marginBottom: '2rem' }}
+            >
+              Careers at Vikamusk
+            </h1>
+            <p 
+              className="text-white/60 text-lg leading-relaxed max-w-xl mx-auto"
+              style={{ marginBottom: '3rem' }}
+            >
               Be part of a team that&apos;s shaping the future of construction equipment and material handling solutions across the globe.
             </p>
           </AnimatedSection>
@@ -291,21 +304,21 @@ export default function Careers() {
               >
                 <a
                   href="mailto:career@vikamusk.com"
-                  className="w-full sm:w-[280px] bg-accent hover:bg-white text-[#001f3f] hover:text-[#001f3f] font-black rounded-2xl transition-all inline-flex items-center justify-center gap-3 hover:scale-105 shadow-[0_15px_40px_-5px_rgba(245,158,11,0.35)]"
+                  className="w-full sm:w-auto bg-accent hover:bg-white text-[#001f3f] hover:text-[#001f3f] font-bold rounded-xl transition-all inline-flex items-center justify-center gap-2.5 hover:scale-105 hover:shadow-[0_0_25px_rgba(255,255,255,0.4)]"
                   style={{
-                    height: '72px',
-                    fontSize: '1rem',
-                    letterSpacing: '0.02em'
+                    padding: '1rem 1.5rem',
+                    fontSize: '0.9rem',
+                    boxShadow: '0 4px 20px rgba(245, 158, 11, 0.3)',
                   }}
                 >
-                  Send Resume <Mail size={20} />
+                  Send Resume <Mail size={18} />
                 </a>
                 <Link
                   href="/contact"
-                  className="w-full sm:w-[280px] bg-white/10 hover:bg-white text-white hover:text-[#001f3f] font-bold rounded-2xl border border-white/20 hover:border-white transition-all inline-flex items-center justify-center gap-3 hover:scale-105 backdrop-blur-md"
+                  className="w-full sm:w-auto bg-white/10 hover:bg-white text-white hover:text-[#001f3f] font-semibold rounded-xl border border-white/20 hover:border-white transition-all inline-flex items-center justify-center gap-2.5 hover:scale-105 hover:shadow-[0_0_25px_rgba(255,255,255,0.4)]"
                   style={{
-                    height: '72px',
-                    fontSize: '1rem'
+                    padding: '1rem 1.5rem',
+                    fontSize: '0.9rem',
                   }}
                 >
                   Contact Us
