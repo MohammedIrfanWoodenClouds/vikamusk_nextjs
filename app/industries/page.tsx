@@ -81,7 +81,7 @@ export default function Industries() {
               Industries We Serve
             </h1>
             <p 
-              className="text-white/60 text-lg leading-relaxed max-w-xl mx-auto"
+              className="text-white/60 text-lg leading-relaxed max-w-4xl mx-auto"
               style={{ marginBottom: '3rem' }}
             >
               Vikamusk delivers trusted equipment solutions across a wide range of sectors —
