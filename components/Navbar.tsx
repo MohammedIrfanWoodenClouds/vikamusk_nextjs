@@ -496,8 +496,8 @@ export default function Navbar() {
               <div style={{ padding: '32px 24px 40px 24px' }}>
                 {/* Header */}
                 <div className="flex items-center justify-between mb-10 pb-5 border-b border-gray-100">
-                  <div className="relative" style={{ width: '160px', height: '40px' }}>
-                    <Image src="/images/logo-black.png" alt="Vikamusk" fill className="object-contain object-left" sizes="160px" />
+                  <div className="relative" style={{ width: '240px', height: '80px' }}>
+                    <Image src="/images/logo-black.png" alt="Vikamusk" fill className="object-contain object-left" sizes="220px" />
                   </div>
                   <button onClick={closeMobile} className="p-2 hover:bg-gray-100 rounded-full transition-colors" aria-label="Close menu">
                     <X size={24} className="text-gray-600" />
