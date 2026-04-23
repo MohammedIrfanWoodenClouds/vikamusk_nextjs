@@ -97,42 +97,7 @@ export default function Navbar() {
     };
   }, []);
 
-  /* ---- Scroll listener ---- */
-  useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', handler, { passive: true });
-    return () => window.removeEventListener('scroll', handler);
-  }, []);
-
-  /* ---- Close mobile on route change ---- */
-  useEffect(() => {
-    setMobileOpen(false);
-    // Professionally reset the drawer accordions with a delay
-    // so they don't snap shut while the drawer is sliding out.
-    const t = setTimeout(() => {
-      setMobileProductsOpen(false);
-      setMobileSubOpen(null);
-    }, 300);
-    return () => clearTimeout(t);
-  }, [pathname]);
-
-  /* ---- Lock body scroll when mobile menu open ---- */
-  useEffect(() => {
-    document.body.style.overflow = mobileOpen ? 'hidden' : '';
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [mobileOpen]);
-
   /* ---- Helpers ---- */
-  const closeMobile = useCallback(() => {
-    setMobileOpen(false);
-    setTimeout(() => {
-      setMobileProductsOpen(false);
-      setMobileSubOpen(null);
-    }, 300);
-  }, []);
-
   const openMega = useCallback(() => {
     if (megaTimeout.current) clearTimeout(megaTimeout.current);
     setMegaOpen(true);
@@ -149,9 +114,51 @@ export default function Navbar() {
     }, 150); // small delay so mouse can travel across gap
   }, []);
 
+  const immediateCloseMega = useCallback(() => {
+    if (megaTimeout.current) clearTimeout(megaTimeout.current);
+    setMegaOpen(false);
+    setActiveCatSlug(null);
+  }, []);
+
   const cancelCloseMega = useCallback(() => {
     if (megaTimeout.current) clearTimeout(megaTimeout.current);
   }, []);
+
+  const closeMobile = useCallback(() => {
+    setMobileOpen(false);
+    setTimeout(() => {
+      setMobileProductsOpen(false);
+      setMobileSubOpen(null);
+    }, 300);
+  }, []);
+
+  /* ---- Scroll listener ---- */
+  useEffect(() => {
+    const handler = () => setScrolled(window.scrollY > 50);
+    window.addEventListener('scroll', handler, { passive: true });
+    return () => window.removeEventListener('scroll', handler);
+  }, []);
+
+  /* ---- Close mobile/mega on route change ---- */
+  useEffect(() => {
+    setMobileOpen(false);
+    immediateCloseMega();
+    // Professionally reset the drawer accordions with a delay
+    // so they don't snap shut while the drawer is sliding out.
+    const t = setTimeout(() => {
+      setMobileProductsOpen(false);
+      setMobileSubOpen(null);
+    }, 300);
+    return () => clearTimeout(t);
+  }, [pathname, immediateCloseMega]);
+
+  /* ---- Lock body scroll when mobile menu open ---- */
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileOpen]);
 
   const isTransparent = pathname === '/' && !scrolled;
   const textColor = isTransparent ? 'text-white' : 'text-gray-700';
@@ -252,10 +259,7 @@ export default function Navbar() {
             >
               <Link
                 href="/products"
-                onClick={() => {
-                  setMegaOpen(false);
-                  setActiveCatSlug(null);
-                }}
+                onClick={immediateCloseMega}
                 className={`flex items-center gap-1.5 px-3 py-2.5 text-[15px] font-bold rounded-md transition-all whitespace-nowrap ${
                   isActive('/products') || isActive('/categories')
                     ? 'text-accent'
@@ -325,6 +329,7 @@ export default function Navbar() {
                         </div>
                         <Link 
                           href="/products"
+                          onClick={immediateCloseMega}
                           className="group flex items-center gap-1.5 text-[11px] font-bold text-gray-400 hover:text-accent transition-all"
                         >
                           View All Equipment
@@ -344,6 +349,7 @@ export default function Navbar() {
                               <Link
                                 key={cat.id}
                                 href={`/categories/${cat.slug}`}
+                                onClick={immediateCloseMega}
                                 onMouseEnter={() => setActiveCatSlug(cat.slug)}
                                 className={`group flex items-center justify-between px-3 py-2 rounded-lg transition-all duration-200 ${
                                   activeCatSlug === cat.slug 
@@ -393,6 +399,7 @@ export default function Navbar() {
                                        <Link
                                          key={p.id}
                                          href={`/products/${p.slug}`}
+                                         onClick={immediateCloseMega}
                                          className="group py-1.5 px-2 -mx-2 rounded-md hover:bg-slate-50 transition-all duration-200"
                                        >
                                            <p className="text-[13px] font-bold text-gray-700 group-hover:text-accent transition-colors leading-tight">
