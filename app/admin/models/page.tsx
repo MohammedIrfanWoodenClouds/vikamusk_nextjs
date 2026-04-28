@@ -23,7 +23,8 @@ interface Model {
   images: string[];
   sort_order: number;
 }
-interface Product { id: string; name: string; main_category_name: string; }
+interface Product { id: string; name: string; main_category_id: string; main_category_name: string; }
+interface Category { id: string; name: string; }
 
 /* ─── Sidebar nav ─── */
 const NAV_LINKS = [
@@ -176,6 +177,7 @@ export default function AdminModels() {
   const [token,     setToken]     = useState<string | null>(null);
   const [models,    setModels]    = useState<Model[]>([]);
   const [products,  setProducts]  = useState<Product[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
   const [loading,   setLoading]   = useState(true);
   const [showForm,  setShowForm]  = useState(false);
   const [editing,   setEditing]   = useState<Model | null>(null);
@@ -183,6 +185,7 @@ export default function AdminModels() {
   const [deleting,  setDeleting]  = useState<string | null>(null);
   const [error,     setError]     = useState('');
   const [search,    setSearch]    = useState('');
+  const [filterCategory, setFilterCategory] = useState('all');
   const [filterProduct, setFilterProduct] = useState('all');
   const [deleteConfirm,     setDeleteConfirm]     = useState<{ id: string; name: string } | null>(null);
   const [selectedIds,       setSelectedIds]       = useState<Set<string>>(new Set());
@@ -202,13 +205,17 @@ export default function AdminModels() {
     if (!token) return;
     const headers = { Authorization: `Bearer ${token}` };
     try {
-      const [modelsRes, prodsRes] = await Promise.all([
+      const [modelsRes, prodsRes, catsRes] = await Promise.all([
         fetch('/api/admin/models',   { headers }),
         fetch('/api/admin/products', { headers }),
+        fetch('/api/admin/categories', { headers }),
       ]);
-      const [modelsData, prodsData] = await Promise.all([modelsRes.json(), prodsRes.json()]);
+      const [modelsData, prodsData, catsData] = await Promise.all([
+        modelsRes.json(), prodsRes.json(), catsRes.json()
+      ]);
       setModels((modelsData.models || []).map((m: any) => ({ ...m, images: parseImages(m.images) })));
       setProducts(prodsData.products || []);
+      setCategories(catsData.categories || []);
     } catch {} finally { setLoading(false); }
   }, [token]);
 
@@ -361,7 +368,22 @@ export default function AdminModels() {
 
   /* ── Filtered list ── */
   const filtered = useMemo(() => {
-    let result = filterProduct === 'all' ? models : models.filter(m => m.product_id === filterProduct);
+    let result = models;
+    
+    // 1. Category Filter
+    if (filterCategory !== 'all') {
+      const productIdsInCat = products
+        .filter(p => p.main_category_id === filterCategory)
+        .map(p => p.id);
+      result = result.filter(m => productIdsInCat.includes(m.product_id));
+    }
+
+    // 2. Product Filter
+    if (filterProduct !== 'all') {
+      result = result.filter(m => m.product_id === filterProduct);
+    }
+
+    // 3. Search
     if (search.trim()) {
       const q = search.toLowerCase();
       result = result.filter(m =>
@@ -372,7 +394,13 @@ export default function AdminModels() {
       );
     }
     return result;
-  }, [models, filterProduct, search]);
+  }, [models, products, filterCategory, filterProduct, search]);
+
+  // Derived products for the filter dropdown (filtered by category)
+  const productsForFilter = useMemo(() => {
+    if (filterCategory === 'all') return products;
+    return products.filter(p => p.main_category_id === filterCategory);
+  }, [products, filterCategory]);
 
   let galleryImages: string[] = [];
   try { galleryImages = JSON.parse(form.galleryImages); } catch {}
@@ -438,12 +466,16 @@ export default function AdminModels() {
                 </button>
               )}
             </div>
+            <select value={filterCategory} onChange={e => { setFilterCategory(e.target.value); setFilterProduct('all'); }} style={filterSelect}>
+              <option value="all">All Categories</option>
+              {categories.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
+            </select>
             <select value={filterProduct} onChange={e => setFilterProduct(e.target.value)} style={filterSelect}>
               <option value="all">All Products</option>
-              {products.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}
+              {productsForFilter.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}
             </select>
-            {(filterProduct !== 'all' || search) && (
-              <button onClick={() => { setFilterProduct('all'); setSearch(''); }} style={{ padding: '8px 12px', borderRadius: 10, fontSize: 12, fontWeight: 600, background: '#fef2f2', border: '1px solid #fecaca', color: '#dc2626', cursor: 'pointer' }}>
+            {(filterCategory !== 'all' || filterProduct !== 'all' || search) && (
+              <button onClick={() => { setFilterCategory('all'); setFilterProduct('all'); setSearch(''); }} style={{ padding: '8px 12px', borderRadius: 10, fontSize: 12, fontWeight: 600, background: '#fef2f2', border: '1px solid #fecaca', color: '#dc2626', cursor: 'pointer' }}>
                 Clear filters
               </button>
             )}
