@@ -775,6 +775,18 @@ export default function AdminProducts() {
                 </div>
               </div>
 
+              {/* Features & Specs */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
+                <div>
+                  <label className={labelCls} style={labelStyle}>Key Features (One per line)</label>
+                  <textarea rows={6} value={form.features} onChange={e => setForm(p => ({ ...p, features: e.target.value }))} className={inputCls} style={{ ...inputStyle, resize: 'vertical', minHeight: 120 }} placeholder="Self-propelled design&#10;Emergency stop button&#10;Overload sensor" />
+                </div>
+                <div>
+                  <label className={labelCls} style={labelStyle}>Technical Specs (Label: Value)</label>
+                  <textarea rows={6} value={form.specs} onChange={e => setForm(p => ({ ...p, specs: e.target.value }))} className={inputCls} style={{ ...inputStyle, resize: 'vertical', minHeight: 120 }} placeholder="Lifting Capacity: 230kg&#10;Max. Working Height: 12m&#10;Power Source: Battery 24V" />
+                </div>
+              </div>
+
               {/* Main image */}
               <div>
                 <label className={labelCls} style={labelStyle}>Main Image</label>
