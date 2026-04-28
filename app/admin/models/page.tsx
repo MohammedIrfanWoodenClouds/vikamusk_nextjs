@@ -133,7 +133,6 @@ const EMPTY_FORM = {
   product_id: '',
   model_name: '',
   short_description: '',
-  features: '',
   specsList: [] as { label: string; value: string }[],
   mainImage: '',
   galleryImages: '[]',
@@ -289,7 +288,6 @@ export default function AdminModels() {
       product_id: model.product_id,
       model_name: model.model_name,
       short_description: model.short_description || '',
-      features: featuresStr,
       specsList: Array.isArray(model.specs) ? model.specs : [],
       mainImage: mainImage || '',
       galleryImages: JSON.stringify(rest),
@@ -310,7 +308,6 @@ export default function AdminModels() {
       product_id: form.product_id,
       model_name: form.model_name,
       short_description: form.short_description,
-      features: JSON.stringify(parseFeatures(form.features)),
       specs: form.specsList,
       images: allImages,
       sort_order: form.sort_order,
@@ -724,11 +721,6 @@ export default function AdminModels() {
                 <input value={form.short_description} onChange={e => setForm(p => ({ ...p, short_description: e.target.value }))} style={inp} placeholder="Brief one-liner about this model" onFocus={focusAmber} onBlur={blurReset} />
               </div>
 
-              {/* Features */}
-              <div>
-                <label style={lbl}>Features (one per line)</label>
-                <textarea value={form.features} onChange={e => setForm(p => ({ ...p, features: e.target.value }))} rows={4} style={{ ...inp, resize: 'vertical', lineHeight: 1.6, fontFamily: 'inherit' }} placeholder={'Heavy duty lift system\nFull hydraulic control\nSafety certified'} onFocus={focusAmber} onBlur={blurReset} />
-              </div>
 
               {/* Specs table */}
               <div style={{ background: '#fff', border: '1px solid #e5e7eb', borderRadius: 14, overflow: 'hidden' }}>
