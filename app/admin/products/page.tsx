@@ -769,6 +769,10 @@ export default function AdminProducts() {
                   <label className={labelCls} style={labelStyle}>Full Description (Overview)</label>
                   <textarea rows={4} value={form.full_description} onChange={e => setForm(p => ({ ...p, full_description: e.target.value }))} className={inputCls} style={{ ...inputStyle, resize: 'vertical', minHeight: 100 }} placeholder="Detailed product overview (shown in Overview tab)" />
                 </div>
+                <div>
+                  <label className={labelCls} style={labelStyle}>Brochure URL (PDF Link)</label>
+                  <input value={form.brochure_url} onChange={e => setForm(p => ({ ...p, brochure_url: e.target.value }))} className={inputCls} style={inputStyle} placeholder="https://example.com/brochure.pdf" />
+                </div>
               </div>
 
               {/* Main image */}
