@@ -30,9 +30,9 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
     if (data.product_id !== undefined) updateData.product_id = data.product_id;
     if (data.short_description !== undefined) updateData.short_description = data.short_description;
     if (data.features !== undefined) {
-      updateData.features = JSON.stringify(parseFeatures(data.features));
+      updateData.features = parseFeatures(data.features);
     }
-    if (Array.isArray(data.images)) updateData.images = JSON.stringify(data.images);
+    if (Array.isArray(data.images)) updateData.images = data.images;
 
     if (data.specs !== undefined) {
       updateData.specs = parseSpecs(data.specs);

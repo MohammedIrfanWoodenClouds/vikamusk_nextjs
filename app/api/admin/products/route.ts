@@ -24,9 +24,13 @@ export async function POST(req: NextRequest) {
     if (!data.name || !data.slug || !data.main_category_id) {
       return NextResponse.json({ error: 'Name, slug, and main_category_id are required' }, { status: 400 });
     }
-    // Ensure features and specs are JSON strings
-    if (typeof data.features === 'object') data.features = JSON.stringify(data.features);
-    if (typeof data.specs === 'object') data.specs = JSON.stringify(data.specs);
+    // Ensure features and specs are handled as objects for jsonb
+    if (typeof data.features === 'string') {
+      try { data.features = JSON.parse(data.features); } catch {}
+    }
+    if (typeof data.specs === 'string') {
+      try { data.specs = JSON.parse(data.specs); } catch {}
+    }
     
     const product = await createProduct(data);
     return NextResponse.json({ product }, { status: 201 });

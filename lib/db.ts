@@ -409,7 +409,7 @@ export async function createProductModel(data: {
   product_id: string;
   model_name: string;
   short_description?: string;
-  features?: string;
+  features?: any;
   specs: any[];
   images?: any[];
   sort_order: number;
@@ -420,10 +420,10 @@ export async function createProductModel(data: {
       product_id: data.product_id,
       model_name: data.model_name,
       short_description: data.short_description || '',
-      features: data.features || '[]',
+      features: data.features || [],
       sort_order: data.sort_order,
       specs: data.specs,
-      images: data.images ? JSON.stringify(data.images) : null,
+      images: data.images || [],
     })
     .select()
     .single();

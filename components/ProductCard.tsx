@@ -60,14 +60,14 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
                 <img
                   src={primaryImage}
                   alt={product.name}
-                  className="primary-img absolute inset-0 w-full h-full object-contain p-10 transition-all duration-500 ease-out"
+                  className="primary-img absolute inset-0 w-full h-full object-contain p-4 transition-all duration-500 ease-out"
                   style={{ zIndex: 1 }}
                 />
                 {secondaryImage && (
                   <img
                     src={secondaryImage}
                     alt={`${product.name} – alternate view`}
-                    className="secondary-img absolute inset-0 w-full h-full object-contain p-10 opacity-0 transition-all duration-500 ease-out"
+                    className="secondary-img absolute inset-0 w-full h-full object-contain p-4 opacity-0 transition-all duration-500 ease-out"
                     style={{ zIndex: 2 }}
                   />
                 )}
@@ -79,7 +79,7 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
                   src={primaryImage}
                   alt={product.name}
                   fill
-                  className="object-contain p-10 transition-all duration-500 ease-out"
+                  className="object-contain p-4 transition-all duration-500 ease-out"
                   sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   style={{ zIndex: 1 }}
                 />
@@ -88,7 +88,7 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
                     src={secondaryImage}
                     alt={`${product.name} – alternate view`}
                     fill
-                    className="object-contain p-10 opacity-0 transition-all duration-500 ease-out"
+                    className="object-contain p-4 opacity-0 transition-all duration-500 ease-out"
                     sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     style={{ zIndex: 2 }}
                   />

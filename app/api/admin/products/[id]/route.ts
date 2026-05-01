@@ -23,8 +23,12 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
   const { id } = await params;
   try {
     const data = await req.json();
-    if (typeof data.features === 'object') data.features = JSON.stringify(data.features);
-    if (typeof data.specs === 'object') data.specs = JSON.stringify(data.specs);
+    if (typeof data.features === 'string') {
+      try { data.features = JSON.parse(data.features); } catch {}
+    }
+    if (typeof data.specs === 'string') {
+      try { data.specs = JSON.parse(data.specs); } catch {}
+    }
     
     await updateProduct(id, data);
     const updated = await getProductById(id);

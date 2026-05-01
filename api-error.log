@@ -1,0 +1,6 @@
+{
+  "message": "Could not find the 'short_description' column of 'product_models' in the schema cache",
+  "code": "PGRST204",
+  "details": null,
+  "hint": null
+}

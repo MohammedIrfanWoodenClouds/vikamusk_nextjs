@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
     }
 
     const specs = parseSpecs(data.specs || '');
-    const features = JSON.stringify(parseFeatures(data.features || ''));
+    const features = parseFeatures(data.features || '');
 
     const model = await createProductModel({
       product_id: data.product_id,

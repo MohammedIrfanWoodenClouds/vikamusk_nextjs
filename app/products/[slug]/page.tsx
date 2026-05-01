@@ -93,12 +93,35 @@ function ProductImage({ src, alt, fill, className, sizes, width, height, priorit
   src: string; alt: string; className?: string; priority?: boolean;
   fill?: boolean; sizes?: string; width?: number; height?: number;
 }) {
-  if (src.startsWith('data:')) {
-    return <img src={src} alt={alt} className={className} />;
-  }
+  const isBase64 = src.startsWith('data:');
+  
   if (fill) {
+    if (isBase64) {
+      return (
+        <img 
+          src={src} 
+          alt={alt} 
+          className={`absolute inset-0 w-full h-full ${className || ''}`} 
+          style={{ objectFit: (className?.includes('object-contain') ? 'contain' : (className?.includes('object-cover') ? 'cover' : 'contain')) as any }}
+        />
+      );
+    }
     return <Image src={src} alt={alt} fill className={className} sizes={sizes} priority={priority} />;
   }
+  
+  if (isBase64) {
+    return (
+      <img 
+        src={src} 
+        alt={alt} 
+        className={className} 
+        width={width} 
+        height={height} 
+        style={{ width: width ? `${width}px` : 'auto', height: height ? `${height}px` : 'auto' }}
+      />
+    );
+  }
+  
   return <Image src={src} alt={alt} width={width ?? 80} height={height ?? 80} className={className} />;
 }
 
@@ -128,7 +151,7 @@ function ModelCard({ model, isActive, onClick, fallbackImage }: {
         {displayImg ? (
           <ProductImage
             src={displayImg} alt={model.model_name}
-            fill className="object-contain p-5 transition-transform duration-400 group-hover:scale-105"
+            fill className="object-contain p-6 transition-transform duration-400 group-hover:scale-105"
             sizes="250px"
           />
         ) : fallbackImage ? (
@@ -444,12 +467,12 @@ export default function ProductDetail() {
     <div className="overflow-hidden">
 
       {/* Navbar spacer */}
-      <div className="h-6 sm:hidden w-full bg-white" />
+      <div className="h-24 lg:h-32 w-full bg-white" />
 
       {/* ── Breadcrumb ── */}
       <div
-        className="bg-white border-b sticky z-30"
-        style={{ borderColor: '#e2e8f0', top: 0 }}
+        className="bg-white border-b relative z-30"
+        style={{ borderColor: '#e2e8f0' }}
       >
         <div className="container-custom py-3">
           <nav
@@ -482,7 +505,7 @@ export default function ProductDetail() {
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-10 xl:gap-16 items-start">
 
             {/* ───── LEFT: Image Gallery ───── */}
-            <div className="lg:sticky" style={{ top: 56 }}>
+            <div className="lg:sticky" style={{ top: 120 }}>
               <motion.div
                 initial={{ opacity: 0, x: -16 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -505,7 +528,7 @@ export default function ProductDetail() {
                       fill
                       priority
                       sizes="(max-width: 1024px) 100vw, 50vw"
-                      className="object-contain p-10 transition-transform duration-600 group-hover:scale-[1.04]"
+                      className="object-contain p-6 transition-transform duration-600 group-hover:scale-[1.04]"
                     />
                   ) : (
                     <div className="absolute inset-0 flex flex-col items-center justify-center gap-2"
@@ -573,7 +596,7 @@ export default function ProductDetail() {
                           boxShadow: activeImage === i ? '0 2px 10px rgba(245,158,11,0.3)' : 'none',
                         }}
                       >
-                        <ProductImage src={img} alt="" width={56} height={56} className="object-contain p-1.5 w-full h-full" />
+                        <ProductImage src={img} alt="" width={56} height={56} className="object-contain p-0.5 w-full h-full" />
                       </button>
                     ))}
                   </div>

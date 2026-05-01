@@ -4,6 +4,7 @@ import { getNavCategories, getAllMainCategories, seedDatabase } from '@/lib/db';
 export const dynamic = 'force-dynamic';
 
 export async function GET(req: Request) {
+  console.log('API: GET /api/public/categories called', req.url);
   try {
     await seedDatabase();
     
