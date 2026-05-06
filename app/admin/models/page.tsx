@@ -232,6 +232,11 @@ export default function AdminModels() {
     setForm({ ...form, specsList: list });
   };
   const addSpecRow    = () => setForm({ ...form, specsList: [...form.specsList, { label: '', value: '' }] });
+  const insertSpecRow = (idx: number) => {
+    const list = [...form.specsList];
+    list.splice(idx + 1, 0, { label: '', value: '' });
+    setForm({ ...form, specsList: list });
+  };
   const removeSpecRow = (idx: number) => { const l = [...form.specsList]; l.splice(idx, 1); setForm({ ...form, specsList: l }); };
   const loadTemplate  = () => setForm(p => ({ ...p, specsList: SCISSOR_LIFT_TEMPLATE.map(r => ({ ...r })) }));
 
@@ -737,9 +742,10 @@ export default function AdminModels() {
 
                 <div style={{ padding: 12 }}>
                   {form.specsList.length > 0 && (
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 32px', gap: '0 8px', marginBottom: 6 }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 32px 32px', gap: '0 8px', marginBottom: 6 }}>
                       <span style={{ fontSize: 10, fontWeight: 700, textTransform: 'uppercase', color: '#9ca3af', paddingLeft: 4 }}>Label / Spec Name</span>
                       <span style={{ fontSize: 10, fontWeight: 700, textTransform: 'uppercase', color: '#9ca3af', paddingLeft: 4 }}>Value</span>
+                      <span />
                       <span />
                     </div>
                   )}
@@ -747,15 +753,29 @@ export default function AdminModels() {
                     {form.specsList.map((row, idx) => {
                       const isHeader = row.label.startsWith('---');
                       return (
-                        <div key={idx} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 32px', gap: 8, alignItems: 'center' }}>
+                        <div key={idx} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 32px 32px', gap: 8, alignItems: 'center' }}>
                           <input value={row.label} onChange={e => handleSpecChange(idx, 'label', e.target.value)}
                             style={{ ...inp, padding: '7px 10px', fontSize: 12, background: isHeader ? '#fffbeb' : '#f9fafb', fontWeight: isHeader ? 700 : 400, color: isHeader ? '#92400e' : '#111827' }}
                             placeholder="Spec label" onFocus={focusAmber} onBlur={blurReset} />
                           <input value={row.value} onChange={e => handleSpecChange(idx, 'value', e.target.value)}
                             style={{ ...inp, padding: '7px 10px', fontSize: 12 }}
                             placeholder={isHeader ? 'Leave blank for headers' : 'Value'} onFocus={focusAmber} onBlur={blurReset} />
+                          
+                          <button type="button" onClick={() => insertSpecRow(idx)}
+                            title="Insert row below"
+                            style={{ width: 28, height: 28, borderRadius: 7, border: 'none', background: '#f0fdf4', color: '#10b981', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, transition: 'all 0.15s' }}
+                            onMouseEnter={(e) => { e.currentTarget.style.background = '#dcfce7'; }}
+                            onMouseLeave={(e) => { e.currentTarget.style.background = '#f0fdf4'; }}
+                          >
+                            <Plus size={12} />
+                          </button>
+
                           <button type="button" onClick={() => removeSpecRow(idx)}
-                            style={{ width: 28, height: 28, borderRadius: 7, border: 'none', background: '#fef2f2', color: '#ef4444', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                            title="Remove row"
+                            style={{ width: 28, height: 28, borderRadius: 7, border: 'none', background: '#fef2f2', color: '#ef4444', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, transition: 'all 0.15s' }}
+                            onMouseEnter={(e) => { e.currentTarget.style.background = '#fee2e2'; }}
+                            onMouseLeave={(e) => { e.currentTarget.style.background = '#fef2f2'; }}
+                          >
                             <X size={12} />
                           </button>
                         </div>
