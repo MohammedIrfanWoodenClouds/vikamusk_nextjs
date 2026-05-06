@@ -562,9 +562,9 @@ export default function Navbar() {
                           transition={{ duration: 0.25, ease: 'easeInOut' }}
                           className="overflow-hidden"
                         >
-                          <div className="ml-3 space-y-0.5 mb-1 border-l-2 border-gray-100 pl-3">
+                          <div className="ml-3 space-y-2 mb-4 border-l-2 border-gray-100 pl-4 mt-2">
                             {/* All Products link */}
-                            <Link href="/products" onClick={closeMobile} className="block py-2 text-[17px] text-accent font-semibold">
+                            <Link href="/products" onClick={closeMobile} className="block py-2.5 text-[16px] text-accent font-bold tracking-tight">
                               All Products
                             </Link>
 
@@ -588,7 +588,7 @@ export default function Navbar() {
                                 <div key={mc.id}>
                                   <button
                                     onClick={() => setMobileSubOpen(mobileSubOpen === mc.slug ? null : mc.slug)}
-                                    className="w-full flex items-center justify-between py-2 text-[17px] text-gray-600 hover:text-accent transition-colors"
+                                    className="w-full flex items-center justify-between py-3 text-[16px] font-bold text-gray-800 hover:text-accent transition-colors"
                                   >
                                     <span className="truncate">{mc.name}</span>
                                     <ChevronDown
@@ -608,11 +608,11 @@ export default function Navbar() {
                                         transition={{ duration: 0.2, ease: 'easeInOut' }}
                                         className="overflow-hidden"
                                       >
-                                        <div className="ml-4 space-y-0.5 border-l border-gray-100 pl-3">
+                                        <div className="ml-4 space-y-1 border-l border-gray-100 pl-4 my-2">
                                           <Link
                                             href={`/categories/${mc.slug}`}
                                             onClick={closeMobile}
-                                            className="block py-1.5 text-[16px] text-accent font-semibold"
+                                            className="block py-2 text-[15px] text-accent font-bold tracking-tight"
                                           >
                                             View All {mc.name}
                                           </Link>
@@ -626,7 +626,7 @@ export default function Navbar() {
                                               key={p.id}
                                               href={`/products/${p.slug}`}
                                               onClick={closeMobile}
-                                              className="block py-1.5 text-[16px] text-gray-500 hover:text-accent transition-colors"
+                                              className="block py-2 text-[14px] font-medium text-gray-500 hover:text-accent transition-colors leading-tight"
                                             >
                                               {p.name}
                                             </Link>
