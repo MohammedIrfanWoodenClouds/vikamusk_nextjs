@@ -8,9 +8,9 @@ export async function POST(request: NextRequest) {
     const { fullName, email, phone, companyName, location, subject, message } = body;
 
     // Validation
-    if (!fullName || !email || !phone) {
+    if (!fullName || !email || !phone || !companyName) {
       return NextResponse.json(
-        { error: 'Name, email, and phone are required.' },
+        { error: 'Name, email, phone, and company name are required.' },
         { status: 400 }
       );
     }

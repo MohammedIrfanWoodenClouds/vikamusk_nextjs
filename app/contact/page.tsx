@@ -299,8 +299,11 @@ export default function Contact() {
                     Contact Form
                   </span>
                   <h2 className="text-4xl md:text-5xl font-black text-[#001f3f] mb-4">Get in Touch</h2>
-                  <p className="text-slate-500 text-base leading-relaxed max-w-lg">
+                  <p className="text-slate-500 text-base leading-relaxed max-w-lg mb-2">
                     Fill in the form and our specialists will respond within 24 hours.
+                  </p>
+                  <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                    <span className="text-red-500">*</span> Required Fields
                   </p>
                 </div>
               </AnimatedSection>
@@ -311,7 +314,7 @@ export default function Contact() {
                     {/* First Name */}
                     <div className="space-y-3">
                       <label htmlFor="firstName" className="block text-[12px] font-bold text-slate-400 uppercase tracking-[0.2em]">
-                        First Name
+                        First Name <span className="text-red-500">*</span>
                       </label>
                       <input
                         type="text"
@@ -328,7 +331,7 @@ export default function Contact() {
                     {/* Last Name */}
                     <div className="space-y-3">
                       <label htmlFor="lastName" className="block text-[12px] font-bold text-slate-400 uppercase tracking-[0.2em]">
-                        Last Name
+                        Last Name <span className="text-red-500">*</span>
                       </label>
                       <input
                         type="text"
@@ -345,7 +348,7 @@ export default function Contact() {
                     {/* Email */}
                     <div className="space-y-3">
                       <label htmlFor="email" className="block text-[12px] font-bold text-slate-400 uppercase tracking-[0.2em]">
-                        Email
+                        Email <span className="text-red-500">*</span>
                       </label>
                       <input
                         type="email"
@@ -362,7 +365,7 @@ export default function Contact() {
                     {/* Phone Number */}
                     <div className="space-y-3">
                       <label htmlFor="phone" className="block text-[12px] font-bold text-slate-400 uppercase tracking-[0.2em]">
-                        Phone Number
+                        Phone Number <span className="text-red-500">*</span>
                       </label>
                       <input
                         type="tel"
@@ -376,14 +379,14 @@ export default function Contact() {
                       />
                     </div>
 
-                    {/* Company Name */}
                     <div className="space-y-3">
                       <label htmlFor="companyName" className="block text-[12px] font-bold text-slate-400 uppercase tracking-[0.2em]">
-                        Company Name
+                        Company Name <span className="text-red-500">*</span>
                       </label>
                       <input
                         type="text"
                         id="companyName"
+                        required
                         placeholder="Please enter company name..."
                         className="w-full h-14 bg-white border-2 border-slate-100 rounded-xl text-[#001f3f] font-medium placeholder:text-slate-300 focus:border-[#fabc22] focus:ring-0 transition-all outline-none shadow-sm"
                         style={{ paddingLeft: '40px', paddingRight: '24px' }}
@@ -412,7 +415,7 @@ export default function Contact() {
                   {/* Message */}
                   <div className="space-y-3" style={{ marginTop: '2rem' }}>
                     <label htmlFor="message" className="block text-[12px] font-bold text-slate-400 uppercase tracking-[0.2em]">
-                      What Do You Have In Mind
+                      What Do You Have In Mind <span className="text-red-500">*</span>
                     </label>
                     <textarea
                       id="message"
