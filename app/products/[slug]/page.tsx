@@ -125,7 +125,62 @@ function ProductImage({ src, alt, fill, className, sizes, width, height, priorit
   return <Image src={src} alt={alt} width={width ?? 80} height={height ?? 80} className={className} />;
 }
 
-/* ─────────────────────────────── Model Card ─────────────────────────────── */
+/* ─────────────────────────────── Helpers ─────────────────────────────── */
+function getProcessedSpecs(specs: { label: string; value: string }[]) {
+  const finalRows: { label: string; value?: string; isHeading: boolean }[] = [];
+  const seenHeadings = new Set<string>();
+  const itemsByHeading: Record<string, { label: string; value: string }[]> = { "GENERAL": [] };
+  let activeHeading = "GENERAL";
+
+  specs.forEach(s => {
+    const isHeading = s.label.trim().startsWith('-') || s.label.trim().startsWith('—');
+    if (isHeading) {
+      const cleanHeading = s.label.replace(/[-—]/g, '').trim().toUpperCase();
+      if (cleanHeading) {
+        activeHeading = cleanHeading;
+        if (!seenHeadings.has(activeHeading)) {
+          seenHeadings.add(activeHeading);
+          itemsByHeading[activeHeading] = [];
+        }
+      }
+    } else {
+      const cleanLabel = s.label.trim();
+      if (cleanLabel) {
+        // Avoid duplicate labels in the same heading
+        if (!itemsByHeading[activeHeading].find(item => item.label === cleanLabel)) {
+          itemsByHeading[activeHeading].push({ label: cleanLabel, value: s.value });
+        }
+      }
+    }
+  });
+
+  const headingOrder = ['DIMENSIONS', 'PERFORMANCE', 'BATTERY', 'GENERAL'];
+  const sortedHeadings = Array.from(seenHeadings).sort((a, b) => {
+    const idxA = headingOrder.indexOf(a);
+    const idxB = headingOrder.indexOf(b);
+    if (idxA !== -1 && idxB !== -1) return idxA - idxB;
+    if (idxA !== -1) return -1;
+    if (idxB !== -1) return 1;
+    return a.localeCompare(b);
+  });
+
+  if (itemsByHeading["GENERAL"].length > 0 && !sortedHeadings.includes("GENERAL")) {
+    sortedHeadings.push("GENERAL");
+  }
+
+  sortedHeadings.forEach(heading => {
+    const items = itemsByHeading[heading] || [];
+    if (items.length > 0) {
+      finalRows.push({ label: heading, isHeading: true });
+      items.forEach(item => {
+        finalRows.push({ label: item.label, value: item.value, isHeading: false });
+      });
+    }
+  });
+
+  return finalRows;
+}
+
 function ModelCard({ model, isActive, onClick, fallbackImage }: {
   model: ProductModel; isActive: boolean; onClick: () => void; fallbackImage?: string;
 }) {
@@ -204,62 +259,79 @@ function ModelCard({ model, isActive, onClick, fallbackImage }: {
 /* ─────────────────────────────── Spec Table ─────────────────────────────── */
 function SpecTable({ models }: { models: ProductModel[] }) {
   if (!models.length) return null;
-  const allLabels = Array.from(new Set(models.flatMap(m => (m.specs || []).map(s => s.label))));
-  if (!allLabels.length) return null;
-  const getValue = (m: ProductModel, label: string) =>
-    m.specs?.find(s => s.label === label)?.value ?? '—';
+
+  // Extract and normalize all specs into a structured format
+  const allSpecs = models.flatMap(m => m.specs || []);
+  const processedSpecs = getProcessedSpecs(allSpecs);
+  const finalRows = processedSpecs.map(row => ({ label: row.label, isHeading: row.isHeading }));
+
+  const getValue = (m: ProductModel, label: string) => {
+    // Try exact match first, then case-insensitive
+    const found = m.specs?.find(s => s.label.trim() === label);
+    return found?.value ?? '—';
+  };
 
   return (
     <>
       {/* Desktop Table View */}
-      <div className="hidden lg:block overflow-x-auto rounded-2xl scrollbar-thin scrollbar-thumb-accent/20" style={{ border: '1px solid #e2e8f0' }}>
+      <div className="hidden lg:block overflow-x-auto rounded-2xl shadow-sm border border-slate-200" style={{ background: '#fff' }}>
         <table className="w-full text-base border-collapse" style={{ minWidth: models.length * 200 }}>
           <thead className="sticky top-0 z-20">
-            <tr style={{ background: '#001f3f' }}>
+            <tr className="bg-[#001f3f]">
               <th
-                className="sticky left-0 z-30 text-left py-5 uppercase tracking-widest px-8 font-black text-[11px]"
-                style={{ color: 'rgba(255,255,255,0.45)', background: '#001229', borderRight: '1px solid rgba(255,255,255,0.06)', minWidth: 220 }}
+                className="sticky left-0 z-30 text-left py-6 px-10 font-black text-[11px] uppercase tracking-[0.2em]"
+                style={{ color: 'rgba(255,255,255,0.5)', background: '#001229', borderRight: '1px solid rgba(255,255,255,0.08)', minWidth: 260 }}
               >
                 Specification
               </th>
               {models.map(m => (
-                <th key={m.id} className="px-5 py-5 text-center font-black whitespace-nowrap"
-                  style={{ color: '#f59e0b', borderRight: '1px solid rgba(255,255,255,0.06)', minWidth: 160, fontSize: '15px' }}>
+                <th key={m.id} className="px-6 py-6 text-center font-black whitespace-nowrap"
+                  style={{ color: '#f59e0b', borderRight: '1px solid rgba(255,255,255,0.08)', minWidth: 180, fontSize: '15px' }}>
                   {m.model_name}
                 </th>
               ))}
             </tr>
           </thead>
           <tbody>
-            {allLabels.map((label, i) => {
+            {finalRows.map((row, i) => {
+              const { label, isHeading } = row;
               const values = models.map(m => getValue(m, label));
-              const isDiff = new Set(values.filter(v => v !== '—')).size > 1;
-              const rowBg = i % 2 === 0 ? '#f8fafc' : '#ffffff';
-              const isSection = label.includes('---');
+              const isDiff = !isHeading && new Set(values.filter(v => v !== '—')).size > 1;
+              const rowBg = isHeading ? '#f1f5f9' : (i % 2 === 0 ? '#f8fafc' : '#ffffff');
               
               return (
-                <tr key={label} className="group" style={{ background: rowBg }}>
+                <tr key={`${label}-${i}`} className="group transition-colors hover:bg-slate-50" style={{ background: rowBg }}>
                   <td
-                    className="sticky left-0 z-10 py-5 px-8 uppercase tracking-wide font-bold text-[12px]"
+                    className="sticky left-0 z-10 py-5 px-10 tracking-wide"
                     style={{ 
-                      color: isSection ? '#001f3f' : '#475569', 
+                      color: isHeading ? '#001f3f' : '#475569', 
                       background: rowBg, 
                       borderRight: '1px solid #e2e8f0',
-                      paddingLeft: isSection ? '2rem' : '3.5rem',
-                      fontWeight: isSection ? 900 : 700
+                      paddingLeft: isHeading ? '1.5rem' : '3.5rem',
+                      fontWeight: isHeading ? 900 : 700,
+                      fontSize: isHeading ? '12px' : '13px',
+                      textTransform: isHeading ? 'uppercase' : 'none'
                     }}
                   >
-                    <span className="flex items-center gap-2">
-                      {label}
-                      {!isSection && isDiff && (
-                        <span className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: '#f59e0b' }} />
-                      )}
-                    </span>
+                    <div className="flex items-center gap-3">
+                      {isHeading && <div className="w-1.5 h-4 bg-[#f59e0b] rounded-full" />}
+                      <span className="flex items-center gap-2">
+                        {isHeading ? label.replace(/---/g, '').trim() : label}
+                        {isDiff && (
+                          <span className="inline-block w-2 h-2 rounded-full bg-amber-400 shadow-sm" title="Variation across models" />
+                        )}
+                      </span>
+                    </div>
                   </td>
                   {models.map(m => (
-                    <td key={m.id} className="px-5 py-5 text-center font-bold"
-                      style={{ color: '#001f3f', borderRight: '1px solid #f1f5f9', fontSize: '16px' }}>
-                      {getValue(m, label)}
+                    <td key={m.id} className={`px-6 py-5 text-center ${isHeading ? 'bg-slate-100/50' : ''}`}
+                      style={{ 
+                        color: isHeading ? 'transparent' : '#001f3f', 
+                        borderRight: '1px solid #f1f5f9', 
+                        fontSize: '15px',
+                        fontWeight: 800
+                      }}>
+                      {!isHeading ? getValue(m, label) : ''}
                     </td>
                   ))}
                 </tr>
@@ -270,13 +342,13 @@ function SpecTable({ models }: { models: ProductModel[] }) {
       </div>
 
       {/* Mobile Professional Data List View */}
-      <div className="lg:hidden px-4 pb-16">
-        {allLabels.map((label, i) => {
-          const isSection = label.includes('---');
-          if (isSection) {
+      <div className="lg:hidden space-y-12 pb-16">
+        {finalRows.map((row, i) => {
+          const { label, isHeading } = row;
+          if (isHeading) {
             return (
-              <div key={label} className="mt-12 mb-6 border-l-4 border-accent pl-4 py-1">
-                <h4 className="text-[15px] font-black uppercase tracking-[0.2em] text-[#001f3f]">
+              <div key={`${label}-${i}`} className="sticky top-0 z-10 bg-white/95 backdrop-blur-sm py-4 border-b-2 border-amber-500 mb-6">
+                <h4 className="text-[14px] font-black uppercase tracking-[0.2em] text-[#001f3f] px-4">
                   {label.replace(/---/g, '').trim()}
                 </h4>
               </div>
@@ -288,28 +360,28 @@ function SpecTable({ models }: { models: ProductModel[] }) {
 
           return (
             <div 
-              key={label} 
-              className="mb-8 border-b border-gray-200 pb-6"
+              key={`${label}-${i}`} 
+              className="px-4"
             >
-              <div className="flex items-center gap-3 mb-4">
-                <span className="text-[11px] font-black uppercase tracking-[0.25em] text-[#94a3b8]">
+              <div className="flex items-center gap-3 mb-5">
+                <span className="text-[11px] font-black uppercase tracking-[0.25em] text-slate-400">
                   {label}
                 </span>
                 {hasVariant && (
-                  <span className="px-2 py-0.5 rounded text-[8px] font-black bg-[#f59e0b]/10 text-[#d97706] uppercase tracking-widest border border-[#f59e0b]/20">
+                  <span className="px-2 py-0.5 rounded-full text-[8px] font-black bg-amber-100 text-amber-700 uppercase tracking-widest border border-amber-200">
                     Variant
                   </span>
                 )}
               </div>
               
-              <div className="space-y-4">
+              <div className="bg-slate-50 rounded-2xl overflow-hidden border border-slate-100">
                 {modelValues.map((m, idx) => (
-                  <div key={idx} className="flex justify-between items-baseline gap-8">
-                    <span className="text-[11px] font-bold text-gray-400 uppercase tracking-tight shrink-0">
+                  <div key={idx} 
+                    className={`flex justify-between items-center gap-6 p-4 ${idx < modelValues.length - 1 ? 'border-b border-slate-100' : ''}`}>
+                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-wider shrink-0">
                       {m.name}
                     </span>
-                    <div className="h-px flex-1 border-b border-dotted border-gray-200 mt-1" />
-                    <span className="text-[15px] font-black text-[#001f3f] text-right">
+                    <span className="text-[14px] font-black text-[#001f3f] text-right">
                       {m.val}
                     </span>
                   </div>
@@ -915,21 +987,26 @@ export default function ProductDetail() {
                                   </button>
                                 </div>
                                 {/* Spec rows */}
-                                {sel.specs.map((s, i) => (
+                                {getProcessedSpecs(sel.specs).map((s, i) => (
                                     <div
                                       key={i}
-                                      className="flex justify-between items-center pr-4 py-3"
+                                      className="flex justify-between items-center pr-4 py-3 transition-colors"
                                       style={{
-                                        background: i % 2 === 0 ? '#f8fafc' : '#fff',
-                                        borderBottom: i < sel.specs.length - 1 ? '1px solid #f1f5f9' : 'none',
-                                        paddingLeft: s.label.includes('---') ? '1.5rem' : '2.5rem'
+                                        background: s.isHeading ? 'rgba(245,158,11,0.03)' : (i % 2 === 0 ? '#f8fafc' : '#fff'),
+                                        borderBottom: '1px solid #f1f5f9',
+                                        paddingLeft: s.isHeading ? '1.5rem' : '2.5rem'
                                       }}
                                     >
-                                      <span className={`text-[13px] uppercase tracking-wide ${s.label.includes('---') ? 'font-black text-[#001f3f]' : 'font-bold text-[#64748b]'}`}>
-                                        {s.label}
-                                      </span>
-                                      <span className="text-[15px] font-black text-right ml-4"
-                                        style={{ color: '#001f3f' }}>{s.value}</span>
+                                      <div className="flex items-center gap-2">
+                                        {s.isHeading && <div className="w-1 h-3 bg-[#f59e0b] rounded-full" />}
+                                        <span className={`text-[13px] uppercase tracking-wide ${s.isHeading ? 'font-black text-[#001f3f]' : 'font-bold text-[#64748b]'}`}>
+                                          {s.label}
+                                        </span>
+                                      </div>
+                                      {!s.isHeading && (
+                                        <span className="text-[15px] font-black text-right ml-4"
+                                          style={{ color: '#001f3f' }}>{s.value}</span>
+                                      )}
                                     </div>
                                 ))}
                               </motion.div>
