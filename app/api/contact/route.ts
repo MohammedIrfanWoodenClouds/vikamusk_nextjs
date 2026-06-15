@@ -2,6 +2,18 @@ import { NextRequest, NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 import { createEnquiry } from '@/lib/db';
 
+// CORS headers for cross-origin requests (landing page)
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type',
+};
+
+// Handle preflight requests
+export async function OPTIONS() {
+  return NextResponse.json({}, { headers: corsHeaders });
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
@@ -11,7 +23,7 @@ export async function POST(request: NextRequest) {
     if (!fullName || !email || !phone || !companyName) {
       return NextResponse.json(
         { error: 'Name, email, phone, and company name are required.' },
-        { status: 400 }
+        { status: 400, headers: corsHeaders }
       );
     }
 
@@ -20,7 +32,7 @@ export async function POST(request: NextRequest) {
     if (!emailRegex.test(email)) {
       return NextResponse.json(
         { error: 'Please provide a valid email address.' },
-        { status: 400 }
+        { status: 400, headers: corsHeaders }
       );
     }
 
@@ -29,7 +41,7 @@ export async function POST(request: NextRequest) {
       console.error('SMTP credentials missing in environment variables');
       return NextResponse.json(
         { error: 'Server configuration error. Please contact us directly.' },
-        { status: 500 }
+        { status: 500, headers: corsHeaders }
       );
     }
 
@@ -50,7 +62,7 @@ export async function POST(request: NextRequest) {
       console.error('SMTP Verification Error:', verifyError);
       return NextResponse.json(
         { error: 'Email service authentication failed.' },
-        { status: 500 }
+        { status: 500, headers: corsHeaders }
       );
     }
 
@@ -136,7 +148,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(
       { success: true, message: 'Enquiry submitted successfully.' },
-      { status: 200 }
+      { status: 200, headers: corsHeaders }
     );
   } catch (error: any) {
     console.error('Contact form error details:', {
@@ -146,7 +158,7 @@ export async function POST(request: NextRequest) {
     });
     return NextResponse.json(
       { error: 'Failed to send message. Please try again or email us directly.' },
-      { status: 500 }
+      { status: 500, headers: corsHeaders }
     );
   }
 }

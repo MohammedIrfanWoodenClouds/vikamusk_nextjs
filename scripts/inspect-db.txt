@@ -1,0 +1,1901 @@
+
+=========================================
+PRODUCT: articulated-boomlift-electric
+=========================================
+ID: 0ce0f1fd-e328-40a9-837d-083e495d2d2a
+Name: Articulated boom lift - electric
+Models found: LTQE1214, LTQE1416, LTQE1618, LTQE1820, LTQE2022
+
+--- Model: LTQE1214 (ID: dff3339d-9662-4924-a476-be37116dbd95) ---
+[
+  {
+    "label": "---DIMENSIONS---",
+    "value": ""
+  },
+  {
+    "label": "Max. Working Height (m)",
+    "value": "14"
+  },
+  {
+    "label": "Max. Platform Height (m)",
+    "value": "12"
+  },
+  {
+    "label": "Max. Horizontal Reach (m)",
+    "value": "8"
+  },
+  {
+    "label": "Max. Up & Over Clearance (m)",
+    "value": "5"
+  },
+  {
+    "label": "Platform Dimensions — L×W (m)",
+    "value": "1.1 × 0.65"
+  },
+  {
+    "label": "Length — Stowed (m)",
+    "value": "5.3"
+  },
+  {
+    "label": "Width — Stowed (m)",
+    "value": "2"
+  },
+  {
+    "label": "Height — Stowed (m)",
+    "value": "2.05"
+  },
+  {
+    "label": "Wheelbase (m)",
+    "value": "2"
+  },
+  {
+    "label": "Ground Clearance — Center (m)",
+    "value": "0.2"
+  },
+  {
+    "label": "---PRODUCTIVITY---",
+    "value": ""
+  },
+  {
+    "label": "Max. Load Capacity (kg)",
+    "value": "230"
+  },
+  {
+    "label": "Max. Platform Occupancy",
+    "value": "2"
+  },
+  {
+    "label": "Platform Rotation",
+    "value": "±80°"
+  },
+  {
+    "label": "Vertical Jib Rotation",
+    "value": "140°"
+  },
+  {
+    "label": "Turntable Rotation",
+    "value": "355°"
+  },
+  {
+    "label": "Drive Speed — Stowed (km/h)",
+    "value": "3"
+  },
+  {
+    "label": "Drive Speed — Raised/Extended (km/h)",
+    "value": "—"
+  },
+  {
+    "label": "Gradeability",
+    "value": "0.25"
+  },
+  {
+    "label": "Max. Allowable Slope",
+    "value": "3° / 3°"
+  },
+  {
+    "label": "Turning Radius — Inside (m)",
+    "value": "2.2"
+  },
+  {
+    "label": "Turning Radius — Outside (m)",
+    "value": "—"
+  },
+  {
+    "label": "Drive & Steer Mode",
+    "value": "4×2×2"
+  },
+  {
+    "label": "Tire Type",
+    "value": "0.59 × 0.19"
+  },
+  {
+    "label": "---POWER---",
+    "value": ""
+  },
+  {
+    "label": "Power Source",
+    "value": "Lithium Battery"
+  },
+  {
+    "label": "Battery",
+    "value": "48V / 320Ah"
+  },
+  {
+    "label": "Drive and Steering",
+    "value": "2WD × 2WS"
+  },
+  {
+    "label": "Drive Electric Motor Power (kW)",
+    "value": "—"
+  },
+  {
+    "label": "Control Voltage",
+    "value": "24V DC"
+  },
+  {
+    "label": "Charger",
+    "value": "48V / 50A"
+  },
+  {
+    "label": "Weight (kg)",
+    "value": "5500"
+  }
+]
+
+--- Model: LTQE1416 (ID: f809013a-1031-411a-9702-6a58f1f69e9c) ---
+[
+  {
+    "label": "---DIMENSIONS---",
+    "value": ""
+  },
+  {
+    "label": "Max. Working Height (m)",
+    "value": "16"
+  },
+  {
+    "label": "Max. Platform Height (m)",
+    "value": "14"
+  },
+  {
+    "label": "Max. Horizontal Reach (m)",
+    "value": "7.6"
+  },
+  {
+    "label": "Max. Up & Over Clearance (m)",
+    "value": "—"
+  },
+  {
+    "label": "Platform Dimensions — L×W (m)",
+    "value": "1.53 × 0.76"
+  },
+  {
+    "label": "Length — Stowed (m)",
+    "value": "6.58"
+  },
+  {
+    "label": "Width — Stowed (m)",
+    "value": "1.76"
+  },
+  {
+    "label": "Height — Stowed (m)",
+    "value": "1.98"
+  },
+  {
+    "label": "Wheelbase (m)",
+    "value": "2"
+  },
+  {
+    "label": "Ground Clearance — Center (m)",
+    "value": "0.2"
+  },
+  {
+    "label": "---PRODUCTIVITY---",
+    "value": ""
+  },
+  {
+    "label": "Max. Load Capacity (kg)",
+    "value": "230"
+  },
+  {
+    "label": "Max. Platform Occupancy",
+    "value": "2"
+  },
+  {
+    "label": "Platform Rotation",
+    "value": "±80°"
+  },
+  {
+    "label": "Vertical Jib Rotation",
+    "value": "140°"
+  },
+  {
+    "label": "Turntable Rotation",
+    "value": "355°"
+  },
+  {
+    "label": "Drive Speed — Stowed (km/h)",
+    "value": "5"
+  },
+  {
+    "label": "Drive Speed — Raised/Extended (km/h)",
+    "value": "—"
+  },
+  {
+    "label": "Gradeability",
+    "value": "0.25"
+  },
+  {
+    "label": "Max. Allowable Slope",
+    "value": "3° / 3°"
+  },
+  {
+    "label": "Turning Radius — Inside (m)",
+    "value": "2.2"
+  },
+  {
+    "label": "Turning Radius — Outside (m)",
+    "value": "—"
+  },
+  {
+    "label": "Drive & Steer Mode",
+    "value": "4×2×2"
+  },
+  {
+    "label": "Tire Type",
+    "value": "26 × 12-16"
+  },
+  {
+    "label": "---POWER---",
+    "value": ""
+  },
+  {
+    "label": "Power Source",
+    "value": "Lithium Battery"
+  },
+  {
+    "label": "Battery",
+    "value": "48V / 320Ah"
+  },
+  {
+    "label": "Drive and Steering",
+    "value": "2WD × 2WS"
+  },
+  {
+    "label": "Drive Electric Motor Power (kW)",
+    "value": "—"
+  },
+  {
+    "label": "Control Voltage",
+    "value": "24V DC"
+  },
+  {
+    "label": "Charger",
+    "value": "48V / 50A"
+  },
+  {
+    "label": "Weight (kg)",
+    "value": "6800"
+  }
+]
+
+--- Model: LTQE1618 (ID: c259f1a6-754c-4400-92ba-a5f8c80b62a0) ---
+[
+  {
+    "label": "---DIMENSIONS---",
+    "value": ""
+  },
+  {
+    "label": "Max. Working Height (m)",
+    "value": "18"
+  },
+  {
+    "label": "Max. Platform Height (m)",
+    "value": "16"
+  },
+  {
+    "label": "Max. Horizontal Reach (m)",
+    "value": "9.6"
+  },
+  {
+    "label": "Max. Up & Over Clearance (m)",
+    "value": "—"
+  },
+  {
+    "label": "Platform Dimensions — L×W (m)",
+    "value": "1.53 × 0.76"
+  },
+  {
+    "label": "Length — Stowed (m)",
+    "value": "7.7"
+  },
+  {
+    "label": "Width — Stowed (m)",
+    "value": "2.32"
+  },
+  {
+    "label": "Height — Stowed (m)",
+    "value": "2.35"
+  },
+  {
+    "label": "Wheelbase (m)",
+    "value": "2.28"
+  },
+  {
+    "label": "Ground Clearance — Center (m)",
+    "value": "0.28"
+  },
+  {
+    "label": "---PRODUCTIVITY---",
+    "value": ""
+  },
+  {
+    "label": "Max. Load Capacity (kg)",
+    "value": "230"
+  },
+  {
+    "label": "Max. Platform Occupancy",
+    "value": "2"
+  },
+  {
+    "label": "Platform Rotation",
+    "value": "±80°"
+  },
+  {
+    "label": "Vertical Jib Rotation",
+    "value": "140°"
+  },
+  {
+    "label": "Turntable Rotation",
+    "value": "355°"
+  },
+  {
+    "label": "Drive Speed — Stowed (km/h)",
+    "value": "5"
+  },
+  {
+    "label": "Drive Speed — Raised/Extended (km/h)",
+    "value": "0.8"
+  },
+  {
+    "label": "Gradeability",
+    "value": "0.25"
+  },
+  {
+    "label": "Max. Allowable Slope",
+    "value": "3° / 3°"
+  },
+  {
+    "label": "Turning Radius — Inside (m)",
+    "value": "2.66"
+  },
+  {
+    "label": "Turning Radius — Outside (m)",
+    "value": "5.66"
+  },
+  {
+    "label": "Drive & Steer Mode",
+    "value": "4×2×2"
+  },
+  {
+    "label": "Tire Type",
+    "value": "26 × 12-16"
+  },
+  {
+    "label": "---POWER---",
+    "value": ""
+  },
+  {
+    "label": "Power Source",
+    "value": "Lithium Battery"
+  },
+  {
+    "label": "Battery",
+    "value": "48V / 390Ah"
+  },
+  {
+    "label": "Drive and Steering",
+    "value": "2WD × 2WS"
+  },
+  {
+    "label": "Drive Electric Motor Power (kW)",
+    "value": "6.5 × 2"
+  },
+  {
+    "label": "Control Voltage",
+    "value": "24V DC"
+  },
+  {
+    "label": "Charger",
+    "value": "48V / 62A"
+  },
+  {
+    "label": "Weight (kg)",
+    "value": "7080"
+  }
+]
+
+--- Model: LTQE1820 (ID: 8f8f44c4-3f80-48ed-b459-dd4de0ead7d4) ---
+[
+  {
+    "label": "---DIMENSIONS---",
+    "value": ""
+  },
+  {
+    "label": "Max. Working Height (m)",
+    "value": "20"
+  },
+  {
+    "label": "Max. Platform Height (m)",
+    "value": "18"
+  },
+  {
+    "label": "Max. Horizontal Reach (m)",
+    "value": "10.8"
+  },
+  {
+    "label": "Max. Up & Over Clearance (m)",
+    "value": "9.2"
+  },
+  {
+    "label": "Platform Dimensions — L×W (m)",
+    "value": "1.53 × 0.76"
+  },
+  {
+    "label": "Length — Stowed (m)",
+    "value": "8.1"
+  },
+  {
+    "label": "Width — Stowed (m)",
+    "value": "2.38"
+  },
+  {
+    "label": "Height — Stowed (m)",
+    "value": "2.38"
+  },
+  {
+    "label": "Wheelbase (m)",
+    "value": "2.6"
+  },
+  {
+    "label": "Ground Clearance — Center (m)",
+    "value": "0.3"
+  },
+  {
+    "label": "---PRODUCTIVITY---",
+    "value": ""
+  },
+  {
+    "label": "Max. Load Capacity (kg)",
+    "value": "230"
+  },
+  {
+    "label": "Max. Platform Occupancy",
+    "value": "2"
+  },
+  {
+    "label": "Platform Rotation",
+    "value": "±80°"
+  },
+  {
+    "label": "Vertical Jib Rotation",
+    "value": "140°"
+  },
+  {
+    "label": "Turntable Rotation",
+    "value": "355°"
+  },
+  {
+    "label": "Drive Speed — Stowed (km/h)",
+    "value": "5"
+  },
+  {
+    "label": "Drive Speed — Raised/Extended (km/h)",
+    "value": "0.8"
+  },
+  {
+    "label": "Gradeability",
+    "value": "0.25"
+  },
+  {
+    "label": "Max. Allowable Slope",
+    "value": "3° / 3°"
+  },
+  {
+    "label": "Turning Radius — Inside (m)",
+    "value": "2.66"
+  },
+  {
+    "label": "Turning Radius — Outside (m)",
+    "value": "5.66"
+  },
+  {
+    "label": "Drive & Steer Mode",
+    "value": "4×2×2"
+  },
+  {
+    "label": "Tire Type",
+    "value": "33 × 12-20"
+  },
+  {
+    "label": "---POWER---",
+    "value": ""
+  },
+  {
+    "label": "Power Source",
+    "value": "Lithium Battery"
+  },
+  {
+    "label": "Battery",
+    "value": "48V / 390Ah"
+  },
+  {
+    "label": "Drive and Steering",
+    "value": "2WD × 2WS"
+  },
+  {
+    "label": "Drive Electric Motor Power (kW)",
+    "value": "6.5 × 2"
+  },
+  {
+    "label": "Control Voltage",
+    "value": "24V DC"
+  },
+  {
+    "label": "Charger",
+    "value": "48V / 62A"
+  },
+  {
+    "label": "Weight (kg)",
+    "value": "8080"
+  }
+]
+
+--- Model: LTQE2022 (ID: 1c34e9f5-7741-49d2-a6a7-52826bff05b1) ---
+[
+  {
+    "label": "---DIMENSIONS---",
+    "value": ""
+  },
+  {
+    "label": "Max. Working Height (m)",
+    "value": "22"
+  },
+  {
+    "label": "Max. Platform Height (m)",
+    "value": "20"
+  },
+  {
+    "label": "Max. Horizontal Reach (m)",
+    "value": "12.3"
+  },
+  {
+    "label": "Max. Up & Over Clearance (m)",
+    "value": "9.2"
+  },
+  {
+    "label": "Platform Dimensions — L×W (m)",
+    "value": "1.53 × 0.76"
+  },
+  {
+    "label": "Length — Stowed (m)",
+    "value": "9.2"
+  },
+  {
+    "label": "Width — Stowed (m)",
+    "value": "2.38"
+  },
+  {
+    "label": "Height — Stowed (m)",
+    "value": "2.34"
+  },
+  {
+    "label": "Wheelbase (m)",
+    "value": "2.6"
+  },
+  {
+    "label": "Ground Clearance — Center (m)",
+    "value": "0.3"
+  },
+  {
+    "label": "---PRODUCTIVITY---",
+    "value": ""
+  },
+  {
+    "label": "Max. Load Capacity (kg)",
+    "value": "230"
+  },
+  {
+    "label": "Max. Platform Occupancy",
+    "value": "2"
+  },
+  {
+    "label": "Platform Rotation",
+    "value": "±80°"
+  },
+  {
+    "label": "Vertical Jib Rotation",
+    "value": "140°"
+  },
+  {
+    "label": "Turntable Rotation",
+    "value": "355°"
+  },
+  {
+    "label": "Drive Speed — Stowed (km/h)",
+    "value": "5"
+  },
+  {
+    "label": "Drive Speed — Raised/Extended (km/h)",
+    "value": "—"
+  },
+  {
+    "label": "Gradeability",
+    "value": "0.25"
+  },
+  {
+    "label": "Max. Allowable Slope",
+    "value": "3° / 3°"
+  },
+  {
+    "label": "Turning Radius — Inside (m)",
+    "value": "2.66"
+  },
+  {
+    "label": "Turning Radius — Outside (m)",
+    "value": "—"
+  },
+  {
+    "label": "Drive & Steer Mode",
+    "value": "4×2×2"
+  },
+  {
+    "label": "Tire Type",
+    "value": "33 × 12-20"
+  },
+  {
+    "label": "---POWER---",
+    "value": ""
+  },
+  {
+    "label": "Power Source",
+    "value": "Lithium Battery"
+  },
+  {
+    "label": "Battery",
+    "value": "48V / 390Ah"
+  },
+  {
+    "label": "Drive and Steering",
+    "value": "2WD × 2WS"
+  },
+  {
+    "label": "Drive Electric Motor Power (kW)",
+    "value": "6.5 × 2"
+  },
+  {
+    "label": "Control Voltage",
+    "value": "24V DC"
+  },
+  {
+    "label": "Charger",
+    "value": "48V / 62A"
+  },
+  {
+    "label": "Weight (kg)",
+    "value": "8200"
+  }
+]
+
+=========================================
+PRODUCT: electric-reach-trucks
+=========================================
+ID: be1aa955-5e83-4110-ada1-ba9e80f4bc41
+Name: Electric reach trucks
+Models found: FRB12, FRB15, FRB20
+
+--- Model: FRB12 (ID: b35e4837-08c3-431d-b5fe-6245cde6b399) ---
+[
+  {
+    "label": "---GENERAL---",
+    "value": ""
+  },
+  {
+    "label": "Power Type",
+    "value": "Full-Electric"
+  },
+  {
+    "label": "Capacity (kg)",
+    "value": "1200"
+  },
+  {
+    "label": "Max. Lifting Height (H2) (mm)",
+    "value": "3000"
+  },
+  {
+    "label": "Load Center (C) (mm)",
+    "value": "500"
+  },
+  {
+    "label": "---DIMENSIONS---",
+    "value": ""
+  },
+  {
+    "label": "Fork Dimensions (mm)",
+    "value": "1070 × 100 × 35"
+  },
+  {
+    "label": "Fork Spread (mm)",
+    "value": "210 – 705"
+  },
+  {
+    "label": "Reach Distance (mm)",
+    "value": "555"
+  },
+  {
+    "label": "Overall Length Including Fork (L) (mm)",
+    "value": "2245"
+  },
+  {
+    "label": "Overall Width (S) (mm)",
+    "value": "1090"
+  },
+  {
+    "label": "Height — Mast Lowered (H1) (mm)",
+    "value": "2100"
+  },
+  {
+    "label": "Max. Height When Fork is Lifting (H) (mm)",
+    "value": "3965"
+  },
+  {
+    "label": "Turning Radius (Wa) (mm)",
+    "value": "1670"
+  },
+  {
+    "label": "Height of Overhead Guards (mm)",
+    "value": "2280"
+  },
+  {
+    "label": "Min. Stacking Aisle (mm)",
+    "value": "2700"
+  },
+  {
+    "label": "Min. Ground Clearance (mm)",
+    "value": "70"
+  },
+  {
+    "label": "Total Weight (kg)",
+    "value": "2000"
+  },
+  {
+    "label": "---WHEELS & CHASSIS---",
+    "value": ""
+  },
+  {
+    "label": "Wheel Type",
+    "value": "PU Solid Tire"
+  },
+  {
+    "label": "Front Wheel (mm)",
+    "value": "Ø210 × 85"
+  },
+  {
+    "label": "Balance Wheel (mm)",
+    "value": "Ø150 × 50"
+  },
+  {
+    "label": "---POWER & CONTROL---",
+    "value": ""
+  },
+  {
+    "label": "Battery",
+    "value": "Lithium"
+  },
+  {
+    "label": "Battery Capacity (V/Ah)",
+    "value": "24 / 280"
+  },
+  {
+    "label": "Charger — Intelligent (V/A)",
+    "value": "24 / 40"
+  },
+  {
+    "label": "Driving Motor (kW)",
+    "value": "2.5"
+  },
+  {
+    "label": "Lifting Motor (kW)",
+    "value": "3"
+  },
+  {
+    "label": "Drive Controlling Type",
+    "value": "2.5 (AC)"
+  },
+  {
+    "label": "Walking Adjustable Type",
+    "value": "Holzer type accelerator"
+  },
+  {
+    "label": "Walkie Brake",
+    "value": "Electromagnetic"
+  }
+]
+
+--- Model: FRB15 (ID: 8b18e804-775f-41c6-84ba-001a2de1ab71) ---
+[
+  {
+    "label": "---GENERAL---",
+    "value": ""
+  },
+  {
+    "label": "Power Type",
+    "value": "Full-Electric"
+  },
+  {
+    "label": "Capacity (kg)",
+    "value": "1500"
+  },
+  {
+    "label": "Max. Lifting Height (H2) (mm)",
+    "value": "3000"
+  },
+  {
+    "label": "Load Center (C) (mm)",
+    "value": "500"
+  },
+  {
+    "label": "---DIMENSIONS---",
+    "value": ""
+  },
+  {
+    "label": "Fork Dimensions (mm)",
+    "value": "1070 × 100 × 35"
+  },
+  {
+    "label": "Fork Spread (mm)",
+    "value": "210 – 705"
+  },
+  {
+    "label": "Reach Distance (mm)",
+    "value": "555"
+  },
+  {
+    "label": "Overall Length Including Fork (L) (mm)",
+    "value": "2245"
+  },
+  {
+    "label": "Overall Width (S) (mm)",
+    "value": "1090"
+  },
+  {
+    "label": "Height — Mast Lowered (H1) (mm)",
+    "value": "2100"
+  },
+  {
+    "label": "Max. Height When Fork is Lifting (H) (mm)",
+    "value": "3965"
+  },
+  {
+    "label": "Turning Radius (Wa) (mm)",
+    "value": "1670"
+  },
+  {
+    "label": "Height of Overhead Guards (mm)",
+    "value": "2280"
+  },
+  {
+    "label": "Min. Stacking Aisle (mm)",
+    "value": "2700"
+  },
+  {
+    "label": "Min. Ground Clearance (mm)",
+    "value": "70"
+  },
+  {
+    "label": "Total Weight (kg)",
+    "value": "2200"
+  },
+  {
+    "label": "---WHEELS & CHASSIS---",
+    "value": ""
+  },
+  {
+    "label": "Wheel Type",
+    "value": "PU Solid Tire"
+  },
+  {
+    "label": "Front Wheel (mm)",
+    "value": "Ø210 × 85"
+  },
+  {
+    "label": "Balance Wheel (mm)",
+    "value": "Ø150 × 50"
+  },
+  {
+    "label": "---POWER & CONTROL---",
+    "value": ""
+  },
+  {
+    "label": "Battery",
+    "value": "Lithium"
+  },
+  {
+    "label": "Battery Capacity (V/Ah)",
+    "value": "24 / 280"
+  },
+  {
+    "label": "Charger — Intelligent (V/A)",
+    "value": "24 / 40"
+  },
+  {
+    "label": "Driving Motor (kW)",
+    "value": "2.5"
+  },
+  {
+    "label": "Lifting Motor (kW)",
+    "value": "3"
+  },
+  {
+    "label": "Drive Controlling Type",
+    "value": "2.5 (AC)"
+  },
+  {
+    "label": "Walking Adjustable Type",
+    "value": "—"
+  },
+  {
+    "label": "Walkie Brake",
+    "value": "—"
+  }
+]
+
+--- Model: FRB20 (ID: 7b3ce6e4-69a2-4ca2-aa3f-7bc7365630f4) ---
+[
+  {
+    "label": "---GENERAL---",
+    "value": ""
+  },
+  {
+    "label": "Power Type",
+    "value": "Full-Electric"
+  },
+  {
+    "label": "Capacity (kg)",
+    "value": "2000"
+  },
+  {
+    "label": "Max. Lifting Height (H2) (mm)",
+    "value": "3000"
+  },
+  {
+    "label": "Load Center (C) (mm)",
+    "value": "500"
+  },
+  {
+    "label": "---DIMENSIONS---",
+    "value": ""
+  },
+  {
+    "label": "Fork Dimensions (mm)",
+    "value": "1070 × 122 × 40"
+  },
+  {
+    "label": "Fork Spread (mm)",
+    "value": "270 – 705"
+  },
+  {
+    "label": "Reach Distance (mm)",
+    "value": "640"
+  },
+  {
+    "label": "Overall Length Including Fork (L) (mm)",
+    "value": "2315"
+  },
+  {
+    "label": "Overall Width (S) (mm)",
+    "value": "1090"
+  },
+  {
+    "label": "Height — Mast Lowered (H1) (mm)",
+    "value": "2100"
+  },
+  {
+    "label": "Max. Height When Fork is Lifting (H) (mm)",
+    "value": "3965"
+  },
+  {
+    "label": "Turning Radius (Wa) (mm)",
+    "value": "1820"
+  },
+  {
+    "label": "Height of Overhead Guards (mm)",
+    "value": "2280"
+  },
+  {
+    "label": "Min. Stacking Aisle (mm)",
+    "value": "2800"
+  },
+  {
+    "label": "Min. Ground Clearance (mm)",
+    "value": "70"
+  },
+  {
+    "label": "Total Weight (kg)",
+    "value": "2250"
+  },
+  {
+    "label": "---WHEELS & CHASSIS---",
+    "value": ""
+  },
+  {
+    "label": "Wheel Type",
+    "value": "PU Solid Tire"
+  },
+  {
+    "label": "Front Wheel (mm)",
+    "value": "Ø210 × 85"
+  },
+  {
+    "label": "Balance Wheel (mm)",
+    "value": "Ø150 × 50"
+  },
+  {
+    "label": "---POWER & CONTROL---",
+    "value": ""
+  },
+  {
+    "label": "Battery",
+    "value": "Lithium"
+  },
+  {
+    "label": "Battery Capacity (V/Ah)",
+    "value": "24 / 280"
+  },
+  {
+    "label": "Charger — Intelligent (V/A)",
+    "value": "24 / 40"
+  },
+  {
+    "label": "Driving Motor (kW)",
+    "value": "2.5"
+  },
+  {
+    "label": "Lifting Motor (kW)",
+    "value": "3"
+  },
+  {
+    "label": "Drive Controlling Type",
+    "value": "2.5 (AC)"
+  },
+  {
+    "label": "Walking Adjustable Type",
+    "value": "—"
+  },
+  {
+    "label": "Walkie Brake",
+    "value": "—"
+  }
+]
+
+=========================================
+PRODUCT: articulated-boomlift-diesel
+=========================================
+ID: 813ca866-0e73-46cd-b068-cdb1e94cff21
+Name: Articulated boom lift - diesel
+Models found: LTQD1214, LTQD1618, LTQD1820, LTQD2022, LTQD2426, LTQD2628
+
+--- Model: LTQD1214 (ID: 67d3d264-ba94-4d40-8631-66c7605f1a36) ---
+[
+  {
+    "label": "---DIMENSIONS---",
+    "value": ""
+  },
+  {
+    "label": "Max. Working Height (m)",
+    "value": "14"
+  },
+  {
+    "label": "Max. Platform Height (m)",
+    "value": "11"
+  },
+  {
+    "label": "Max. Horizontal Reach (m)",
+    "value": "8"
+  },
+  {
+    "label": "Max. Up & Over Clearance (m)",
+    "value": "5"
+  },
+  {
+    "label": "Platform Dimensions — L×W (m)",
+    "value": "1.1 × 0.67"
+  },
+  {
+    "label": "Length — Stowed (m)",
+    "value": "5.3"
+  },
+  {
+    "label": "Width — Stowed (m)",
+    "value": "2"
+  },
+  {
+    "label": "Height — Stowed (m)",
+    "value": "2.26"
+  },
+  {
+    "label": "Wheelbase (m)",
+    "value": "2.4"
+  },
+  {
+    "label": "Ground Clearance — Center (m)",
+    "value": "0.2"
+  },
+  {
+    "label": "---PRODUCTIVITY---",
+    "value": ""
+  },
+  {
+    "label": "Max. Load Capacity (kg)",
+    "value": "200"
+  },
+  {
+    "label": "Max. Platform Occupancy",
+    "value": "2"
+  },
+  {
+    "label": "Platform Rotation",
+    "value": "±80°"
+  },
+  {
+    "label": "Vertical Jib Rotation",
+    "value": "140°"
+  },
+  {
+    "label": "Turntable Rotation",
+    "value": "360°"
+  },
+  {
+    "label": "Turntable Tail Swing (m)",
+    "value": "0.26"
+  },
+  {
+    "label": "Drive Speed — Stowed (km/h)",
+    "value": "3.2"
+  },
+  {
+    "label": "Drive Speed — Raised/Extended (km/h)",
+    "value": "—"
+  },
+  {
+    "label": "Gradeability",
+    "value": "0.3"
+  },
+  {
+    "label": "Max. Allowable Slope",
+    "value": "3° / 3°"
+  },
+  {
+    "label": "Turning Radius — Inside (m)",
+    "value": "3"
+  },
+  {
+    "label": "Turning Radius — Outside (m)",
+    "value": "—"
+  },
+  {
+    "label": "Drive & Steer Mode",
+    "value": "4×4×2"
+  },
+  {
+    "label": "Tire Type",
+    "value": "33×12-20"
+  },
+  {
+    "label": "---POWER---",
+    "value": ""
+  },
+  {
+    "label": "Engine",
+    "value": "Yanmar"
+  },
+  {
+    "label": "Power (kW/rpm)",
+    "value": "36.8 / 2500"
+  },
+  {
+    "label": "Fuel Tank Volume (L)",
+    "value": "40"
+  },
+  {
+    "label": "Hydraulic Oil Tank Volume (L)",
+    "value": "50"
+  },
+  {
+    "label": "Control Voltage",
+    "value": "12V DC"
+  },
+  {
+    "label": "Weight (kg)",
+    "value": "5300"
+  }
+]
+
+--- Model: LTQD1618 (ID: a44a45f6-e11f-47d1-ac17-bbf579ded38d) ---
+[
+  {
+    "label": "---DIMENSIONS---",
+    "value": ""
+  },
+  {
+    "label": "Max. Working Height (m)",
+    "value": "16"
+  },
+  {
+    "label": "Max. Platform Height (m)",
+    "value": "14"
+  },
+  {
+    "label": "Max. Horizontal Reach (m)",
+    "value": "8.1"
+  },
+  {
+    "label": "Max. Up & Over Clearance (m)",
+    "value": "7.75"
+  },
+  {
+    "label": "Platform Dimensions — L×W (m)",
+    "value": "1.83 × 0.76"
+  },
+  {
+    "label": "Length — Stowed (m)",
+    "value": "6.7"
+  },
+  {
+    "label": "Width — Stowed (m)",
+    "value": "2.28"
+  },
+  {
+    "label": "Height — Stowed (m)",
+    "value": "2.47"
+  },
+  {
+    "label": "Wheelbase (m)",
+    "value": "2.4"
+  },
+  {
+    "label": "Ground Clearance — Center (m)",
+    "value": "0.4"
+  },
+  {
+    "label": "---PRODUCTIVITY---",
+    "value": ""
+  },
+  {
+    "label": "Max. Load Capacity (kg)",
+    "value": "200"
+  },
+  {
+    "label": "Max. Platform Occupancy",
+    "value": "2"
+  },
+  {
+    "label": "Platform Rotation",
+    "value": "±80°"
+  },
+  {
+    "label": "Vertical Jib Rotation",
+    "value": "140°"
+  },
+  {
+    "label": "Turntable Rotation",
+    "value": "360°"
+  },
+  {
+    "label": "Turntable Tail Swing (m)",
+    "value": "—"
+  },
+  {
+    "label": "Drive Speed — Stowed (km/h)",
+    "value": "4.2"
+  },
+  {
+    "label": "Drive Speed — Raised/Extended (km/h)",
+    "value": "0.8"
+  },
+  {
+    "label": "Gradeability",
+    "value": "0.4"
+  },
+  {
+    "label": "Max. Allowable Slope",
+    "value": "3° / 3°"
+  },
+  {
+    "label": "Turning Radius — Inside (m)",
+    "value": "1.87"
+  },
+  {
+    "label": "Turning Radius — Outside (m)",
+    "value": "4.8"
+  },
+  {
+    "label": "Drive & Steer Mode",
+    "value": "4×4×2"
+  },
+  {
+    "label": "Tire Type",
+    "value": "33×12-20"
+  },
+  {
+    "label": "---POWER---",
+    "value": ""
+  },
+  {
+    "label": "Engine",
+    "value": "Yanmar"
+  },
+  {
+    "label": "Power (kW/rpm)",
+    "value": "36.8 / 2500"
+  },
+  {
+    "label": "Fuel Tank Volume (L)",
+    "value": "100"
+  },
+  {
+    "label": "Hydraulic Oil Tank Volume (L)",
+    "value": "110"
+  },
+  {
+    "label": "Control Voltage",
+    "value": "12V DC"
+  },
+  {
+    "label": "Weight (kg)",
+    "value": "8070"
+  }
+]
+
+--- Model: LTQD1820 (ID: 6611af5d-ea70-43e0-855d-e26556c8db45) ---
+[
+  {
+    "label": "---DIMENSIONS---",
+    "value": ""
+  },
+  {
+    "label": "Max. Working Height (m)",
+    "value": "20"
+  },
+  {
+    "label": "Max. Platform Height (m)",
+    "value": "18"
+  },
+  {
+    "label": "Max. Horizontal Reach (m)",
+    "value": "11.6"
+  },
+  {
+    "label": "Max. Up & Over Clearance (m)",
+    "value": "8.3"
+  },
+  {
+    "label": "Platform Dimensions — L×W (m)",
+    "value": "1.83 × 0.76"
+  },
+  {
+    "label": "Length — Stowed (m)",
+    "value": "8.23"
+  },
+  {
+    "label": "Width — Stowed (m)",
+    "value": "2.28"
+  },
+  {
+    "label": "Height — Stowed (m)",
+    "value": "2.5"
+  },
+  {
+    "label": "Wheelbase (m)",
+    "value": "2.4"
+  },
+  {
+    "label": "Ground Clearance — Center (m)",
+    "value": "0.4"
+  },
+  {
+    "label": "---PRODUCTIVITY---",
+    "value": ""
+  },
+  {
+    "label": "Max. Load Capacity (kg)",
+    "value": "230"
+  },
+  {
+    "label": "Max. Platform Occupancy",
+    "value": "2"
+  },
+  {
+    "label": "Platform Rotation",
+    "value": "±80°"
+  },
+  {
+    "label": "Vertical Jib Rotation",
+    "value": "140°"
+  },
+  {
+    "label": "Turntable Rotation",
+    "value": "360°"
+  },
+  {
+    "label": "Turntable Tail Swing (m)",
+    "value": "—"
+  },
+  {
+    "label": "Drive Speed — Stowed (km/h)",
+    "value": "4.2"
+  },
+  {
+    "label": "Drive Speed — Raised/Extended (km/h)",
+    "value": "—"
+  },
+  {
+    "label": "Gradeability",
+    "value": "0.45"
+  },
+  {
+    "label": "Max. Allowable Slope",
+    "value": "3° / 3°"
+  },
+  {
+    "label": "Turning Radius — Inside (m)",
+    "value": "1.82"
+  },
+  {
+    "label": "Turning Radius — Outside (m)",
+    "value": "—"
+  },
+  {
+    "label": "Drive & Steer Mode",
+    "value": "4×4×2"
+  },
+  {
+    "label": "Tire Type",
+    "value": "33×12-20"
+  },
+  {
+    "label": "---POWER---",
+    "value": ""
+  },
+  {
+    "label": "Engine",
+    "value": "Yanmar"
+  },
+  {
+    "label": "Power (kW/rpm)",
+    "value": "36.8 / 2500"
+  },
+  {
+    "label": "Fuel Tank Volume (L)",
+    "value": "100"
+  },
+  {
+    "label": "Hydraulic Oil Tank Volume (L)",
+    "value": "110"
+  },
+  {
+    "label": "Control Voltage",
+    "value": "12V DC"
+  },
+  {
+    "label": "Weight (kg)",
+    "value": "8800"
+  }
+]
+
+--- Model: LTQD2022 (ID: 890855bb-7f6a-471d-86dd-75fea4d9f822) ---
+[
+  {
+    "label": "---DIMENSIONS---",
+    "value": ""
+  },
+  {
+    "label": "Max. Working Height (m)",
+    "value": "22"
+  },
+  {
+    "label": "Max. Platform Height (m)",
+    "value": "20"
+  },
+  {
+    "label": "Max. Horizontal Reach (m)",
+    "value": "12.6"
+  },
+  {
+    "label": "Max. Up & Over Clearance (m)",
+    "value": "9.2"
+  },
+  {
+    "label": "Platform Dimensions — L×W (m)",
+    "value": "1.83 × 0.76"
+  },
+  {
+    "label": "Length — Stowed (m)",
+    "value": "9.07"
+  },
+  {
+    "label": "Width — Stowed (m)",
+    "value": "2.38"
+  },
+  {
+    "label": "Height — Stowed (m)",
+    "value": "2.49"
+  },
+  {
+    "label": "Wheelbase (m)",
+    "value": "2.45"
+  },
+  {
+    "label": "Ground Clearance — Center (m)",
+    "value": "0.43"
+  },
+  {
+    "label": "---PRODUCTIVITY---",
+    "value": ""
+  },
+  {
+    "label": "Max. Load Capacity (kg)",
+    "value": "230"
+  },
+  {
+    "label": "Max. Platform Occupancy",
+    "value": "2"
+  },
+  {
+    "label": "Platform Rotation",
+    "value": "±80°"
+  },
+  {
+    "label": "Vertical Jib Rotation",
+    "value": "140°"
+  },
+  {
+    "label": "Turntable Rotation",
+    "value": "360°"
+  },
+  {
+    "label": "Turntable Tail Swing (m)",
+    "value": "0.33"
+  },
+  {
+    "label": "Drive Speed — Stowed (km/h)",
+    "value": "4.2"
+  },
+  {
+    "label": "Drive Speed — Raised/Extended (km/h)",
+    "value": "—"
+  },
+  {
+    "label": "Gradeability",
+    "value": "0.45"
+  },
+  {
+    "label": "Max. Allowable Slope",
+    "value": "3° / 3°"
+  },
+  {
+    "label": "Turning Radius — Inside (m)",
+    "value": "2.66"
+  },
+  {
+    "label": "Turning Radius — Outside (m)",
+    "value": "—"
+  },
+  {
+    "label": "Drive & Steer Mode",
+    "value": "4×4×2"
+  },
+  {
+    "label": "Tire Type",
+    "value": "33×12-20"
+  },
+  {
+    "label": "---POWER---",
+    "value": ""
+  },
+  {
+    "label": "Engine",
+    "value": "Yanmar"
+  },
+  {
+    "label": "Power (kW/rpm)",
+    "value": "36.8 / 2500"
+  },
+  {
+    "label": "Fuel Tank Volume (L)",
+    "value": "100"
+  },
+  {
+    "label": "Hydraulic Oil Tank Volume (L)",
+    "value": "110"
+  },
+  {
+    "label": "Control Voltage",
+    "value": "12V DC"
+  },
+  {
+    "label": "Weight (kg)",
+    "value": "8800"
+  }
+]
+
+--- Model: LTQD2426 (ID: f30ab5cc-0a79-4e93-a8bf-d661bb4a7abb) ---
+[
+  {
+    "label": "---DIMENSIONS---",
+    "value": ""
+  },
+  {
+    "label": "Max. Working Height (m)",
+    "value": "26"
+  },
+  {
+    "label": "Max. Platform Height (m)",
+    "value": "24.2"
+  },
+  {
+    "label": "Max. Horizontal Reach (m)",
+    "value": "15.8"
+  },
+  {
+    "label": "Max. Up & Over Clearance (m)",
+    "value": "9.8"
+  },
+  {
+    "label": "Platform Dimensions — L×W (m)",
+    "value": "1.83 × 0.76"
+  },
+  {
+    "label": "Length — Stowed (m)",
+    "value": "9.92"
+  },
+  {
+    "label": "Width — Stowed (m)",
+    "value": "2.48"
+  },
+  {
+    "label": "Height — Stowed (m)",
+    "value": "2.82"
+  },
+  {
+    "label": "Wheelbase (m)",
+    "value": "3"
+  },
+  {
+    "label": "Ground Clearance — Center (m)",
+    "value": "0.43"
+  },
+  {
+    "label": "---PRODUCTIVITY---",
+    "value": ""
+  },
+  {
+    "label": "Max. Load Capacity (kg)",
+    "value": "230"
+  },
+  {
+    "label": "Max. Platform Occupancy",
+    "value": "2"
+  },
+  {
+    "label": "Platform Rotation",
+    "value": "±80°"
+  },
+  {
+    "label": "Vertical Jib Rotation",
+    "value": "140°"
+  },
+  {
+    "label": "Turntable Rotation",
+    "value": "360°"
+  },
+  {
+    "label": "Turntable Tail Swing (m)",
+    "value": "0.28"
+  },
+  {
+    "label": "Drive Speed — Stowed (km/h)",
+    "value": "4.2"
+  },
+  {
+    "label": "Drive Speed — Raised/Extended (km/h)",
+    "value": "1.1"
+  },
+  {
+    "label": "Gradeability",
+    "value": "0.45"
+  },
+  {
+    "label": "Max. Allowable Slope",
+    "value": "3° / 3°"
+  },
+  {
+    "label": "Turning Radius — Inside (m)",
+    "value": "2.6"
+  },
+  {
+    "label": "Turning Radius — Outside (m)",
+    "value": "5.85"
+  },
+  {
+    "label": "Drive & Steer Mode",
+    "value": "4×4×2"
+  },
+  {
+    "label": "Tire Type",
+    "value": "36×14-20"
+  },
+  {
+    "label": "---POWER---",
+    "value": ""
+  },
+  {
+    "label": "Engine",
+    "value": "Yanmar"
+  },
+  {
+    "label": "Power (kW/rpm)",
+    "value": "36.8 / 2500"
+  },
+  {
+    "label": "Fuel Tank Volume (L)",
+    "value": "100"
+  },
+  {
+    "label": "Hydraulic Oil Tank Volume (L)",
+    "value": "150"
+  },
+  {
+    "label": "Control Voltage",
+    "value": "12V DC"
+  },
+  {
+    "label": "Weight (kg)",
+    "value": "16300"
+  }
+]
+
+--- Model: LTQD2628 (ID: 86ad294e-748b-40ce-b801-ba4ca0516704) ---
+[
+  {
+    "label": "---DIMENSIONS---",
+    "value": ""
+  },
+  {
+    "label": "Max. Working Height (m)",
+    "value": "27"
+  },
+  {
+    "label": "Max. Platform Height (m)",
+    "value": "25.1"
+  },
+  {
+    "label": "Max. Horizontal Reach (m)",
+    "value": "16"
+  },
+  {
+    "label": "Max. Up & Over Clearance (m)",
+    "value": "6.8"
+  },
+  {
+    "label": "Platform Dimensions — L×W (m)",
+    "value": "1.83 × 0.76"
+  },
+  {
+    "label": "Length — Stowed (m)",
+    "value": "9.75"
+  },
+  {
+    "label": "Width — Stowed (m)",
+    "value": "2.58"
+  },
+  {
+    "label": "Height — Stowed (m)",
+    "value": "2.8"
+  },
+  {
+    "label": "Wheelbase (m)",
+    "value": "3"
+  },
+  {
+    "label": "Ground Clearance — Center (m)",
+    "value": "0.43"
+  },
+  {
+    "label": "---PRODUCTIVITY---",
+    "value": ""
+  },
+  {
+    "label": "Max. Load Capacity (kg)",
+    "value": "230"
+  },
+  {
+    "label": "Max. Platform Occupancy",
+    "value": "2"
+  },
+  {
+    "label": "Platform Rotation",
+    "value": "±80°"
+  },
+  {
+    "label": "Vertical Jib Rotation",
+    "value": "140°"
+  },
+  {
+    "label": "Turntable Rotation",
+    "value": "360°"
+  },
+  {
+    "label": "Turntable Tail Swing (m)",
+    "value": "0.19"
+  },
+  {
+    "label": "Drive Speed — Stowed (km/h)",
+    "value": "4.2"
+  },
+  {
+    "label": "Drive Speed — Raised/Extended (km/h)",
+    "value": "—"
+  },
+  {
+    "label": "Gradeability",
+    "value": "0.45"
+  },
+  {
+    "label": "Max. Allowable Slope",
+    "value": "3° / 3°"
+  },
+  {
+    "label": "Turning Radius — Inside (m)",
+    "value": "2.6"
+  },
+  {
+    "label": "Turning Radius — Outside (m)",
+    "value": "—"
+  },
+  {
+    "label": "Drive & Steer Mode",
+    "value": "4×4×2"
+  },
+  {
+    "label": "Tire Type",
+    "value": "385/65-22.5"
+  },
+  {
+    "label": "---POWER---",
+    "value": ""
+  },
+  {
+    "label": "Engine",
+    "value": "Cummins"
+  },
+  {
+    "label": "Power (kW/rpm)",
+    "value": "55.4 / 2600"
+  },
+  {
+    "label": "Fuel Tank Volume (L)",
+    "value": "100"
+  },
+  {
+    "label": "Hydraulic Oil Tank Volume (L)",
+    "value": "150"
+  },
+  {
+    "label": "Control Voltage",
+    "value": "12V DC"
+  },
+  {
+    "label": "Weight (kg)",
+    "value": "14400"
+  }
+]
