@@ -83,7 +83,7 @@ export default function RootLayout({
         <PublicShell>
           {children}
         </PublicShell>
-        <Analytics />
+        {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>
   )

@@ -160,6 +160,86 @@ export async function getAllSubCategories(mainCategoryId?: string) {
 // -----------------------------------------
 // Products
 // -----------------------------------------
+export async function getAllProductsSummary(mainCategoryId?: string) {
+  let query = supabase.from('products').select('id, name, slug, main_category_id, short_description, image, featured, specs').order('sort_order', { ascending: true });
+
+  if (mainCategoryId) {
+    query = query.eq('main_category_id', mainCategoryId);
+  }
+
+  const { data: prods, error } = await query;
+  if (error) throw error;
+
+  // Batch-load all model names in a single query
+  const { data: allModels } = await supabase
+    .from('product_models')
+    .select('product_id, model_name, sort_order')
+    .order('sort_order', { ascending: true });
+
+  const modelsByProduct: Record<string, string[]> = {};
+  (allModels || []).forEach((m) => {
+    if (!modelsByProduct[m.product_id]) modelsByProduct[m.product_id] = [];
+    modelsByProduct[m.product_id].push(m.model_name);
+  });
+
+  // Batch load main categories
+  const { data: mainCats } = await supabase.from('main_categories').select('id, name, slug');
+  const catMap = (mainCats || []).reduce((acc: any, cat: any) => {
+    acc[cat.id] = cat;
+    return acc;
+  }, {});
+
+  return (prods || []).map((p) => {
+    const cat = catMap[p.main_category_id];
+    return {
+      ...p,
+      main_category_name: cat?.name,
+      main_category_slug: cat?.slug,
+      model_names: modelsByProduct[p.id] || [],
+    };
+  });
+}
+
+export async function getRelatedProductsSummary(mainCategoryId: string, excludeSlug: string, limit: number = 3) {
+  const { data: prods, error } = await supabase
+    .from('products')
+    .select('id, name, slug, short_description, image, featured, main_category_id, specs')
+    .eq('main_category_id', mainCategoryId)
+    .neq('slug', excludeSlug)
+    .limit(limit)
+    .order('sort_order', { ascending: true });
+
+  if (error) throw error;
+
+  const prodIds = (prods || []).map(p => p.id);
+  const { data: allModels } = prodIds.length > 0
+    ? await supabase
+        .from('product_models')
+        .select('product_id, model_name, sort_order')
+        .in('product_id', prodIds)
+        .order('sort_order', { ascending: true })
+    : { data: [] };
+
+  const modelsByProduct: Record<string, string[]> = {};
+  (allModels || []).forEach((m) => {
+    if (!modelsByProduct[m.product_id]) modelsByProduct[m.product_id] = [];
+    modelsByProduct[m.product_id].push(m.model_name);
+  });
+  
+  const { data: mainCat } = await supabase
+      .from('main_categories')
+      .select('name, slug')
+      .eq('id', mainCategoryId)
+      .single();
+
+  return (prods || []).map(p => ({
+    ...p,
+    main_category_name: mainCat?.name,
+    main_category_slug: mainCat?.slug,
+    model_names: modelsByProduct[p.id] || [],
+  }));
+}
+
 export async function getAllProducts(mainCategoryId?: string) {
   let query = supabase.from('products').select('*').order('sort_order', { ascending: true });
 
