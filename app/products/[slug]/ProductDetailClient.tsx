@@ -650,7 +650,7 @@ export default function ProductDetailClient({
             </div>
 
             <motion.div
-              className="px-12"
+              className="px-0 lg:pl-8 lg:pr-0"
               initial={{ opacity: 0, x: 16 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.45, delay: 0.1 }}

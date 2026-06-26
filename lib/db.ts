@@ -203,7 +203,7 @@ export async function getAllProductsSummary(mainCategoryId?: string) {
 export async function getRelatedProductsSummary(mainCategoryId: string, excludeSlug: string, limit: number = 3) {
   const { data: prods, error } = await supabase
     .from('products')
-    .select('id, name, slug, short_description, image, featured, main_category_id, specs')
+    .select('id, name, slug, short_description, image, featured, main_category_id, specs, main_categories(name, slug), product_models(model_name, sort_order)')
     .eq('main_category_id', mainCategoryId)
     .neq('slug', excludeSlug)
     .limit(limit)
@@ -211,32 +211,13 @@ export async function getRelatedProductsSummary(mainCategoryId: string, excludeS
 
   if (error) throw error;
 
-  const prodIds = (prods || []).map(p => p.id);
-  const { data: allModels } = prodIds.length > 0
-    ? await supabase
-        .from('product_models')
-        .select('product_id, model_name, sort_order')
-        .in('product_id', prodIds)
-        .order('sort_order', { ascending: true })
-    : { data: [] };
-
-  const modelsByProduct: Record<string, string[]> = {};
-  (allModels || []).forEach((m) => {
-    if (!modelsByProduct[m.product_id]) modelsByProduct[m.product_id] = [];
-    modelsByProduct[m.product_id].push(m.model_name);
-  });
-  
-  const { data: mainCat } = await supabase
-      .from('main_categories')
-      .select('name, slug')
-      .eq('id', mainCategoryId)
-      .single();
-
-  return (prods || []).map(p => ({
+  return (prods || []).map((p: any) => ({
     ...p,
-    main_category_name: mainCat?.name,
-    main_category_slug: mainCat?.slug,
-    model_names: modelsByProduct[p.id] || [],
+    main_category_name: p.main_categories?.name,
+    main_category_slug: p.main_categories?.slug,
+    model_names: (p.product_models || []).map((m: any) => m.model_name),
+    main_categories: undefined,
+    product_models: undefined,
   }));
 }
 
@@ -372,23 +353,17 @@ export async function getProductById(id: string) {
 export async function getProductBySlug(slug: string) {
   const { data: p, error } = await supabase
     .from('products')
-    .select('*')
+    .select('*, main_categories(name, slug)')
     .eq('slug', slug)
     .single();
 
   if (error && error.code !== 'PGRST116') throw error;
   if (!p) return null;
 
-  const { data: mainCat } = await supabase
-    .from('main_categories')
-    .select('name, slug')
-    .eq('id', p.main_category_id)
-    .single();
-
   return {
     ...p,
-    main_category_name: mainCat?.name,
-    main_category_slug: mainCat?.slug,
+    main_category_name: (p as any).main_categories?.name,
+    main_category_slug: (p as any).main_categories?.slug,
   };
 }
 

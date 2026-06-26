@@ -14,12 +14,12 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
     notFound();
   }
 
-  const models = await getModelsByProduct(product.id);
-  
-  let relatedProducts: any[] = [];
-  if (product.main_category_id) {
-    relatedProducts = await getRelatedProductsSummary(product.main_category_id, slug, 3);
-  }
+  const [models, relatedProducts] = await Promise.all([
+    getModelsByProduct(product.id),
+    product.main_category_id
+      ? getRelatedProductsSummary(product.main_category_id, slug, 3)
+      : Promise.resolve([])
+  ]);
 
   return (
     <Suspense fallback={<Loading />}>

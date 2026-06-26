@@ -30,7 +30,7 @@ export default function Loading() {
             </div>
 
             {/* RIGHT: Product Info Skeleton */}
-            <div className="px-12 animate-pulse">
+            <div className="px-0 lg:pl-8 lg:pr-0 animate-pulse">
               <div className="flex items-center justify-between mb-4">
                 <div className="w-32 h-3 bg-gray-200 rounded-full" />
                 <div className="w-24 h-6 bg-gray-100 rounded-full" />
