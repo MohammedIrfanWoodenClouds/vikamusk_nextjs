@@ -567,32 +567,24 @@ export async function deleteCareer(id: string) {
 export async function getNavCategories() {
   const { data: cats, error } = await supabase
     .from('main_categories')
-    .select('*')
+    .select('id, name, slug, image, sort_order, products(id, name, slug, sort_order)')
     .order('sort_order', { ascending: true });
 
   if (error) throw error;
 
-  const navCats = await Promise.all((cats || []).map(async (cat) => {
-    const { data: prods } = await supabase
-      .from('products')
-      .select('id, name, slug')
-      .eq('main_category_id', cat.id)
-      .order('sort_order', { ascending: true });
-
-    return {
-      id: cat.id,
-      name: cat.name,
-      slug: cat.slug,
-      image: cat.image,
-      products: (prods || []).map(p => ({
+  return (cats || []).map((cat: any) => ({
+    id: cat.id,
+    name: cat.name,
+    slug: cat.slug,
+    image: cat.image,
+    products: (cat.products || [])
+      .sort((a: any, b: any) => a.sort_order - b.sort_order)
+      .map((p: any) => ({
         id: p.id,
         name: p.name,
         slug: p.slug,
       })),
-    };
   }));
-
-  return navCats;
 }
 
 // -----------------------------------------

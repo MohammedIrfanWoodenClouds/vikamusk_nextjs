@@ -8,6 +8,9 @@ const nextConfig = {
   },
   // Allow larger request bodies for base64 image uploads
   serverExternalPackages: ['mongodb'],
+  experimental: {
+    staticGenerationMaxConcurrency: 1,
+  },
 }
 
 export default nextConfig

@@ -63,8 +63,22 @@ export default function Navbar() {
 
   /* ---- Fetch categories from admin‑managed DB ---- */
   useEffect(() => {
+    // Try to load cached categories from sessionStorage for instant rendering (0ms)
+    try {
+      const cached = sessionStorage.getItem('nav_categories');
+      if (cached) {
+        setCategories(JSON.parse(cached));
+        setLoading(false);
+      }
+    } catch (e) {
+      console.warn('sessionStorage is not accessible', e);
+    }
+
     let cancelled = false;
-    setLoading(true);
+    // Keep loading state true if there's no cache yet
+    if (categories.length === 0) {
+      setLoading(true);
+    }
     setError(false);
 
     fetch('/api/public/categories?nav=true')
@@ -84,6 +98,11 @@ export default function Navbar() {
           }
         }
         setCategories(unique);
+        
+        // Cache the result in sessionStorage for subsequent visits
+        try {
+          sessionStorage.setItem('nav_categories', JSON.stringify(unique));
+        } catch (e) {}
       })
       .catch(() => {
         if (!cancelled) setError(true);
