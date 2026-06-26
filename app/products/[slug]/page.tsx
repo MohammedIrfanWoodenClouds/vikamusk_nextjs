@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import { notFound } from 'next/navigation';
-import { getProductBySlug, getModelsByProduct, getRelatedProductsSummary } from '@/lib/db';
+import { getProductBySlug, getModelsByProduct, getRelatedProductsSummary, getAllProductsSummary } from '@/lib/db';
 import ProductDetailClient from './ProductDetailClient';
 import Loading from './loading';
 
@@ -30,4 +30,11 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       />
     </Suspense>
   );
+}
+
+export async function generateStaticParams() {
+  const products = await getAllProductsSummary();
+  return products.map((p) => ({
+    slug: p.slug,
+  }));
 }
