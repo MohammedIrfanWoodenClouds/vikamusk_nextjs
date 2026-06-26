@@ -33,8 +33,8 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 }
 
 export async function generateStaticParams() {
-  const products = await getAllProductsSummary();
-  return products.map((p) => ({
-    slug: p.slug,
-  }));
+  // Return an empty array to disable pre-rendering all products at build-time.
+  // This avoids database connection/statement timeouts on the free-tier Supabase DB.
+  // Pages will be generated on-demand when first requested and then cached (ISR).
+  return [];
 }
