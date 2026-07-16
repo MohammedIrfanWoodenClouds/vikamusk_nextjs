@@ -535,21 +535,32 @@ export default function ProductsClient({ initialCategories, initialProducts }: {
                 </p>
               </div>
               
-              <div className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-6 mb-8 mt-12 sm:mt-20 w-full max-w-2xl mx-auto">
-                <Link 
-                  href="/contact" 
-                  className="w-full sm:w-auto bg-accent text-[#001f3f] rounded-[2rem] font-black uppercase tracking-[0.2em] hover:bg-white hover:scale-105 transition-all flex items-center justify-center gap-3 shadow-[0_25px_60px_rgba(245,158,11,0.4)] group px-8 py-4 text-sm"
-                >
-                  Contact Sales <ArrowRight size={20} className="group-hover:translate-x-2 transition-transform" />
-                </Link>
-                <a 
-                  href="/vikamusk-company-profile.pdf" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="w-full sm:w-auto bg-white/5 border-2 border-white/20 text-white rounded-[2rem] font-black uppercase tracking-[0.2em] hover:bg-white hover:text-primary hover:scale-105 transition-all flex items-center justify-center shadow-xl px-8 py-4 text-sm"
-                >
-                  Download Catalogue
-                </a>
+              <div className="flex flex-col items-center w-full mt-12 sm:mt-20">
+                <div className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-6 mb-8 w-full max-w-2xl mx-auto px-4">
+                  <Link 
+                    href="/contact" 
+                    className="w-full sm:w-auto bg-accent hover:bg-white text-[#001f3f] hover:text-[#001f3f] font-bold rounded-xl border border-accent hover:border-white transition-all inline-flex items-center justify-center gap-2.5 hover:scale-105 hover:shadow-[0_0_25px_rgba(255,255,255,0.4)] group"
+                    style={{
+                      padding: '1rem 1.5rem',
+                      fontSize: '0.9rem',
+                      boxShadow: '0 4px 20px rgba(245, 158, 11, 0.3)',
+                    }}
+                  >
+                    Contact Sales <ArrowRight size={18} className="group-hover:translate-x-2 transition-transform" />
+                  </Link>
+                  <a 
+                    href="/vikamusk-company-profile.pdf" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="w-full sm:w-auto bg-white/10 hover:bg-white text-white hover:text-[#001f3f] font-semibold rounded-xl border border-white/20 hover:border-white transition-all inline-flex items-center justify-center gap-2.5 hover:scale-105 hover:shadow-[0_0_25px_rgba(255,255,255,0.4)]"
+                    style={{
+                      padding: '1rem 1.5rem',
+                      fontSize: '0.9rem',
+                    }}
+                  >
+                    Download Catalogue
+                  </a>
+                </div>
               </div>
             </AnimatedSection>
           </div>
